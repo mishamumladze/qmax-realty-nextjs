@@ -1,0 +1,15 @@
+/* ─── Tailwind v4 Import ─────────────────────────────────────────────── */
+@use "tailwindcss";
+
+/* ─── Global ────────────────────────────────────────────────────────────── */
+* {
+  font-family: "Inter", sans-serif;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+.section{
+  @apply container mx-auto px-4 py-8 md:py-12 my-6 md:my-8 rounded-lg;
+}

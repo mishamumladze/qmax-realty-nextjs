@@ -1,0 +1,10 @@
+
+> qmax-realty@0.1.0 dev
+> cls && next dev
+
+▲ Next.js 16.3.1 (Turbopack)
+- Local:         http://localhost:3001
+- Network:       http://192.168.0.2:3001
+✓ Ready in 988ms
+✓ Running next.config.ts took 50ms
+[?25h

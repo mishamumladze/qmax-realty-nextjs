@@ -1,0 +1,100 @@
+==========================================================
+CODE QUALITY REVIEW — Theme Changer Fix (F2)
+Date: 2026-08-19
+Reviewer: Code-quality reviewer (read-only)
+Files reviewed: globals.css, layout.tsx, ThemeToggle.tsx
+==========================================================
+
+OVERALL VERDICT: PASS
+
+==========================================================
+CHECK 1: Type safety, unused imports, dead code
+----------------------------------------------------------
+VERDICT: PASS (with minor note)
+
+- No `as any`, `@ts-ignore`, `@ts-expect-error`, or `@ts-nocheck` in any file.
+- All imports are used in every file:
+  * globals.css: No JS imports.
+  * layout.tsx: ThemeProvider, Footer, ThemeToggle — all referenced.
+  * ThemeToggle.tsx: useTheme, useEffect, useState, Sun, Moon — all referenced.
+- No commented-out code blocks. No dead code paths.
+- Minor note: `theme` is destructured from `useTheme()` on line 8 of
+  ThemeToggle.tsx but only `resolvedTheme` and `setTheme` are used. This is
+  idiomatic (single destructure statement for readability) and harmless, but
+  strictly speaking the `theme` binding is unused. Removing it would be
+  `const { resolvedTheme, setTheme } = useTheme();`.
+
+==========================================================
+CHECK 2: Minimal & idiomatic changes
+----------------------------------------------------------
+VERDICT: PASS
+
+- globals.css: Exactly two lines added at top (`@import "tailwindcss"` and
+  `@custom-variant dark` directive). Rest of the file (:root, .dark, @theme,
+  body rules) is untouched. Clean.
+- layout.tsx: One new import (ThemeToggle). One new JSX element (fixed-position
+  div wrapping ThemeToggle) inserted between <main> and <Footer />. Provider
+  props (`attribute="class" defaultTheme="system" enableSystem`) unchanged.
+  html `lang="en"` and `suppressHydrationWarning` present. Clean.
+- ThemeToggle.tsx: Entire file is the new component. Self-contained "use client"
+  component with:
+  * Hydration guard (useEffect + useState mounted state).
+  * Placeholder div before mount to prevent layout shift.
+  * Resolved isDark via `resolvedTheme === "dark"` (correct per next-themes API).
+  * lucide Sun/Moon icons toggled by isDark.
+  * setTheme toggles between "light" and "dark".
+  Clean, no over-engineering.
+
+==========================================================
+CHECK 3: ThemeToggle rendered INSIDE ThemeProvider
+----------------------------------------------------------
+VERDICT: PASS
+
+- layout.tsx lines 15-19: ThemeProvider wraps <main>, ThemeToggle div, and
+  <Footer />. ThemeToggle (line 17) is a child of ThemeProvider (line 15),
+  so `useTheme()` context is available. Correct.
+
+==========================================================
+CHECK 4: Tailwind v4 dark variant directive syntax
+----------------------------------------------------------
+VERDICT: PASS
+
+- Line 2 of globals.css: `@custom-variant dark (&:where(.dark, .dark *));`
+- This is valid Tailwind CSS v4 syntax: top-level @custom-variant at-rule,
+  selector-based variant using &:where() for specificity.
+- Matches the expected Tailwind v4 pattern for class-based dark mode.
+
+==========================================================
+CHECK 5: No AI slop
+----------------------------------------------------------
+VERDICT: PASS
+
+- No redundant wrappers or HOCs.
+- One brief comment in ThemeToggle.tsx (line 11):
+    "// Prevent layout shift / hydration mismatch on client render"
+  This is purposeful and specific, not meaningless filler.
+- Consistent formatting: 2-space indent throughout all files.
+- Double quotes for strings/JSX (consistent with project convention).
+- Component naming is clear and conventional.
+- No unnecessary abstractions.
+
+==========================================================
+CHECK 6: TypeScript compilation
+----------------------------------------------------------
+VERDICT: PASS
+
+- `npx tsc --noEmit` exit code: 0
+- Zero errors, zero warnings from the compiler.
+- No pre-existing errors in the 3 reviewed files or elsewhere.
+
+==========================================================
+SUMMARY
+==========================================================
+Check 1 (type safety / unused):     PASS (note: unused `theme` destructure)
+Check 2 (minimal & idiomatic):      PASS
+Check 3 (inside ThemeProvider):      PASS
+Check 4 (Tailwind v4 syntax):       PASS
+Check 5 (no AI slop):               PASS
+Check 6 (tsc --noEmit):             PASS (exit code 0)
+
+OVERALL: PASS

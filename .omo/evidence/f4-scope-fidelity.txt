@@ -1,0 +1,145 @@
+================================================================================
+F4: SCOPE FIDELITY AUDIT — Theme-Changer Fix
+Date: 2026-08-19  ~03:12 AM
+Auditor: Scope-Fidelity Auditor (read-only)
+================================================================================
+
+SCOPED FILES (expected):
+  1. src/app/globals.css
+  2. src/app/layout.tsx
+  3. src/components/ThemeToggle.tsx
+
+================================================================================
+CHECK 1: Recently modified files under src/ (3h mtime window)
+================================================================================
+
+Command: Get-ChildItem -Path src -Recurse -File | Where-Object { $_.LastWriteTime -gt (Get-Date).AddHours(-3) }
+
+Results (6 files modified within 3 hours):
+  src/app/globals.css                8/19/2026  3:09:26 AM   ← FIX (scoped)
+  src/app/layout.tsx                 8/19/2026  3:09:33 AM   ← FIX (scoped)
+  src/components/ThemeToggle.tsx     8/19/2026  3:09:39 AM   ← FIX (scoped)
+  src/app/page.tsx                   8/19/2026  2:46:29 AM   ← prior work (setup)
+  src/components/Footer.tsx          8/19/2026  2:54:03 AM   ← prior work (setup)
+  src/components/ThemeProvider.tsx    8/19/2026  2:58:54 AM   ← prior work (setup)
+
+ANALYSIS:
+  The 3 scoped files cluster at 3:09:26–3:09:39 AM (13-second window) —
+  clearly a single coordinated edit operation (the fix).
+  The other 3 files (page.tsx, Footer.tsx, ThemeProvider.tsx) were modified
+  10–23 minutes EARLIER (2:46–2:58 AM) during project scaffolding / prior tasks.
+  No src/ file outside the 3 scoped files was touched during the fix window.
+
+  FINDING: FIX WINDOW IS CLEAN. Only the 3 scoped files modified by the fix.
+
+================================================================================
+CHECK 2: Root config files — were they changed by the fix?
+================================================================================
+
+  package.json          8/19/2026  2:58:14 AM  ← prior work (npm install at setup)
+  package-lock.json     8/19/2026  2:58:14 AM  ← prior work (npm install at setup)
+  next.config.ts        8/19/2026  2:46:29 AM  ← initial setup
+  tsconfig.json         8/19/2026  2:46:29 AM  ← initial setup
+
+  FINDING: No root config files were modified by the fix.
+  All timestamps predate the fix window (3:09 AM) by 11–23 minutes.
+
+================================================================================
+CHECK 3: package.json — dependency audit
+================================================================================
+
+DEPENDENCIES (expected):
+  lucide-react    ^1.32.0   ✓ present
+  next            16.3.1    ✓ present
+  next-themes     ^0.4.6    ✓ present
+  react           19.2.8    ✓ present
+  react-dom       19.2.8    ✓ present
+
+DEVDEPENDENCIES (expected set):
+  @tailwindcss/postcss       ^4           ✓ present (standard TW v4 scaffold)
+  @types/node                ^20          ✓ present
+  @types/react               ^19          ✓ present
+  @types/react-dom           ^19          ✓ present
+  babel-plugin-react-compiler 1.0.0       ✓ present (create-next-app default)
+  eslint                     ^9           ✓ present
+  eslint-config-next         16.3.1       ✓ present
+  tailwindcss                ^4           ✓ present
+  typescript                 ^5           ✓ present
+
+  FINDING: Every dependency and devDependency in package.json is a known
+  pre-existing package. No new packages were added by this fix.
+  package.json was NOT modified during the fix (mtime 2:58:14 AM, prior work).
+
+================================================================================
+CHECK 4: node_modules modification
+================================================================================
+
+  node_modules mtime:    8/19/2026  02:58:14 AM
+  Audit time:            8/19/2026  03:11:42 AM
+  Hours since modified:  0.22
+
+  FINDING: node_modules was last modified at 2:58:14 AM (prior npm install),
+  approximately 11 minutes BEFORE the fix at 3:09 AM. The fix did NOT trigger
+  any npm install or modify node_modules.
+
+================================================================================
+CHECK 5: New files — confirm only .omo/ additions
+================================================================================
+
+ALL project files (excluding node_modules/, .next/) with recent mtimes:
+
+  .omo/ artifacts (expected orchestration files):
+    .omo/drafts/fix-theme-changer.md                              3:06:16 AM
+    .omo/plans/fix-theme-changer.md                               3:07:51 AM
+    .omo/boulder.json                                             3:08:07 AM
+    .omo/start-work/ledger.jsonl                                  3:09:12 AM
+    .omo/evidence/task-1-fix-theme-changer.txt                    3:09:33 AM
+    .omo/evidence/task-2-fix-theme-changer.txt                    3:09:41 AM
+    .omo/evidence/task-3-fix-theme-changer.txt                    3:09:46 AM
+    .omo/run-continuation/ses_fe8de3769ffe...json                 3:08:05 AM
+    .omo/run-continuation/ses_fe8de343dffe...json                 3:08:07 AM
+    .omo/run-continuation/ses_fe8de2f1effe...json                 3:08:08 AM
+    .omo/run-continuation/ses_fe8e31f9cffe...json                 3:08:21 AM
+    .omo/run-continuation/ses_fe8dd0b62ffe...json                 3:09:36 AM
+    .omo/run-continuation/ses_fe8dcfa28ffe...json                 3:09:44 AM
+    .omo/run-continuation/ses_fe8dce748ffe...json                 3:09:48 AM
+
+  Auto-generated (NOT scope violations):
+    tsconfig.tsbuildinfo                                          3:11:31 AM  ← TS incremental build cache
+    AGENTS.md                                                    2:47:30 AM  ← Next.js auto-gen
+    CLAUDE.md                                                    2:47:30 AM  ← project config
+    next-env.d.ts                                                2:51:52 AM  ← Next.js auto-gen
+
+  Pre-existing (Aug 17 scaffold):
+    eslint.config.mjs, postcss.config.mjs, README.md, .gitignore
+    public/*, src/app/favicon.ico
+
+  FINDING: No files were added outside src/ and .omo/ (excluding standard
+  build outputs and auto-generated files). All new files are either the 3
+  scoped source files or .omo/ orchestration artifacts.
+
+================================================================================
+VERDICT
+================================================================================
+
+  ████████╗ ██████╗  █████╗  ██████╗ ███████╗██████╗
+  ╚══██╔══╝██╔═══██╗██╔══██╗██╔═══██╗██╔════╝██╔══██╗
+     ██║   ██║   ██║███████║██║   ██║█████╗  ██████╔╝
+     ██║   ██║   ██║██╔══██║██║   ██║██╔══╝  ██╔══██╗
+     ██║   ╚██████╔╝██║  ██║╚██████╔╝███████╗██║  ██║
+     ╚═╝    ╚═════╝ ╚═╝  ╚═╝ ╚═════╝ ╚══════╝╚═╝  ╚═╝
+
+  SCOPE FIDELITY: PASS
+
+  Evidence summary:
+  - Fix window (3:09:26–3:09:39 AM): only 3 scoped files modified
+  - No root config files changed by fix
+  - No new dependencies added to package.json
+  - node_modules untouched by fix
+  - No new files outside src/ and .omo/ orchestration artifacts
+  - Earlier-modified src/ files (page.tsx, Footer.tsx, ThemeProvider.tsx)
+    were from prior work 10–23 min before the fix, NOT scope creep
+
+  Risk: NONE — scope is exactly as specified.
+
+================================================================================
