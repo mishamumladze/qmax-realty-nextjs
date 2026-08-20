@@ -11,11 +11,11 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <SpeedInsights/>
       <body className="flex flex-col min-h-screen">
         <Navbar />
         <main className="flex-grow transition-fade min-h-screen md:pt-16">{children}</main>
         <Footer />
+        <SpeedInsights />
       </body>
     </html>
   );
