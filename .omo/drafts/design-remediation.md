@@ -1,10 +1,11 @@
 ---
 slug: design-remediation
-status: awaiting-approval
+status: approved
 intent: clear
-review_required: false
-pending-action: write .omo/plans/design-remediation.md
+review_required: true
+pending-action: high-accuracy review COMPLETE (in-house, see below) -> then /start-work design-remediation
 approach: Remediate the full apple-design (HIG) review of qmax-realty - Critical + High + Medium issues, including a new property details page, SQLite+email form backend, and full dark mode
+review-verdict: needs-fix-minor -> FIXED (T11 Suspense-safe split, T4 dependency, T14 honeypot, T1 font fallback note) -> APPROVED for execution
 ---
 
 # Draft: design-remediation
@@ -72,7 +73,16 @@ approach: Remediate the full apple-design (HIG) review of qmax-realty - Critical
 - None - all forks answered in m0027. Email transport default (nodemailer/SMTP) is a veto point at the gate.
 
 ## Approval gate
-status: awaiting-approval
+status: approved
 <!-- When exploration is exhausted and unknowns are answered, set status: awaiting-approval. -->
 <!-- That durable record is the loop guard: on a later turn read it and resume at the gate instead of re-running exploration. -->
 <!-- APPROVAL BRIEF PRESENTED m0028. Next action on approval: write .omo/plans/design-remediation.md (scaffold-equivalent), run Metis, append todos, fill TL;DR last. -->
+
+## High-accuracy review record (2026-08-20, in-house)
+- Independent subagent path UNAVAILABLE: every spawn failed 'ProviderModelNotFoundError' for gpt-5.6-terra/sol, claude-opus-5, gemini-3.1-pro (models not installed; harness also ignored user's deepseek constraint). No respawn (same wall). Review performed inline by Prometheus: momus-rigor pass + oracle-technical pass, honestly labeled.
+- FINDING 1 (build-breaker, FIXED in plan T11): contact page is 'use client'; useSearchParams without Suspense breaks next build (local docs 01-app/03-api-reference/04-functions/use-search-params.md:180-181). Fix: extract ContactForm.tsx client child + server page wrapper reading searchParams.subject, restore metadata.
+- FINDING 2 (FIXED): T4 Navbar Blocked-by T1 (wrong file) -> corrected to T3.
+- FINDING 3 (FIXED): T14 gained honeypot (hidden `website` field, silently ok) matching Scope OUT 'basic validation + honeypot'.
+- FINDING 4 (FIXED): T1 next/font/google offline-build risk note added (next/font/local or system-ui fallback, ledger deviation).
+- Verified-clean: todo grammar (column-zero `- [ ] N.` / `- [ ] F<n>.`), wave dependencies (T13/T14<-T12, T15<-T14, T16<-T3, T17/T18<-T16, T19<-T5/T6/T9), better-sqlite3 per-call pattern safe for getPropertyBySlug, route handlers Node-runtime safe, @custom-variant dark = correct Tailwind v4, generateStaticParams+notFound 404 handling correct, T8/T20 ordering consistent.
+- VERDICT: needs-fix-minor -> all 4 fixed in .omo/plans/design-remediation.md -> APPROVED.
