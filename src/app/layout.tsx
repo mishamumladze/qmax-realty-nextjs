@@ -30,7 +30,7 @@ export const metadata: Metadata = {
       "Discover premium properties, invest with confidence. Expert real estate solutions in Tbilisi and across Georgia.",
     images: [
       {
-        url: "/img/placeholder_1.webp", // Should be 1200x630px
+        url: "/img/og-image.webp", // Should be 1200x630px
         // width: 1200,
         // height: 630,
         alt: "QMAX Realty - Premium Properties",
@@ -42,7 +42,7 @@ export const metadata: Metadata = {
     card: "summary_large_image",
     title: "QMAX Realty - Premium Real Estate in Georgia",
     description: "Discover premium properties, invest with confidence.",
-    images: ["/img/placeholder_1.webp"],
+    images: ["/img/og-image.webp"],
   },
 };
 
