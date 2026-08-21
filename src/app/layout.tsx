@@ -5,11 +5,46 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import "@/app/globals.scss";
+import { Metadata } from "next";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
+
+export const metadata: Metadata = {
+  title: "QMAX Realty - Premium Real Estate in Georgia",
+  description:
+    "Discover premium properties, invest with confidence. Expert real estate solutions in Tbilisi and across Georgia.",
+  icons: {
+    icon: "/favicon.ico",
+  },
+  metadataBase: new URL("https://qmaxrealty.com"), // CHANGE THIS TO YOUR DOMAIN
+  openGraph: {
+    type: "website",
+    locale: "en_US",
+    url: "https://qmaxrealty.com",
+    siteName: "QMAX Realty",
+    title: "QMAX Realty - Premium Real Estate in Georgia",
+    description:
+      "Discover premium properties, invest with confidence. Expert real estate solutions in Tbilisi and across Georgia.",
+    images: [
+      {
+        url: "/img/og-image.png", // Should be 1200x630px
+        width: 1200,
+        height: 630,
+        alt: "QMAX Realty - Premium Properties",
+        type: "image/png",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "QMAX Realty - Premium Real Estate in Georgia",
+    description: "Discover premium properties, invest with confidence.",
+    images: ["/img/og-image.png"],
+  },
+};
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (

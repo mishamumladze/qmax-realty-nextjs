@@ -7,6 +7,26 @@ import { CONTACT_INFO } from "@/config/contact";
 
 import { Home, Key, BadgeDollarSign, Building2, Star, Handshake, ShieldCheck } from "lucide-react";
 
+import { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "Find Your Dream Property - QMAX Realty",
+  description:
+    "Discover premium real estate with expert guidance and unmatched service. Buy, sell, or rent properties in Georgia.",
+  openGraph: {
+    title: "Find Your Dream Property - QMAX Realty",
+    description: "Discover premium real estate with expert guidance and unmatched service.",
+    images: [
+      {
+        url: "/img/og-home.png", // Hero image, 1200x630px
+        width: 1200,
+        height: 630,
+        alt: "Premium Properties - QMAX Realty",
+      },
+    ],
+  },
+};
+
 const whyUsItems = [
   {
     icon: Building2,
