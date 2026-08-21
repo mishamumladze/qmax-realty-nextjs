@@ -19,8 +19,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/img/og-image.webp", // Hero image, 1200x630px
-        // width: 1200,
-        // height: 630,
+        width: 1200,
+        height: 630,
         alt: "Premium Properties - QMAX Realty",
       },
     ],
