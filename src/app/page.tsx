@@ -18,7 +18,7 @@ export const metadata: Metadata = {
     description: "Discover premium real estate with expert guidance and unmatched service.",
     images: [
       {
-        url: "/img/og-home.png", // Hero image, 1200x630px
+        url: "/img/placeholder_1.webp", // Hero image, 1200x630px
         width: 1200,
         height: 630,
         alt: "Premium Properties - QMAX Realty",
