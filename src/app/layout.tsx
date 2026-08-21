@@ -31,8 +31,8 @@ export const metadata: Metadata = {
     images: [
       {
         url: "/img/placeholder_1.webp", // Should be 1200x630px
-        width: 1200,
-        height: 630,
+        // width: 1200,
+        // height: 630,
         alt: "QMAX Realty - Premium Properties",
         type: "image/png",
       },
