@@ -1,0 +1,11 @@
+﻿=== TASK 2 ROUNDTRIP EVIDENCE (node v26.5.0) ===
+node exit code: 0
+
+Loaded live-server token: eyJzdWIiOi...<masked> (length 87)
+PASS | valid token from live server | verifyToken=true expected=true
+PASS | tampered signature rejected | verifyToken=false expected=false
+PASS | tampered payload (sub=hacker) rejected | verifyToken=false expected=false
+PASS | expired token rejected | verifyToken=false expected=false
+PASS | garbage string rejected | verifyToken=false expected=false
+ROUNDTRIP RESULT: ALL CHECKS PASSED
+

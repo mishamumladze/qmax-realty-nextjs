@@ -1,15 +1,46 @@
 /* ─── Tailwind v4 Import ─────────────────────────────────────────────── */
 @use "tailwindcss";
 
+:root {
+  /* 1. Standard color definitions */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+}
+
+@theme {
+  --color-brand-50: var(--color-emerald-50);
+  --color-brand-100: var(--color-emerald-100);
+  --color-brand-200: var(--color-emerald-200);
+  --color-brand-300: var(--color-emerald-300);
+  --color-brand-400: var(--color-emerald-400);
+  --color-brand-500: var(--color-emerald-500);
+  --color-brand-600: var(--color-emerald-600);
+  --color-brand-700: var(--color-emerald-700);
+  --color-brand-800: var(--color-emerald-800);
+  --color-brand-900: var(--color-emerald-900);
+  --color-brand-950: var(--color-emerald-950);
+}
+/* ─── Dark Mode Variant (Tailwind v4) ──────────────────────────────────── */
+@custom-variant dark (&:where(.dark, .dark *));
+
 /* ─── Global ────────────────────────────────────────────────────────────── */
 * {
-  font-family: "Inter", sans-serif;
+  font-family: Inter, var(--font-inter), system-ui, sans-serif;
 }
 
 html {
   scroll-behavior: smooth;
 }
 
-.section{
-  @apply container mx-auto px-4 py-8 md:py-12 my-6 md:my-8 rounded-lg;
+.section {
+  @apply container mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12;
 }

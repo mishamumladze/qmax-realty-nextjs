@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useMemo } from "react";
+import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import {
@@ -34,6 +34,7 @@ interface ListingsContentProps {
   geoCountries: string[];
   geoCities: string[];
   initialFilter?: string;
+  initialOffer?: string;
 }
 
 export default function ListingsContent({
@@ -41,11 +42,12 @@ export default function ListingsContent({
   geoCountries,
   geoCities,
   initialFilter = "all",
+  initialOffer = "all",
 }: ListingsContentProps) {
   // ─── Filter State ───────────────────────────────────────────────────────────
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>(initialFilter);
-  const [offerFilter, setOfferFilter] = useState<string>("all");
+  const [offerFilter, setOfferFilter] = useState<string>(initialOffer);
   const [countryFilter, setCountryFilter] = useState<string>("");
   const [cityFilter, setCityFilter] = useState<string>("");
   const [bedroomsFilter, setBedroomsFilter] = useState<number>(0);
@@ -66,6 +68,56 @@ export default function ListingsContent({
   const [draftBathrooms, setDraftBathrooms] = useState(bathroomsFilter);
   const [draftMinPrice, setDraftMinPrice] = useState(minPrice);
   const [draftMaxPrice, setDraftMaxPrice] = useState(maxPrice);
+
+  // ─── Modal Refs & Focus Management ────────────────────────────────────────────
+  const filtersButtonRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<HTMLDivElement>(null);
+
+  const closeModal = useCallback(() => {
+    setIsModalOpen(false);
+    setTimeout(() => {
+      filtersButtonRef.current?.focus();
+    }, 0);
+  }, []);
+
+  useEffect(() => {
+    if (!isModalOpen) return;
+
+    const modal = modalRef.current;
+    if (!modal) return;
+
+    modal.focus();
+
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        closeModal();
+        return;
+      }
+
+      if (e.key === "Tab") {
+        const focusableElements = modal.querySelectorAll<HTMLElement>(
+          'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+        );
+        const firstElement = focusableElements[0];
+        const lastElement = focusableElements[focusableElements.length - 1];
+
+        if (e.shiftKey) {
+          if (document.activeElement === firstElement) {
+            e.preventDefault();
+            lastElement?.focus();
+          }
+        } else {
+          if (document.activeElement === lastElement) {
+            e.preventDefault();
+            firstElement?.focus();
+          }
+        }
+      }
+    };
+
+    document.addEventListener("keydown", handleKeyDown);
+    return () => document.removeEventListener("keydown", handleKeyDown);
+  }, [isModalOpen, closeModal]);
 
   // ─── Preset Price Handlers ──────────────────────────────────────────────────
   const applyPresetPrice = (preset: string) => {
@@ -216,22 +268,24 @@ export default function ListingsContent({
   return (
     <>
       {/* Hero Banner */}
-      <header className="relative bg-gradient-to-r from-emerald-600 to-emerald-700 text-white py-16 md:py-24">
+      <header
+        className="from-brand-600 to-brand-700 dark:from-brand-700 dark:to-brand-800 relative
+          bg-gradient-to-r py-16 text-white md:py-24"
+      >
         <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
         <div className="relative container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
-            Properties & Listings
-          </h1>
-          <p className="text-lg md:text-xl mb-8 max-w-2xl mx-auto opacity-90">
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">Properties & Listings</h1>
+          <p className="mx-auto mb-8 max-w-2xl text-lg md:text-xl">
             Buy, sell, or rent properties worldwide.
           </p>
-          <div className="max-w-xl mx-auto relative">
+          <div className="relative mx-auto max-w-xl">
             <label htmlFor="property-search" className="sr-only">
               Search properties
             </label>
             <div className="relative">
               <Search
-                className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-emerald-500 pointer-events-none"
+                className="text-brand-500 pointer-events-none absolute top-1/2 left-4 h-5 w-5
+                  -translate-y-1/2"
                 aria-hidden="true"
               />
               <input
@@ -241,7 +295,9 @@ export default function ListingsContent({
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder="Search by title, location, neighborhood…"
                 autoComplete="off"
-                className="w-full pl-12 pr-4 py-3.5 rounded-xl text-gray-800 text-base shadow-lg focus:outline-none focus:ring-2 focus:ring-emerald-300 bg-white/95"
+                className="focus:ring-brand-300 w-full rounded-xl bg-white/95 py-3.5 pr-4 pl-12
+                  text-base text-gray-800 shadow-lg focus:ring-2 focus:outline-none dark:bg-gray-800
+                  dark:text-white dark:placeholder-gray-400"
                 aria-label="Search properties"
               />
             </div>
@@ -250,13 +306,15 @@ export default function ListingsContent({
       </header>
 
       {/* Filter & Sort Bar */}
-      <div className="bg-white border-b border-gray-200 shadow-sm">
+      <div
+        className="border-b border-gray-200 bg-white shadow-sm dark:border-gray-700
+          dark:bg-gray-900"
+      >
         <div className="container mx-auto px-4">
-          <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-3 py-3">
+          <div className="flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between">
             {/* Type Filter Tabs */}
             <div
-              className="flex gap-2 overflow-x-auto pb-1 sm:pb-0 scrollbar-hide"
-              role="tablist"
+              className="scrollbar-hide flex gap-2 overflow-x-auto pb-1 sm:pb-0"
               aria-label="Filter by property type"
             >
               {[
@@ -270,21 +328,24 @@ export default function ListingsContent({
                     key={key}
                     type="button"
                     onClick={() => setTypeFilter(key)}
-                    className={`cursor-pointer flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 border ${
+                    className={`flex cursor-pointer items-center gap-1.5 rounded-full border px-4
+                    py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 ${
                       isActive
-                        ? "bg-emerald-600 text-white border-emerald-600"
-                        : "bg-white text-gray-700 border-gray-200 hover:bg-gray-50"
+                        ? `bg-brand-600 border-brand-600 dark:bg-brand-500 dark:border-brand-500
+                          text-white`
+                        : `border-gray-200 bg-white text-gray-700 hover:bg-gray-50
+                          dark:border-gray-700 dark:bg-gray-800 dark:text-gray-200
+                          dark:hover:bg-gray-700`
                     }`}
-                    role="tab"
-                    aria-selected={isActive}
+                    aria-pressed={isActive}
                   >
-                    <Icon className="w-4 h-4" aria-hidden="true" />
+                    <Icon className="h-4 w-4" aria-hidden="true" />
                     {label}
                     <span
-                      className={`ml-1 text-xs font-semibold px-1.5 py-0.5 rounded-full ${
+                      className={`ml-1 rounded-full px-1.5 py-0.5 text-xs font-semibold ${
                         isActive
                           ? "bg-white/20 text-white"
-                          : "bg-gray-100 text-gray-600"
+                          : "bg-gray-100 text-gray-600 dark:bg-gray-700 dark:text-gray-400"
                       }`}
                     >
                       {counts[key as keyof typeof counts] ?? 0}
@@ -295,28 +356,42 @@ export default function ListingsContent({
             </div>
 
             {/* Modal Trigger & Sort */}
-            <div className="flex items-center gap-2 flex-shrink-0">
+            <div className="flex flex-shrink-0 items-center gap-2">
               <button
+                ref={filtersButtonRef}
                 type="button"
                 onClick={openModal}
-                className="relative inline-flex items-center gap-1.5 px-4 py-2 rounded-full text-sm font-semibold border border-emerald-600 text-emerald-700 bg-emerald-50 hover:bg-emerald-100 transition-colors duration-200 cursor-pointer"
+                className="border-brand-600 text-brand-700 bg-brand-50 hover:bg-brand-100
+                  dark:border-brand-500 dark:text-brand-400 dark:bg-brand-900/30
+                  dark:hover:bg-brand-900/50 relative inline-flex cursor-pointer items-center
+                  gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition-colors
+                  duration-200"
               >
-                <SlidersHorizontal className="w-4 h-4" aria-hidden="true" />
+                <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
                 Filters
                 {activeModalFiltersCount > 0 && (
-                  <span className="absolute -top-1.5 -right-1.5 min-w-[1.25rem] h-5 px-1 bg-emerald-600 text-white text-[11px] font-bold flex items-center justify-center rounded-full">
+                  <span
+                    className="bg-brand-600 absolute -top-1.5 -right-1.5 flex h-5 min-w-[1.25rem]
+                      items-center justify-center rounded-full px-1 text-[11px] font-bold
+                      text-white"
+                  >
                     {activeModalFiltersCount}
                   </span>
                 )}
               </button>
-              <label htmlFor="sort-select" className="text-sm text-gray-500 font-medium">
+              <label
+                htmlFor="sort-select"
+                className="text-sm font-medium text-gray-500 dark:text-gray-400"
+              >
                 Sort:
               </label>
               <select
                 id="sort-select"
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="text-sm border border-gray-200 rounded-lg px-3 py-2 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                className="focus:ring-brand-400 rounded-lg border border-gray-200 bg-white px-3 py-2
+                  text-sm text-gray-700 focus:ring-2 focus:outline-none dark:border-gray-700
+                  dark:bg-gray-800 dark:text-white"
               >
                 <option value="default">Relevance</option>
                 <option value="price-asc">Price: Low → High</option>
@@ -329,70 +404,129 @@ export default function ListingsContent({
 
           {/* Active Filters Chips */}
           {(activeModalFiltersCount > 0 || searchTerm) && (
-            <div className="border-t border-gray-200 py-2.5 flex flex-wrap items-center gap-2">
-              <span className="text-xs font-semibold text-gray-400 uppercase tracking-wide">
+            <div
+              className="flex flex-wrap items-center gap-2 border-t border-gray-200 py-2.5
+                dark:border-gray-700"
+            >
+              <span
+                className="text-xs font-semibold tracking-wide text-gray-600 uppercase
+                  dark:text-gray-400"
+              >
                 Active:
               </span>
               <div className="flex flex-wrap items-center gap-2">
                 {searchTerm && (
-                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <span
+                    className="bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300
+                      border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
+                      rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+                  >
                     Search: "{searchTerm}"
-                    <button onClick={() => setSearchTerm("")} className="hover:text-emerald-900">
-                      <X className="w-3 h-3" />
+                    <button
+                      onClick={() => setSearchTerm("")}
+                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      aria-label="Remove search filter"
+                    >
+                      <X className="h-3 w-3" aria-hidden="true" />
                     </button>
                   </span>
                 )}
                 {offerFilter !== "all" && (
-                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <span
+                    className="bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300
+                      border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
+                      rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+                  >
                     For {offerFilter}
-                    <button onClick={() => setOfferFilter("all")} className="hover:text-emerald-900">
-                      <X className="w-3 h-3" />
+                    <button
+                      onClick={() => setOfferFilter("all")}
+                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      aria-label="Remove offer filter"
+                    >
+                      <X className="h-3 w-3" aria-hidden="true" />
                     </button>
                   </span>
                 )}
                 {countryFilter && (
-                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <span
+                    className="bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300
+                      border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
+                      rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+                  >
                     {countryFilter}
-                    <button onClick={() => setCountryFilter("")} className="hover:text-emerald-900">
-                      <X className="w-3 h-3" />
+                    <button
+                      onClick={() => setCountryFilter("")}
+                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      aria-label={`Remove ${countryFilter} filter`}
+                    >
+                      <X className="h-3 w-3" aria-hidden="true" />
                     </button>
                   </span>
                 )}
                 {cityFilter && (
-                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <span
+                    className="bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300
+                      border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
+                      rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+                  >
                     {cityFilter}
-                    <button onClick={() => setCityFilter("")} className="hover:text-emerald-900">
-                      <X className="w-3 h-3" />
+                    <button
+                      onClick={() => setCityFilter("")}
+                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      aria-label={`Remove ${cityFilter} filter`}
+                    >
+                      <X className="h-3 w-3" aria-hidden="true" />
                     </button>
                   </span>
                 )}
                 {bedroomsFilter > 0 && (
-                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <span
+                    className="bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300
+                      border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
+                      rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+                  >
                     {bedroomsFilter}+ Beds
-                    <button onClick={() => setBedroomsFilter(0)} className="hover:text-emerald-900">
-                      <X className="w-3 h-3" />
+                    <button
+                      onClick={() => setBedroomsFilter(0)}
+                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      aria-label="Remove bedrooms filter"
+                    >
+                      <X className="h-3 w-3" aria-hidden="true" />
                     </button>
                   </span>
                 )}
                 {bathroomsFilter > 0 && (
-                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <span
+                    className="bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300
+                      border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
+                      rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+                  >
                     {bathroomsFilter}+ Baths
-                    <button onClick={() => setBathroomsFilter(0)} className="hover:text-emerald-900">
-                      <X className="w-3 h-3" />
+                    <button
+                      onClick={() => setBathroomsFilter(0)}
+                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      aria-label="Remove bathrooms filter"
+                    >
+                      <X className="h-3 w-3" aria-hidden="true" />
                     </button>
                   </span>
                 )}
                 {(minPrice || maxPrice) && (
-                  <span className="inline-flex items-center gap-1 bg-emerald-50 text-emerald-700 border border-emerald-200 px-2.5 py-0.5 rounded-full text-xs font-semibold">
+                  <span
+                    className="bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300
+                      border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
+                      rounded-full border px-2.5 py-0.5 text-xs font-semibold"
+                  >
                     ${minPrice || "0"} - ${maxPrice || "Any"}
                     <button
                       onClick={() => {
                         setMinPrice("");
                         setMaxPrice("");
                       }}
-                      className="hover:text-emerald-900"
+                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      aria-label="Remove price filter"
                     >
-                      <X className="w-3 h-3" />
+                      <X className="h-3 w-3" aria-hidden="true" />
                     </button>
                   </span>
                 )}
@@ -400,7 +534,8 @@ export default function ListingsContent({
               <button
                 type="button"
                 onClick={clearAllFilters}
-                className="text-xs font-medium text-emerald-600 hover:underline cursor-pointer"
+                className="text-brand-700 dark:text-brand-400 cursor-pointer text-xs font-medium
+                  hover:underline"
               >
                 Clear all
               </button>
@@ -417,32 +552,44 @@ export default function ListingsContent({
           aria-modal="true"
           aria-label="Filter properties"
         >
-          <div
-            className="fixed inset-0 bg-black/50 transition-opacity"
-            onClick={() => setIsModalOpen(false)}
-          />
-          <div className="relative min-h-full flex items-center justify-center p-4">
-            <div className="relative w-full max-w-lg bg-white rounded-2xl shadow-2xl overflow-hidden">
-              <div className="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+          <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={closeModal} />
+          <div className="relative flex min-h-full items-center justify-center p-4">
+            <div
+              ref={modalRef}
+              tabIndex={-1}
+              className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl
+                outline-none dark:bg-gray-900"
+            >
+              <div
+                className="flex items-center justify-between border-b border-gray-200 px-6 py-4
+                  dark:border-gray-700"
+              >
                 <div className="flex items-center gap-2">
-                  <SlidersHorizontal className="w-5 h-5 text-emerald-600" aria-hidden="true" />
-                  <h2 className="text-lg font-bold text-gray-800">Filter Properties</h2>
+                  <SlidersHorizontal className="text-brand-600 h-5 w-5" aria-hidden="true" />
+                  <h2 className="text-lg font-bold text-gray-800 dark:text-white">
+                    Filter Properties
+                  </h2>
                 </div>
                 <button
                   type="button"
-                  onClick={() => setIsModalOpen(false)}
-                  className="text-gray-400 hover:text-gray-600 cursor-pointer"
-                  aria-label="Close"
+                  onClick={closeModal}
+                  className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center
+                    justify-center rounded-lg p-2 text-gray-600 hover:text-gray-800
+                    dark:hover:text-gray-200"
+                  aria-label="Close filters"
                 >
-                  <X className="w-6 h-6" />
+                  <X className="h-5 w-5" />
                 </button>
               </div>
 
-              <div className="px-6 py-5 space-y-5 max-h-[60vh] overflow-y-auto">
+              <div className="max-h-[60vh] space-y-5 overflow-y-auto px-6 py-5">
                 {/* Offer Pill Selection */}
                 <div>
-                  <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                    <Tag className="w-3.5 h-3.5 inline-block align-text-top mr-1 text-emerald-500" />
+                  <span
+                    className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
+                      uppercase dark:text-gray-400"
+                  >
+                    <Tag className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
                     Availability
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -455,13 +602,17 @@ export default function ListingsContent({
                         key={key}
                         type="button"
                         onClick={() => setDraftOffer(key)}
-                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border cursor-pointer transition-all ${
+                        className={`inline-flex cursor-pointer items-center gap-2 rounded-full
+                        border px-4 py-2 text-sm font-medium transition-all ${
                           draftOffer === key
-                            ? "bg-emerald-600 text-white border-emerald-600"
-                            : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                            ? `bg-brand-600 border-brand-600 dark:bg-brand-500 dark:border-brand-500
+                              text-white`
+                            : `border-gray-200 bg-white text-gray-600 hover:bg-gray-50
+                              dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300
+                              dark:hover:bg-gray-700`
                         }`}
                       >
-                        <Icon className="w-4 h-4" />
+                        <Icon className="h-4 w-4" />
                         {label}
                       </button>
                     ))}
@@ -470,8 +621,13 @@ export default function ListingsContent({
 
                 {/* Property Type Selection */}
                 <div>
-                  <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                    <LayoutGrid className="w-3.5 h-3.5 inline-block align-text-top mr-1 text-emerald-500" />
+                  <span
+                    className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
+                      uppercase dark:text-gray-400"
+                  >
+                    <LayoutGrid
+                      className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
+                    />
                     Property Type
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -484,13 +640,17 @@ export default function ListingsContent({
                         key={key}
                         type="button"
                         onClick={() => setDraftType(key)}
-                        className={`inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium border cursor-pointer transition-all ${
+                        className={`inline-flex cursor-pointer items-center gap-2 rounded-full
+                        border px-4 py-2 text-sm font-medium transition-all ${
                           draftType === key
-                            ? "bg-emerald-600 text-white border-emerald-600"
-                            : "bg-white text-gray-600 border-gray-200 hover:bg-gray-50"
+                            ? `bg-brand-600 border-brand-600 dark:bg-brand-500 dark:border-brand-500
+                              text-white`
+                            : `border-gray-200 bg-white text-gray-600 hover:bg-gray-50
+                              dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300
+                              dark:hover:bg-gray-700`
                         }`}
                       >
-                        <Icon className="w-4 h-4" />
+                        <Icon className="h-4 w-4" />
                         {label}
                       </button>
                     ))}
@@ -500,14 +660,19 @@ export default function ListingsContent({
                 {/* Country & City */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                      <Globe className="w-3.5 h-3.5 inline-block align-text-top mr-1 text-emerald-500" />
+                    <label
+                      className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
+                        uppercase dark:text-gray-400"
+                    >
+                      <Globe className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
                       Country
                     </label>
                     <select
                       value={draftCountry}
                       onChange={(e) => setDraftCountry(e.target.value)}
-                      className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      className="focus:ring-brand-400 w-full rounded-lg border border-gray-200
+                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
+                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <option value="">All countries</option>
                       {geoCountries.map((gc) => (
@@ -518,14 +683,21 @@ export default function ListingsContent({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                      <MapPin className="w-3.5 h-3.5 inline-block align-text-top mr-1 text-emerald-500" />
+                    <label
+                      className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
+                        uppercase dark:text-gray-400"
+                    >
+                      <MapPin
+                        className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
+                      />
                       City
                     </label>
                     <select
                       value={draftCity}
                       onChange={(e) => setDraftCity(e.target.value)}
-                      className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      className="focus:ring-brand-400 w-full rounded-lg border border-gray-200
+                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
+                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <option value="">All cities</option>
                       {geoCities.map((gc) => (
@@ -540,14 +712,21 @@ export default function ListingsContent({
                 {/* Bedrooms & Bathrooms */}
                 <div className="grid grid-cols-2 gap-4">
                   <div>
-                    <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                      <BedDouble className="w-3.5 h-3.5 inline-block align-text-top mr-1 text-emerald-500" />
+                    <label
+                      className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
+                        uppercase dark:text-gray-400"
+                    >
+                      <BedDouble
+                        className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
+                      />
                       Bedrooms
                     </label>
                     <select
                       value={draftBedrooms}
                       onChange={(e) => setDraftBedrooms(Number(e.target.value))}
-                      className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      className="focus:ring-brand-400 w-full rounded-lg border border-gray-200
+                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
+                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <option value={0}>Any</option>
                       <option value={1}>1+</option>
@@ -557,14 +736,19 @@ export default function ListingsContent({
                     </select>
                   </div>
                   <div>
-                    <label className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                      <Bath className="w-3.5 h-3.5 inline-block align-text-top mr-1 text-emerald-500" />
+                    <label
+                      className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
+                        uppercase dark:text-gray-400"
+                    >
+                      <Bath className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
                       Bathrooms
                     </label>
                     <select
                       value={draftBathrooms}
                       onChange={(e) => setDraftBathrooms(Number(e.target.value))}
-                      className="w-full text-sm border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      className="focus:ring-brand-400 w-full rounded-lg border border-gray-200
+                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
+                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <option value={0}>Any</option>
                       <option value={1}>1+</option>
@@ -576,36 +760,49 @@ export default function ListingsContent({
 
                 {/* Price Presets & Range */}
                 <div>
-                  <span className="block text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2">
-                    <CircleDollarSign className="w-3.5 h-3.5 inline-block align-text-top mr-1 text-emerald-500" />
+                  <span
+                    className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
+                      uppercase dark:text-gray-400"
+                  >
+                    <CircleDollarSign
+                      className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
+                    />
                     Price Range (USD)
                   </span>
-                  <div className="grid grid-cols-2 gap-2 mb-3">
+                  <div className="mb-3 grid grid-cols-2 gap-2">
                     <button
                       type="button"
                       onClick={() => applyPresetPrice("u200")}
-                      className="px-3 py-1.5 rounded-full text-xs font-semibold border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 text-emerald-700 transition-colors"
+                      className="hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300
+                        text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
+                        py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
                     >
                       Under $200k
                     </button>
                     <button
                       type="button"
                       onClick={() => applyPresetPrice("200-400")}
-                      className="px-3 py-1.5 rounded-full text-xs font-semibold border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 text-emerald-700 transition-colors"
+                      className="hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300
+                        text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
+                        py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
                     >
                       $200k – $400k
                     </button>
                     <button
                       type="button"
                       onClick={() => applyPresetPrice("400-600")}
-                      className="px-3 py-1.5 rounded-full text-xs font-semibold border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 text-emerald-700 transition-colors"
+                      className="hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300
+                        text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
+                        py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
                     >
                       $400k – $600k
                     </button>
                     <button
                       type="button"
                       onClick={() => applyPresetPrice("600p")}
-                      className="px-3 py-1.5 rounded-full text-xs font-semibold border border-gray-200 hover:bg-emerald-50 hover:border-emerald-300 text-emerald-700 transition-colors"
+                      className="hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300
+                        text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
+                        py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
                     >
                       Over $600k
                     </button>
@@ -616,35 +813,45 @@ export default function ListingsContent({
                       value={draftMinPrice}
                       onChange={(e) => setDraftMinPrice(e.target.value)}
                       placeholder="Min $"
-                      className="w-1/2 text-sm border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      className="focus:ring-brand-400 w-1/2 rounded-lg border border-gray-200
+                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
+                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     />
-                    <span className="text-gray-400">–</span>
+                    <span className="text-gray-600">–</span>
                     <input
                       type="number"
                       value={draftMaxPrice}
                       onChange={(e) => setDraftMaxPrice(e.target.value)}
                       placeholder="Max $"
-                      className="w-1/2 text-sm border border-gray-200 rounded-lg px-3 py-2.5 text-gray-700 bg-white focus:outline-none focus:ring-2 focus:ring-emerald-400"
+                      className="focus:ring-brand-400 w-1/2 rounded-lg border border-gray-200
+                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
+                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     />
                   </div>
                 </div>
               </div>
 
-              <div className="flex items-center justify-between gap-3 px-6 py-4 bg-gray-50 border-t border-gray-200">
+              <div
+                className="flex items-center justify-between gap-3 border-t border-gray-200
+                  bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-800"
+              >
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="inline-flex items-center gap-1.5 text-sm font-medium text-gray-500 hover:text-gray-700 cursor-pointer"
+                  className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium
+                    text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 >
-                  <RotateCcw className="w-4 h-4" />
+                  <RotateCcw className="h-4 w-4" />
                   Clear all
                 </button>
                 <button
                   type="button"
                   onClick={applyModalFilters}
-                  className="inline-flex items-center justify-center gap-1.5 flex-1 bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200 cursor-pointer"
+                  className="bg-brand-600 hover:bg-brand-700 inline-flex flex-1 cursor-pointer
+                    items-center justify-center gap-1.5 rounded-lg px-6 py-2.5 text-sm font-semibold
+                    text-white transition-colors duration-200"
                 >
-                  <Check className="w-4 h-4" />
+                  <Check className="h-4 w-4" />
                   Apply filters
                 </button>
               </div>
@@ -654,15 +861,15 @@ export default function ListingsContent({
       )}
 
       {/* Results Area */}
-      <div className="py-10 md:py-14 bg-gray-50">
+      <div className="bg-gray-50 py-10 md:py-14 dark:bg-gray-900">
         <div className="container mx-auto px-4">
-          <p className="text-sm text-gray-500 mb-6" aria-live="polite">
+          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
             Showing <span className="font-semibold">{filteredProperties.length}</span> of{" "}
             {initialProperties.length} properties
           </p>
 
           {filteredProperties.length > 0 ? (
-            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {filteredProperties.map((property) => {
                 const type = property.type || "apartment";
                 const isHouse = type === "house";
@@ -673,78 +880,96 @@ export default function ListingsContent({
 
                 return (
                   <article
-                  // we will replace slug to id
-                    key={property.slug}
-                    className="bg-white rounded-2xl shadow-md overflow-hidden hover:shadow-xl transition-shadow duration-300 flex flex-col"
+                    key={property.id}
+                    className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-md
+                      transition-shadow duration-300 hover:shadow-xl dark:bg-gray-800"
                   >
-                    <div className="relative flex-shrink-0 h-48 w-full">
+                    <div className="relative h-48 w-full flex-shrink-0">
                       <Image
-                        src={property.card_image || "/img/placeholder.webp"}
+                        src={property.card_image || "/img/placeholder_2.webp"}
                         alt={title}
                         fill
                         sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                         className="object-cover"
                       />
                       <span
-                        className={`absolute top-3 left-3 flex items-center gap-1 text-xs font-semibold px-2.5 py-1 rounded-full shadow-sm ${
-                          isHouse
-                            ? "bg-emerald-100 text-emerald-800"
-                            : "bg-blue-100 text-blue-800"
-                        }`}
+                        className={`absolute top-3 left-3 flex items-center gap-1 rounded-full
+                          px-2.5 py-1 text-xs font-semibold shadow-sm ${
+                            isHouse
+                              ? `bg-brand-100 text-brand-800 dark:bg-brand-900/40
+                                dark:text-brand-300`
+                              : `bg-brand-100 text-brand-800 dark:bg-brand-900/40
+                                dark:text-brand-300`
+                          }`}
                       >
                         {isHouse ? (
-                          <HomeIcon className="w-3 h-3" />
+                          <HomeIcon className="h-3 w-3" />
                         ) : (
-                          <Building2 className="w-3 h-3" />
+                          <Building2 className="h-3 w-3" />
                         )}
                         {isHouse ? "House" : "Apartment"}
                       </span>
 
-                      <span className="absolute top-3 right-3 bg-emerald-600 text-white px-3 py-1 rounded-full text-sm font-bold shadow">
+                      <span
+                        className="bg-brand-600 absolute top-3 right-3 rounded-full px-3 py-1
+                          text-sm font-bold text-white shadow"
+                      >
                         ${price.toLocaleString()}
                       </span>
 
-                      <span className="absolute bottom-3 right-3 bg-black/60 text-white text-xs px-2.5 py-1 rounded-full backdrop-blur-sm">
+                      <span
+                        className="absolute right-3 bottom-3 rounded-full bg-black/60 px-2.5 py-1
+                          text-xs text-white backdrop-blur-sm"
+                      >
                         {saleType}
                       </span>
                     </div>
 
-                    <div className="p-5 flex flex-col flex-1">
-                      <h3 className="text-lg font-bold text-gray-800 mb-1 leading-snug">
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3
+                        className="mb-1 text-lg leading-snug font-bold text-gray-800
+                          dark:text-white"
+                      >
                         {title}
                       </h3>
-                      <p className="text-gray-500 text-sm mb-4 flex items-center gap-1">
-                        <MapPin className="w-3.5 h-3.5 shrink-0" />
+                      <p
+                        className="mb-4 flex items-center gap-1 text-sm text-gray-500
+                          dark:text-gray-400"
+                      >
+                        <MapPin className="h-3.5 w-3.5 shrink-0" />
                         {property.neighborhood ? `${property.neighborhood}, ` : ""}
                         {city}
                       </p>
 
-                      <div className="grid grid-cols-3 gap-2 mb-5 text-sm text-gray-600 mt-auto">
+                      <div
+                        className="mt-auto mb-5 grid grid-cols-3 gap-2 text-sm text-gray-600
+                          dark:text-gray-300"
+                      >
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <DoorOpen className="w-4 h-4 text-emerald-500 shrink-0" />
+                          <DoorOpen className="text-brand-500 h-4 w-4 shrink-0" />
                           <span>
-                            {property.rooms || 0}{" "}
-                            {(property.rooms || 0) === 1 ? "Room" : "Rooms"}
+                            {property.rooms || 0} {(property.rooms || 0) === 1 ? "Room" : "Rooms"}
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <Bed className="w-4 h-4 text-emerald-500 shrink-0" />
+                          <Bed className="text-brand-500 h-4 w-4 shrink-0" />
                           <span>
                             {property.bedrooms || 0}{" "}
                             {(property.bedrooms || 0) === 1 ? "Bed" : "Beds"}
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <SquareDashed className="w-4 h-4 text-emerald-500 shrink-0" />
+                          <SquareDashed className="text-brand-500 h-4 w-4 shrink-0" />
                           <span>{(property.sqmt || 0).toLocaleString()} m²</span>
                         </div>
                       </div>
 
                       <div className="flex gap-2">
                         <Link
-                        // we will replace slug to id
-                          href={`/properties/details/${property.slug}`}
-                          className="flex-1 bg-emerald-600 hover:bg-emerald-700 text-white text-center px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200"
+                          href={`/properties/details/${property.id}`}
+                          className="bg-brand-600 hover:bg-brand-700 flex-1 rounded-lg px-4 py-2.5
+                            text-center text-sm font-semibold text-white transition-colors
+                            duration-200"
                         >
                           View Details
                         </Link>
@@ -754,14 +979,16 @@ export default function ListingsContent({
                           )}%20listed%20at%20$${price}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="flex items-center justify-center gap-1.5 bg-green-500 hover:bg-green-600 text-white px-4 py-2.5 rounded-lg font-semibold text-sm transition-colors duration-200"
+                          className="bg-brand-600 hover:bg-brand-700 flex items-center
+                            justify-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold
+                            text-white transition-colors duration-200"
                         >
                           <Image
                             src="/img/Logos/si-whatsapp-w.svg"
                             alt=""
                             width={16}
                             height={16}
-                            className="w-4 h-4"
+                            className="h-4 w-4"
                           />
                           Enquire
                         </a>
@@ -772,18 +999,19 @@ export default function ListingsContent({
               })}
             </div>
           ) : (
-            <div className="text-center py-20">
-              <SearchX className="w-12 h-12 text-gray-300 mx-auto mb-4" />
-              <h3 className="text-xl font-semibold text-gray-500 mb-2">
+            <div className="py-20 text-center">
+              <SearchX className="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
+              <h3 className="mb-2 text-xl font-semibold text-gray-500 dark:text-gray-400">
                 No properties found
               </h3>
-              <p className="text-gray-400 mb-6">
+              <p className="mb-6 text-gray-600 dark:text-gray-400">
                 Try a different search term or clear your filters.
               </p>
               <button
                 type="button"
                 onClick={clearAllFilters}
-                className="text-emerald-600 font-semibold hover:underline cursor-pointer"
+                className="text-brand-700 dark:text-brand-400 cursor-pointer font-semibold
+                  hover:underline"
               >
                 Clear all filters
               </button>
@@ -793,17 +1021,23 @@ export default function ListingsContent({
       </div>
 
       {/* Why Choose Us Section */}
-      <section className="section bg-emerald-300/5" aria-labelledby="why-heading">
+      <section
+        className="section bg-brand-300/5 dark:bg-brand-900/10"
+        aria-labelledby="why-heading"
+      >
         <div className="container mx-auto px-4">
-          <div className="text-center mb-10">
-            <h2 id="why-heading" className="text-3xl md:text-4xl font-bold text-gray-800 mb-3">
+          <div className="mb-10 text-center">
+            <h2
+              id="why-heading"
+              className="mb-3 text-3xl font-bold text-gray-800 md:text-4xl dark:text-white"
+            >
               Why QMAX Realty?
             </h2>
-            <p className="text-gray-600 max-w-xl mx-auto">
+            <p className="mx-auto max-w-xl text-gray-600 dark:text-gray-400">
               Expert guidance for buying, selling, or renting properties.
             </p>
           </div>
-          <div className="grid grid-cols-2 lg:grid-cols-4 gap-8 max-w-5xl mx-auto">
+          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 lg:grid-cols-4">
             {[
               {
                 icon: Star,
@@ -833,16 +1067,22 @@ export default function ListingsContent({
               const Icon = item.icon;
               return (
                 <div key={idx} className="text-center">
-                  <div className="w-14 h-14 bg-emerald-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                    <Icon className="w-7 h-7 text-emerald-600" />
+                  <div
+                    className="bg-brand-100 dark:bg-brand-900/40 mx-auto mb-3 flex h-14 w-14
+                      items-center justify-center rounded-full"
+                  >
+                    <Icon className="text-brand-600 dark:text-brand-400 h-7 w-7" />
                   </div>
-                  <h3 className="font-semibold text-gray-800 mb-1">
+                  <h3 className="mb-1 font-semibold text-gray-800 dark:text-white">
                     {item.title}
                     {item.hasStar && (
-                      <Star className="w-4 h-4 inline-block ml-1 text-emerald-600 align-text-bottom" />
+                      <Star
+                        className="text-brand-600 dark:text-brand-400 ml-1 inline-block h-4 w-4
+                          align-text-bottom"
+                      />
                     )}
                   </h3>
-                  <p className="text-sm text-gray-600">{item.desc}</p>
+                  <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
                 </div>
               );
             })}
@@ -852,18 +1092,19 @@ export default function ListingsContent({
 
       {/* WhatsApp CTA Section */}
       <section className="section">
-        <div className="bg-gray-50 rounded-2xl p-8 text-center">
-          <h2 className="text-2xl font-bold text-gray-800 mb-2">
+        <div className="rounded-2xl bg-gray-50 p-8 text-center dark:bg-gray-800">
+          <h2 className="mb-2 text-2xl font-bold text-gray-800 dark:text-white">
             Looking for Something Specific?
           </h2>
-          <p className="text-gray-600 mb-6 max-w-md mx-auto">
+          <p className="mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-400">
             Tell us what you're looking for and we'll find the perfect property for you.
           </p>
           <a
             href={`${CONTACT_INFO.whatsapp.href}&text=Hi!%20I'm%20looking%20for%20a%20property.`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center bg-green-500 hover:bg-green-600 text-white px-8 py-3 rounded-xl font-semibold transition-colors duration-200"
+            className="bg-brand-600 hover:bg-brand-700 inline-flex items-center rounded-xl px-8 py-3
+              font-semibold text-white transition-colors duration-200"
           >
             <Image
               src="/img/Logos/si-whatsapp-w.svg"

@@ -18,33 +18,49 @@ export default function NewsletterForm() {
         body: JSON.stringify({ email }),
       });
 
-      if (res.ok) {
-        setStatus("success");
-        setMessage("Thank you for subscribing! You'll receive our latest updates soon.");
-        setEmail("");
-      } else {
-        throw new Error("Failed to subscribe");
+      const data = await res.json();
+
+      if (!res.ok) {
+        setStatus("error");
+        setMessage(data.error || "Something went wrong. Please try again.");
+        return;
       }
+
+      if (!data.ok) {
+        setStatus("error");
+        setMessage("Something went wrong. Please try again.");
+        return;
+      }
+
+      setStatus("success");
+      setMessage("Thank you for subscribing! You'll receive our latest updates soon.");
+      setEmail("");
     } catch {
       setStatus("error");
-      setMessage("Subscription failed. Please try again.");
+      setMessage("Network error. Please check your connection and try again.");
     }
   }
 
   return (
-    <div className="max-w-md mx-auto">
+    <div className="mx-auto max-w-md">
       {status === "success" && (
-        <div className="bg-green-50 border border-green-200 text-green-700 rounded-xl px-6 py-3 mb-6 text-center">
+        <div
+          className="mb-6 rounded-xl border border-green-200 bg-green-50 px-6 py-3 text-center
+            text-green-700 dark:border-green-800 dark:bg-green-900/30 dark:text-green-300"
+        >
           {message}
         </div>
       )}
       {status === "error" && (
-        <div className="bg-red-50 border border-red-200 text-red-700 rounded-xl px-6 py-3 mb-6 text-center">
+        <div
+          className="mb-6 rounded-xl border border-red-200 bg-red-50 px-6 py-3 text-center
+            text-red-700 dark:border-red-800 dark:bg-red-900/30 dark:text-red-300"
+        >
           {message}
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="flex flex-col sm:flex-row gap-3">
+      <form onSubmit={handleSubmit} className="flex flex-col gap-3 sm:flex-row">
         <label htmlFor="newsletter-email" className="sr-only">
           Email address
         </label>
@@ -56,12 +72,15 @@ export default function NewsletterForm() {
           placeholder="Enter your email"
           required
           autoComplete="email"
-          className="flex-1 px-4 py-3 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent text-gray-800"
+          className="focus:ring-brand-500 flex-1 rounded-lg border border-gray-300 px-4 py-3
+            text-gray-800 focus:border-transparent focus:ring-2 focus:outline-none
+            dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
         />
         <button
           type="submit"
           disabled={status === "loading"}
-          className="bg-emerald-600 hover:bg-emerald-700 disabled:opacity-50 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+          className="bg-brand-600 hover:bg-brand-700 rounded-lg px-6 py-3 font-semibold text-white
+            transition-colors duration-200 disabled:opacity-50"
         >
           {status === "loading" ? "Subscribing..." : "Subscribe"}
         </button>

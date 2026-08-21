@@ -1,0 +1,26 @@
+﻿=== task19-curl.txt | /api/admin/properties real-surface QA ===
+Run: 2026-08-22T01:23:20.8075360+04:00 | target: http://localhost:3000 (live dev server)
+
+--- login ---
+POST /api/admin/credentials => HTTP 200, token issued
+token extracted OK (87 chars)
+
+--- (a) 401 proofs: GET without Authorization header ---
+GET /api/admin/properties (no auth) => HTTP 401 body={"error":"Unauthorized"}
+GET /api/admin/messages (no auth) => HTTP 401 body={"error":"Unauthorized"}
+GET /api/admin/newsletter (no auth) => HTTP 401 body={"error":"Unauthorized"}
+
+--- (b) properties CRUD cycle ---
+GET #1 (auth) => HTTP 200 | count=6 | ids=6,5,4,3,2,1
+POST create (__qa_temp_property; price sent as STRING '123000' to prove coercion; parking boolean true) => HTTP 200
+body: {"property":{"id":98,"slug":"qa-temp-property","type":null,"title":"__qa_temp_property","subtitle":null,"property_type":null,"rooms":null,"bedrooms":null,"bathrooms":null,"sqmt":null,"price":123000,"currency":null,"location":null,"neighborhood":null,"city":"Tbilisi","region":null,"country":null,"sale_type":null,"year_built":null,"floor":null,"parking":"1.0","card_image":null,"meta_description":null,"description":null,"inclusions":"[\"qa-item-one\",\"qa-item-two\"]","gallery":null,"floor_plan":null,"virtual_tour":null,"coords":null,"featured":0,"status":"active","created_at":"2026-08-21 21:23:21","updated_at":"2026-08-21 21:23:21","coordinates":null}}
+created id=98
+PUT rename id=98 => HTTP 200
+body: {"property":{"id":98,"slug":"qa-temp-property","type":null,"title":"__qa_temp_property_renamed","subtitle":null,"property_type":null,"rooms":null,"bedrooms":null,"bathrooms":null,"sqmt":null,"price":999000,"currency":null,"location":null,"neighborhood":null,"city":"Tbilisi","region":null,"country":null,"sale_type":null,"year_built":null,"floor":null,"parking":"1.0","card_image":null,"meta_description":null,"description":null,"inclusions":"[\"qa-item-one\",\"qa-item-two\"]","gallery":null,"floor_plan":null,"virtual_tour":null,"coords":null,"featured":0,"status":"active","created_at":"2026-08-21 21:23:21","updated_at":"2026-08-21 21:23:21","coordinates":null}}
+GET-after-PUT (stale-state check) => HTTP 200 | count=7 | row 98 now: title='__qa_temp_property_renamed' price=999000 slug='qa-temp-property' parking=1.0 inclusions=["qa-item-one","qa-item-two"]
+DELETE ?id=98 => HTTP 200 body={"ok":true}
+GET-after-DELETE (residue check) => HTTP 200 | count=6 | ids=6,5,4,3,2,1 | qa residue rows=0
+
+NOTE: parking bound as integer 1 per spec; live schema declares parking TEXT so SQLite TEXT affinity renders it '1.0' on read (driver binds JS numbers as REAL). messages.read is INTEGER affinity and stores true integers.
+
+CLEANUP RECEIPT: properties final count=6 (expected 6); __qa_temp_property* rows remaining=0 (expected 0)

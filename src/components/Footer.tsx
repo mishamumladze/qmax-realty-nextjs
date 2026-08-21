@@ -1,7 +1,7 @@
-import Image from 'next/image';
-import Link from 'next/link';
-import { MapPin, Mail } from 'lucide-react';
-import ContactLinks from './ContactLinks';
+import Image from "next/image";
+import Link from "next/link";
+import { MapPin, Mail } from "lucide-react";
+import ContactLinks from "./ContactLinks";
 
 // Optional: Define props if you want dynamic data, or define fallback constants
 interface FooterProps {
@@ -12,15 +12,13 @@ interface FooterProps {
   telegramUrl?: string;
 }
 
-export default function Footer({
-}: FooterProps) {
+export default function Footer({}: FooterProps) {
   const currentYear = new Date().getFullYear();
 
   return (
-    <footer className="bg-white border-t border-gray-200 my-8">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <div className="flex flex-col md:flex-row justify-between items-center gap-8">
-          
+    <footer className="my-8 border-t border-gray-200 bg-white dark:border-gray-800 dark:bg-gray-900">
+      <div className="mx-auto max-w-7xl px-4 py-12 sm:px-6 lg:px-8">
+        <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           {/* Logo */}
           <div className="logo-container">
             <Link href="/" aria-label="QMAX Realty homepage">
@@ -29,21 +27,26 @@ export default function Footer({
                 alt="QMAX Realty Logo"
                 width={550}
                 height={550}
-                className="w-40 h-auto"
+                className="block h-auto w-40 dark:hidden"
+                priority={false}
+              />
+              <Image
+                src="/img/Logo1000.webp"
+                alt="QMAX Realty Logo"
+                width={550}
+                height={550}
+                className="hidden h-auto w-40 dark:block"
                 priority={false}
               />
             </Link>
           </div>
 
           {/* Contact Info */}
-          <ContactLinks 
-            variant="list" 
-            only={["email", "phone", "address"]} 
-          />
+          <ContactLinks variant="list" only={["email", "phone", "address"]} />
           {/* Social Links */}
-          <ContactLinks 
-            variant="icons-only" 
-            only={["whatsapp", "telegram"]} 
+          <ContactLinks
+            variant="icons-only"
+            only={["whatsapp", "telegram"]}
             className="mt-4 md:mt-0"
           />
         </div>
@@ -52,8 +55,8 @@ export default function Footer({
         <div className="map-container mt-8 mb-8">
           <iframe
             title="QMAX Realty Office Location"
-            src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d73888.86342402626!2d31.366121!3d36.7898965!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x14c3598de8ddfd4d%3A0xeda826ac64e176dc!2sSide%2C%20Manavgat%2FAntalya%2C%20T%C3%BCrkiye!5e1!3m2!1sen!2sge!4v1786216775962!5m2!1sen!2sge"
-            className="w-full h-80 border-0 rounded-lg"
+            src="https://www.google.com/maps?q=Rustaveli+Ave+12,+Tbilisi,+Georgia&output=embed"
+            className="h-80 w-full rounded-lg border-0"
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"
@@ -61,7 +64,10 @@ export default function Footer({
         </div>
 
         {/* Bottom Bar */}
-        <div className="border-t border-gray-200 pt-6 text-center text-sm text-gray-500">
+        <div
+          className="border-t border-gray-200 pt-6 text-center text-sm text-gray-500
+            dark:border-gray-800 dark:text-gray-400"
+        >
           <p>&copy; {currentYear} QMAX Realty. All rights reserved.</p>
         </div>
       </div>

@@ -1,0 +1,4 @@
+﻿Command: npx tsc --noEmit
+WorkingDirectory: C:\Users\Misha\Desktop\next\qmax-realty
+ExitCode: 0
+--- output ---

@@ -18,6 +18,7 @@ interface ListingsPageProps {
 export default async function ListingsPage({ searchParams }: ListingsPageProps) {
   const resolvedParams = await searchParams;
   const initialFilter = resolvedParams.filter || "all";
+  const initialOffer = resolvedParams.offer || "all";
 
   // Fetch properties via SQLite helper
   const allProperties = getActiveProperties();
@@ -40,6 +41,7 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
       geoCountries={geoCountries}
       geoCities={geoCities}
       initialFilter={initialFilter}
+      initialOffer={initialOffer}
     />
   );
 }

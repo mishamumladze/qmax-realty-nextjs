@@ -1,20 +1,9 @@
 import { Phone, Mail, MapPin } from "lucide-react";
-import {
-  siWhatsapp,
-  siTelegram,
-  siFacebook,
-  siInstagram,
-} from "simple-icons";
+import { siWhatsapp, siTelegram, siFacebook, siInstagram } from "simple-icons";
 import { CONTACT_INFO } from "@/config/contact";
 
 type ContactKey =
-  | "phone"
-  | "email"
-  | "address"
-  | "whatsapp"
-  | "telegram"
-  | "facebook"
-  | "instagram";
+  "phone" | "email" | "address" | "whatsapp" | "telegram" | "facebook" | "instagram";
 
 interface ContactLinksProps {
   variant?: "buttons" | "list" | "icons-only";
@@ -23,7 +12,13 @@ interface ContactLinksProps {
 }
 
 // Simple Icon Renderer helper component
-function SimpleIcon({ icon, className = "w-4 h-4" }: { icon: { path: string; title: string }; className?: string }) {
+function SimpleIcon({
+  icon,
+  className = "w-4 h-4",
+}: {
+  icon: { path: string; title: string };
+  className?: string;
+}) {
   return (
     <svg
       role="img"
@@ -62,7 +57,7 @@ export default function ContactLinks({
       label: CONTACT_INFO.address.display,
       href: CONTACT_INFO.address.href,
       renderIcon: (cls: string) => <MapPin className={cls} />,
-      color: "bg-red-600 hover:bg-red-700 text-white",
+      color: "bg-gray-700 hover:bg-gray-800 text-white",
       target: "_blank",
     },
     {
@@ -83,9 +78,7 @@ export default function ContactLinks({
     },
   ];
 
-  const links = only
-    ? allLinks.filter((item) => only.includes(item.key))
-    : allLinks;
+  const links = only ? allLinks.filter((item) => only.includes(item.key)) : allLinks;
 
   if (variant === "icons-only") {
     return (
@@ -97,9 +90,11 @@ export default function ContactLinks({
             target={item.target}
             rel={item.target ? "noopener noreferrer" : undefined}
             aria-label={item.label}
-            className="p-2.5 rounded-full bg-gray-100 hover:bg-emerald-100 text-gray-700 hover:text-emerald-600 transition-colors"
+            className="hover:bg-brand-100 hover:text-brand-600 dark:hover:bg-brand-900/40
+              dark:hover:text-brand-400 rounded-full bg-gray-100 p-3 text-gray-700 transition-colors
+              dark:bg-gray-800 dark:text-gray-300"
           >
-            {item.renderIcon("w-10 h-10")}
+            {item.renderIcon("w-6 h-6")}
           </a>
         ))}
       </div>
@@ -115,11 +110,10 @@ export default function ContactLinks({
               href={item.href}
               target={item.target}
               rel={item.target ? "noopener noreferrer" : undefined}
-              className="inline-flex items-center gap-3 text-gray-600 hover:text-emerald-600 transition-colors text-md font-medium"
+              className="hover:text-brand-600 dark:hover:text-brand-400 text-md inline-flex
+                items-center gap-3 font-medium text-gray-600 transition-colors dark:text-gray-300"
             >
-              <span className="text-emerald-600 shrink-0">
-                {item.renderIcon("w-4 h-4")}
-              </span>
+              <span className="text-brand-600 shrink-0">{item.renderIcon("w-4 h-4")}</span>
               <span>{item.label}</span>
             </a>
           </li>
@@ -136,7 +130,8 @@ export default function ContactLinks({
           href={item.href}
           target={item.target}
           rel={item.target ? "noopener noreferrer" : undefined}
-          className={`inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-md font-semibold shadow-sm transition-all duration-200 hover:-translate-y-0.5 ${item.color}`}
+          className={`text-md inline-flex items-center gap-2 rounded-lg px-4 py-2.5 font-semibold
+          shadow-sm transition-all duration-200 hover:-translate-y-0.5 ${item.color}`}
         >
           {item.renderIcon("w-4 h-4 shrink-0")}
           <span>{item.label}</span>

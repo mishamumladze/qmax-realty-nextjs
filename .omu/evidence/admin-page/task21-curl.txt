@@ -1,0 +1,25 @@
+﻿=== task21-curl.txt | /api/admin/newsletter real-surface QA ===
+Run: 2026-08-22T01:28:33.6345289+04:00 | target: http://localhost:3000 (live dev server)
+
+login OK, token extracted (87 chars)
+GET #1 (auth) => HTTP 200 | count=2 | rows=39:test2@example.com 38:f3-newsletter-qa@example.com
+
+--- (d1) seed temp subscriber __qa__@example.com DIRECTLY via better-sqlite3 ---
+(public /api/newsletter deliberately NOT used - it sends welcome mail; admin route does not)
+seeded direct sqlite INSERT => id=44
+GET #2 => HTTP 200 | count=3 | rows=44:__qa__@example.com 39:test2@example.com 38:f3-newsletter-qa@example.com
+
+--- (d2) DELETE seeded row via admin API ---
+DELETE ?id=44 => HTTP 200 body={"ok":true}
+
+--- (d3) admin POST re-add __qa__@example.com then DELETE cleanup ---
+POST {\"email\":\"__qa__@example.com\"} => HTTP 200
+body: {"subscriber":{"id":45,"email":"__qa__@example.com","unsub_token":"0aa01037be97244cf9ab5d6e1d509348","created_at":"2026-08-21 21:28:34"}}
+DELETE ?id=45 => HTTP 200 body={"ok":true}
+
+--- (e) 405 proof: PUT on /api/admin/newsletter ---
+PUT /api/admin/newsletter => HTTP 405 body={"error":"Method not allowed"}
+
+FINAL GET => HTTP 200 | count=2 | rows=39:test2@example.com 38:f3-newsletter-qa@example.com
+
+CLEANUP RECEIPT: final subscriber count=2 (direct sqlite count=2; expected exactly 2); original rows id=38 f3-newsletter-qa@example.com intact=True, id=39 test2@example.com intact=True; __qa__* residue rows=0 (expected 0)

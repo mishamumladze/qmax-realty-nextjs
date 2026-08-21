@@ -1,0 +1,24 @@
+﻿=== task20-curl.txt | /api/admin/messages real-surface QA ===
+Run: 2026-08-22T01:26:46.2465683+04:00 | target: http://localhost:3000 (live dev server)
+
+login OK, token extracted (87 chars)
+migration check: messages columns = ["id","name","email","phone","subject","message","created_at","read"]
+messages count BEFORE: 0
+
+--- (c1) seed ONE temp row directly via better-sqlite3 ---
+seeded direct sqlite INSERT name=__QA__ => id=9
+GET #1 (auth) => HTTP 200 | count=1 | ids=9
+
+--- (c2) PATCH read:true then verify persisted via direct sqlite SELECT ---
+PATCH {\"id\":9,\"read\":true} => HTTP 200 body={"ok":true}
+direct sqlite verify (temp script qa-msg-verify.js) => {"id":9,"name":"__QA__","read":1} (expect read=1)
+
+--- (c3) POST undo-style re-insert of same values via admin API ---
+POST (same values as seeded row) => HTTP 200 body={"ok":true,"id":10}
+API-created id=10
+
+--- (c4) DELETE both temp ids ---
+DELETE ?id=9 => HTTP 200 body={"ok":true}
+DELETE ?id=10 => HTTP 200 body={"ok":true}
+
+CLEANUP RECEIPT: messages final count=0 (before=0, expected 0) => zero residue

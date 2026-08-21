@@ -1,10 +1,4 @@
-import {
-  siInstagram,
-  siFacebook,
-  siTiktok,
-  siTelegram,
-  siWhatsapp,
-} from "simple-icons";
+import { siInstagram, siFacebook, siTiktok, siTelegram, siWhatsapp } from "simple-icons";
 
 export const CONTACT_INFO = {
   phone: {

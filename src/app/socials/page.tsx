@@ -6,39 +6,45 @@ import { SocialsButton } from "@/components/ui/Buttons";
 
 export const metadata: Metadata = {
   title: "Connect With Us - QMAX Realty Socials",
-  description:
-    "Follow QMAX Real Estate on Instagram, Facebook, TikTok, Telegram, WhatsApp & more.",
+  description: "Follow QMAX Real Estate on Instagram, Facebook, TikTok, Telegram, WhatsApp & more.",
 };
 
 export default function SocialsPage() {
   return (
     <>
-      <header className="text-center pt-12 md:pt-20">
-        <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-800 mb-4">
+      <header className="pt-12 text-center md:pt-20">
+        <h1
+          className="mb-4 text-3xl font-bold text-gray-800 md:text-4xl lg:text-5xl dark:text-white"
+        >
           Connect With Us
         </h1>
-        <p className="text-lg md:text-xl text-gray-600 max-w-3xl mx-auto">
-          Follow QMAX Realty for new property listings, market insights, and investment opportunities worldwide.
+        <p className="mx-auto max-w-3xl text-lg text-gray-600 md:text-xl dark:text-gray-300">
+          Follow QMAX Realty for new property listings, market insights, and investment
+          opportunities worldwide.
         </p>
       </header>
 
       {/* Social Cards Grid */}
       <div className="section">
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
+        <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {SOCIAL_MEDIAS.map((s) => (
             <div
               key={s.key}
-              className={`bg-gradient-to-br ${s.gradient} rounded-2xl p-6 md:p-8 text-white shadow-lg hover:shadow-2xl transition-shadow flex flex-col justify-between`}
+              className={`bg-gradient-to-br ${s.gradient} flex flex-col justify-between rounded-2xl
+              p-6 text-white shadow-lg transition-shadow hover:shadow-2xl md:p-8`}
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
+                <div className="mb-4 flex items-center justify-between">
                   <div className="flex items-center space-x-3">
-                    <div className="w-12 h-12 bg-white/20 rounded-full flex items-center justify-center shrink-0">
+                    <div
+                      className="flex h-12 w-12 shrink-0 items-center justify-center rounded-full
+                        bg-white/20"
+                    >
                       <svg
                         role="img"
                         viewBox="0 0 24 24"
                         fill="currentColor"
-                        className="w-6 h-6 text-white"
+                        className="h-6 w-6 text-white"
                         aria-hidden="true"
                       >
                         <path d={s.icon.path} />
@@ -46,42 +52,44 @@ export default function SocialsPage() {
                     </div>
                     <div>
                       <h2 className="text-xl font-bold">{s.name}</h2>
-                      <p className="text-white/80 text-sm">{s.handle}</p>
+                      <p className="text-sm text-white">{s.handle}</p>
                     </div>
                   </div>
-                  {/* <ExternalLink className="w-5 h-5 shrink-0 text-white/80" aria-hidden="true" /> */}
+                  {/* <ExternalLink className="w-5 h-5 shrink-0 text-white/80" aria-hidden="true"/> */}
                 </div>
 
-                <p className="text-white/90 mb-6 text-sm leading-relaxed">
-                  {s.description}
-                </p>
+                <p className="mb-6 text-sm leading-relaxed text-white">{s.description}</p>
               </div>
 
-              <div className="flex items-center justify-between pt-4 border-t border-white/10">
-                <span className="text-sm text-white/80">{s.tagline}</span>
-                <SocialsButton
-                  href={s.cta_url}
-                  label={s.cta_text}
-                  />
+              <div className="flex items-center justify-between border-t border-white/10 pt-4">
+                <span className="text-sm text-white">{s.tagline}</span>
+                <SocialsButton href={s.cta_url} label={s.cta_text} />
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <section className="section text-center bg-gray-50 rounded-2xl shadow-lg">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Get in Touch</h2>
-        <p className="text-gray-600 max-w-2xl mx-auto mb-8">
-          Have questions about our properties or need help finding your dream home? We're here to help!
+      <section className="section rounded-2xl bg-gray-50 text-center shadow-lg dark:bg-gray-800">
+        <h2 className="mb-4 text-2xl font-bold text-gray-800 md:text-3xl dark:text-white">
+          Get in Touch
+        </h2>
+        <p className="mx-auto mb-8 max-w-2xl text-gray-600 dark:text-gray-300">
+          Have questions about our properties or need help finding your dream home? We're here to
+          help!
         </p>
         <div className="flex justify-center">
           <ContactLinks variant="list" only={["email", "phone", "address"]} />
         </div>
       </section>
 
-      <section className="section text-center bg-emerald-50 rounded-2xl shadow-lg">
-        <h2 className="text-2xl md:text-3xl font-bold text-gray-800 mb-4">Stay Updated</h2>
-        <p className="text-gray-600 mb-6">
+      <section
+        className="section bg-brand-50 dark:bg-brand-900/20 rounded-2xl text-center shadow-lg"
+      >
+        <h2 className="mb-4 text-2xl font-bold text-gray-800 md:text-3xl dark:text-white">
+          Stay Updated
+        </h2>
+        <p className="mb-6 text-gray-600 dark:text-gray-300">
           Subscribe for new property listings, market insights, and exclusive opportunities.
         </p>
         <NewsletterForm />

@@ -9,36 +9,37 @@ export const metadata: Metadata = {
 
 export default function NotFound() {
   return (
-    <main className="min-h-screen flex items-center justify-center px-4">
-      <div className="text-center max-w-lg mx-auto py-20">
+    <section className="section">
+      <div className="mx-auto max-w-lg py-20 text-center">
         <div
-          className="text-emerald-600 text-9xl font-black mb-4 select-none"
+          className="mb-4 text-9xl font-black text-emerald-600 select-none dark:text-emerald-400"
           aria-hidden="true"
         >
           404
         </div>
-        <h1 className="text-3xl font-bold text-gray-800 mb-4">
-          Page Not Found
-        </h1>
-        <p className="text-gray-600 mb-8">
-          The page you're looking for doesn't exist or may have moved. Let's
-          get you back on the right path.
+        <h1 className="mb-4 text-3xl font-bold text-gray-800 dark:text-white">Page Not Found</h1>
+        <p className="mb-8 text-gray-600 dark:text-gray-300">
+          The page you're looking for doesn't exist or may have moved. Let's get you back on the
+          right path.
         </p>
-        <div className="flex flex-col sm:flex-row gap-4 justify-center">
+        <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <Link
             href="/"
-            className="bg-emerald-600 hover:bg-emerald-700 text-white px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+            className="rounded-lg bg-emerald-600 px-6 py-3 font-semibold text-white
+              transition-colors duration-200 hover:bg-emerald-700"
           >
             Go Home
           </Link>
           <Link
             href="/listings"
-            className="border-2 border-emerald-600 text-emerald-600 hover:bg-emerald-50 px-6 py-3 rounded-lg font-semibold transition-colors duration-200"
+            className="rounded-lg border-2 border-emerald-600 px-6 py-3 font-semibold
+              text-emerald-600 transition-colors duration-200 hover:bg-emerald-50
+              dark:border-emerald-500 dark:text-emerald-400 dark:hover:bg-emerald-900/30"
           >
             Browse Properties
           </Link>
         </div>
       </div>
-    </main>
+    </section>
   );
 }

@@ -3,14 +3,7 @@
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import {
-  ChevronLeft,
-  ChevronRight,
-  Bed,
-  Bath,
-  Square,
-  ArrowRight,
-} from "lucide-react";
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, ArrowRight } from "lucide-react";
 import { Property } from "@/types/property";
 
 interface PropertiesCarouselProps {
@@ -78,25 +71,28 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
 
   return (
     <section className="container mx-auto px-4 py-8 md:py-12" aria-labelledby="most-viewed-heading">
-      <div className="text-center mb-8 md:mb-12">
+      <div className="mb-8 text-center md:mb-12">
         <h2
           id="most-viewed-heading"
-          className="text-2xl md:text-3xl lg:text-4xl font-bold text-emerald-600 mb-4"
+          className="text-brand-600 mb-4 text-2xl font-bold md:text-3xl lg:text-4xl"
         >
           Most Viewed Properties This Week
         </h2>
-        <p className="text-base md:text-lg text-gray-600 max-w-2xl mx-auto">
+        <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">
           These properties are trending with buyers and investors right now
         </p>
       </div>
 
-      <div className="relative max-w-5xl mx-auto">
+      <div className="relative mx-auto max-w-5xl">
         <button
           onClick={handlePrev}
           aria-label="Previous properties"
-          className="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 md:-translate-x-6 z-10 w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-md text-gray-600 hover:text-emerald-600 hover:border-emerald-400 transition-all duration-200 cursor-pointer"
+          className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 left-0 z-10 flex
+            h-12 w-12 -translate-x-4 -translate-y-1/2 cursor-pointer items-center justify-center
+            rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-all
+            duration-200 md:-translate-x-6"
         >
-          <ChevronLeft className="w-5 h-5" aria-hidden="true" />
+          <ChevronLeft className="h-5 w-5" aria-hidden="true" />
         </button>
 
         <div
@@ -105,7 +101,8 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
           onTouchEnd={handleTouchEnd}
         >
           <div
-            className="flex gap-4 md:gap-6 transition-transform duration-500 ease-in-out will-change-transform"
+            className="flex gap-4 transition-transform duration-500 ease-in-out
+              will-change-transform md:gap-6"
             style={{
               transform: `translateX(-${translateX}%)`,
             }}
@@ -119,11 +116,13 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
 
               return (
                 <article
-                  // we will replace slug with id
-                  key={p.slug || index}
-                  className="properties-carousel-card flex-none w-[80vw] sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] flex flex-col bg-white rounded-xl shadow-lg overflow-hidden hover:shadow-xl transition-shadow duration-300"
+                  key={p.id}
+                  className="properties-carousel-card flex w-[80vw] flex-none flex-col
+                    overflow-hidden rounded-xl bg-white shadow-lg transition-shadow duration-300
+                    hover:shadow-xl sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] dark:bg-gray-800
+                    dark:text-white"
                 >
-                  <div className="relative w-full h-40 md:h-48">
+                  <div className="relative h-40 w-full md:h-48">
                     <Image
                       src={p.card_image || "/img/placeholder.webp"}
                       alt={title}
@@ -133,39 +132,54 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
                     />
                   </div>
 
-                  <div className="p-4 md:p-6 flex-1 flex flex-col">
-                    <div className="flex justify-between items-start mb-2">
-                      <h3 className="text-lg md:text-xl font-bold text-gray-800 line-clamp-1">
+                  <div className="flex flex-1 flex-col p-4 md:p-6">
+                    <div className="mb-2 flex items-start justify-between">
+                      <h3
+                        className="line-clamp-1 text-lg font-bold text-gray-800 md:text-xl
+                          dark:text-white"
+                      >
                         {title}
                       </h3>
-                      <span className="text-emerald-600 font-bold text-sm md:text-base whitespace-nowrap ml-2">
+                      <span
+                        className="text-brand-700 ml-2 text-sm font-bold whitespace-nowrap
+                          md:text-base"
+                      >
                         ${price.toLocaleString()}
                       </span>
                     </div>
 
-                    <p className="text-sm md:text-base text-gray-600 mb-3 md:mb-4 line-clamp-1">
+                    <p
+                      className="mb-3 line-clamp-1 text-sm text-gray-600 md:mb-4 md:text-base
+                        dark:text-gray-300"
+                    >
                       {p.location || p.city || "Georgia"}
                     </p>
 
-                    <div className="flex gap-4 text-xs md:text-sm text-gray-500 mb-3">
+                    <div
+                      className="mb-3 flex gap-4 text-xs text-gray-500 md:text-sm
+                        dark:text-gray-400"
+                    >
                       <span className="flex items-center gap-1">
-                        <Bed className="w-4 h-4" /> {bedrooms}
+                        <Bed className="h-4 w-4" /> {bedrooms}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Bath className="w-4 h-4" /> {bathrooms}
+                        <Bath className="h-4 w-4" /> {bathrooms}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Square className="w-4 h-4" /> {sqmt} m²
+                        <Square className="h-4 w-4" /> {sqmt} m²
                       </span>
                     </div>
 
                     <Link
-                      // we will replace slug with id
-                      href={`/properties/details/${p.slug}`}
-                      className="group mt-auto inline-flex items-center text-emerald-600 hover:text-emerald-700 font-semibold transition-all duration-300"
+                      href={`/properties/details/${p.id}`}
+                      className="group text-brand-700 hover:text-brand-800 mt-auto inline-flex
+                        items-center font-semibold transition-all duration-300"
                     >
                       <span>View Details</span>
-                      <ArrowRight className="w-4 h-4 ml-1 transition-transform duration-300 group-hover:translate-x-1" />
+                      <ArrowRight
+                        className="ml-1 h-4 w-4 transition-transform duration-300
+                          group-hover:translate-x-1"
+                      />
                     </Link>
                   </div>
                 </article>
@@ -177,19 +191,22 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
         <button
           onClick={handleNext}
           aria-label="Next properties"
-          className="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 md:translate-x-6 z-10 w-10 h-10 flex items-center justify-center bg-white border border-gray-200 rounded-full shadow-md text-gray-600 hover:text-emerald-600 hover:border-emerald-400 transition-all duration-200 cursor-pointer"
+          className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 right-0 z-10 flex
+            h-12 w-12 translate-x-4 -translate-y-1/2 cursor-pointer items-center justify-center
+            rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-all
+            duration-200 md:translate-x-6"
         >
-          <ChevronRight className="w-5 h-5" aria-hidden="true" />
+          <ChevronRight className="h-5 w-5" aria-hidden="true" />
         </button>
 
-        <div className="flex justify-center gap-2 mt-6">
+        <div className="mt-6 flex justify-center gap-2">
           {Array.from({ length: maxIndex + 1 }).map((_, i) => (
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
               aria-label={`Go to slide ${i + 1}`}
-              className={`w-2 h-2 rounded-full transition-colors duration-200 ${
-                i === currentIndex ? "bg-emerald-500" : "bg-gray-300"
+              className={`h-2 w-2 rounded-full transition-colors duration-200 ${
+                i === currentIndex ? "bg-brand-500" : "bg-gray-300 dark:bg-gray-600"
               }`}
             />
           ))}

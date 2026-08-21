@@ -1,0 +1,6 @@
+﻿Command: npx tsc --noEmit
+Exit code: 0
+Scope: single run covering src/lib/db.ts, src/app/api/admin/properties/route.ts, src/app/api/admin/messages/route.ts, src/app/api/admin/newsletter/route.ts (all changed files)
+Output: (empty - no type errors)
+Re-run after final db.ts fix (title mapping): exit code 0 again - verified against final code state.
+
