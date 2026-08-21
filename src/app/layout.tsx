@@ -5,21 +5,40 @@ import ThemeToggle from "@/components/ThemeToggle";
 import { SpeedInsights } from "@vercel/speed-insights/next";
 import { Inter } from "next/font/google";
 import "@/app/globals.scss";
-import { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
 });
+// app/layout.tsx
+
+export const viewport: Viewport = {
+  themeColor: "#4285f4",
+  width: "device-width",
+  initialScale: 1,
+};
 
 export const metadata: Metadata = {
-  title: "QMAX Realty - Premium Real Estate in Georgia",
+  metadataBase: new URL("https://qmax-realty.vercel.app"),
+  title: {
+    default: "QMAX Realty - Premium Real Estate in Georgia",
+    template: "%s - QMAX Realty",
+  },
   description:
     "Discover premium properties, invest with confidence. Expert real estate solutions in Tbilisi and across Georgia.",
-  icons: {
-    icon: "/favicon.ico",
+  alternates: {
+    canonical: "/",
   },
-  metadataBase: new URL("https://qmax-realty.vercel.app"), // CHANGE THIS TO YOUR DOMAIN
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon.svg", type: "image/svg+xml" },
+    ],
+    apple: [{ url: "/apple-touch-icon.png", sizes: "180x180" }],
+  },
+  manifest: "/site.webmanifest",
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -27,19 +46,21 @@ export const metadata: Metadata = {
     siteName: "QMAX Realty",
     title: "QMAX Realty - Premium Real Estate in Georgia",
     description:
-      "Discover premium properties, invest with confidence. Expert real estate solutions in Tbilisi and across Georgia.",
+      "Discover premium real estate with expert guidance and unmatched service. Buy, sell, or rent properties in Georgia.",
     images: [
       {
-        url: "/img/og-image.webp", // Should be 1200x630px
+        url: "/img/og-image.webp",
         width: 1200,
         height: 630,
-        alt: "QMAX Realty - Premium Properties",
+        alt: "Premium Properties - QMAX Realty",
         type: "image/webp",
       },
     ],
   },
   twitter: {
     card: "summary_large_image",
+    site: "@qmaxrealty", // Replace with actual X/Twitter handle
+    creator: "@qmaxrealty",
     title: "QMAX Realty - Premium Real Estate in Georgia",
     description: "Discover premium properties, invest with confidence.",
     images: ["/img/og-image.webp"],

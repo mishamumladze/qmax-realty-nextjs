@@ -10,18 +10,23 @@ import { Home, Key, BadgeDollarSign, Building2, Star, Handshake, ShieldCheck } f
 import { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Find Your Dream Property - QMAX Realty",
+  title: "Find Your Dream Property",
   description:
     "Discover premium real estate with expert guidance and unmatched service. Buy, sell, or rent properties in Georgia.",
+  alternates: {
+    canonical: "https://qmax-realty.vercel.app",
+  },
   openGraph: {
     title: "Find Your Dream Property - QMAX Realty",
     description: "Discover premium real estate with expert guidance and unmatched service.",
+    url: "https://qmax-realty.vercel.app",
     images: [
       {
-        url: "/img/og-image.webp", // Hero image, 1200x630px
+        url: "https://qmax-realty.vercel.app/img/og-image.webp",
         width: 1200,
         height: 630,
         alt: "Premium Properties - QMAX Realty",
+        type: "image/webp",
       },
     ],
   },
