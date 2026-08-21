@@ -19,11 +19,11 @@ export const metadata: Metadata = {
   icons: {
     icon: "/favicon.ico",
   },
-  metadataBase: new URL("https://qmaxrealty.com"), // CHANGE THIS TO YOUR DOMAIN
+  metadataBase: new URL("https://qmax-realty.vercel.app"), // CHANGE THIS TO YOUR DOMAIN
   openGraph: {
     type: "website",
     locale: "en_US",
-    url: "https://qmaxrealty.com",
+    url: "https://qmax-realty.vercel.app",
     siteName: "QMAX Realty",
     title: "QMAX Realty - Premium Real Estate in Georgia",
     description:
