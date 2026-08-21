@@ -90,8 +90,8 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
     <>
       {/* Fixed Navigation */}
       <section
-        className="fixed top-0 right-0 left-0 z-40 border-b border-gray-200 bg-white/80 px-4 py-4
-          backdrop-blur-md dark:border-gray-800 dark:bg-gray-900/80"
+        className="z-40 border-b border-gray-200 bg-white/80 px-4 py-4 dark:border-gray-800
+          dark:bg-gray-900/80"
       >
         <div className="mx-auto max-w-6xl">
           <Link
@@ -106,10 +106,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
       </section>
 
       {/* Hero Section */}
-      <section
-        className="relative mt-16 h-screen max-h-[600px] w-full overflow-hidden bg-gray-900
-          sm:mt-20"
-      >
+      <section className="relative h-screen max-h-[600px] w-full overflow-hidden bg-gray-900">
         <Image src={imageSrc} alt={property.title} fill className="object-cover" priority />
         {/* Gradient Overlay */}
         <div
