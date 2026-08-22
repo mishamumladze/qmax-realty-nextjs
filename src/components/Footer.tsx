@@ -23,16 +23,16 @@ export default function Footer({}: FooterProps) {
           <div className="logo-container">
             <Link href="/" aria-label="QMAX Realty homepage">
               <Image
-                src="/img/Logo550.webp"
-                alt="QMAX Realty Logo"
+                src="/img/Light/Logo550.webp"
+                alt="QMAX Realty Logo Light"
                 width={550}
                 height={550}
                 className="block h-auto w-40 dark:hidden"
                 priority={false}
               />
               <Image
-                src="/img/Logo1000.webp"
-                alt="QMAX Realty Logo"
+                src="/img/Dark/Logo550.webp"
+                alt="QMAX Realty Logo Dark"
                 width={550}
                 height={550}
                 className="hidden h-auto w-40 dark:block"

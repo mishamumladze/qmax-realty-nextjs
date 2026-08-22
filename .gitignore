@@ -41,7 +41,8 @@ yarn-error.log*
 next-env.d.ts
 
 .omo/
-.playwright-mcp
+.omu/
+.playwright-mcp/
 .gitignore
 agents.md
 claude.md

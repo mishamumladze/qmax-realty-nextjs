@@ -103,11 +103,20 @@ export default function Navbar() {
             <div className="flex flex-shrink-0 items-center">
               <Link href="/" className="flex flex-shrink-0 items-center space-x-2">
                 <Image
-                  src="/img/Logo200.webp"
-                  alt="QMAX Realty Logo"
+                  src="/img/Light/Logo200.webp"
+                  alt="QMAX Realty Logo Light"
                   width={40}
                   height={40}
-                  className="h-8 w-8 md:h-10 md:w-10"
+                  className="block h-8 w-8 md:h-10 md:w-10 dark:hidden"
+                  priority={false}
+                />
+                <Image
+                  src="/img/Dark/Logo200.webp"
+                  alt="QMAX Realty Logo Dark"
+                  width={40}
+                  height={40}
+                  className="hidden h-8 w-8 md:h-10 md:w-10 dark:block"
+                  priority={false}
                 />
                 <span
                   className="inline text-base font-bold text-gray-800 md:text-xl dark:text-white"
