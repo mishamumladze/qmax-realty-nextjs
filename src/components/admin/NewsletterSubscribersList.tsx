@@ -56,7 +56,6 @@ export function NewsletterSubscribersList() {
     null
   );
   const [loadError, setLoadError] = useState<string | null>(null);
-  const [reloadKey, setReloadKey] = useState(0);
   const [rowErrors, setRowErrors] = useState<Record<number, string>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
   const [confirmTarget, setConfirmTarget] = useState<NewsletterSubscriber | null>(
@@ -74,20 +73,23 @@ export function NewsletterSubscribersList() {
   const titleId = useId();
   const descId = useId();
 
-  const load = useCallback(async () => {
-    setLoadError(null);
+  const load = useCallback(async (): Promise<void> => {
     try {
       const data = await adminFetch<{
         subscribers: NewsletterSubscriber[];
       }>('/api/admin/newsletter');
+      setLoadError(null);
       setSubscribers(sortByNewest(data.subscribers));
     } catch (err) {
       setLoadError(err instanceof Error ? err.message : String(err));
     }
-  }, [reloadKey]);
+  }, []);
 
   useEffect(() => {
-    void load();
+    const t = setTimeout(() => {
+      void load();
+    }, 0);
+    return () => clearTimeout(t);
   }, [load]);
 
   useEffect(() => {
@@ -189,7 +191,9 @@ export function NewsletterSubscribersList() {
             variant="secondary"
             size="sm"
             className="min-h-[44px]"
-            onClick={() => setReloadKey((k) => k + 1)}
+            onClick={() => {
+              void load();
+            }}
           >
             Retry
           </AdminButton>
@@ -216,7 +220,7 @@ export function NewsletterSubscribersList() {
                   aria-label={`Remove ${s.email}`}
                   onClick={(e) => requestRemove(s, e)}
                 >
-                  <Trash2 aria-hidden="true" />
+                  <Trash2 aria-hidden="true"/>
                   Remove
                 </AdminButton>
               </div>

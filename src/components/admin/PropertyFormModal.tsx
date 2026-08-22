@@ -33,8 +33,6 @@ const TEXT_KEYS = [
 
 const NUMERIC_KEYS = ['rooms', 'bedrooms', 'bathrooms', 'sqmt', 'price', 'year_built'] as const;
 
-type NumericKey = (typeof NUMERIC_KEYS)[number];
-
 function defaultFields(): Record<string, string> {
   const next: Record<string, string> = {};
   for (const key of TEXT_KEYS) next[key] = '';
@@ -170,13 +168,15 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       next.inclusionsText = property.inclusions?.join('\n') ?? '';
       next.galleryText = property.gallery?.join('\n') ?? '';
     }
-    setFields(next);
-    setParking(property?.parking === true);
-    setErrors({});
-    setFormError(null);
-    setSubmitting(false);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [open]);
+    const t = setTimeout(() => {
+      setFields(next);
+      setParking(property?.parking === true);
+      setErrors({});
+      setFormError(null);
+      setSubmitting(false);
+    }, 0);
+    return () => clearTimeout(t);
+  }, [open, property]);
 
   useEffect(() => {
     if (!open) return;
@@ -378,7 +378,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
             aria-label="Close dialog"
             className="min-h-[44px] min-w-[44px]"
           >
-            <X className="h-5 w-5" aria-hidden="true" />
+            <X className="h-5 w-5" aria-hidden="true"/>
           </AdminButton>
         </div>
 

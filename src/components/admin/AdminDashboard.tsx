@@ -227,19 +227,19 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
                 aria-current={active ? 'true' : undefined}
                 onClick={() => setActiveTab(id)}
               >
-                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <Icon className="h-4 w-4 shrink-0" aria-hidden="true"/>
                 <span>{label}</span>
               </AdminButton>
             );
           })}
-          <div className="flex-1 hidden md:block" />
+          <div className="flex-1 hidden md:block"/>
           <AdminButton
             variant="destructive"
             size="sm"
             className="w-full min-h-[44px]"
             onClick={handleLogout}
           >
-            <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <LogOut className="h-4 w-4 shrink-0" aria-hidden="true"/>
             <span>Log out</span>
           </AdminButton>
         </div>
@@ -260,7 +260,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
                   setModalOpen(true);
                 }}
               >
-                <Plus className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <Plus className="h-4 w-4 shrink-0" aria-hidden="true"/>
                 <span>Add property</span>
               </AdminButton>
             </div>
@@ -284,7 +284,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
               Messages
             </h1>
-            <MessagesList />
+            <MessagesList/>
           </>
         )}
 
@@ -293,7 +293,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
               Newsletter
             </h1>
-            <NewsletterSubscribersList />
+            <NewsletterSubscribersList/>
           </>
         )}
       </main>

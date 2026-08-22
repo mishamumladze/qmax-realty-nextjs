@@ -204,7 +204,7 @@ export function MessagesList() {
         <p className="text-gray-600 dark:text-gray-300">Loading…</p>
       ) : loadError !== null ? (
         <div className="flex items-start gap-3 rounded-lg border border-red-300 bg-red-50 p-4 text-red-700 dark:border-red-800 dark:bg-red-950/40 dark:text-red-300">
-          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true"/>
           <div>
             <p>{loadError}</p>
             <AdminButton
@@ -253,9 +253,9 @@ export function MessagesList() {
                   onClick={() => void toggleRead(m)}
                 >
                   {m.read === 0 ? (
-                    <MailOpen className="h-4 w-4" aria-hidden="true" />
+                    <MailOpen className="h-4 w-4" aria-hidden="true"/>
                   ) : (
-                    <Mail className="h-4 w-4" aria-hidden="true" />
+                    <Mail className="h-4 w-4" aria-hidden="true"/>
                   )}
                   <span className="sr-only">
                     {m.read === 0 ? 'Mark as read' : 'Mark as unread'}
@@ -268,7 +268,7 @@ export function MessagesList() {
                   aria-label={`Delete message from ${m.name}`}
                   onClick={(e) => requestDelete(m, e)}
                 >
-                  <Trash2 className="h-4 w-4" aria-hidden="true" />
+                  <Trash2 className="h-4 w-4" aria-hidden="true"/>
                 </AdminButton>
               </div>
             </li>

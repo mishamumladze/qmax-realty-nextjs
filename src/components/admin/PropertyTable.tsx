@@ -121,10 +121,10 @@ export function PropertyTable({ properties, onEdit, onDelete }: PropertyTablePro
                     {formatPrice(p)}
                   </td>
                   <td className="px-3 py-3">
-                    <StatusBadge status={status} />
+                    <StatusBadge status={status}/>
                   </td>
                   <td className="px-3 py-3">
-                    <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete} />
+                    <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete}/>
                   </td>
                 </tr>
               );
@@ -146,7 +146,7 @@ export function PropertyTable({ properties, onEdit, onDelete }: PropertyTablePro
                 <h3 className="min-w-0 truncate text-base font-semibold text-gray-900 dark:text-gray-100">
                   {p.title}
                 </h3>
-                <StatusBadge status={status} />
+                <StatusBadge status={status}/>
               </div>
               <dl className="mt-3 space-y-1.5 text-sm">
                 <div className="flex justify-between gap-4">
@@ -167,7 +167,7 @@ export function PropertyTable({ properties, onEdit, onDelete }: PropertyTablePro
                 </div>
               </dl>
               <div className="mt-4 border-t border-gray-200 pt-3 dark:border-gray-700">
-                <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete} />
+                <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete}/>
               </div>
             </div>
           );

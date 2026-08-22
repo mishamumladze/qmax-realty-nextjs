@@ -12,5 +12,5 @@ export const metadata: Metadata = {
 export default async function AdminPage() {
   const properties = await getAllProperties();
 
-  return <AdminDashboard initialProperties={properties} />;
+  return <AdminDashboard initialProperties={properties}/>;
 }
