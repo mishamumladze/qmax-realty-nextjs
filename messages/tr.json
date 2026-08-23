@@ -1,0 +1,125 @@
+{
+  "Components": {
+    "Navbar": {
+      "Home": "Ana Sayfa",
+      "Socials": "Toplum bilimleri",
+      "Listings": "İlanlar",
+      "Contact": "İletişim",
+      "About": "Hakkında"
+    },
+    "Pcarousel": {
+      "title": "Bu Hafta En Çok Görüntülenen Emlaklar",
+      "description": "Bu gayrimenkuller şu anda alıcılar ve yatırımcılar arasında büyük ilgi görüyor"
+    },
+    "PCarousel": {
+      "title": "Bu Hafta En Çok Görüntülenen Emlaklar",
+      "description": "Bu gayrimenkuller şu anda alıcılar ve yatırımcılar arasında büyük ilgi görüyor",
+      "details": "Ayrıntıları Görüntüle",
+      "subtitle": "Bu gayrimenkuller şu anda alıcılar ve yatırımcılar arasında büyük ilgi görüyor"
+    },
+    "NewsForm": {
+      "input": {
+        "text": "E-posta adresinizi girin",
+        "sub": "Abone ol",
+        "loading": "yükleniyor",
+        "subbing": "Abone oluyorsunuz..."
+      },
+      "status": {
+        "wrong": "Bir hata oluştu. Lütfen tekrar deneyin.",
+        "success": "Abone olduğunuz için teşekkür ederiz! En son güncellemelerimizi yakında alacaksınız.",
+        "network": "Ağ hatası. Lütfen bağlantınızı kontrol edin ve tekrar deneyin."
+      }
+    }
+  },
+  "HomePage": {
+    "Metadata": {
+      "title": "Hayalinizdeki Gayrimenkulü Bulun",
+      "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın veya kiralayın.",
+      "og_alt": "Seçkin Gayrimenkuller - QMAX Realty"
+    },
+    "Hero": {
+      "image_alt": "Muhteşem manzaralı birinci sınıf gayrimenkuller",
+      "title": "Hayalinizdeki Gayrimenkulü Bulun!",
+      "subtitle": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin",
+      "buy_btn": "Gayrimenkul Satın Alın",
+      "rent_btn": "Kiralık Emlaklar",
+      "sell_btn": "Evinizi Satın"
+    },
+    "WhyUs": {
+      "title": "Neden QMAX Realty'yi Seçmelisiniz?",
+      "years_excellence": "Mükemmelliğin Yılları",
+      "properties_sold": "Satılan Gayrimenkuller",
+      "client_satisfaction": "Müşteri Memnuniyeti",
+      "experts_title": "Piyasa Uzmanları",
+      "experts_desc": "Yerel emlak piyasaları, eğilimler ve yatırım fırsatları hakkında derinlemesine bilgi.",
+      "service_title": "5 Yıldızlı Hizmet",
+      "service_desc": "Memnun kalan alıcılar, satıcılar ve yatırımcılardan gelen yüzlerce 5 yıldızlı yorum.",
+      "approach_title": "Kişiye Özel Yaklaşım",
+      "approach_desc": "Benzersiz gayrimenkul ihtiyaçlarınız için size özel çözümler ve bire bir danışmanlık.",
+      "trusted_title": "Güvenilir ve Şeffaf",
+      "trusted_desc": "İşleminizin başından sonuna kadar net iletişim, etik uygulamalar ve tam destek."
+    },
+    "ContactBanner": {
+      "title": "Hayalinizdeki Gayrimenkulü Bulmaya Hazır mısınız?",
+      "description": "Görüşme ayarlamak veya uzman tavsiyesi almak için hemen bizimle iletişime geçin. Bir saat içinde yanıt veriyoruz.",
+      "whatsapp_btn": "WhatsApp'tan bize mesaj gönderin",
+      "view_all_btn": "Tüm Emlakları Görüntüle"
+    }
+  },
+  "Pages": {
+    "HomePage": {
+      "Metadata": {
+        "title": "Hayalinizdeki Gayrimenkulü Bulun",
+        "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın veya kiralayın.",
+        "og_alt": "Seçkin Gayrimenkuller - QMAX Emlak"
+      },
+      "Hero": {
+        "image_alt": "Muhteşem manzaralı birinci sınıf gayrimenkuller",
+        "title": "Hayalinizdeki Gayrimenkulü Bulun!",
+        "subtitle": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin",
+        "buy_btn": "Gayrimenkul Satın Alın",
+        "rent_btn": "Kiralık Emlaklar",
+        "sell_btn": "Evinizi Satın"
+      },
+      "WhyUs": {
+        "title": "Neden QMAX Realty’yi Seçmelisiniz?",
+        "years_excellence": "Mükemmelliğin Yılları",
+        "properties_sold": "Satılan Gayrimenkuller",
+        "client_satisfaction": "Müşteri Memnuniyeti",
+        "experts_title": "Piyasa Uzmanları",
+        "experts_desc": "Yerel emlak piyasaları, eğilimler ve yatırım fırsatları hakkında derinlemesine bilgi.",
+        "service_title": "5 Yıldızlı Hizmet",
+        "service_desc": "Memnun kalan alıcılar, satıcılar ve yatırımcılardan gelen yüzlerce 5 yıldızlı yorum.",
+        "approach_title": "Kişiye Özel Yaklaşım",
+        "approach_desc": "Benzersiz gayrimenkul ihtiyaçlarınız için size özel çözümler ve bire bir rehberlik.",
+        "trusted_title": "Güvenilir ve Şeffaf",
+        "trusted_desc": "İşleminiz boyunca net iletişim, etik uygulamalar ve tam destek."
+      },
+      "ContactBanner": {
+        "title": "Hayalinizdeki gayrimenkulü bulmaya hazır mısınız?",
+        "description": "Görüşme randevusu almak veya uzman tavsiyesi almak için hemen bizimle iletişime geçin. Bir saat içinde yanıt veriyoruz.",
+        "whatsapp_btn": "WhatsApp'tan bize mesaj gönderin",
+        "view_all_btn": "Tüm Emlakları Görüntüle"
+      }
+    },
+    "Socials": {
+      "Metadata": {
+        "title": "Hayalinizdeki Gayrimenkulü Bulun",
+        "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın veya kiralayın.",
+        "og_alt": "Seçkin Gayrimenkuller - QMAX Emlak"
+      },
+      "Hero": {
+        "title": "Bizimle İletişime Geçin",
+        "subtitle": "QMAX Realty’yi takip ederek dünya çapındaki yeni emlak ilanlarını, piyasa analizlerini ve yatırım fırsatlarını öğrenin."
+      },
+      "GetInTouch": {
+        "title": "Bize Ulaşın",
+        "subtitle": "Mülklerimizle ilgili sorularınız mı var ya da hayalinizdeki evi bulmak için yardıma mı ihtiyacınız var? Size yardımcı olmaktan memnuniyet duyarız!"
+      },
+      "StayUpdated": {
+        "title": "Gelişmelerden Haberdar Olun",
+        "subtitle": "Yeni emlak ilanları, piyasa bilgileri ve özel fırsatlardan haberdar olmak için abone olun."
+      }
+    }
+  }
+}

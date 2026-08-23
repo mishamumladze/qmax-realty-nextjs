@@ -1,11 +1,13 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState("");
   const [status, setStatus] = useState<"idle" | "loading" | "success" | "error">("idle");
   const [message, setMessage] = useState("");
+  const t = useTranslations("Components.NewsForm");
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
@@ -22,22 +24,22 @@ export default function NewsletterForm() {
 
       if (!res.ok) {
         setStatus("error");
-        setMessage(data.error || "Something went wrong. Please try again.");
+        setMessage(data.error || t("status.wrong"));
         return;
       }
 
       if (!data.ok) {
         setStatus("error");
-        setMessage("Something went wrong. Please try again.");
+        setMessage(t("status.wrong"));
         return;
       }
 
       setStatus("success");
-      setMessage("Thank you for subscribing! You'll receive our latest updates soon.");
+      setMessage(t("status.success"));
       setEmail("");
     } catch {
       setStatus("error");
-      setMessage("Network error. Please check your connection and try again.");
+      setMessage(t("status.network"));
     }
   }
 
@@ -69,7 +71,7 @@ export default function NewsletterForm() {
           id="newsletter-email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          placeholder="Enter your email"
+          placeholder={t("input.text")}
           required
           autoComplete="email"
           className="focus:ring-brand-500 flex-1 rounded-lg border border-gray-300 px-4 py-3
@@ -82,7 +84,7 @@ export default function NewsletterForm() {
           className="bg-brand-600 hover:bg-brand-700 rounded-lg px-6 py-3 font-semibold text-white
             transition-colors duration-200 disabled:opacity-50"
         >
-          {status === "loading" ? "Subscribing..." : "Subscribe"}
+          {status === t("input.loading") ? t("input.subbing") : t("input.sub")}
         </button>
       </form>
     </div>

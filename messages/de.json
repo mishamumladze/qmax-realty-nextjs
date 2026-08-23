@@ -1,0 +1,125 @@
+{
+  "Components": {
+    "Navbar": {
+      "Home": "Startseite",
+      "Socials": "Sozialkunde",
+      "Listings": "Angebote",
+      "Contact": "Kontakt",
+      "About": "Über"
+    },
+    "Pcarousel": {
+      "title": "Die meistgesehenen Immobilien dieser Woche",
+      "description": "Diese Immobilien liegen derzeit bei Käufern und Investoren voll im Trend"
+    },
+    "PCarousel": {
+      "title": "Die meistgesehenen Immobilien dieser Woche",
+      "description": "Diese Immobilien liegen derzeit bei Käufern und Investoren voll im Trend",
+      "details": "Details anzeigen",
+      "subtitle": "Diese Immobilien stehen derzeit bei Käufern und Investoren hoch im Kurs"
+    },
+    "NewsForm": {
+      "input": {
+        "text": "Geben Sie Ihre E-Mail-Adresse ein",
+        "sub": "Abonnieren",
+        "loading": "Wird geladen",
+        "subbing": "Abonnieren..."
+      },
+      "status": {
+        "wrong": "Es ist ein Fehler aufgetreten. Bitte versuche es erneut.",
+        "success": "Vielen Dank für Ihre Anmeldung! Sie erhalten in Kürze unsere neuesten Informationen.",
+        "network": "Netzwerkfehler. Bitte überprüfen Sie Ihre Verbindung und versuchen Sie es erneut."
+      }
+    }
+  },
+  "HomePage": {
+    "Metadata": {
+      "title": "Finden Sie Ihre Traumimmobilie",
+      "description": "Entdecken Sie erstklassige Immobilien mit fachkundiger Beratung und unübertroffenem Service. Kaufen, verkaufen oder vermieten Sie Immobilien in Georgien.",
+      "og_alt": "Premium-Immobilien – QMAX Realty"
+    },
+    "Hero": {
+      "image_alt": "Erstklassige Immobilien mit atemberaubender Aussicht",
+      "title": "Finden Sie Ihre Traumimmobilie!",
+      "subtitle": "Entdecken Sie hochwertige Immobilien mit fachkundiger Beratung und unübertroffenem Service",
+      "buy_btn": "Immobilien kaufen",
+      "rent_btn": "Immobilien zur Miete",
+      "sell_btn": "Verkaufen Sie Ihr Haus"
+    },
+    "WhyUs": {
+      "title": "Warum sollten Sie sich für QMAX Realty entscheiden?",
+      "years_excellence": "Jahre der Spitzenleistungen",
+      "properties_sold": "Verkaufte Immobilien",
+      "client_satisfaction": "Kundenzufriedenheit",
+      "experts_title": "Marktexperten",
+      "experts_desc": "Fundierte Kenntnisse der lokalen Immobilienmärkte, Trends und Investitionsmöglichkeiten.",
+      "service_title": "5-Sterne-Service",
+      "service_desc": "Hunderte von 5-Sterne-Bewertungen von zufriedenen Käufern, Verkäufern und Investoren.",
+      "approach_title": "Individueller Ansatz",
+      "approach_desc": "Maßgeschneiderte Lösungen und individuelle Beratung für Ihre individuellen Immobilienbedürfnisse.",
+      "trusted_title": "Vertrauenswürdig & transparent",
+      "trusted_desc": "Klare Kommunikation, ethisches Handeln und umfassende Unterstützung während der gesamten Transaktion."
+    },
+    "ContactBanner": {
+      "title": "Sind Sie bereit, Ihre Traumimmobilie zu finden?",
+      "description": "Kontaktieren Sie uns jetzt, um einen Besichtigungstermin zu vereinbaren oder fachkundige Beratung zu erhalten. Wir melden uns innerhalb einer Stunde bei Ihnen.",
+      "whatsapp_btn": "Schreiben Sie uns auf WhatsApp",
+      "view_all_btn": "Alle Immobilien anzeigen"
+    }
+  },
+  "Pages": {
+    "HomePage": {
+      "Metadata": {
+        "title": "Finden Sie Ihre Traumimmobilie",
+        "description": "Entdecken Sie erstklassige Immobilien mit fachkundiger Beratung und unübertroffenem Service. Kaufen, verkaufen oder vermieten Sie Immobilien in Georgien.",
+        "og_alt": "Premium-Immobilien – QMAX Realty"
+      },
+      "Hero": {
+        "image_alt": "Erstklassige Immobilien mit atemberaubender Aussicht",
+        "title": "Finden Sie Ihre Traumimmobilie!",
+        "subtitle": "Entdecken Sie erstklassige Immobilien mit fachkundiger Beratung und unübertroffenem Service",
+        "buy_btn": "Immobilien kaufen",
+        "rent_btn": "Immobilien zur Miete",
+        "sell_btn": "Verkaufen Sie Ihr Haus"
+      },
+      "WhyUs": {
+        "title": "Warum sollten Sie sich für QMAX Realty entscheiden?",
+        "years_excellence": "Jahre der Spitzenleistungen",
+        "properties_sold": "Verkaufte Immobilien",
+        "client_satisfaction": "Kundenzufriedenheit",
+        "experts_title": "Marktexperten",
+        "experts_desc": "Fundierte Kenntnisse der lokalen Immobilienmärkte, Trends und Investitionsmöglichkeiten.",
+        "service_title": "5-Sterne-Service",
+        "service_desc": "Hunderte von 5-Sterne-Bewertungen von zufriedenen Käufern, Verkäufern und Investoren.",
+        "approach_title": "Individueller Ansatz",
+        "approach_desc": "Maßgeschneiderte Lösungen und individuelle Beratung für Ihre individuellen Immobilienbedürfnisse.",
+        "trusted_title": "Vertrauenswürdig & transparent",
+        "trusted_desc": "Klare Kommunikation, ethisches Handeln und umfassende Unterstützung während des gesamten Transaktionsprozesses."
+      },
+      "ContactBanner": {
+        "title": "Sind Sie bereit, Ihre Traumimmobilie zu finden?",
+        "description": "Kontaktieren Sie uns jetzt, um einen Besichtigungstermin zu vereinbaren oder fachkundige Beratung zu erhalten. Wir melden uns innerhalb einer Stunde bei Ihnen.",
+        "whatsapp_btn": "Schreiben Sie uns auf WhatsApp",
+        "view_all_btn": "Alle Immobilien anzeigen"
+      }
+    },
+    "Socials": {
+      "Metadata": {
+        "title": "Finden Sie Ihre Traumimmobilie",
+        "description": "Entdecken Sie erstklassige Immobilien mit fachkundiger Beratung und unübertroffenem Service. Kaufen, verkaufen oder vermieten Sie Immobilien in Georgien.",
+        "og_alt": "Premium-Immobilien – QMAX Realty"
+      },
+      "Hero": {
+        "title": "Bleiben Sie mit uns in Verbindung",
+        "subtitle": "Folgen Sie QMAX Realty, um neue Immobilienangebote, Markteinblicke und Investitionsmöglichkeiten weltweit zu erhalten."
+      },
+      "GetInTouch": {
+        "title": "Kontakt aufnehmen",
+        "subtitle": "Haben Sie Fragen zu unseren Immobilien oder benötigen Sie Hilfe bei der Suche nach Ihrem Traumhaus? Wir helfen Ihnen gerne weiter!"
+      },
+      "StayUpdated": {
+        "title": "Bleiben Sie auf dem Laufenden",
+        "subtitle": "Abonnieren Sie unseren Newsletter, um über neue Immobilienangebote, Markteinblicke und exklusive Gelegenheiten informiert zu werden."
+      }
+    }
+  }
+}

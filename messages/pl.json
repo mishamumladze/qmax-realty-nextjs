@@ -1,0 +1,125 @@
+{
+  "Components": {
+    "Navbar": {
+      "Home": "Strona główna",
+      "Socials": "Nauki społeczne",
+      "Listings": "Ogłoszenia",
+      "Contact": "Kontakt",
+      "About": "O nas"
+    },
+    "Pcarousel": {
+      "title": "Najczęściej oglądane nieruchomości w tym tygodniu",
+      "description": "Te nieruchomości cieszą się obecnie dużym zainteresowaniem wśród nabywców i inwestorów"
+    },
+    "PCarousel": {
+      "title": "Najczęściej oglądane nieruchomości w tym tygodniu",
+      "description": "Te nieruchomości cieszą się obecnie dużym zainteresowaniem wśród nabywców i inwestorów",
+      "details": "Zobacz szczegóły",
+      "subtitle": "Te nieruchomości cieszą się obecnie dużym zainteresowaniem wśród nabywców i inwestorów"
+    },
+    "NewsForm": {
+      "input": {
+        "text": "Wpisz swój adres e-mail",
+        "sub": "Subskrybuj",
+        "loading": "ładowanie",
+        "subbing": "Trwa subskrypcja..."
+      },
+      "status": {
+        "wrong": "Wystąpił błąd. Spróbuj ponownie.",
+        "success": "Dziękujemy za zapisanie się! Wkrótce otrzymasz nasze najnowsze informacje.",
+        "network": "Błąd sieci. Sprawdź połączenie i spróbuj ponownie."
+      }
+    }
+  },
+  "HomePage": {
+    "Metadata": {
+      "title": "Znajdź swoją wymarzoną nieruchomość",
+      "description": "Odkryj nieruchomości z najwyższej półki, korzystając z fachowego doradztwa i niezrównanej obsługi. Kupuj, sprzedawaj lub wynajmuj nieruchomości w stanie Georgia.",
+      "og_alt": "Nieruchomości klasy premium – QMAX Realty"
+    },
+    "Hero": {
+      "image_alt": "Ekskluzywne nieruchomości z przepięknymi widokami",
+      "title": "Znajdź swoją wymarzoną nieruchomość!",
+      "subtitle": "Odkryj nieruchomości klasy premium dzięki fachowemu doradztwu i niezrównanej obsłudze",
+      "buy_btn": "Kup nieruchomości",
+      "rent_btn": "Nieruchomości na wynajem",
+      "sell_btn": "Sprzedaj swój dom"
+    },
+    "WhyUs": {
+      "title": "Dlaczego warto wybrać QMAX Realty?",
+      "years_excellence": "Lata doskonałości",
+      "properties_sold": "Sprzedane nieruchomości",
+      "client_satisfaction": "Zadowolenie klientów",
+      "experts_title": "Eksperci rynkowi",
+      "experts_desc": "Dogłębna znajomość lokalnych rynków nieruchomości, trendów i możliwości inwestycyjnych.",
+      "service_title": "Obsługa na 5 gwiazdek",
+      "service_desc": "Setki pięciogwiazdkowych recenzji od zadowolonych nabywców, sprzedawców i inwestorów.",
+      "approach_title": "Indywidualne podejście",
+      "approach_desc": "Indywidualnie dostosowane rozwiązania i spersonalizowane doradztwo dostosowane do Twoich konkretnych potrzeb związanych z nieruchomościami.",
+      "trusted_title": "Godni zaufania i przejrzyści",
+      "trusted_desc": "Przejrzysta komunikacja, etyczne praktyki oraz pełne wsparcie na każdym etapie transakcji."
+    },
+    "ContactBanner": {
+      "title": "Chcesz znaleźć swoją wymarzoną nieruchomość?",
+      "description": "Skontaktuj się z nami już teraz, aby umówić się na oglądanie nieruchomości lub uzyskać fachową poradę. Odpowiadamy w ciągu godziny.",
+      "whatsapp_btn": "Napisz do nas na WhatsAppie",
+      "view_all_btn": "Zobacz wszystkie nieruchomości"
+    }
+  },
+  "Pages": {
+    "HomePage": {
+      "Metadata": {
+        "title": "Znajdź swoją wymarzoną nieruchomość",
+        "description": "Odkryj nieruchomości klasy premium, korzystając z fachowego doradztwa i niezrównanej obsługi. Kupuj, sprzedawaj lub wynajmuj nieruchomości w stanie Georgia.",
+        "og_alt": "Nieruchomości klasy premium – QMAX Realty"
+      },
+      "Hero": {
+        "image_alt": "Ekskluzywne nieruchomości z przepięknymi widokami",
+        "title": "Znajdź swoją wymarzoną nieruchomość!",
+        "subtitle": "Odkryj nieruchomości klasy premium, korzystając z fachowego doradztwa i niezrównanej obsługi",
+        "buy_btn": "Kup nieruchomości",
+        "rent_btn": "Nieruchomości do wynajęcia",
+        "sell_btn": "Sprzedaj swój dom"
+      },
+      "WhyUs": {
+        "title": "Dlaczego warto wybrać QMAX Realty?",
+        "years_excellence": "Lata doskonałości",
+        "properties_sold": "Sprzedane nieruchomości",
+        "client_satisfaction": "Zadowolenie klientów",
+        "experts_title": "Eksperci rynkowi",
+        "experts_desc": "Dogłębna znajomość lokalnych rynków nieruchomości, trendów i możliwości inwestycyjnych.",
+        "service_title": "Obsługa na 5 gwiazdek",
+        "service_desc": "Setki 5-gwiazdkowych recenzji od zadowolonych kupujących, sprzedających i inwestorów.",
+        "approach_title": "Indywidualne podejście",
+        "approach_desc": "Indywidualnie dostosowane rozwiązania i spersonalizowane doradztwo dostosowane do Twoich konkretnych potrzeb związanych z nieruchomościami.",
+        "trusted_title": "Godni zaufania i przejrzyści",
+        "trusted_desc": "Przejrzysta komunikacja, etyczne praktyki oraz pełne wsparcie na każdym etapie transakcji."
+      },
+      "ContactBanner": {
+        "title": "Chcesz znaleźć swoją wymarzoną nieruchomość?",
+        "description": "Skontaktuj się z nami już teraz, aby umówić się na oglądanie nieruchomości lub uzyskać fachową poradę. Odpowiadamy w ciągu godziny.",
+        "whatsapp_btn": "Napisz do nas na WhatsApp",
+        "view_all_btn": "Zobacz wszystkie nieruchomości"
+      }
+    },
+    "Socials": {
+      "Metadata": {
+        "title": "Znajdź swoją wymarzoną nieruchomość",
+        "description": "Odkryj nieruchomości klasy premium, korzystając z fachowego doradztwa i niezrównanej obsługi. Kupuj, sprzedawaj lub wynajmuj nieruchomości w stanie Georgia.",
+        "og_alt": "Nieruchomości klasy premium – QMAX Realty"
+      },
+      "Hero": {
+        "title": "Skontaktuj się z nami",
+        "subtitle": "Obserwuj QMAX Realty, aby być na bieżąco z nowymi ofertami nieruchomości, analizami rynku i możliwościami inwestycyjnymi na całym świecie."
+      },
+      "GetInTouch": {
+        "title": "Skontaktuj się z nami",
+        "subtitle": "Masz pytania dotyczące naszych nieruchomości lub potrzebujesz pomocy w znalezieniu wymarzonego domu? Chętnie Ci pomożemy!"
+      },
+      "StayUpdated": {
+        "title": "Bądź na bieżąco",
+        "subtitle": "Zapisz się, aby otrzymywać informacje o nowych ofertach nieruchomości, analizy rynkowe oraz ekskluzywne okazje."
+      }
+    }
+  }
+}

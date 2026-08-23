@@ -1,0 +1,85 @@
+{
+  "Components": {
+    "PCarousel": {
+      "title": "Most Viewed Properties This Week",
+      "subtitle": "These properties are trending with buyers and investors right now",
+      "details": "View Details"
+    },
+    "NewsForm": {
+      "input": {
+        "text": "Enter your email",
+        "sub": "Subscribe",
+        "loading": "loading",
+        "subbing": "Subscribing..."
+      },
+      "status": {
+        "wrong": "Something went wrong. Please try again.",
+        "success": "Thank you for subscribing! You'll receive our latest updates soon.",
+        "network": "Network error. Please check your connection and try again."
+      }
+    },
+    "Navbar": {
+      "Home": "Home",
+      "Socials": "Socials",
+      "Listings": "Listings",
+      "Contact": "Contact",
+      "About": "About"
+    }
+  },
+  "Pages": {
+    "HomePage": {
+      "Metadata": {
+        "title": "Find Your Dream Property",
+        "description": "Discover premium real estate with expert guidance and unmatched service. Buy, sell, or rent properties in Georgia.",
+        "og_alt": "Premium Properties - QMAX Realty"
+      },
+      "Hero": {
+        "image_alt": "Premium real estate properties with stunning views",
+        "title": "Find Your Dream Property!",
+        "subtitle": "Discover premium real estate with expert guidance and unmatched service",
+        "buy_btn": "Buy Properties",
+        "rent_btn": "Rent Properties",
+        "sell_btn": "Sell Your Home"
+      },
+      "WhyUs": {
+        "title": "Why Choose QMAX Realty?",
+        "years_excellence": "Years of Excellence",
+        "properties_sold": "Properties Sold",
+        "client_satisfaction": "Client Satisfaction",
+        "experts_title": "Market Experts",
+        "experts_desc": "Deep knowledge of local real estate markets, trends, and investment opportunities.",
+        "service_title": "5-Star Service",
+        "service_desc": "Hundreds of 5-star reviews from satisfied buyers, sellers, and investors.",
+        "approach_title": "Personalized Approach",
+        "approach_desc": "Tailored solutions and one-on-one guidance for your unique real estate needs.",
+        "trusted_title": "Trusted & Transparent",
+        "trusted_desc": "Clear communication, ethical practices, and full support throughout your transaction."
+      },
+      "ContactBanner": {
+        "title": "Ready to Find Your Dream Property?",
+        "description": "Contact us now to schedule a viewing or get expert advice. We respond within the hour.",
+        "whatsapp_btn": "WhatsApp Us",
+        "view_all_btn": "View All Properties"
+      }
+    },
+    "Socials": {
+      "Metadata": {
+        "title": "Find Your Dream Property",
+        "description": "Discover premium real estate with expert guidance and unmatched service. Buy, sell, or rent properties in Georgia.",
+        "og_alt": "Premium Properties - QMAX Realty"
+      },
+      "Hero": {
+        "title": "Connect With Us",
+        "subtitle": "Follow QMAX Realty for new property listings, market insights, and investment opportunities worldwide."
+      },
+      "GetInTouch": {
+        "title": "Get in Touch",
+        "subtitle": "Have questions about our properties or need help finding your dream home? We're here to help!"
+      },
+      "StayUpdated": {
+        "title": "Stay Updated",
+        "subtitle": "Subscribe for new property listings, market insights, and exclusive opportunities."
+      }
+    }
+  }
+}

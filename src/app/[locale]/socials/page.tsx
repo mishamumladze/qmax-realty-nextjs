@@ -3,24 +3,45 @@ import { SOCIAL_MEDIAS } from "@/config/contact";
 import ContactLinks from "@/components/ContactLinks";
 import NewsletterForm from "@/components/NewsletterForm";
 import { SocialsButton } from "@/components/ui/Buttons";
+import { getTranslations } from "next-intl/server";
 
-export const metadata: Metadata = {
-  title: "Connect With Us - QMAX Realty Socials",
-  description: "Follow QMAX Real Estate on Instagram, Facebook, TikTok, Telegram, WhatsApp & more.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Pages.Socials.Metadata");
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: "https://qmax-realty.vercel.app",
+    },
+    openGraph: {
+      title: `${t("title")} - QMAX Realty`,
+      description: t("description"),
+      url: "https://qmax-realty.vercel.app",
+      images: [
+        {
+          url: "https://qmax-realty.vercel.app/img/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: t("og_alt"),
+          type: "image/webp",
+        },
+      ],
+    },
+  };
+}
 
-export default function SocialsPage() {
+export default async function SocialsPage() {
+  const t = await getTranslations("Pages.Socials");
   return (
     <>
       <header className="pt-12 text-center md:pt-20">
         <h1
           className="mb-4 text-3xl font-bold text-gray-800 md:text-4xl lg:text-5xl dark:text-white"
         >
-          Connect With Us
+          {t("Hero.title")}
         </h1>
         <p className="mx-auto max-w-3xl text-lg text-gray-600 md:text-xl dark:text-gray-300">
-          Follow QMAX Realty for new property listings, market insights, and investment
-          opportunities worldwide.
+          {t("Hero.subtitle")}
         </p>
       </header>
 
@@ -72,11 +93,10 @@ export default function SocialsPage() {
 
       <section className="section rounded-2xl bg-gray-50 text-center shadow-lg dark:bg-gray-800">
         <h2 className="mb-4 text-2xl font-bold text-gray-800 md:text-3xl dark:text-white">
-          Get in Touch
+          {t("GetInTouch.title")}
         </h2>
         <p className="mx-auto mb-8 max-w-2xl text-gray-600 dark:text-gray-300">
-          Have questions about our properties or need help finding your dream home? We're here to
-          help!
+          {t("GetInTouch.subtitle")}
         </p>
         <div className="flex justify-center">
           <ContactLinks variant="list" only={["email", "phone", "address"]} />
@@ -87,11 +107,9 @@ export default function SocialsPage() {
         className="section bg-brand-50 dark:bg-brand-900/20 rounded-2xl text-center shadow-lg"
       >
         <h2 className="mb-4 text-2xl font-bold text-gray-800 md:text-3xl dark:text-white">
-          Stay Updated
+          {t("StayUpdated.title")}
         </h2>
-        <p className="mb-6 text-gray-600 dark:text-gray-300">
-          Subscribe for new property listings, market insights, and exclusive opportunities.
-        </p>
+        <p className="mb-6 text-gray-600 dark:text-gray-300">{t("StayUpdated.subtitle")}</p>
         <NewsletterForm />
       </section>
     </>

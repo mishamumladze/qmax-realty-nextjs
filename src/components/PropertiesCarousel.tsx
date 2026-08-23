@@ -1,16 +1,18 @@
 "use client";
 
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useTransition } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Bed, Bath, Square, ArrowRight } from "lucide-react";
 import { Property } from "@/types/property";
+import { useTranslations } from "next-intl";
 
 interface PropertiesCarouselProps {
   properties: Property[];
 }
 
 export default function PropertiesCarousel({ properties }: PropertiesCarouselProps) {
+  const t = useTranslations("Components.PCarousel");
   // Ensure exactly 6 properties are selected for the homepage carousel
   const homepageProperties = properties.slice(0, 6);
 
@@ -76,11 +78,9 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
           id="most-viewed-heading"
           className="text-brand-600 mb-4 text-2xl font-bold md:text-3xl lg:text-4xl"
         >
-          Most Viewed Properties This Week
+          {t("title")}
         </h2>
-        <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">
-          These properties are trending with buyers and investors right now
-        </p>
+        <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">{t("description")}</p>
       </div>
 
       <div className="relative mx-auto max-w-5xl">
@@ -175,7 +175,7 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
                       className="group text-brand-700 hover:text-brand-800 mt-auto inline-flex
                         items-center font-semibold transition-all duration-300"
                     >
-                      <span>View Details</span>
+                      <span>{t("details")}</span>
                       <ArrowRight
                         className="ml-1 h-4 w-4 transition-transform duration-300
                           group-hover:translate-x-1"

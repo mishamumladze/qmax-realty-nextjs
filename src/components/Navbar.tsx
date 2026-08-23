@@ -5,18 +5,22 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
+import { LanguageSelector } from "./LanguageSelector";
+import { useTranslations } from "next-intl";
 
 import { Menu, X, Home, Share2, Users, Building2, Info } from "lucide-react";
 
-const navLinks = [
-  { href: "/", page: "home", label: "Home", icon: Home },
-  { href: "/socials", page: "socials", label: "Socials", icon: Share2 },
-  { href: "/listings", page: "listings", label: "Listings", icon: Users },
-  { href: "/contact", page: "contact", label: "Contact", icon: Building2 },
-  { href: "/about", page: "about", label: "About", icon: Info },
-];
-
 export default function Navbar() {
+  const t = useTranslations("Components.Navbar");
+
+  const navLinks = [
+    { href: "/", page: "home", label: t("Home"), icon: Home },
+    { href: "/socials", page: "Socials", label: t("Socials"), icon: Share2 },
+    { href: "/listings", page: "listings", label: t("Listings"), icon: Users },
+    { href: "/contact", page: "Contact", label: t("Contact"), icon: Building2 },
+    { href: "/about", page: "About", label: t("About"), icon: Info },
+  ];
+
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
 
@@ -127,7 +131,7 @@ export default function Navbar() {
             </div>
 
             {/* Desktop Nav Links */}
-            <div className="hidden md:block">
+            <div className="hidden md:flex md:items-center md:gap-8">
               <div className="flex items-baseline space-x-6">
                 {navLinks.map((link) => {
                   const isActive = pathname === link.href;
@@ -155,10 +159,18 @@ export default function Navbar() {
                   );
                 })}
               </div>
+
+              {/* Desktop Language Selector */}
+              <div className="border-l border-gray-200 pl-6 dark:border-gray-700">
+                <LanguageSelector />
+              </div>
             </div>
 
-            {/* Right Side: Mobile Menu Toggle */}
+            {/* Right Side: Mobile Menu Toggle & Language Selector */}
             <div className="flex min-w-0 items-center justify-end gap-3 md:hidden">
+              {/* Mobile Language Selector */}
+              <LanguageSelector />
+
               <button
                 ref={hamburgerRef}
                 type="button"

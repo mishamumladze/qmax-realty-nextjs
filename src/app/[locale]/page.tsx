@@ -1,66 +1,71 @@
 import Image from "next/image";
-import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import PropertiesCarousel from "@/components/PropertiesCarousel";
 import { getActiveProperties } from "@/lib/db";
 import { PrimaryButton, PrimaryButtonRounded, SecondaryButton } from "@/components/ui/Buttons";
 import { CONTACT_INFO } from "@/config/contact";
 
 import { Home, Key, BadgeDollarSign, Building2, Star, Handshake, ShieldCheck } from "lucide-react";
-
 import { Metadata } from "next";
 
-export const metadata: Metadata = {
-  title: "Find Your Dream Property",
-  description:
-    "Discover premium real estate with expert guidance and unmatched service. Buy, sell, or rent properties in Georgia.",
-  alternates: {
-    canonical: "https://qmax-realty.vercel.app",
-  },
-  openGraph: {
-    title: "Find Your Dream Property - QMAX Realty",
-    description: "Discover premium real estate with expert guidance and unmatched service.",
-    url: "https://qmax-realty.vercel.app",
-    images: [
-      {
-        url: "https://qmax-realty.vercel.app/img/og-image.webp",
-        width: 1200,
-        height: 630,
-        alt: "Premium Properties - QMAX Realty",
-        type: "image/webp",
-      },
-    ],
-  },
-};
+// 1. Dynamic localized Metadata scoped to "HomePage.Metadata"
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Pages.HomePage.Metadata");
 
-const whyUsItems = [
-  {
-    icon: Building2,
-    title: "Market Experts",
-    hasStar: false,
-    desc: "Deep knowledge of local real estate markets, trends, and investment opportunities.",
-  },
-  {
-    icon: Star,
-    title: "5-Star Service",
-    hasStar: true,
-    desc: "Hundreds of 5-star reviews from satisfied buyers, sellers, and investors.",
-  },
-  {
-    icon: Handshake,
-    title: "Personalized Approach",
-    hasStar: false,
-    desc: "Tailored solutions and one-on-one guidance for your unique real estate needs.",
-  },
-  {
-    icon: ShieldCheck,
-    title: "Trusted & Transparent",
-    hasStar: false,
-    desc: "Clear communication, ethical practices, and full support throughout your transaction.",
-  },
-];
+  return {
+    title: t("title"),
+    description: t("description"),
+    alternates: {
+      canonical: "https://qmax-realty.vercel.app",
+    },
+    openGraph: {
+      title: `${t("title")} - QMAX Realty`,
+      description: t("description"),
+      url: "https://qmax-realty.vercel.app",
+      images: [
+        {
+          url: "https://qmax-realty.vercel.app/img/og-image.webp",
+          width: 1200,
+          height: 630,
+          alt: t("og_alt"),
+          type: "image/webp",
+        },
+      ],
+    },
+  };
+}
 
 export default async function HomePage() {
+  // Scope translations to "HomePage"
+  const t = await getTranslations("Pages.HomePage");
   const properties = getActiveProperties().slice(0, 6);
+
+  const whyUsItems = [
+    {
+      icon: Building2,
+      title: t("WhyUs.experts_title"),
+      hasStar: false,
+      desc: t("WhyUs.experts_desc"),
+    },
+    {
+      icon: Star,
+      title: t("WhyUs.service_title"),
+      hasStar: true,
+      desc: t("WhyUs.service_desc"),
+    },
+    {
+      icon: Handshake,
+      title: t("WhyUs.approach_title"),
+      hasStar: false,
+      desc: t("WhyUs.approach_desc"),
+    },
+    {
+      icon: ShieldCheck,
+      title: t("WhyUs.trusted_title"),
+      hasStar: false,
+      desc: t("WhyUs.trusted_desc"),
+    },
+  ];
 
   return (
     <>
@@ -72,7 +77,7 @@ export default async function HomePage() {
         <div className="relative h-full w-full">
           <Image
             src="/img/hero.webp"
-            alt="Premium real estate properties with stunning views"
+            alt={t("Hero.image_alt")}
             fill
             priority
             sizes="100vw"
@@ -86,24 +91,22 @@ export default async function HomePage() {
               className="mx-auto mb-6 flex h-full w-4/5 flex-col items-center justify-end
                 text-white"
             >
-              <h1 className="mb-2 text-3xl font-bold md:text-5xl">Find Your Dream Property!</h1>
-              <p className="mx-auto mb-6 max-w-2xl text-base md:text-lg">
-                Discover premium real estate with expert guidance and unmatched service
-              </p>
+              <h1 className="mb-2 text-3xl font-bold md:text-5xl">{t("Hero.title")}</h1>
+              <p className="mx-auto mb-6 max-w-2xl text-base md:text-lg">{t("Hero.subtitle")}</p>
             </div>
             <div className="flex flex-wrap items-center justify-center">
               <PrimaryButtonRounded
-                label="Buy Properties"
+                label={t("Hero.buy_btn")}
                 icon={<Home className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
                 href="/listings?offer=sale"
               />
               <PrimaryButtonRounded
-                label="Rent Properties"
+                label={t("Hero.rent_btn")}
                 icon={<Key className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
                 href="/listings?offer=rent"
               />
               <PrimaryButtonRounded
-                label="Sell Your Home"
+                label={t("Hero.sell_btn")}
                 icon={<BadgeDollarSign className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
                 href="/contact?subject=selling"
               />
@@ -111,6 +114,7 @@ export default async function HomePage() {
           </div>
         </div>
       </section>
+
       {/* Properties Carousel Section */}
       <PropertiesCarousel properties={properties} />
 
@@ -121,7 +125,7 @@ export default async function HomePage() {
             id="why-us-heading"
             className="mb-12 text-3xl font-bold text-gray-800 md:text-4xl dark:text-white"
           >
-            Why Choose QMAX Realty?
+            {t("WhyUs.title")}
           </h2>
 
           {/* Stats Grid */}
@@ -131,7 +135,7 @@ export default async function HomePage() {
                 15+
               </p>
               <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
-                Years of Excellence
+                {t("WhyUs.years_excellence")}
               </p>
             </div>
             <div className="text-center">
@@ -139,7 +143,7 @@ export default async function HomePage() {
                 1,200+
               </p>
               <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
-                Properties Sold
+                {t("WhyUs.properties_sold")}
               </p>
             </div>
             <div className="text-center max-md:col-span-2">
@@ -147,7 +151,7 @@ export default async function HomePage() {
                 99%
               </p>
               <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
-                Client Satisfaction
+                {t("WhyUs.client_satisfaction")}
               </p>
             </div>
           </div>
@@ -177,6 +181,7 @@ export default async function HomePage() {
                     />
                   )}
                 </h3>
+                <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
               </div>
             );
           })}
@@ -186,19 +191,17 @@ export default async function HomePage() {
       {/* Quick Contact CTA Banner */}
       <section className="section dark:bg-gray-900">
         <div className="bg-brand-600 rounded-2xl p-8 text-center text-white md:p-12">
-          <h2 className="mb-4 text-2xl font-bold md:text-3xl">
-            Ready to Find Your Dream Property?
-          </h2>
+          <h2 className="mb-4 text-2xl font-bold md:text-3xl">{t("ContactBanner.title")}</h2>
           <p className="mx-auto mb-6 max-w-xl text-lg text-white">
-            Contact us now to schedule a viewing or get expert advice. We respond within the hour.
+            {t("ContactBanner.description")}
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
             <SecondaryButton
-              label="WhatsApp Us"
+              label={t("ContactBanner.whatsapp_btn")}
               href={CONTACT_INFO.whatsapp.href}
               icon={<Image src="/img/Logos/si-whatsapp.svg" alt="" width={20} height={20} />}
             />
-            <PrimaryButton label="View All Properties" href="/listings" />
+            <PrimaryButton label={t("ContactBanner.view_all_btn")} href="/listings" />
           </div>
         </div>
       </section>

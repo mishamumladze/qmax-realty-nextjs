@@ -28,7 +28,9 @@
     "**/*.tsx",
     ".next/types/**/*.ts",
     ".next/dev/types/**/*.ts",
-    "**/*.mts"
+    "**/*.mts",
+    "scripts/translate.ts",
+    "scripts/translate.mjs"
   ],
   "exclude": ["node_modules"]
 }

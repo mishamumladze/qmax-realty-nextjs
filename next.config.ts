@@ -1,13 +1,12 @@
 import type { NextConfig } from "next";
 import createNextIntlPlugin from "next-intl/plugin";
 
-const withNextIntl = createNextIntlPlugin("./src/i18n/request.ts");
+// Call without arguments for Next.js 16 Turbopack auto-discovery
+const withNextIntl = createNextIntlPlugin();
 
 const nextConfig: NextConfig = {
-  /* config options here */
   reactCompiler: true,
   compiler: { styledComponents: true },
 };
 
-export default nextConfig;
-withNextIntl;
+export default withNextIntl(nextConfig);
