@@ -17,14 +17,17 @@ export function getActiveProperties(): Property[] {
     ORDER BY id ASC
   `);
 
-  return stmt.all() as Property[];
+  return stmt
+    .all()
+    .map((r) => normalizePropertyRow(r as Record<string, unknown>))
+    .filter((p): p is Property => p !== undefined);
 }
 
 export function getPropertyById(id: number): Property | undefined {
   try {
     const db = new Database(dbPath);
     const stmt = db.prepare("SELECT * FROM properties WHERE id = ? AND status = 'active'");
-    return stmt.get(id) as Property | undefined;
+    return normalizePropertyRow(stmt.get(id) as Record<string, unknown> | undefined);
   } catch {
     return undefined;
   }
@@ -156,6 +159,50 @@ function toColumnValue(
   return value as string | number;
 }
 
+function parseJsonArrayColumn(value: unknown): string[] {
+  if (Array.isArray(value)) return value.map(String);
+  if (typeof value !== "string") return [];
+  try {
+    const parsed: unknown = JSON.parse(value);
+    return Array.isArray(parsed) ? parsed.map(String) : [];
+  } catch {
+    return [];
+  }
+}
+
+function parseCoordsColumn(value: unknown): [number, number] | undefined {
+  let candidate: unknown = value;
+  if (typeof candidate === "string") {
+    try { candidate = JSON.parse(candidate) as unknown; } catch { return undefined; }
+  }
+  if (
+    Array.isArray(candidate) &&
+    candidate.length === 2 &&
+    typeof candidate[0] === "number" && Number.isFinite(candidate[0]) &&
+    typeof candidate[1] === "number" && Number.isFinite(candidate[1])
+  ) {
+    return [candidate[0], candidate[1]];
+  }
+  if (candidate !== null && typeof candidate === "object") {
+    const lat = (candidate as { lat?: unknown }).lat;
+    const lng = (candidate as { lng?: unknown }).lng;
+    if (typeof lat === "number" && Number.isFinite(lat) && typeof lng === "number" && Number.isFinite(lng)) {
+      return [lat, lng];
+    }
+  }
+  return undefined;
+}
+
+function normalizePropertyRow(row: Record<string, unknown> | undefined): Property | undefined {
+  if (!row || typeof row !== "object" || !("id" in row)) return undefined;
+  return {
+    ...row,
+    inclusions: parseJsonArrayColumn(row.inclusions),
+    gallery: parseJsonArrayColumn(row.gallery),
+    coords: parseCoordsColumn(row.coords),
+  } as Property;
+}
+
 export function getAllProperties(): Property[] {
   const db = new Database(dbPath);
 
@@ -164,7 +211,10 @@ export function getAllProperties(): Property[] {
     ORDER BY created_at DESC, id DESC
   `);
 
-  return stmt.all() as Property[];
+  return stmt
+    .all()
+    .map((r) => normalizePropertyRow(r as Record<string, unknown>))
+    .filter((p): p is Property => p !== undefined);
 }
 
 export function updateProperty(id: number, data: Partial<PropertyFormData>): Property | null {
@@ -178,7 +228,7 @@ export function updateProperty(id: number, data: Partial<PropertyFormData>): Pro
 
     if (entries.length === 0) {
       const stmt = db.prepare("SELECT * FROM properties WHERE id = ?");
-      return (stmt.get(id) as Property | undefined) ?? null;
+      return normalizePropertyRow(stmt.get(id) as Record<string, unknown> | undefined) ?? null;
     }
 
     const setClauses: string[] = [];
@@ -195,7 +245,7 @@ export function updateProperty(id: number, data: Partial<PropertyFormData>): Pro
     }
 
     const select = db.prepare("SELECT * FROM properties WHERE id = ?");
-    return (select.get(id) as Property | undefined) ?? null;
+    return normalizePropertyRow(select.get(id) as Record<string, unknown> | undefined) ?? null;
   } catch {
     return null;
   }
@@ -307,7 +357,9 @@ export function insertProperty(data: PropertyFormData & { slug?: string }): Prop
     const info = stmt.run(...values);
 
     const select = db.prepare("SELECT * FROM properties WHERE id = ?");
-    return (select.get(info.lastInsertRowid as number) as Property | undefined) ?? null;
+    return (
+      normalizePropertyRow(select.get(info.lastInsertRowid as number) as Record<string, unknown> | undefined) ?? null
+    );
   } catch {
     return null;
   }
