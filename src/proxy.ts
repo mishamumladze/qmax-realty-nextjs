@@ -9,8 +9,13 @@ const ADMIN_TOKEN_COOKIE = "admin_token";
 const LOGIN_PATH = "/admin/login";
 const ADMIN_ROOT = "/admin";
 
-function isAdminLogin(pathname: string): boolean {
-  return pathname.includes("/admin/login");
+function stripLocalePrefix(pathname: string): string {
+  const segments = pathname.split("/");
+  const first = segments[1]?.toLowerCase();
+  if (segments.length > 1 && first && (routing.locales as readonly string[]).includes(first)) {
+    return "/" + segments.slice(2).join("/");
+  }
+  return pathname;
 }
 
 async function hasValidAdminToken(request: NextRequest): Promise<boolean> {
@@ -21,21 +26,26 @@ async function hasValidAdminToken(request: NextRequest): Promise<boolean> {
 
 export default async function proxy(request: NextRequest): Promise<NextResponse> {
   const { pathname } = request.nextUrl;
+  const path = stripLocalePrefix(pathname);
+
+  const isAdminPath = path === "/admin" || path.startsWith("/admin/");
+  const isAdminLoginPath =
+    path === "/admin/login" || path.startsWith("/admin/login/");
 
   // 1. Handle Admin Route Protection first
-  if (pathname.includes("/admin")) {
-    if (isAdminLogin(pathname)) {
+  if (isAdminPath) {
+    if (isAdminLoginPath) {
       if (await hasValidAdminToken(request)) {
         return NextResponse.redirect(new URL(ADMIN_ROOT, request.url));
       }
-      return NextResponse.next();
+      return intlMiddleware(request);
     }
 
     if (!(await hasValidAdminToken(request))) {
       return NextResponse.redirect(new URL(LOGIN_PATH, request.url));
     }
 
-    return NextResponse.next();
+    return intlMiddleware(request);
   }
 
   // 2. Handle next-intl Language Routing for all public routes
