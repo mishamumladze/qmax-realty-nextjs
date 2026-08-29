@@ -120,6 +120,69 @@
         "title": "Gelişmelerden Haberdar Olun",
         "subtitle": "Yeni emlak ilanları, piyasa bilgileri ve özel fırsatlardan haberdar olmak için abone olun."
       }
+    },
+    "Listings": {
+      "Metadata": {
+        "title": "Hayalinizdeki Gayrimenkulü Bulun",
+        "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın ya da kiralayın.",
+        "og_alt": "Seçkin Gayrimenkuller - QMAX Realty"
+      },
+      "Hero": {
+        "title": "Gayrimenkuller ve İlanlar",
+        "subtitle": "Dünya çapında gayrimenkul satın alın veya kiralayın.",
+        "search": "Başlığa, konuma, mahalleye göre arama yapın…",
+        "search_text": "Başlığa, konuma, mahalleye göre arama yapın…"
+      },
+      "Sort": {
+        "all": "Tümü",
+        "apartments": "Daireler",
+        "houses": "Evler",
+        "revelance": "Alaka düzeyi",
+        "price-asc": "Fiyat: Düşük → Yüksek",
+        "price-desc": "Fiyat: Yüksek → Düşük ",
+        "sqmt-asc": "Boyut: En küçük",
+        "sqmt-desc": "Boyut: En büyük",
+        "Filters": {
+          "title": "Filtreler",
+          "revelance": "Alaka düzeyi",
+          "price-asc": "Fiyat: Düşük → Yüksek",
+          "price-desc": "Fiyat: Yüksek → Düşük ",
+          "sqmt-asc": "Boyut: En küçük",
+          "sqmt-desc": "Boyut: En büyük",
+          "price_asc": "Fiyat: Düşük → Yüksek",
+          "price_desc": "Fiyat: Yüksek → Düşük ",
+          "sqmt_asc": "Boyut: En küçük",
+          "sqmt_desc": "Boyut: En büyük"
+        }
+      },
+      "Card": {
+        "apartment": "Daire",
+        "house": "Ev",
+        "room": "Oda",
+        "rooms": "Odalar",
+        "bed": "Dünya",
+        "beds": "Yataklar",
+        "view": "Ayrıntıları Görüntüle",
+        "enquire": "Bilgi Alın",
+        "btn": "Ayrıntıları Görüntüle"
+      },
+      "WhyUs": {
+        "title": "Neden QMAX Realty?",
+        "subtitle": "Gayrimenkul alım, satım veya kiralama konusunda uzman danışmanlığı.",
+        "rated_title": "5 Yıldızlı",
+        "rated_desc": "Memnun müşterilerimizden gelen yüzlerce 5 yıldızlı yorum.",
+        "trust_title": "Güvenilir ve Şeffaf",
+        "trust_desc": "Baştan sona net iletişim ve etik uygulamalar.",
+        "expertise_title": "Yerel Uzmanlık",
+        "expertise_desc": "Tiflis’in mahalleleri ve gelişmekte olan pazarlar hakkında derinlemesine bilgi.",
+        "support_title": "7/24 Destek",
+        "support_desc": "WhatsApp üzerinden haftanın 7 günü bize ulaşabilirsiniz."
+      },
+      "ContactBanner": {
+        "title": "Belirli bir şey mi arıyorsunuz?",
+        "description": "Bize ne aradığınızı söyleyin, sizin için en uygun gayrimenkulü bulalım.",
+        "btn": "WhatsApp'tan bize sorun"
+      }
     }
   }
 }

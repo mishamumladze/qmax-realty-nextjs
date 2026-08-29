@@ -3,6 +3,7 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useTranslations } from "next-intl";
 import {
   Search,
   LayoutGrid,
@@ -44,6 +45,8 @@ export default function ListingsContent({
   initialFilter = "all",
   initialOffer = "all",
 }: ListingsContentProps) {
+  const t = useTranslations("Pages.Listings");
+
   // ─── Filter State ───────────────────────────────────────────────────────────
   const [searchTerm, setSearchTerm] = useState("");
   const [typeFilter, setTypeFilter] = useState<string>(initialFilter);
@@ -274,13 +277,11 @@ export default function ListingsContent({
       >
         <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
         <div className="relative container mx-auto px-4 text-center">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">Properties & Listings</h1>
-          <p className="mx-auto mb-8 max-w-2xl text-lg md:text-xl">
-            Buy, sell, or rent properties worldwide.
-          </p>
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">{t("Hero.title")}</h1>
+          <p className="mx-auto mb-8 max-w-2xl text-lg md:text-xl">{t("Hero.subtitle")}</p>
           <div className="relative mx-auto max-w-xl">
             <label htmlFor="property-search" className="sr-only">
-              Search properties
+              {t("Hero.search")}
             </label>
             <div className="relative">
               <Search
@@ -293,7 +294,7 @@ export default function ListingsContent({
                 type="search"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Search by title, location, neighborhood…"
+                placeholder={t("Hero.search_text")}
                 autoComplete="off"
                 className="focus:ring-brand-300 w-full rounded-xl bg-white/95 py-3.5 pr-4 pl-12
                   text-base text-gray-800 shadow-lg focus:ring-2 focus:outline-none dark:bg-gray-800
@@ -318,9 +319,9 @@ export default function ListingsContent({
               aria-label="Filter by property type"
             >
               {[
-                { key: "all", label: "All", icon: LayoutGrid },
-                { key: "apartment", label: "Apartments", icon: Building2 },
-                { key: "house", label: "Houses", icon: HomeIcon },
+                { key: "all", label: t("Sort.all"), icon: LayoutGrid },
+                { key: "apartment", label: t("Sort.apartments"), icon: Building2 },
+                { key: "house", label: t("Sort.houses"), icon: HomeIcon },
               ].map(({ key, label, icon: Icon }) => {
                 const isActive = typeFilter === key;
                 return (
@@ -368,7 +369,7 @@ export default function ListingsContent({
                   duration-200"
               >
                 <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
-                Filters
+                {t("Sort.Filters.title")}
                 {activeModalFiltersCount > 0 && (
                   <span
                     className="bg-brand-600 absolute -top-1.5 -right-1.5 flex h-5 min-w-[1.25rem]
@@ -393,11 +394,11 @@ export default function ListingsContent({
                   text-sm text-gray-700 focus:ring-2 focus:outline-none dark:border-gray-700
                   dark:bg-gray-800 dark:text-white"
               >
-                <option value="default">Relevance</option>
-                <option value="price-asc">Price: Low → High</option>
-                <option value="price-desc">Price: High → Low</option>
-                <option value="sqmt-asc">Size: Smallest</option>
-                <option value="sqmt-desc">Size: Largest</option>
+                <option value="default">{t("Sort.Filters.revelance")}</option>
+                <option value="price-asc">{t("Sort.Filters.price_asc")}</option>
+                <option value="price-desc">{t("Sort.Filters.price_desc")}</option>
+                <option value="sqmt-asc">{t("Sort.Filters.sqmt_asc")}</option>
+                <option value="sqmt-desc">{t("Sort.Filters.sqmt_desc")}</option>
               </select>
             </div>
           </div>
@@ -907,7 +908,7 @@ export default function ListingsContent({
                         ) : (
                           <Building2 className="h-3 w-3" />
                         )}
-                        {isHouse ? "House" : "Apartment"}
+                        {isHouse ? t("Card.house") : t("Card.apartment")}
                       </span>
 
                       <span
@@ -948,14 +949,15 @@ export default function ListingsContent({
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
                           <DoorOpen className="text-brand-500 h-4 w-4 shrink-0" />
                           <span>
-                            {property.rooms || 0} {(property.rooms || 0) === 1 ? "Room" : "Rooms"}
+                            {property.rooms || 0}{" "}
+                            {(property.rooms || 0) === 1 ? t("Card.room") : t("Card.rooms")}
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
                           <Bed className="text-brand-500 h-4 w-4 shrink-0" />
                           <span>
                             {property.bedrooms || 0}{" "}
-                            {(property.bedrooms || 0) === 1 ? "Bed" : "Beds"}
+                            {(property.bedrooms || 0) === 1 ? t("Card.bed") : t("Card.beds")}
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
@@ -971,7 +973,7 @@ export default function ListingsContent({
                             text-center text-sm font-semibold text-white transition-colors
                             duration-200"
                         >
-                          View Details
+                          {t("Card.btn")}
                         </Link>
                         <a
                           href={`${CONTACT_INFO.whatsapp.href}&text=Hi!%20I'm%20interested%20in%20${encodeURIComponent(
@@ -990,7 +992,7 @@ export default function ListingsContent({
                             height={16}
                             className="h-4 w-4"
                           />
-                          Enquire
+                          {t("Card.enquire")}
                         </a>
                       </div>
                     </div>
@@ -1031,37 +1033,37 @@ export default function ListingsContent({
               id="why-heading"
               className="mb-3 text-3xl font-bold text-gray-800 md:text-4xl dark:text-white"
             >
-              Why QMAX Realty?
+              {t("WhyUs.title")}
             </h2>
             <p className="mx-auto max-w-xl text-gray-600 dark:text-gray-400">
-              Expert guidance for buying, selling, or renting properties.
+              {t("WhyUs.subtitle")}
             </p>
           </div>
           <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 lg:grid-cols-4">
             {[
               {
                 icon: Star,
-                title: "5 Rated",
+                title: t("WhyUs.rated_title"),
                 hasStar: true,
-                desc: "Hundreds of 5-star reviews from satisfied clients.",
+                desc: t("WhyUs.rated_desc"),
               },
               {
                 icon: ShieldCheck,
-                title: "Trusted & Transparent",
+                title: t("WhyUs.trust_title"),
                 hasStar: false,
-                desc: "Clear communication and ethical practices throughout.",
+                desc: t("WhyUs.trust_desc"),
               },
               {
                 icon: MapPin,
-                title: "Local Expertise",
+                title: t("WhyUs.expertise_title"),
                 hasStar: false,
-                desc: "Deep knowledge of Tbilisi neighborhoods and emerging markets.",
+                desc: t("WhyUs.expertise_desc"),
               },
               {
                 icon: MessageCircle,
-                title: "24/7 Support",
+                title: t("WhyUs.support_title"),
                 hasStar: false,
-                desc: "We're available 7 days a week via WhatsApp.",
+                desc: t("WhyUs.support_desc"),
               },
             ].map((item, idx) => {
               const Icon = item.icon;
@@ -1094,10 +1096,10 @@ export default function ListingsContent({
       <section className="section">
         <div className="rounded-2xl bg-gray-50 p-8 text-center dark:bg-gray-800">
           <h2 className="mb-2 text-2xl font-bold text-gray-800 dark:text-white">
-            Looking for Something Specific?
+            {t("ContactBanner.title")}
           </h2>
           <p className="mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-400">
-            Tell us what you're looking for and we'll find the perfect property for you.
+            {t("ContactBanner.description")}
           </p>
           <a
             href={`${CONTACT_INFO.whatsapp.href}&text=Hi!%20I'm%20looking%20for%20a%20property.`}
@@ -1113,7 +1115,7 @@ export default function ListingsContent({
               height={20}
               className="mr-2"
             />
-            Ask Us on WhatsApp
+            {t("ContactBanner.btn")}
           </a>
         </div>
       </section>

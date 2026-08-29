@@ -80,7 +80,7 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
         >
           {t("title")}
         </h2>
-        <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">{t("description")}</p>
+        <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">{t("subtitle")}</p>
       </div>
 
       <div className="relative mx-auto max-w-5xl">

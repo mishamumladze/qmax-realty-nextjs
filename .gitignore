@@ -43,6 +43,6 @@ next-env.d.ts
 .omo/
 .omu/
 .playwright-mcp/
-.gitignore
-agents.md
-claude.md
+
+# local tooling config
+opencode.json

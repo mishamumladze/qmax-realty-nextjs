@@ -80,6 +80,63 @@
         "title": "Stay Updated",
         "subtitle": "Subscribe for new property listings, market insights, and exclusive opportunities."
       }
+    },
+    "Listings": {
+      "Metadata": {
+        "title": "Find Your Dream Property",
+        "description": "Discover premium real estate with expert guidance and unmatched service. Buy, sell, or rent properties in Georgia.",
+        "og_alt": "Premium Properties - QMAX Realty"
+      },
+      "Hero": {
+        "title": "Properties & Listings",
+        "subtitle": "Buy or rent properties worldwide.",
+        "search": "Search properties",
+        "search_text": "Search by title, location, neighborhood…"
+      },
+      "Sort": {
+        "all": "All",
+        "apartments": "Apartments",
+        "houses": "Houses",
+        "Filters": {
+          "title": "Filters",
+          "revelance": "Relevance",
+          "price_asc": "Price: Low → High",
+          "price_desc": "Price: High → Low ",
+          "sqmt_asc": "Size: Smallest",
+          "sqmt_desc": "Size: Largest"
+        }
+      },
+      "Card": {
+        "apartment": "Apartment",
+        "house": "House",
+        "room": "Room",
+        "rooms": "Rooms",
+        "bed": "Bed",
+        "beds": "Beds",
+        "btn": "View Details",
+        "enquire": "Enquire"
+      },
+      "WhyUs": {
+        "title": "Why QMAX Realty?",
+        "subtitle": "Expert guidance for buying, selling, or renting properties.",
+
+        "rated_title": "5 Star Rated",
+        "rated_desc": "Hundreds of 5-star reviews from satisfied clients.",
+
+        "trust_title": "Trusted & Transparent",
+        "trust_desc": "Clear communication and ethical practices throughout.",
+
+        "expertise_title": "Local Expertise",
+        "expertise_desc": "Deep knowledge of Tbilisi neighborhoods and emerging markets.",
+
+        "support_title": "24/7 Support",
+        "support_desc": "We're available 7 days a week via WhatsApp."
+      },
+      "ContactBanner": {
+        "title": "Looking for Something Specific?",
+        "description": "Tell us what you're looking for and we'll find the perfect property for you.",
+        "btn": "Ask Us on WhatsApp"
+      }
     }
   }
 }

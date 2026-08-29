@@ -120,6 +120,69 @@
         "title": "Bądź na bieżąco",
         "subtitle": "Zapisz się, aby otrzymywać informacje o nowych ofertach nieruchomości, analizy rynkowe oraz ekskluzywne okazje."
       }
+    },
+    "Listings": {
+      "Metadata": {
+        "title": "Znajdź swoją wymarzoną nieruchomość",
+        "description": "Odkryj nieruchomości z najwyższej półki, korzystając z fachowego doradztwa i niezrównanej obsługi. Kupuj, sprzedawaj lub wynajmuj nieruchomości w stanie Georgia.",
+        "og_alt": "Nieruchomości klasy premium – QMAX Realty"
+      },
+      "Hero": {
+        "title": "Nieruchomości i oferty",
+        "subtitle": "Kupuj lub wynajmuj nieruchomości na całym świecie.",
+        "search": "Wyszukiwanie według tytułu, lokalizacji, dzielnicy…",
+        "search_text": "Wyszukiwanie według tytułu, lokalizacji, dzielnicy…"
+      },
+      "Sort": {
+        "all": "Wszystkie",
+        "apartments": "Apartamenty",
+        "houses": "Domy",
+        "revelance": "Trafność",
+        "price-asc": "Cena: od najniższej do najwyższej",
+        "price-desc": "Cena: Od najwyższej do najniższej ",
+        "sqmt-asc": "Rozmiar: Najmniejszy",
+        "sqmt-desc": "Rozmiar: Największy",
+        "Filters": {
+          "title": "Filtry",
+          "revelance": "Trafność",
+          "price-asc": "Cena: od najniższej do najwyższej",
+          "price-desc": "Cena: Od najwyższej do najniższej ",
+          "sqmt-asc": "Rozmiar: najmniejszy",
+          "sqmt-desc": "Rozmiar: Największy",
+          "price_asc": "Cena: od najniższej do najwyższej",
+          "price_desc": "Cena: Od najwyższej do najniższej ",
+          "sqmt_asc": "Rozmiar: Najmniejszy",
+          "sqmt_desc": "Rozmiar: Największy"
+        }
+      },
+      "Card": {
+        "apartment": "Mieszkanie",
+        "house": "Dom",
+        "room": "Pokój",
+        "rooms": "Pokoje",
+        "bed": "Świat",
+        "beds": "Łóżka",
+        "view": "Zobacz szczegóły",
+        "enquire": "Zapytaj",
+        "btn": "Zobacz szczegóły"
+      },
+      "WhyUs": {
+        "title": "Dlaczego QMAX Realty?",
+        "subtitle": "Profesjonalne doradztwo w zakresie kupna, sprzedaży lub wynajmu nieruchomości.",
+        "rated_title": "Ocenione na 5 gwiazdek",
+        "rated_desc": "Setki 5-gwiazdkowych recenzji od zadowolonych klientów.",
+        "trust_title": "Godni zaufania i przejrzyści",
+        "trust_desc": "Przejrzysta komunikacja i przestrzeganie zasad etycznych na każdym etapie.",
+        "expertise_title": "Lokalna wiedza specjalistyczna",
+        "expertise_desc": "Dogłębna znajomość dzielnic Tbilisi oraz rynków wschodzących.",
+        "support_title": "Pomoc techniczna dostępna 24 godziny na dobę, 7 dni w tygodniu",
+        "support_desc": "Jesteśmy dostępni 7 dni w tygodniu przez WhatsApp."
+      },
+      "ContactBanner": {
+        "title": "Szukasz czegoś konkretnego?",
+        "description": "Powiedz nam, czego szukasz, a my znajdziemy dla Ciebie idealną nieruchomość.",
+        "btn": "Zapytaj nas na WhatsAppie"
+      }
     }
   }
 }

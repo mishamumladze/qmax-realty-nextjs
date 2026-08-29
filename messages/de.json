@@ -120,6 +120,69 @@
         "title": "Bleiben Sie auf dem Laufenden",
         "subtitle": "Abonnieren Sie unseren Newsletter, um über neue Immobilienangebote, Markteinblicke und exklusive Gelegenheiten informiert zu werden."
       }
+    },
+    "Listings": {
+      "Metadata": {
+        "title": "Finden Sie Ihre Traumimmobilie",
+        "description": "Entdecken Sie erstklassige Immobilien mit fachkundiger Beratung und unübertroffenem Service. Kaufen, verkaufen oder vermieten Sie Immobilien in Georgien.",
+        "og_alt": "Premium-Immobilien – QMAX Realty"
+      },
+      "Hero": {
+        "title": "Immobilien & Angebote",
+        "subtitle": "Kaufen oder mieten Sie Immobilien weltweit.",
+        "search": "Suche nach Titel, Ort, Stadtteil…",
+        "search_text": "Suche nach Titel, Ort, Stadtteil…"
+      },
+      "Sort": {
+        "all": "Alle",
+        "apartments": "Wohnungen",
+        "houses": "Häuser",
+        "revelance": "Relevanz",
+        "price-asc": "Preis: Niedrig → Hoch",
+        "price-desc": "Preis: Hoch → Niedrig ",
+        "sqmt-asc": "Größe: Kleinste",
+        "sqmt-desc": "Größe: Am größten",
+        "Filters": {
+          "title": "Filter",
+          "revelance": "Relevanz",
+          "price-asc": "Preis: Niedrig → Hoch",
+          "price-desc": "Preis: Hoch → Niedrig ",
+          "sqmt-asc": "Größe: Kleinste",
+          "sqmt-desc": "Größe: Am größten",
+          "price_asc": "Preis: Niedrig → Hoch",
+          "price_desc": "Preis: Hoch → Niedrig ",
+          "sqmt_asc": "Größe: Kleinste",
+          "sqmt_desc": "Größe: Am größten"
+        }
+      },
+      "Card": {
+        "apartment": "Wohnung",
+        "house": "Haus",
+        "room": "Zimmer",
+        "rooms": "Zimmer",
+        "bed": "Welt",
+        "beds": "Betten",
+        "view": "Details anzeigen",
+        "enquire": "Anfragen",
+        "btn": "Details anzeigen"
+      },
+      "WhyUs": {
+        "title": "Warum QMAX Realty?",
+        "subtitle": "Kompetente Beratung beim Kauf, Verkauf oder der Vermietung von Immobilien.",
+        "rated_title": "Mit 5 Sternen bewertet",
+        "rated_desc": "Hunderte von 5-Sterne-Bewertungen von zufriedenen Kunden.",
+        "trust_title": "Vertrauenswürdig & transparent",
+        "trust_desc": "Durchgängig klare Kommunikation und ethisches Handeln.",
+        "expertise_title": "Lokale Fachkenntnisse",
+        "expertise_desc": "Fundierte Kenntnisse der Stadtteile von Tiflis und der aufstrebenden Märkte.",
+        "support_title": "Support rund um die Uhr",
+        "support_desc": "Wir sind 7 Tage die Woche über WhatsApp erreichbar."
+      },
+      "ContactBanner": {
+        "title": "Suchen Sie etwas Bestimmtes?",
+        "description": "Sagen Sie uns, wonach Sie suchen, und wir finden die perfekte Immobilie für Sie.",
+        "btn": "Fragen Sie uns auf WhatsApp"
+      }
     }
   }
 }
