@@ -7,7 +7,7 @@ import { Inter } from "next/font/google";
 import "@/app/globals.scss";
 
 import { NextIntlClientProvider } from "next-intl";
-import { getMessages } from "next-intl/server";
+import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
@@ -29,6 +29,7 @@ export default async function RootLayout({
 
   // Obtain all localization messages for client components
   const messages = await getMessages();
+  const tLayout = await getTranslations("Components.Layout");
 
   return (
     <html lang={locale} className={inter.variable} suppressHydrationWarning>
@@ -47,7 +48,7 @@ export default async function RootLayout({
             className="focus:bg-brand-600 sr-only focus:not-sr-only focus:absolute focus:z-50
               focus:m-2 focus:rounded-lg focus:px-4 focus:py-2 focus:text-white"
           >
-            Skip to content
+            {tLayout("skip_to_content")}
           </a>
           <Navbar />
           <ThemeToggle />

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import {
   ArrowLeft,
   MessageCircle,
@@ -30,18 +31,19 @@ export async function generateMetadata({
   params: Promise<{ id: string }>;
 }): Promise<Metadata> {
   const { id } = await params;
+  const t = await getTranslations("Pages.PropertyDetails.Metadata");
   const property = getPropertyById(Number(id));
-  if (!property) return { title: "Property Not Found" };
+  if (!property) return { title: t("not_found") };
 
   const metaDesc =
     property.meta_description ||
     [
       property.title,
       property.subtitle,
-      property.location || property.city || "Premium property",
-      property.sale_type ? `for ${property.sale_type}` : "",
-      property.sqmt ? `${property.sqmt} sqm` : "",
-      property.bedrooms ? `${property.bedrooms} bedrooms` : "",
+      property.location || property.city || t("premium"),
+      property.sale_type ? t("for_sale_type", { sale_type: property.sale_type }) : "",
+      property.sqmt ? t("sqmt", { sqmt: property.sqmt }) : "",
+      property.bedrooms ? t("bedrooms_count", { bedrooms: property.bedrooms }) : "",
     ]
       .filter(Boolean)
       .join(". ");
@@ -54,6 +56,7 @@ export async function generateMetadata({
 
 export default async function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
+  const t = await getTranslations("Pages.PropertyDetails");
   const property = getPropertyById(Number(id));
 
   if (!property) {
@@ -62,7 +65,8 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
 
   const imageSrc = property.card_image || "/img/placeholder_1.webp";
   const whatsappUrl =
-    CONTACT_INFO.whatsapp.href + encodeURIComponent(` I'm interested in ${property.title}`);
+    CONTACT_INFO.whatsapp.href +
+    encodeURIComponent(` ${t("Sidebar.whatsapp_prefill", { title: property.title })}`);
 
   const currency = property.currency || "USD";
 
@@ -100,7 +104,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
               transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           >
             <ArrowLeft className="h-4 w-4" />
-            Back to Listings
+            {t("Details.back_to_listings")}
           </Link>
         </div>
       </section>
@@ -117,7 +121,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
         <div className="absolute right-0 bottom-0 left-0 px-4 pb-8 sm:pb-12">
           <div className="mx-auto max-w-6xl">
             <div className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-300">
-              <span>{property.type || "Property"}</span>
+              <span>{property.type || t("Fallback.property")}</span>
               {property.region && (
                 <>
                   <ChevronRight className="h-4 w-4" />
@@ -148,8 +152,8 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
               {property.sale_type && (
                 <div className="flex gap-2">
                   <span
-                    className="inline-flex rounded-full bg-emerald-100 px-4 py-2 text-sm
-                      font-semibold text-emerald-900 dark:bg-emerald-900/30 dark:text-emerald-300"
+                    className="bg-brand-100 text-brand-900 dark:bg-brand-900/30 dark:text-brand-300
+                      inline-flex rounded-full px-4 py-2 text-sm font-semibold"
                   >
                     {property.sale_type}
                   </span>
@@ -166,9 +170,16 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 <div className="flex items-start gap-3">
                   <MapPin className="mt-1 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-600" />
                   <div>
-                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">Location</p>
+                    <p className="text-sm font-medium text-gray-600 dark:text-gray-400">
+                      {t("Details.location")}
+                    </p>
                     <p className="mt-1 text-base text-gray-900 dark:text-white">
-                      {[property.neighborhood, property.city, property.region, "Georgia"]
+                      {[
+                        property.neighborhood,
+                        property.city,
+                        property.region,
+                        t("Fallback.country"),
+                      ]
                         .filter(Boolean)
                         .join(", ")}
                     </p>
@@ -184,7 +195,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.rooms}
                     </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Rooms</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{t("Details.rooms")}</p>
                   </div>
                 )}
                 {property.bedrooms != null && (
@@ -193,7 +204,9 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.bedrooms}
                     </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Bedrooms</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                      {t("Details.bedrooms")}
+                    </p>
                   </div>
                 )}
                 {property.bathrooms != null && (
@@ -202,7 +215,9 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.bathrooms}
                     </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Bathrooms</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                      {t("Details.bathrooms")}
+                    </p>
                   </div>
                 )}
                 {property.sqmt != null && (
@@ -211,7 +226,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.sqmt.toLocaleString()}
                     </p>
-                    <p className="text-xs text-gray-600 dark:text-gray-400">sqm</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{t("Details.sqm")}</p>
                   </div>
                 )}
               </div>
@@ -220,7 +235,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
               {property.description && (
                 <div>
                   <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-                    About this property
+                    {t("Details.about")}
                   </h2>
                   <p
                     className="leading-relaxed whitespace-pre-line text-gray-700 dark:text-gray-300"
@@ -235,7 +250,9 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 {property.year_built && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
                     <Calendar className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Year Built</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">
+                      {t("Facts.year_built")}
+                    </p>
                     <p className="font-semibold text-gray-900 dark:text-white">
                       {property.year_built}
                     </p>
@@ -244,16 +261,16 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 {property.floor != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
                     <Building className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Floor</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{t("Facts.floor")}</p>
                     <p className="font-semibold text-gray-900 dark:text-white">{property.floor}</p>
                   </div>
                 )}
                 {property.parking != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
                     <Car className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
-                    <p className="text-xs text-gray-600 dark:text-gray-400">Parking</p>
+                    <p className="text-xs text-gray-600 dark:text-gray-400">{t("Facts.parking")}</p>
                     <p className="font-semibold text-gray-900 dark:text-white">
-                      {property.parking ? "Available" : "None"}
+                      {property.parking ? t("Facts.available") : t("Facts.none")}
                     </p>
                   </div>
                 )}
@@ -263,7 +280,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
               {property.floor_plan && (
                 <div>
                   <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-                    Floor Plan
+                    {t("Details.floor_plan")}
                   </h2>
                   <div
                     className="relative aspect-square w-full max-w-lg overflow-hidden rounded-2xl
@@ -271,7 +288,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                   >
                     <Image
                       src={property.floor_plan}
-                      alt={`${property.title} floor plan`}
+                      alt={t("Alts.floor_plan", { title: property.title })}
                       fill
                       className="object-contain p-4"
                     />
@@ -283,12 +300,12 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
               {inclusions.length > 0 && (
                 <div>
                   <h2 className="mb-4 text-xl font-bold text-gray-900 dark:text-white">
-                    What&apos;s Included
+                    {t("Details.included")}
                   </h2>
                   <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {inclusions.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-3">
-                        <div className="mt-1 h-2 w-2 shrink-0 rounded-full bg-emerald-500" />
+                        <div className="bg-brand-500 mt-1 h-2 w-2 shrink-0 rounded-full" />
                         <span className="text-gray-700 dark:text-gray-300">{item}</span>
                       </li>
                     ))}
@@ -303,9 +320,11 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 className="sticky top-32 space-y-4 rounded-2xl border border-gray-200 bg-white p-6
                   dark:border-gray-700 dark:bg-gray-800"
               >
-                <h2 className="text-xl font-bold text-gray-900 dark:text-white">Interested?</h2>
+                <h2 className="text-xl font-bold text-gray-900 dark:text-white">
+                  {t("Sidebar.title")}
+                </h2>
                 <p className="text-sm text-gray-600 dark:text-gray-400">
-                  Contact us to arrange a viewing or get more information about this property.
+                  {t("Sidebar.description")}
                 </p>
                 <a
                   href={whatsappUrl}
@@ -316,14 +335,14 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     hover:shadow-lg active:scale-95"
                 >
                   <MessageCircle className="h-5 w-5" />
-                  Message on WhatsApp
+                  {t("Sidebar.whatsapp")}
                 </a>
                 <button
                   className="w-full rounded-xl border-2 border-gray-200 px-4 py-3 font-semibold
                     text-gray-900 transition-all hover:bg-gray-50 active:scale-95
                     dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
                 >
-                  Schedule a Viewing
+                  {t("Sidebar.viewing")}
                 </button>
               </div>
             </div>

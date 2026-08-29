@@ -299,7 +299,7 @@ export default function ListingsContent({
                 className="focus:ring-brand-300 w-full rounded-xl bg-white/95 py-3.5 pr-4 pl-12
                   text-base text-gray-800 shadow-lg focus:ring-2 focus:outline-none dark:bg-gray-800
                   dark:text-white dark:placeholder-gray-400"
-                aria-label="Search properties"
+                aria-label={t("Hero.search")}
               />
             </div>
           </div>
@@ -316,7 +316,7 @@ export default function ListingsContent({
             {/* Type Filter Tabs */}
             <div
               className="scrollbar-hide flex gap-2 overflow-x-auto pb-1 sm:pb-0"
-              aria-label="Filter by property type"
+              aria-label={t("Filters.Aria.type_filter")}
             >
               {[
                 { key: "all", label: t("Sort.all"), icon: LayoutGrid },
@@ -413,7 +413,7 @@ export default function ListingsContent({
                 className="text-xs font-semibold tracking-wide text-gray-600 uppercase
                   dark:text-gray-400"
               >
-                Active:
+                {t("Filters.Labels.active")}
               </span>
               <div className="flex flex-wrap items-center gap-2">
                 {searchTerm && (
@@ -422,11 +422,11 @@ export default function ListingsContent({
                       border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
                       rounded-full border px-2.5 py-0.5 text-xs font-semibold"
                   >
-                    Search: "{searchTerm}"
+                    {t("Filters.Labels.search_chip", { term: searchTerm })}
                     <button
                       onClick={() => setSearchTerm("")}
                       className="hover:text-brand-900 dark:hover:text-brand-100"
-                      aria-label="Remove search filter"
+                      aria-label={t("Filters.Aria.remove_search")}
                     >
                       <X className="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -438,11 +438,11 @@ export default function ListingsContent({
                       border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
                       rounded-full border px-2.5 py-0.5 text-xs font-semibold"
                   >
-                    For {offerFilter}
+                    {t("Filters.Labels.offer_chip", { offer: offerFilter })}
                     <button
                       onClick={() => setOfferFilter("all")}
                       className="hover:text-brand-900 dark:hover:text-brand-100"
-                      aria-label="Remove offer filter"
+                      aria-label={t("Filters.Aria.remove_offer")}
                     >
                       <X className="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -458,7 +458,7 @@ export default function ListingsContent({
                     <button
                       onClick={() => setCountryFilter("")}
                       className="hover:text-brand-900 dark:hover:text-brand-100"
-                      aria-label={`Remove ${countryFilter} filter`}
+                      aria-label={t("Filters.Aria.remove_item", { item: countryFilter })}
                     >
                       <X className="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -474,7 +474,7 @@ export default function ListingsContent({
                     <button
                       onClick={() => setCityFilter("")}
                       className="hover:text-brand-900 dark:hover:text-brand-100"
-                      aria-label={`Remove ${cityFilter} filter`}
+                      aria-label={t("Filters.Aria.remove_item", { item: cityFilter })}
                     >
                       <X className="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -486,11 +486,11 @@ export default function ListingsContent({
                       border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
                       rounded-full border px-2.5 py-0.5 text-xs font-semibold"
                   >
-                    {bedroomsFilter}+ Beds
+                    {t("Filters.Labels.beds_chip", { n: bedroomsFilter })}
                     <button
                       onClick={() => setBedroomsFilter(0)}
                       className="hover:text-brand-900 dark:hover:text-brand-100"
-                      aria-label="Remove bedrooms filter"
+                      aria-label={t("Filters.Aria.remove_bedrooms")}
                     >
                       <X className="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -502,11 +502,11 @@ export default function ListingsContent({
                       border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
                       rounded-full border px-2.5 py-0.5 text-xs font-semibold"
                   >
-                    {bathroomsFilter}+ Baths
+                    {t("Filters.Labels.baths_chip", { n: bathroomsFilter })}
                     <button
                       onClick={() => setBathroomsFilter(0)}
                       className="hover:text-brand-900 dark:hover:text-brand-100"
-                      aria-label="Remove bathrooms filter"
+                      aria-label={t("Filters.Aria.remove_bathrooms")}
                     >
                       <X className="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -525,7 +525,7 @@ export default function ListingsContent({
                         setMaxPrice("");
                       }}
                       className="hover:text-brand-900 dark:hover:text-brand-100"
-                      aria-label="Remove price filter"
+                      aria-label={t("Filters.Aria.remove_price")}
                     >
                       <X className="h-3 w-3" aria-hidden="true" />
                     </button>
@@ -538,7 +538,7 @@ export default function ListingsContent({
                 className="text-brand-700 dark:text-brand-400 cursor-pointer text-xs font-medium
                   hover:underline"
               >
-                Clear all
+                {t("Filters.Labels.clear_all")}
               </button>
             </div>
           )}
@@ -551,7 +551,7 @@ export default function ListingsContent({
           className="fixed inset-0 z-50 overflow-y-auto"
           role="dialog"
           aria-modal="true"
-          aria-label="Filter properties"
+          aria-label={t("Filters.Aria.open")}
         >
           <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={closeModal} />
           <div className="relative flex min-h-full items-center justify-center p-4">
@@ -568,7 +568,7 @@ export default function ListingsContent({
                 <div className="flex items-center gap-2">
                   <SlidersHorizontal className="text-brand-600 h-5 w-5" aria-hidden="true" />
                   <h2 className="text-lg font-bold text-gray-800 dark:text-white">
-                    Filter Properties
+                    {t("Filters.Labels.filter_properties")}
                   </h2>
                 </div>
                 <button
@@ -577,7 +577,7 @@ export default function ListingsContent({
                   className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center
                     justify-center rounded-lg p-2 text-gray-600 hover:text-gray-800
                     dark:hover:text-gray-200"
-                  aria-label="Close filters"
+                  aria-label={t("Filters.Aria.close")}
                 >
                   <X className="h-5 w-5" />
                 </button>
@@ -591,13 +591,13 @@ export default function ListingsContent({
                       uppercase dark:text-gray-400"
                   >
                     <Tag className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
-                    Availability
+                    {t("Filters.Labels.availability")}
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { key: "all", label: "All", icon: LayoutGrid },
-                      { key: "sale", label: "For Sale", icon: Tag },
-                      { key: "rent", label: "For Rent", icon: Check },
+                      { key: "all", label: t("Sort.all"), icon: LayoutGrid },
+                      { key: "sale", label: t("Filters.for_sale"), icon: Tag },
+                      { key: "rent", label: t("Filters.for_rent"), icon: Check },
                     ].map(({ key, label, icon: Icon }) => (
                       <button
                         key={key}
@@ -629,13 +629,13 @@ export default function ListingsContent({
                     <LayoutGrid
                       className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
                     />
-                    Property Type
+                    {t("Filters.Labels.property_type")}
                   </span>
                   <div className="flex flex-wrap gap-2">
                     {[
-                      { key: "all", label: "All", icon: LayoutGrid },
-                      { key: "apartment", label: "Apartments", icon: Building2 },
-                      { key: "house", label: "Houses", icon: HomeIcon },
+                      { key: "all", label: t("Sort.all"), icon: LayoutGrid },
+                      { key: "apartment", label: t("Sort.apartments"), icon: Building2 },
+                      { key: "house", label: t("Sort.houses"), icon: HomeIcon },
                     ].map(({ key, label, icon: Icon }) => (
                       <button
                         key={key}
@@ -666,7 +666,7 @@ export default function ListingsContent({
                         uppercase dark:text-gray-400"
                     >
                       <Globe className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
-                      Country
+                      {t("Filters.Labels.country")}
                     </label>
                     <select
                       value={draftCountry}
@@ -675,7 +675,7 @@ export default function ListingsContent({
                         bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
                         dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
-                      <option value="">All countries</option>
+                      <option value="">{t("Filters.Options.all_countries")}</option>
                       {geoCountries.map((gc) => (
                         <option key={gc} value={gc}>
                           {gc}
@@ -691,7 +691,7 @@ export default function ListingsContent({
                       <MapPin
                         className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
                       />
-                      City
+                      {t("Filters.Labels.city")}
                     </label>
                     <select
                       value={draftCity}
@@ -700,7 +700,7 @@ export default function ListingsContent({
                         bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
                         dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
-                      <option value="">All cities</option>
+                      <option value="">{t("Filters.Options.all_cities")}</option>
                       {geoCities.map((gc) => (
                         <option key={gc} value={gc}>
                           {gc}
@@ -720,7 +720,7 @@ export default function ListingsContent({
                       <BedDouble
                         className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
                       />
-                      Bedrooms
+                      {t("Filters.Labels.bedrooms")}
                     </label>
                     <select
                       value={draftBedrooms}
@@ -729,7 +729,7 @@ export default function ListingsContent({
                         bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
                         dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
-                      <option value={0}>Any</option>
+                      <option value={0}>{t("Filters.Options.any")}</option>
                       <option value={1}>1+</option>
                       <option value={2}>2+</option>
                       <option value={3}>3+</option>
@@ -742,7 +742,7 @@ export default function ListingsContent({
                         uppercase dark:text-gray-400"
                     >
                       <Bath className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
-                      Bathrooms
+                      {t("Filters.Labels.bathrooms")}
                     </label>
                     <select
                       value={draftBathrooms}
@@ -751,7 +751,7 @@ export default function ListingsContent({
                         bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
                         dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
-                      <option value={0}>Any</option>
+                      <option value={0}>{t("Filters.Options.any")}</option>
                       <option value={1}>1+</option>
                       <option value={2}>2+</option>
                       <option value={3}>3+</option>
@@ -768,7 +768,7 @@ export default function ListingsContent({
                     <CircleDollarSign
                       className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
                     />
-                    Price Range (USD)
+                    {t("Filters.Labels.price_range")}
                   </span>
                   <div className="mb-3 grid grid-cols-2 gap-2">
                     <button
@@ -778,7 +778,7 @@ export default function ListingsContent({
                         text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
                         py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
                     >
-                      Under $200k
+                      {t("Filters.Presets.under_200k")}
                     </button>
                     <button
                       type="button"
@@ -787,7 +787,7 @@ export default function ListingsContent({
                         text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
                         py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
                     >
-                      $200k – $400k
+                      {t("Filters.Presets.r_200_400")}
                     </button>
                     <button
                       type="button"
@@ -796,7 +796,7 @@ export default function ListingsContent({
                         text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
                         py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
                     >
-                      $400k – $600k
+                      {t("Filters.Presets.r_400_600")}
                     </button>
                     <button
                       type="button"
@@ -805,7 +805,7 @@ export default function ListingsContent({
                         text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
                         py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
                     >
-                      Over $600k
+                      {t("Filters.Presets.over_600k")}
                     </button>
                   </div>
                   <div className="flex items-center gap-3">
@@ -843,7 +843,7 @@ export default function ListingsContent({
                     text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 >
                   <RotateCcw className="h-4 w-4" />
-                  Clear all
+                  {t("Filters.Labels.clear_all")}
                 </button>
                 <button
                   type="button"
@@ -853,7 +853,7 @@ export default function ListingsContent({
                     text-white transition-colors duration-200"
                 >
                   <Check className="h-4 w-4" />
-                  Apply filters
+                  {t("Filters.Labels.apply")}
                 </button>
               </div>
             </div>
@@ -865,8 +865,11 @@ export default function ListingsContent({
       <div className="bg-gray-50 py-10 md:py-14 dark:bg-gray-900">
         <div className="container mx-auto px-4">
           <p className="mb-6 text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
-            Showing <span className="font-semibold">{filteredProperties.length}</span> of{" "}
-            {initialProperties.length} properties
+            {t.rich("Results.showing", {
+              shown: filteredProperties.length,
+              total: initialProperties.length,
+              b: (chunks) => <span className="font-semibold">{chunks}</span>,
+            })}
           </p>
 
           {filteredProperties.length > 0 ? (
@@ -874,10 +877,10 @@ export default function ListingsContent({
               {filteredProperties.map((property) => {
                 const type = property.type || "apartment";
                 const isHouse = type === "house";
-                const saleType = property.sale_type || "For Sale";
+                const saleType = property.sale_type || t("Filters.for_sale");
                 const price = property.price || 0;
-                const title = property.title || "Property";
-                const city = property.city || "Tbilisi";
+                const title = property.title || t("Fallback.property");
+                const city = property.city || t("Fallback.city");
 
                 return (
                   <article
@@ -976,9 +979,9 @@ export default function ListingsContent({
                           {t("Card.btn")}
                         </Link>
                         <a
-                          href={`${CONTACT_INFO.whatsapp.href}&text=Hi!%20I'm%20interested%20in%20${encodeURIComponent(
-                            title
-                          )}%20listed%20at%20$${price}`}
+                          href={`${CONTACT_INFO.whatsapp.href}&text=${encodeURIComponent(
+                            t("Card.whatsapp_prefill", { title, price })
+                          )}`}
                           target="_blank"
                           rel="noopener noreferrer"
                           className="bg-brand-600 hover:bg-brand-700 flex items-center
@@ -1004,10 +1007,10 @@ export default function ListingsContent({
             <div className="py-20 text-center">
               <SearchX className="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
               <h3 className="mb-2 text-xl font-semibold text-gray-500 dark:text-gray-400">
-                No properties found
+                {t("Results.no_results_title")}
               </h3>
               <p className="mb-6 text-gray-600 dark:text-gray-400">
-                Try a different search term or clear your filters.
+                {t("Results.no_results_text")}
               </p>
               <button
                 type="button"
@@ -1102,7 +1105,9 @@ export default function ListingsContent({
             {t("ContactBanner.description")}
           </p>
           <a
-            href={`${CONTACT_INFO.whatsapp.href}&text=Hi!%20I'm%20looking%20for%20a%20property.`}
+            href={`${CONTACT_INFO.whatsapp.href}&text=${encodeURIComponent(
+              t("ContactBanner.whatsapp_prefill")
+            )}`}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-brand-600 hover:bg-brand-700 inline-flex items-center rounded-xl px-8 py-3

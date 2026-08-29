@@ -1,21 +1,18 @@
 {
   "Components": {
-    "Navbar": {
-      "Home": "Strona główna",
-      "Socials": "Nauki społeczne",
-      "Listings": "Ogłoszenia",
-      "Contact": "Kontakt",
-      "About": "O nas"
-    },
-    "Pcarousel": {
-      "title": "Najczęściej oglądane nieruchomości w tym tygodniu",
-      "description": "Te nieruchomości cieszą się obecnie dużym zainteresowaniem wśród nabywców i inwestorów"
-    },
     "PCarousel": {
       "title": "Najczęściej oglądane nieruchomości w tym tygodniu",
-      "description": "Te nieruchomości cieszą się obecnie dużym zainteresowaniem wśród nabywców i inwestorów",
+      "subtitle": "Te nieruchomości cieszą się obecnie dużym zainteresowaniem wśród nabywców i inwestorów",
       "details": "Zobacz szczegóły",
-      "subtitle": "Te nieruchomości cieszą się obecnie dużym zainteresowaniem wśród nabywców i inwestorów"
+      "Aria": {
+        "previous": "Poprzednie nieruchomości",
+        "next": "Kolejne nieruchomości",
+        "go_to_slide": "Przejdź do slajdu {n}"
+      },
+      "Fallback": {
+        "property": "Nieruchomość",
+        "location": "Gruzja"
+      }
     },
     "NewsForm": {
       "input": {
@@ -29,41 +26,279 @@
         "success": "Dziękujemy za zapisanie się! Wkrótce otrzymasz nasze najnowsze informacje.",
         "network": "Błąd sieci. Sprawdź połączenie i spróbuj ponownie."
       }
-    }
-  },
-  "HomePage": {
-    "Metadata": {
-      "title": "Znajdź swoją wymarzoną nieruchomość",
-      "description": "Odkryj nieruchomości z najwyższej półki, korzystając z fachowego doradztwa i niezrównanej obsługi. Kupuj, sprzedawaj lub wynajmuj nieruchomości w stanie Georgia.",
-      "og_alt": "Nieruchomości klasy premium – QMAX Realty"
     },
-    "Hero": {
-      "image_alt": "Ekskluzywne nieruchomości z przepięknymi widokami",
-      "title": "Znajdź swoją wymarzoną nieruchomość!",
-      "subtitle": "Odkryj nieruchomości klasy premium dzięki fachowemu doradztwu i niezrównanej obsłudze",
-      "buy_btn": "Kup nieruchomości",
-      "rent_btn": "Nieruchomości na wynajem",
-      "sell_btn": "Sprzedaj swój dom"
+    "Navbar": {
+      "Home": "Strona główna",
+      "Socials": "Imprezy towarzyskie",
+      "Listings": "Ogłoszenia",
+      "Contact": "Kontakt",
+      "About": "O nas",
+      "Aria": {
+        "open_menu": "Otwórz menu główne",
+        "close_menu": "Zamknij menu główne",
+        "main_menu": "Menu główne"
+      }
     },
-    "WhyUs": {
-      "title": "Dlaczego warto wybrać QMAX Realty?",
-      "years_excellence": "Lata doskonałości",
-      "properties_sold": "Sprzedane nieruchomości",
-      "client_satisfaction": "Zadowolenie klientów",
-      "experts_title": "Eksperci rynkowi",
-      "experts_desc": "Dogłębna znajomość lokalnych rynków nieruchomości, trendów i możliwości inwestycyjnych.",
-      "service_title": "Obsługa na 5 gwiazdek",
-      "service_desc": "Setki pięciogwiazdkowych recenzji od zadowolonych nabywców, sprzedawców i inwestorów.",
-      "approach_title": "Indywidualne podejście",
-      "approach_desc": "Indywidualnie dostosowane rozwiązania i spersonalizowane doradztwo dostosowane do Twoich konkretnych potrzeb związanych z nieruchomościami.",
-      "trusted_title": "Godni zaufania i przejrzyści",
-      "trusted_desc": "Przejrzysta komunikacja, etyczne praktyki oraz pełne wsparcie na każdym etapie transakcji."
+    "Layout": {
+      "skip_to_content": "Przejdź do treści"
     },
-    "ContactBanner": {
-      "title": "Chcesz znaleźć swoją wymarzoną nieruchomość?",
-      "description": "Skontaktuj się z nami już teraz, aby umówić się na oglądanie nieruchomości lub uzyskać fachową poradę. Odpowiadamy w ciągu godziny.",
-      "whatsapp_btn": "Napisz do nas na WhatsAppie",
-      "view_all_btn": "Zobacz wszystkie nieruchomości"
+    "ThemeToggle": {
+      "Aria": {
+        "to_light": "Przełącz na tryb jasny",
+        "to_dark": "Przełącz na tryb ciemny"
+      }
+    },
+    "LanguageSelector": {
+      "Aria": {
+        "select_language": "Wybierz język"
+      }
+    },
+    "PropertyGallery": {
+      "title": "Galeria",
+      "Aria": {
+        "close": "Zamknij",
+        "previous": "Poprzedni",
+        "next": "Dalej"
+      },
+      "photo_alt": "{title} – zdjęcie {n}"
+    },
+    "Footer": {
+      "map_title": "Lokalizacja biura QMAX Realty",
+      "home_aria": "Strona główna QMAX Realty",
+      "copyright": "© {currentYear} QMAX Realty. Wszelkie prawa zastrzeżone."
+    },
+    "ContactForm": {
+      "title": "Wyślij nam wiadomość",
+      "subjects": {
+        "buying": "Chciałbym kupić",
+        "selling": "Chcę sprzedać swoją nieruchomość",
+        "renting": "Chciałbym wynająć",
+        "valuation": "Potrzebuję wyceny nieruchomości",
+        "investment": "Chcę zainwestować",
+        "general": "Ogólne zapytanie"
+      },
+      "labels": {
+        "first_name": "Imię *",
+        "last_name": "Nazwisko *",
+        "email": "E-mail *",
+        "phone": "Telefon (opcjonalnie)",
+        "subject": "Temat *",
+        "message": "Wiadomość *"
+      },
+      "placeholders": {
+        "message": "Opowiedz nam więcej o swoich potrzebach związanych z nieruchomością..."
+      },
+      "select_subject": "Wybierz temat...",
+      "errors": {
+        "first_name_required": "Imię jest polem obowiązkowym",
+        "last_name_required": "Należy podać nazwisko",
+        "email_required": "Pole „E-mail” jest obowiązkowe",
+        "email_invalid": "Wprowadź prawidłowy adres e-mail",
+        "phone_too_long": "Numer telefonu jest za długi",
+        "subject_required": "Proszę wybrać temat",
+        "message_required": "Wpisanie wiadomości jest obowiązkowe",
+        "message_min": "Wiadomość musi zawierać co najmniej 10 znaków"
+      },
+      "submit": {
+        "failed": "Nie udało się wysłać wiadomości. Spróbuj ponownie.",
+        "wrong": "Wystąpił błąd. Spróbuj ponownie.",
+        "network": "Błąd sieci. Sprawdź połączenie i spróbuj ponownie."
+      },
+      "success": "✓ Wiadomość została pomyślnie wysłana! Wkrótce się z Tobą skontaktujemy.",
+      "buttons": {
+        "send": "Wyślij wiadomość",
+        "sending": "Wysyłanie..."
+      },
+      "privacy": "Wysyłając ten formularz, wyrażasz zgodę na naszą politykę prywatności."
+    },
+    "Admin": {
+      "Dashboard": {
+        "nav_aria": "Sekcje administracyjne",
+        "Tabs": {
+          "properties": "Właściwości",
+          "messages": "Wiadomości",
+          "newsletter": "Biuletyn informacyjny"
+        },
+        "Headings": {
+          "properties": "Właściwości",
+          "messages": "Wiadomości",
+          "newsletter": "Biuletyn"
+        },
+        "logout": "Wyloguj się",
+        "add_property": "Dodaj nieruchomość",
+        "Empty": {
+          "no_properties": "Nie ma jeszcze żadnych nieruchomości."
+        },
+        "DeleteDialog": {
+          "title": "Usunąć właściwość?",
+          "description": "{title} zostanie usunięte. Możesz cofnąć tę czynność w ciągu 8 sekund."
+        },
+        "Buttons": {
+          "cancel": "Anuluj",
+          "delete": "Usuń",
+          "undo": "Cofnij"
+        },
+        "Toast": {
+          "deleted": "Obiekt został usunięty."
+        },
+        "Errors": {
+          "delete_failed": "Nie udało się usunąć właściwości.",
+          "restore_failed": "Nie udało się przywrócić właściwości."
+        }
+      },
+      "LoginForm": {
+        "title": "Logowanie administratora",
+        "subtitle": "Zaloguj się na pulpit nawigacyjny, korzystając z konta administratora.",
+        "labels": {
+          "username": "Nazwa użytkownika",
+          "password": "Hasło"
+        },
+        "errors": {
+          "missing_credentials": "Wprowadź zarówno nazwę użytkownika, jak i hasło.",
+          "invalid_credentials": "Nieprawidłowa nazwa użytkownika lub hasło.",
+          "signin_failed": "Logowanie nie powiodło się. Spróbuj ponownie.",
+          "network": "Nie można połączyć się z serwerem. Spróbuj ponownie."
+        },
+        "buttons": {
+          "sign_in": "Zaloguj się",
+          "signing_in": "Logowanie…"
+        }
+      },
+      "PropertyTable": {
+        "caption": "Właściwości",
+        "Columns": {
+          "title": "Tytuł",
+          "type": "Typ",
+          "location": "Lokalizacja",
+          "price": "Cena",
+          "status": "Status",
+          "actions": "Działania"
+        },
+        "Mobile": {
+          "type": "Typ",
+          "location": "Lokalizacja",
+          "price": "Cena"
+        },
+        "Empty": {
+          "none": "Nie ma jeszcze żadnych nieruchomości."
+        },
+        "Buttons": {
+          "edit": "Edytuj",
+          "delete": "Usuń"
+        },
+        "Aria": {
+          "edit_property": "Edytuj {title}",
+          "delete_property": "Usuń {title}"
+        }
+      },
+      "MessagesList": {
+        "loading": "Ładowanie…",
+        "retry": "Spróbuj ponownie",
+        "empty": "Jeszcze nie ma żadnych wiadomości.",
+        "sr": {
+          "read": "Oznacz jako przeczytane",
+          "unread": "Oznacz jako nieprzeczytane"
+        },
+        "Aria": {
+          "delete_message": "Usuń wiadomość od {name}"
+        },
+        "Dialog": {
+          "title": "Usunąć tę wiadomość?",
+          "description": "Spowoduje to trwałe usunięcie komunikatu z {name}. Możesz cofnąć tę czynność w ciągu 8 sekund."
+        },
+        "Buttons": {
+          "cancel": "Anuluj",
+          "delete": "Usuń",
+          "undo": "Cofnij"
+        },
+        "Toast": {
+          "deleted": "Wiadomość została usunięta."
+        }
+      },
+      "NewsletterSubscribers": {
+        "loading": "Ładowanie…",
+        "retry": "Spróbuj ponownie",
+        "empty": "Nie ma jeszcze żadnych subskrybentów.",
+        "Labels": {
+          "subscribed_at": "Subskrybowane {date}"
+        },
+        "Buttons": {
+          "remove": "Usuń",
+          "cancel": "Anuluj",
+          "undo": "Cofnij"
+        },
+        "Aria": {
+          "remove_subscriber": "Usuń {email}"
+        },
+        "Dialog": {
+          "title": "Usunąć abonenta?",
+          "description": "{email} zostanie usunięty z listy odbiorców newslettera. Możesz cofnąć tę czynność w ciągu 8 sekund."
+        },
+        "Toast": {
+          "removed": "Abonent został usunięty."
+        }
+      },
+      "PropertyFormModal": {
+        "Titles": {
+          "edit": "Edytuj właściwości",
+          "add": "Dodaj nieruchomość"
+        },
+        "Aria": {
+          "close_dialog": "Zamknij okno dialogowe"
+        },
+        "Fields": {
+          "title": "Tytuł *",
+          "type": "Typ",
+          "subtitle": "Napisy",
+          "sale_type": "Rodzaj sprzedaży",
+          "location": "Lokalizacja",
+          "neighborhood": "Okolica",
+          "city": "Miasto",
+          "region": "Region",
+          "country": "Kraj",
+          "currency": "Waluta",
+          "price": "Cena",
+          "sqmt": "Drobnostka",
+          "rooms": "Pokoje",
+          "bedrooms": "Sypialnie",
+          "bathrooms": "Łazienki",
+          "year_built": "Rok produkcji",
+          "floor": "Podłoga",
+          "coordsLat": "Szerokość geograficzna",
+          "coordsLng": "Długość geograficzna"
+        },
+        "Textareas": {
+          "description": "Opis",
+          "meta_description": "Opis meta",
+          "inclusions": "Zawartość",
+          "gallery_urls": "Adresy URL galerii"
+        },
+        "Hints": {
+          "one_per_line": "Po jednym w każdym wierszu",
+          "one_url_per_line": "Jeden adres URL w każdym wierszu"
+        },
+        "Parking": {
+          "available": "Dostępny parking"
+        },
+        "Labels": {
+          "card_image": "Zdjęcie karty",
+          "upload_image_file": "Prześlij plik graficzny",
+          "floor_plan": "Plan piętra",
+          "gallery_images": "Zdjęcia z galerii"
+        },
+        "Buttons": {
+          "cancel": "Anuluj",
+          "save": "Zapisz",
+          "saving": "Zapisywanie…"
+        },
+        "Validation": {
+          "title_required": "Tytuł jest obowiązkowy.",
+          "must_be_number": "To musi być liczba.",
+          "something_wrong": "Coś poszło nie tak.",
+          "read_failed_single": "Nie udało się odczytać wybranego obrazu.",
+          "read_failed_multi": "Nie udało się odczytać jednego lub kilku wybranych obrazów."
+        }
+      }
     }
   },
   "Pages": {
@@ -75,10 +310,11 @@
       },
       "Hero": {
         "image_alt": "Ekskluzywne nieruchomości z przepięknymi widokami",
+        "slideshow_aria": "Prezentacja wybranych nieruchomości",
         "title": "Znajdź swoją wymarzoną nieruchomość!",
         "subtitle": "Odkryj nieruchomości klasy premium, korzystając z fachowego doradztwa i niezrównanej obsługi",
         "buy_btn": "Kup nieruchomości",
-        "rent_btn": "Nieruchomości do wynajęcia",
+        "rent_btn": "Nieruchomości na wynajem",
         "sell_btn": "Sprzedaj swój dom"
       },
       "WhyUs": {
@@ -88,7 +324,7 @@
         "client_satisfaction": "Zadowolenie klientów",
         "experts_title": "Eksperci rynkowi",
         "experts_desc": "Dogłębna znajomość lokalnych rynków nieruchomości, trendów i możliwości inwestycyjnych.",
-        "service_title": "Obsługa na 5 gwiazdek",
+        "service_title": "Obsługa na najwyższym poziomie",
         "service_desc": "Setki 5-gwiazdkowych recenzji od zadowolonych kupujących, sprzedających i inwestorów.",
         "approach_title": "Indywidualne podejście",
         "approach_desc": "Indywidualnie dostosowane rozwiązania i spersonalizowane doradztwo dostosowane do Twoich konkretnych potrzeb związanych z nieruchomościami.",
@@ -118,37 +354,55 @@
       },
       "StayUpdated": {
         "title": "Bądź na bieżąco",
-        "subtitle": "Zapisz się, aby otrzymywać informacje o nowych ofertach nieruchomości, analizy rynkowe oraz ekskluzywne okazje."
+        "subtitle": "Zapisz się, aby otrzymywać informacje o nowych ofertach nieruchomości, analizy rynkowe i ekskluzywne okazje."
+      },
+      "SocialCards": {
+        "instagram": {
+          "tagline": "Codzienne aktualizacje",
+          "description": "Obserwuj QMAX Realty, aby oglądać zdjęcia nieruchomości, nowe oferty i wyjątkowe domy z całego świata.",
+          "cta_text": "Śledź nas"
+        },
+        "facebook": {
+          "tagline": "Aktualności ze społeczności",
+          "description": "Dołącz do naszej społeczności, aby uzyskać informacje rynkowe, lokalne porady oraz ekskluzywne ogłoszenia dotyczące nieruchomości.",
+          "cta_text": "Polub stronę"
+        },
+        "tiktok": {
+          "tagline": "Krótkie filmy o nieruchomościach",
+          "description": "Krótkie, wciągające filmiki dotyczące nieruchomości oraz materiały zza kulis przygotowane przez nasz zespół ds. ofert.",
+          "cta_text": "Obserwuj"
+        },
+        "telegram": {
+          "tagline": "Natychmiastowe aktualizacje",
+          "description": "Otrzymuj natychmiastowe powiadomienia o nowych ofertach nieruchomości, zmianach cen i nowościach rynkowych.",
+          "cta_text": "Dołącz do kanału"
+        },
+        "whatsapp": {
+          "tagline": "Pomoc techniczna dostępna 24 godziny na dobę, 7 dni w tygodniu",
+          "description": "Bezpośredni kontakt w sprawie zapytań dotyczących nieruchomości, wniosków o oglądanie oraz pomocy przy zakupie lub wynajmie.",
+          "cta_text": "Napisz do nas"
+        }
       }
     },
     "Listings": {
       "Metadata": {
         "title": "Znajdź swoją wymarzoną nieruchomość",
-        "description": "Odkryj nieruchomości z najwyższej półki, korzystając z fachowego doradztwa i niezrównanej obsługi. Kupuj, sprzedawaj lub wynajmuj nieruchomości w stanie Georgia.",
+        "description": "Odkryj nieruchomości klasy premium, korzystając z fachowego doradztwa i niezrównanej obsługi. Kupuj, sprzedawaj lub wynajmuj nieruchomości w stanie Georgia.",
         "og_alt": "Nieruchomości klasy premium – QMAX Realty"
       },
       "Hero": {
         "title": "Nieruchomości i oferty",
         "subtitle": "Kupuj lub wynajmuj nieruchomości na całym świecie.",
-        "search": "Wyszukiwanie według tytułu, lokalizacji, dzielnicy…",
+        "search": "Wyszukaj nieruchomości",
         "search_text": "Wyszukiwanie według tytułu, lokalizacji, dzielnicy…"
       },
       "Sort": {
         "all": "Wszystkie",
         "apartments": "Apartamenty",
         "houses": "Domy",
-        "revelance": "Trafność",
-        "price-asc": "Cena: od najniższej do najwyższej",
-        "price-desc": "Cena: Od najwyższej do najniższej ",
-        "sqmt-asc": "Rozmiar: Najmniejszy",
-        "sqmt-desc": "Rozmiar: Największy",
         "Filters": {
           "title": "Filtry",
           "revelance": "Trafność",
-          "price-asc": "Cena: od najniższej do najwyższej",
-          "price-desc": "Cena: Od najwyższej do najniższej ",
-          "sqmt-asc": "Rozmiar: najmniejszy",
-          "sqmt-desc": "Rozmiar: Największy",
           "price_asc": "Cena: od najniższej do najwyższej",
           "price_desc": "Cena: Od najwyższej do najniższej ",
           "sqmt_asc": "Rozmiar: Najmniejszy",
@@ -162,12 +416,12 @@
         "rooms": "Pokoje",
         "bed": "Świat",
         "beds": "Łóżka",
-        "view": "Zobacz szczegóły",
+        "btn": "Zobacz szczegóły",
         "enquire": "Zapytaj",
-        "btn": "Zobacz szczegóły"
+        "whatsapp_prefill": "Cześć! Interesuje mnie produkt {title}, którego cena wynosi ${price}"
       },
       "WhyUs": {
-        "title": "Dlaczego QMAX Realty?",
+        "title": "Dlaczego właśnie QMAX Realty?",
         "subtitle": "Profesjonalne doradztwo w zakresie kupna, sprzedaży lub wynajmu nieruchomości.",
         "rated_title": "Ocenione na 5 gwiazdek",
         "rated_desc": "Setki 5-gwiazdkowych recenzji od zadowolonych klientów.",
@@ -181,7 +435,240 @@
       "ContactBanner": {
         "title": "Szukasz czegoś konkretnego?",
         "description": "Powiedz nam, czego szukasz, a my znajdziemy dla Ciebie idealną nieruchomość.",
-        "btn": "Zapytaj nas na WhatsAppie"
+        "btn": "Zapytaj nas na WhatsAppie",
+        "whatsapp_prefill": "Cześć! Szukam nieruchomości."
+      },
+      "PageMeta": {
+        "title": "Nieruchomości na sprzedaż i wynajem – QMAX Realty",
+        "description": "Przejrzyj wszystkie oferty nieruchomości na sprzedaż i do wynajęcia. Mieszkania, domy, nieruchomości komercyjne i nie tylko."
+      },
+      "Filters": {
+        "for_sale": "Na sprzedaż",
+        "for_rent": "Do wynajęcia",
+        "Aria": {
+          "type_filter": "Filtruj według rodzaju nieruchomości",
+          "remove_search": "Usuń filtr wyszukiwania",
+          "remove_offer": "Usuń filtr ofert",
+          "remove_bedrooms": "Usuń filtr „sypialnie”",
+          "remove_bathrooms": "Usuń filtr „łazienki”",
+          "remove_price": "Usuń filtr cenowy",
+          "remove_item": "Usuń filtr {item}",
+          "open": "Właściwości filtra",
+          "close": "Zamknij filtry"
+        },
+        "Labels": {
+          "sort": "Los:",
+          "active": "Aktywne:",
+          "search_chip": "Wyszukaj: „{term}”",
+          "offer_chip": "Dla {offer}",
+          "beds_chip": "{n}+ Łóżka",
+          "baths_chip": "{n}+ Łazienki",
+          "availability": "Dostępność",
+          "property_type": "Rodzaj nieruchomości",
+          "country": "Kraj",
+          "city": "Miasto",
+          "bedrooms": "Sypialnie",
+          "bathrooms": "Łazienki",
+          "price_range": "Zakres cenowy (USD)",
+          "filter_properties": "Właściwości filtra",
+          "clear_all": "Wyczyść wszystko",
+          "apply": "Zastosuj filtry"
+        },
+        "Presets": {
+          "under_200k": "Poniżej 200 tys. dolarów",
+          "r_200_400": "200 tys. – 400 tys.",
+          "r_400_600": "400 tys. – 600 tys. dolarów",
+          "over_600k": "Ponad 600 tys. dolarów"
+        },
+        "Options": {
+          "all_countries": "Wszystkie kraje",
+          "all_cities": "Wszystkie miasta",
+          "any": "Tam"
+        }
+      },
+      "Results": {
+        "showing": "Wyświetlono <b>{shown}</b> spośród {total} właściwości",
+        "no_results_title": "Nie znaleziono żadnych nieruchomości",
+        "no_results_text": "Spróbuj wpisać inne hasło wyszukiwania lub wyczyść filtry.",
+        "clear_all_filters": "Wyczyść wszystkie filtry"
+      },
+      "Fallback": {
+        "property": "Nieruchomość",
+        "city": "Tbilisi"
+      }
+    },
+    "Contact": {
+      "Metadata": {
+        "title": "Skontaktuj się z QMAX Realty – skontaktuj się z nami",
+        "description": "Skontaktuj się z QMAX Realty, aby uzyskać fachowe porady dotyczące kupna, sprzedaży lub wynajmu nieruchomości."
+      },
+      "Hero": {
+        "title": "Skontaktuj się z nami",
+        "subtitle": "Masz pytania? Nasz zespół chętnie Ci pomoże. Skontaktuj się z nami i porozmawiajmy o Twoich planach dotyczących nieruchomości."
+      },
+      "Channels": {
+        "email": "E-mail",
+        "phone": "Telefon",
+        "whatsapp": "WhatsApp",
+        "office": "Biuro",
+        "availability": "Dostępne 24 godziny na dobę, 7 dni w tygodniu"
+      },
+      "WhatsappCard": {
+        "title": "Wolisz porozmawiać na czacie?",
+        "description": "Skontaktuj się z naszym zespołem bezpośrednio przez WhatsApp, aby uzyskać szybką odpowiedź.",
+        "btn": "Rozpocznij czat"
+      },
+      "ReadyCta": {
+        "title": "Gotowy, by zacząć?",
+        "subtitle": "Zapoznaj się z naszymi ofertami lub umów się już dziś na konsultację z jednym z naszych ekspertów."
+      },
+      "Buttons": {
+        "browse": "Przeglądaj oferty nieruchomości",
+        "whatsapp": "Czat na WhatsAppie"
+      }
+    },
+    "About": {
+      "Metadata": {
+        "title": "O firmie QMAX Realty – sprawdzona międzynarodowa agencja nieruchomości",
+        "description": "Poznaj QMAX Realty – międzynarodową agencję nieruchomości. Profesjonalne doradztwo w zakresie kupna, sprzedaży i wynajmu nieruchomości klasy premium."
+      },
+      "Hero": {
+        "title": "O firmie QMAX Realty",
+        "subtitle": "Twój zaufany partner w zakresie kupna, sprzedaży i wynajmu ekskluzywnych nieruchomości na całym świecie."
+      },
+      "Story": {
+        "image_alt": "Nieruchomości klasy premium z QMAX Realty",
+        "title": "Nasza historia",
+        "p1": "QMAX Realty to międzynarodowa agencja nieruchomości, której działalność opiera się na prostej obietnicy: rzetelnym doradztwie, przejrzystych transakcjach oraz dogłębnej znajomości lokalnego rynku. Od zabytkowych mieszkań na Starym Mieście po nowoczesne, luksusowe penthouse’y – pomagamy nabywcom, sprzedającym i inwestorom z pewnością poruszać się po rynkach nieruchomości.",
+        "p2": "Niezależnie od tego, czy szukasz swojego pierwszego mieszkania w mieście, czy też chcesz poszerzyć swój portfel inwestycyjny, nasz zespół łączy znajomość lokalnego rynku z międzynarodowymi standardami obsługi – a do tego mówimy w Twoim języku."
+      },
+      "Stats": {
+        "years_excellence": "Lata doskonałości",
+        "properties_sold": "Sprzedane nieruchomości",
+        "client_satisfaction": "Zadowolenie klientów"
+      },
+      "Buttons": {
+        "browse": "Przeglądaj oferty nieruchomości",
+        "get_in_touch": "Skontaktuj się z nami",
+        "whatsapp": "Czat na WhatsAppie",
+        "contact": "Skontaktuj się z nami"
+      },
+      "WhatWeDo": {
+        "title": "Czym się zajmujemy",
+        "subtitle": "Kompleksowe wsparcie na każdym etapie procesu związanego z nieruchomością."
+      },
+      "Services": {
+        "buying": {
+          "title": "Zakup",
+          "text": "Starannie wyselekcjonowane oferty dopasowane do Twojego budżetu, stylu życia i celów inwestycyjnych."
+        },
+        "selling": {
+          "title": "Sprzedaż",
+          "text": "Rzetelne wyceny, profesjonalna fotografia i ukierunkowane działania marketingowe, które przyspieszają sprzedaż."
+        },
+        "renting": {
+          "title": "Wynajem",
+          "text": "Sprawdzone nieruchomości na wynajem z jasnymi umowami i niezawodnym wsparciem w zakresie długoterminowego najmu."
+        },
+        "investing": {
+          "title": "Inwestowanie",
+          "text": "Badania rynkowe i analiza rentowności, które pomogą Ci podejmować pewne decyzje inwestycyjne."
+        }
+      },
+      "WhyChoose": {
+        "title": "Dlaczego warto wybrać QMAX Realty?",
+        "subtitle": "Co nas wyróżnia."
+      },
+      "WhyUs": {
+        "local_expertise": {
+          "title": "Lokalna wiedza specjalistyczna",
+          "text": "Dogłębna znajomość dzielnic Tbilisi – od Sololaki po Vake i nie tylko."
+        },
+        "multilingual_team": {
+          "title": "Zespół wielojęzyczny",
+          "text": "Współpracujemy z klientami z całego świata, posługując się językiem angielskim, rosyjskim i gruzińskim."
+        },
+        "transparent_deals": {
+          "title": "Przejrzyste transakcje",
+          "text": "Przejrzyste umowy, sprawdzona dokumentacja i brak ukrytych opłat."
+        },
+        "personal_service": {
+          "title": "Usługi indywidualne",
+          "text": "Osoba, która z pełnym zaangażowaniem dba o Twoje potrzeby i towarzyszy Ci od początku do końca."
+        },
+        "fast_response": {
+          "title": "Szybka reakcja",
+          "text": "Odpowiadamy na pytania w ciągu kilku godzin, a oglądanie nieruchomości organizujemy w dogodnym dla Państwa terminie."
+        },
+        "verified_listings": {
+          "title": "Zweryfikowane ogłoszenia",
+          "text": "Każda nieruchomość jest sprawdzana i przedstawiana zgodnie z prawdą – to, co widzisz, jest tym, co dostajesz."
+        }
+      },
+      "ReadyCta": {
+        "title": "Chcesz znaleźć swoją nieruchomość?",
+        "subtitle": "Skontaktuj się z naszym zespołem już dziś, a pomożemy Ci podjąć właściwą decyzję."
+      }
+    },
+    "PropertyDetails": {
+      "Metadata": {
+        "not_found": "Nie znaleziono nieruchomości",
+        "premium": "Nieruchomość klasy premium",
+        "for_sale_type": "dla {sale_type}",
+        "sqmt": "{sqmt} m²",
+        "bedrooms_count": "{bedrooms} sypialnie"
+      },
+      "Details": {
+        "back_to_listings": "Powrót do listy ofert",
+        "location": "Lokalizacja",
+        "rooms": "Pokoje",
+        "bedrooms": "Sypialnie",
+        "bathrooms": "Łazienki",
+        "sqm": "m²",
+        "about": "Informacje o tej nieruchomości",
+        "floor_plan": "Plan piętra",
+        "included": "Co wchodzi w skład zestawu"
+      },
+      "Facts": {
+        "year_built": "Rok budowy",
+        "floor": "Podłoga",
+        "parking": "Parking",
+        "available": "Dostępne",
+        "none": "Brak"
+      },
+      "Sidebar": {
+        "title": "Jesteś zainteresowany?",
+        "description": "Skontaktuj się z nami, aby umówić się na oglądanie nieruchomości lub uzyskać więcej informacji na jej temat.",
+        "whatsapp": "Wiadomość na WhatsAppie",
+        "viewing": "Umów się na oglądanie nieruchomości",
+        "whatsapp_prefill": "Interesuje mnie {title}"
+      },
+      "Alts": {
+        "floor_plan": "Plan piętra {title}"
+      },
+      "Fallback": {
+        "property": "Nieruchomość",
+        "country": "Gruzja"
+      }
+    },
+    "NotFound": {
+      "Metadata": {
+        "title": "Strona nie znaleziona – QMAX Realty",
+        "description": "Nie udało się znaleźć strony, której szukasz. Zapraszamy do przejrzenia naszych ofert nieruchomości klasy premium."
+      },
+      "title": "Nie znaleziono strony",
+      "description": "Strona, której szukasz, nie istnieje lub mogła zostać przeniesiona. Pomogę Ci wrócić na właściwą ścieżkę.",
+      "go_home": "Wróć do strony głównej",
+      "browse": "Przeglądaj nieruchomości"
+    },
+    "Admin": {
+      "Metadata": {
+        "title": "Admin"
+      },
+      "Login": {
+        "Metadata": {
+          "title": "Logowanie administratora"
+        }
       }
     }
   }

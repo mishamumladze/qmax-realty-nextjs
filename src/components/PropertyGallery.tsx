@@ -3,6 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 interface PropertyGalleryProps {
   images: string[];
@@ -10,6 +11,7 @@ interface PropertyGalleryProps {
 }
 
 export default function PropertyGallery({ images, propertyTitle }: PropertyGalleryProps) {
+  const t = useTranslations("Components.PropertyGallery");
   const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
 
   useEffect(() => {
@@ -31,7 +33,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
   return (
     <>
       <div>
-        <h2 className="mb-6 text-xl font-bold text-gray-900 dark:text-white">Gallery</h2>
+        <h2 className="mb-6 text-xl font-bold text-gray-900 dark:text-white">{t("title")}</h2>
 
         {/* Gallery Grid */}
         <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
@@ -45,7 +47,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
             >
               <Image
                 src={img}
-                alt={`${propertyTitle} - photo ${idx + 1}`}
+                alt={t("photo_alt", { title: propertyTitle, n: idx + 1 })}
                 fill
                 className="object-cover transition-transform group-hover:scale-105"
               />
@@ -62,7 +64,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
             onClick={() => setSelectedIndex(null)}
             className="absolute top-4 right-4 rounded-full bg-white/20 p-2 text-white
               transition-colors hover:bg-white/30"
-            aria-label="Close"
+            aria-label={t("Aria.close")}
           >
             <X className="h-6 w-6" />
           </button>
@@ -71,7 +73,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
           <div className="relative h-full max-h-[90vh] w-full max-w-4xl">
             <Image
               src={images[selectedIndex]}
-              alt={`${propertyTitle} - photo ${selectedIndex + 1}`}
+              alt={t("photo_alt", { title: propertyTitle, n: selectedIndex + 1 })}
               fill
               className="object-contain"
             />
@@ -82,7 +84,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
             onClick={() => setSelectedIndex((selectedIndex - 1 + images.length) % images.length)}
             className="absolute top-1/2 left-4 -translate-y-1/2 rounded-full bg-white/20 p-3
               text-white transition-colors hover:bg-white/30"
-            aria-label="Previous"
+            aria-label={t("Aria.previous")}
           >
             <ChevronLeft className="h-6 w-6" />
           </button>
@@ -91,7 +93,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
             onClick={() => setSelectedIndex((selectedIndex + 1) % images.length)}
             className="absolute top-1/2 right-4 -translate-y-1/2 rounded-full bg-white/20 p-3
               text-white transition-colors hover:bg-white/30"
-            aria-label="Next"
+            aria-label={t("Aria.next")}
           >
             <ChevronRight className="h-6 w-6" />
           </button>

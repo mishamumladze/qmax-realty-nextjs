@@ -72,7 +72,7 @@ export default async function HomePage() {
       {/* Hero Section */}
       <section
         className="relative h-[68vh] w-full md:h-[72vh]"
-        aria-label="Featured properties slideshow"
+        aria-label={t("Hero.slideshow_aria")}
       >
         <div className="relative h-full w-full">
           <Image
@@ -85,7 +85,7 @@ export default async function HomePage() {
           />
           <div
             className="absolute inset-0 flex flex-col bg-gradient-to-t from-black/80 via-black/40
-              to-transparent pt-16 text-center md:py-24"
+              to-transparent py-16 text-center md:py-24"
           >
             <div
               className="mx-auto mb-6 flex h-full w-4/5 flex-col items-center justify-end
@@ -94,7 +94,7 @@ export default async function HomePage() {
               <h1 className="mb-2 text-3xl font-bold md:text-5xl">{t("Hero.title")}</h1>
               <p className="mx-auto mb-6 max-w-2xl text-base md:text-lg">{t("Hero.subtitle")}</p>
             </div>
-            <div className="flex flex-wrap items-center justify-center">
+            <div className="flex flex-wrap items-center justify-center gap-4">
               <PrimaryButtonRounded
                 label={t("Hero.buy_btn")}
                 icon={<Home className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}

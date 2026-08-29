@@ -1,16 +1,10 @@
 "use client";
 
 import { useState } from "react";
+import { useTranslations } from "next-intl";
 import { CONTACT_INFO } from "@/config/contact";
 
-const CONTACT_SUBJECTS = [
-  { value: "buying", label: "I'm interested in buying" },
-  { value: "selling", label: "I want to sell my property" },
-  { value: "renting", label: "I'm looking to rent" },
-  { value: "valuation", label: "I need a property valuation" },
-  { value: "investment", label: "I want to invest" },
-  { value: "general", label: "General inquiry" },
-];
+const CONTACT_SUBJECTS = ["buying", "selling", "renting", "valuation", "investment", "general"];
 
 interface FormData {
   firstName: string;
@@ -36,6 +30,7 @@ interface ContactFormProps {
 }
 
 export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
+  const t = useTranslations("Components.ContactForm");
   const [formData, setFormData] = useState<FormData>({
     firstName: "",
     lastName: "",
@@ -53,32 +48,32 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
     const newErrors: FormErrors = {};
 
     if (!formData.firstName.trim()) {
-      newErrors.firstName = "First name is required";
+      newErrors.firstName = t("errors.first_name_required");
     }
 
     if (!formData.lastName.trim()) {
-      newErrors.lastName = "Last name is required";
+      newErrors.lastName = t("errors.last_name_required");
     }
 
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!formData.email.trim()) {
-      newErrors.email = "Email is required";
+      newErrors.email = t("errors.email_required");
     } else if (!emailRegex.test(formData.email)) {
-      newErrors.email = "Please enter a valid email";
+      newErrors.email = t("errors.email_invalid");
     }
 
     if (formData.phone && formData.phone.length > 30) {
-      newErrors.phone = "Phone number is too long";
+      newErrors.phone = t("errors.phone_too_long");
     }
 
     if (!formData.subject) {
-      newErrors.subject = "Please select a subject";
+      newErrors.subject = t("errors.subject_required");
     }
 
     if (!formData.message.trim()) {
-      newErrors.message = "Message is required";
+      newErrors.message = t("errors.message_required");
     } else if (formData.message.length < 10) {
-      newErrors.message = "Message must be at least 10 characters";
+      newErrors.message = t("errors.message_min");
     }
 
     setErrors(newErrors);
@@ -133,14 +128,14 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
           if (data.fields.subject) fieldErrors.subject = data.fields.subject;
           if (data.fields.message) fieldErrors.message = data.fields.message;
         }
-        fieldErrors.submit = data.error || "Failed to send message. Please try again.";
+        fieldErrors.submit = data.error || t("submit.failed");
         setErrors(fieldErrors);
         return;
       }
 
       if (!data.ok) {
         setErrors({
-          submit: "Something went wrong. Please try again.",
+          submit: t("submit.wrong"),
         });
         return;
       }
@@ -158,7 +153,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
       setTimeout(() => setSuccess(false), 5000);
     } catch {
       setErrors({
-        submit: "Network error. Please check your connection and try again.",
+        submit: t("submit.network"),
       });
     } finally {
       setLoading(false);
@@ -167,16 +162,14 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
 
   return (
     <div className="rounded-2xl bg-white p-8 shadow-lg md:p-10 dark:bg-gray-800">
-      <h2 className="mb-6 text-2xl font-bold text-gray-900">Send us a message</h2>
+      <h2 className="mb-6 text-2xl font-bold text-gray-900">{t("title")}</h2>
 
       {success && (
         <div
           className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800
             dark:bg-green-900/20"
         >
-          <p className="font-semibold text-green-800">
-            ✓ Message sent successfully! We'll get back to you soon.
-          </p>
+          <p className="font-semibold text-green-800">{t("success")}</p>
         </div>
       )}
 
@@ -197,7 +190,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               htmlFor="firstName"
               className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
             >
-              First Name *
+              {t("labels.first_name")}
             </label>
             <input
               type="text"
@@ -221,7 +214,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               htmlFor="lastName"
               className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
             >
-              Last Name *
+              {t("labels.last_name")}
             </label>
             <input
               type="text"
@@ -248,7 +241,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             htmlFor="email"
             className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
           >
-            Email *
+            {t("labels.email")}
           </label>
           <input
             type="email"
@@ -274,7 +267,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             htmlFor="phone"
             className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
           >
-            Phone (Optional)
+            {t("labels.phone")}
           </label>
           <input
             type="tel"
@@ -300,7 +293,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             htmlFor="subject"
             className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
           >
-            Subject *
+            {t("labels.subject")}
           </label>
           <select
             id="subject"
@@ -315,10 +308,10 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               }`}
             disabled={loading}
           >
-            <option value="">Select a subject...</option>
+            <option value="">{t("select_subject")}</option>
             {CONTACT_SUBJECTS.map((subj) => (
-              <option key={subj.value} value={subj.value}>
-                {subj.label}
+              <option key={subj} value={subj}>
+                {t(`subjects.${subj}`)}
               </option>
             ))}
           </select>
@@ -331,7 +324,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             htmlFor="message"
             className="mb-2 block text-sm font-semibold text-gray-900 dark:text-white"
           >
-            Message *
+            {t("labels.message")}
           </label>
           <textarea
             id="message"
@@ -345,7 +338,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
                   ? "border-red-500 bg-red-50"
                   : "border-gray-300 dark:border-gray-500 dark:bg-gray-900"
               }`}
-            placeholder="Tell us more about your property needs..."
+            placeholder={t("placeholders.message")}
             disabled={loading}
           />
           {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
@@ -359,12 +352,10 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             w-full rounded-lg py-3 font-semibold text-white transition-colors duration-200
             disabled:bg-gray-400 dark:text-gray-900"
         >
-          {loading ? "Sending..." : "Send Message"}
+          {loading ? t("buttons.sending") : t("buttons.send")}
         </button>
 
-        <p className="text-center text-xs text-gray-500">
-          By submitting this form, you agree to our privacy policy.
-        </p>
+        <p className="text-center text-xs text-gray-500">{t("privacy")}</p>
       </form>
     </div>
   );

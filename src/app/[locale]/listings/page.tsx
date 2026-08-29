@@ -1,12 +1,16 @@
-import { Metadata } from "next";
+import type { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { getActiveProperties } from "@/lib/db";
 import ListingsContent from "@/components/ListingsContent";
 
-export const metadata: Metadata = {
-  title: "Properties for Sale & Rent - QMAX Realty",
-  description:
-    "Browse all properties for sale and rent. Apartments, houses, commercial real estate and more.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Pages.Listings.PageMeta");
+
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 interface ListingsPageProps {
   searchParams: Promise<{

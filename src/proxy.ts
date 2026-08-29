@@ -29,8 +29,7 @@ export default async function proxy(request: NextRequest): Promise<NextResponse>
   const path = stripLocalePrefix(pathname);
 
   const isAdminPath = path === "/admin" || path.startsWith("/admin/");
-  const isAdminLoginPath =
-    path === "/admin/login" || path.startsWith("/admin/login/");
+  const isAdminLoginPath = path === "/admin/login" || path.startsWith("/admin/login/");
 
   // 1. Handle Admin Route Protection first
   if (isAdminPath) {

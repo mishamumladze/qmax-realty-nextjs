@@ -173,20 +173,31 @@ function parseJsonArrayColumn(value: unknown): string[] {
 function parseCoordsColumn(value: unknown): [number, number] | undefined {
   let candidate: unknown = value;
   if (typeof candidate === "string") {
-    try { candidate = JSON.parse(candidate) as unknown; } catch { return undefined; }
+    try {
+      candidate = JSON.parse(candidate) as unknown;
+    } catch {
+      return undefined;
+    }
   }
   if (
     Array.isArray(candidate) &&
     candidate.length === 2 &&
-    typeof candidate[0] === "number" && Number.isFinite(candidate[0]) &&
-    typeof candidate[1] === "number" && Number.isFinite(candidate[1])
+    typeof candidate[0] === "number" &&
+    Number.isFinite(candidate[0]) &&
+    typeof candidate[1] === "number" &&
+    Number.isFinite(candidate[1])
   ) {
     return [candidate[0], candidate[1]];
   }
   if (candidate !== null && typeof candidate === "object") {
     const lat = (candidate as { lat?: unknown }).lat;
     const lng = (candidate as { lng?: unknown }).lng;
-    if (typeof lat === "number" && Number.isFinite(lat) && typeof lng === "number" && Number.isFinite(lng)) {
+    if (
+      typeof lat === "number" &&
+      Number.isFinite(lat) &&
+      typeof lng === "number" &&
+      Number.isFinite(lng)
+    ) {
       return [lat, lng];
     }
   }
@@ -358,7 +369,9 @@ export function insertProperty(data: PropertyFormData & { slug?: string }): Prop
 
     const select = db.prepare("SELECT * FROM properties WHERE id = ?");
     return (
-      normalizePropertyRow(select.get(info.lastInsertRowid as number) as Record<string, unknown> | undefined) ?? null
+      normalizePropertyRow(
+        select.get(info.lastInsertRowid as number) as Record<string, unknown> | undefined
+      ) ?? null
     );
   } catch {
     return null;

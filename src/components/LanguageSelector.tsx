@@ -1,97 +1,120 @@
 "use client";
 
-import { usePathname, useRouter } from "next/navigation";
-import { useLocale } from "next-intl";
-import { Globe } from "lucide-react";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { useState, useRef, useEffect } from "react";
 
-const LANGUAGES = {
-  en: { name: "English", flag: "🇬🇧" },
-  de: { name: "Deutsch", flag: "🇩🇪" },
-  pl: { name: "Polski", flag: "🇵🇱" },
-  ru: { name: "Русский", flag: "🇷🇺" },
-  tr: { name: "Türkçe", flag: "🇹🇷" },
-} as const;
+const LANGUAGES = [
+  { code: "en", label: "English", flag: "🇬🇧" },
+  { code: "de", label: "Deutsch", flag: "🇩🇪" },
+  { code: "pl", label: "Polski", flag: "🇵🇱" },
+  { code: "ru", label: "Русский", flag: "🇷🇺" },
+  { code: "tr", label: "Türkçe", flag: "🇹🇷" },
+] as const;
 
-type Language = keyof typeof LANGUAGES;
-
-export function LanguageSelector() {
+export default function LanguageSelector() {
   const pathname = usePathname();
-  const router = useRouter();
-  const rawLocale = useLocale(); // Get current locale directly from next-intl
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
-  // Safely fallback to "en" if rawLocale isn't in LANGUAGES
-  const currentLang: Language = rawLocale in LANGUAGES ? (rawLocale as Language) : "en";
+  const segments = pathname?.split("/").filter(Boolean) || [];
+  const currentLocale = LANGUAGES.some((lang) => lang.code === segments[0]) ? segments[0] : "en";
 
-  // Safely grab current language object with fallback
-  const activeLangConfig = LANGUAGES[currentLang] || LANGUAGES.en;
+  const selectedLanguage = LANGUAGES.find((l) => l.code === currentLocale) || LANGUAGES[0];
 
-  // Close dropdown when clicking outside
+  // Helper to dynamically build the localized URL for each link
+  const getLocalePath = (nextLocale: string) => {
+    if (!pathname) return nextLocale === "en" ? "/" : `/${nextLocale}`;
+
+    const pathSegments = pathname.split("/").filter(Boolean);
+    const hasLocalePrefix = LANGUAGES.some((lang) => lang.code === pathSegments[0]);
+
+    // Remove the current locale prefix if it exists
+    if (hasLocalePrefix) {
+      pathSegments.shift();
+    }
+
+    // Build the new path
+    if (nextLocale === "en") {
+      // English doesn't get a prefix
+      return pathSegments.length > 0 ? `/${pathSegments.join("/")}` : "/";
+    } else {
+      // Other languages get a prefix
+      return `/${nextLocale}${pathSegments.length > 0 ? "/" + pathSegments.join("/") : ""}`;
+    }
+  };
+
+  // Close dropdown on click outside
   useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
+    const handleClickOutside = (event: MouseEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target as Node)) {
         setIsOpen(false);
       }
-    }
-
-    if (isOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-      return () => document.removeEventListener("mousedown", handleClickOutside);
-    }
-  }, [isOpen]);
-
-  const handleLanguageChange = (lang: Language) => {
-    // Remove existing language prefix if present, then prepend new locale
-    const pathWithoutLang = pathname.replace(/^\/(en|de|pl|ru|tr)/, "");
-    const newPath = `/${lang}${pathWithoutLang || ""}`;
-    router.push(newPath);
-    setIsOpen(false);
-  };
+    };
+    document.addEventListener("mousedown", handleClickOutside);
+    return () => document.removeEventListener("mousedown", handleClickOutside);
+  }, []);
 
   return (
-    <div className="relative" ref={dropdownRef}>
-      {/* Trigger Button */}
+    <div className="relative inline-block text-left" ref={dropdownRef}>
       <button
+        type="button"
         onClick={() => setIsOpen(!isOpen)}
-        className="flex cursor-pointer items-center gap-2 rounded-lg border border-gray-300 px-3
-          py-2 transition-colors dark:hover:bg-gray-700"
-        aria-label="Select language"
+        className="border-brand-300 hover:border-brand-600 focus:ring-brand-500
+          dark:border-brand-800 dark:hover:border-brand-400 inline-flex w-full items-center
+          justify-between gap-x-2 rounded-lg border bg-white px-3.5 py-2 text-sm font-medium
+          text-gray-700 shadow-sm transition-colors focus:ring-2 focus:ring-offset-2
+          focus:outline-none dark:bg-gray-900 dark:text-gray-200"
+        aria-haspopup="true"
+        aria-expanded={isOpen}
       >
-        <Globe size={18} />
-        <span className="text-sm font-medium">
-          {activeLangConfig.flag} {currentLang.toUpperCase()}
+        <span className="flex items-center gap-2">
+          <span>{selectedLanguage.flag}</span>
+          <span>{selectedLanguage.label}</span>
         </span>
+        <svg
+          className={`text-brand-600 dark:text-brand-400 h-4 w-4 transition-transform duration-200
+            ${isOpen ? "rotate-180" : ""}`}
+          fill="none"
+          stroke="currentColor"
+          viewBox="0 0 24 24"
+        >
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
+        </svg>
       </button>
 
-      {/* Dropdown Menu */}
       {isOpen && (
         <div
-          className="absolute right-0 z-50 mt-2 w-48 rounded-lg border shadow-lg
-            dark:border-gray-700 dark:bg-gray-900/95 dark:text-gray-300"
+          className={`ring-opacity-5 border-brand-200 dark:border-brand-800 /* Mobile-first: Open UP
+          */ /* Desktop (sm and up): Open DOWN */ absolute right-0 bottom-full z-50 mb-2 w-40
+          rounded-lg border bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none sm:top-full
+          sm:bottom-auto sm:mt-2 sm:mb-0 dark:bg-gray-900`}
         >
-          <div className="p-2">
-            {(Object.keys(LANGUAGES) as Language[]).map((lang) => {
-              const config = LANGUAGES[lang];
-              return (
-                <button
-                  key={lang}
-                  onClick={() => handleLanguageChange(lang)}
-                  className={`flex w-full cursor-pointer items-center gap-3 rounded-md px-4 py-3
-                  text-left transition-colors ${
-                    currentLang === lang
-                      ? "dark:bg-brand-900 font-semibold"
-                      : "hover:bg-brand-950 transition-colors dark:text-gray-300"
-                  }`}
-                >
-                  <span className="text-lg">{config.flag}</span>
-                  <span className="flex-1">{config.name}</span>
-                  {currentLang === lang && <span className="text-brand-600">✓</span>}
-                </button>
-              );
-            })}
-          </div>
+          {LANGUAGES.map((lang) => {
+            const isActive = lang.code === currentLocale;
+            return (
+              <Link
+                key={lang.code}
+                href={getLocalePath(lang.code)}
+                onClick={() => setIsOpen(false)}
+                className={`flex w-full items-center justify-between px-4 py-2 text-sm
+                transition-colors ${
+                  isActive
+                    ? "bg-brand-600 dark:bg-brand-500 font-semibold text-white dark:text-gray-900"
+                    : `hover:bg-brand-50 hover:text-brand-700 dark:hover:bg-brand-900/40
+                      dark:hover:text-brand-400 text-gray-700 dark:text-gray-200`
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <span>{lang.flag}</span>
+                  <span>{lang.label}</span>
+                </span>
+                {isActive && (
+                  <span className="bg-brand-600 dark:bg-brand-400 h-1.5 w-1.5 rounded-full" />
+                )}
+              </Link>
+            );
+          })}
         </div>
       )}
     </div>

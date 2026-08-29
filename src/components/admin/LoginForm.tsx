@@ -2,6 +2,7 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { AdminButton } from "@/components/ui/AdminButton";
 import type { AdminCredentials } from "@/types/admin";
 
@@ -10,6 +11,7 @@ const inputClasses =
 
 export function LoginForm() {
   const router = useRouter();
+  const t = useTranslations("Components.Admin.LoginForm");
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
@@ -21,7 +23,7 @@ export function LoginForm() {
 
     // Client-side required validation before any network request.
     if (username.trim() === "" || password === "") {
-      setError("Please enter both username and password.");
+      setError(t("errors.missing_credentials"));
       return;
     }
 
@@ -36,13 +38,13 @@ export function LoginForm() {
       });
 
       if (!response.ok) {
-        setError("Invalid username or password.");
+        setError(t("errors.invalid_credentials"));
         return;
       }
 
       const data: { token?: string } = await response.json();
       if (!data.token) {
-        setError("Sign-in failed. Please try again.");
+        setError(t("errors.signin_failed"));
         return;
       }
 
@@ -50,18 +52,19 @@ export function LoginForm() {
       document.cookie = `admin_token=${data.token}; path=/; max-age=604800; samesite=lax`;
       router.push("/admin");
     } catch {
-      setError("Unable to reach the server. Please try again.");
+      setError(t("errors.network"));
     } finally {
       setSubmitting(false);
     }
   }
 
   return (
-    <div className="mx-auto w-full max-w-sm rounded-xl border border-gray-200 bg-white p-6 shadow-sm dark:border-gray-700 dark:bg-gray-800">
-      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-50">Admin sign in</h1>
-      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
-        Use your admin account to access the dashboard.
-      </p>
+    <div
+      className="mx-auto w-full max-w-sm rounded-xl border border-gray-200 bg-white p-6 shadow-sm
+        dark:border-gray-700 dark:bg-gray-800"
+    >
+      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-50">{t("title")}</h1>
+      <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t("subtitle")}</p>
 
       <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
         <div>
@@ -69,7 +72,7 @@ export function LoginForm() {
             htmlFor="login-username"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
-            Username
+            {t("labels.username")}
           </label>
           <input
             id="login-username"
@@ -88,7 +91,7 @@ export function LoginForm() {
             htmlFor="login-password"
             className="block text-sm font-medium text-gray-700 dark:text-gray-300"
           >
-            Password
+            {t("labels.password")}
           </label>
           <input
             id="login-password"
@@ -109,7 +112,7 @@ export function LoginForm() {
           className="w-full"
           disabled={submitting}
         >
-          {submitting ? "Signing in…" : "Sign in"}
+          {submitting ? t("buttons.signing_in") : t("buttons.sign_in")}
         </AdminButton>
 
         <div aria-live="polite">

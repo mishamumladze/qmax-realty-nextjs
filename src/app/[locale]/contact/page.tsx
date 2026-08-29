@@ -1,13 +1,18 @@
 import { Metadata } from "next";
+import { getTranslations } from "next-intl/server";
 import { Mail, Phone, MapPin, MessageCircle } from "lucide-react";
 import { PrimaryButton, SecondaryButtonTransparent } from "@/components/ui/Buttons";
 import { CONTACT_INFO } from "@/config/contact";
 import ContactForm from "@/components/ContactForm";
 
-export const metadata: Metadata = {
-  title: "Contact QMAX Realty - Get in Touch",
-  description: "Contact QMAX Realty for expert guidance on buying, selling, or renting property.",
-};
+export async function generateMetadata(): Promise<Metadata> {
+  const t = await getTranslations("Pages.Contact.Metadata");
+
+  return {
+    title: t("title"),
+    description: t("description"),
+  };
+}
 
 interface ContactPageProps {
   searchParams: Promise<{
@@ -18,6 +23,7 @@ interface ContactPageProps {
 export default async function ContactPage({ searchParams }: ContactPageProps) {
   const params = await searchParams;
   const subject = params.subject || "";
+  const t = await getTranslations("Pages.Contact");
 
   return (
     <>
@@ -27,11 +33,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           overflow-hidden bg-gradient-to-r py-16 text-white md:py-24"
       >
         <div className="relative container mx-auto px-4 text-center">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">Contact Us</h1>
-          <p className="mx-auto max-w-2xl text-lg md:text-xl">
-            Have questions? Our team is here to help. Reach out and let's talk about your property
-            goals.
-          </p>
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl">{t("Hero.title")}</h1>
+          <p className="mx-auto max-w-2xl text-lg md:text-xl">{t("Hero.subtitle")}</p>
         </div>
       </section>
 
@@ -52,7 +55,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                    Email
+                    {t("Channels.email")}
                   </h3>
                   <a
                     href="mailto:info@qmaxrealty.ge"
@@ -75,7 +78,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                    Phone
+                    {t("Channels.phone")}
                   </h3>
                   <a href={CONTACT_INFO.phone.href} className="text-brand-700 hover:text-brand-800">
                     {CONTACT_INFO.phone.display}
@@ -95,7 +98,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                    WhatsApp
+                    {t("Channels.whatsapp")}
                   </h3>
                   <a
                     href={CONTACT_INFO.whatsapp.href}
@@ -105,7 +108,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   >
                     {CONTACT_INFO.phone.display}
                   </a>
-                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">Available 24/7</p>
+                  <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
+                    {t("Channels.availability")}
+                  </p>
                 </div>
               </div>
 
@@ -121,7 +126,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 </div>
                 <div>
                   <h3 className="mb-1 text-lg font-semibold text-gray-900 dark:text-white">
-                    Office
+                    {t("Channels.office")}
                   </h3>
                   <p className="text-gray-600 dark:text-gray-300">{CONTACT_INFO.address.display}</p>
                 </div>
@@ -133,10 +138,10 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   mt-8 rounded-2xl border p-6"
               >
                 <h3 className="mb-2 text-lg font-semibold text-gray-900 dark:text-white">
-                  Prefer to chat?
+                  {t("WhatsappCard.title")}
                 </h3>
                 <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
-                  Connect with our team instantly on WhatsApp for quick responses.
+                  {t("WhatsappCard.description")}
                 </p>
                 <a
                   href={CONTACT_INFO.whatsapp.href}
@@ -146,7 +151,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     rounded-lg px-4 py-2 font-semibold text-white transition-colors"
                 >
                   <MessageCircle className="h-4 w-4" />
-                  Start Chat
+                  {t("WhatsappCard.btn")}
                 </a>
               </div>
             </div>
@@ -166,15 +171,15 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
       >
         <div className="container mx-auto px-4 text-center">
           <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl dark:text-white">
-            Ready to Get Started?
+            {t("ReadyCta.title")}
           </h2>
           <p className="mx-auto mb-8 max-w-2xl text-gray-600 dark:text-gray-300">
-            Browse our listings or schedule a consultation with one of our experts today.
+            {t("ReadyCta.subtitle")}
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <PrimaryButton label="Browse Properties" href="/listings" />
+            <PrimaryButton label={t("Buttons.browse")} href="/listings" />
             <SecondaryButtonTransparent
-              label="Chat on WhatsApp"
+              label={t("Buttons.whatsapp")}
               href={CONTACT_INFO.whatsapp.href}
             />
           </div>

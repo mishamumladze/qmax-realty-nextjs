@@ -46,3 +46,5 @@ next-env.d.ts
 
 # local tooling config
 opencode.json
+.omo/start-work/ledger.jsonl
+.omo/start-work/ledger.jsonl

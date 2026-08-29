@@ -3,7 +3,16 @@
     "PCarousel": {
       "title": "Most Viewed Properties This Week",
       "subtitle": "These properties are trending with buyers and investors right now",
-      "details": "View Details"
+      "details": "View Details",
+      "Aria": {
+        "previous": "Previous properties",
+        "next": "Next properties",
+        "go_to_slide": "Go to slide {n}"
+      },
+      "Fallback": {
+        "property": "Property",
+        "location": "Georgia"
+      }
     },
     "NewsForm": {
       "input": {
@@ -23,7 +32,273 @@
       "Socials": "Socials",
       "Listings": "Listings",
       "Contact": "Contact",
-      "About": "About"
+      "About": "About",
+      "Aria": {
+        "open_menu": "Open main menu",
+        "close_menu": "Close main menu",
+        "main_menu": "Main menu"
+      }
+    },
+    "Layout": {
+      "skip_to_content": "Skip to content"
+    },
+    "ThemeToggle": {
+      "Aria": {
+        "to_light": "Switch to light mode",
+        "to_dark": "Switch to dark mode"
+      }
+    },
+    "LanguageSelector": {
+      "Aria": {
+        "select_language": "Select language"
+      }
+    },
+    "PropertyGallery": {
+      "title": "Gallery",
+      "Aria": {
+        "close": "Close",
+        "previous": "Previous",
+        "next": "Next"
+      },
+      "photo_alt": "{title} - photo {n}"
+    },
+    "Footer": {
+      "map_title": "QMAX Realty Office Location",
+      "home_aria": "QMAX Realty homepage",
+      "copyright": "© {currentYear} QMAX Realty. All rights reserved."
+    },
+    "ContactForm": {
+      "title": "Send us a message",
+      "subjects": {
+        "buying": "I'm interested in buying",
+        "selling": "I want to sell my property",
+        "renting": "I'm looking to rent",
+        "valuation": "I need a property valuation",
+        "investment": "I want to invest",
+        "general": "General inquiry"
+      },
+      "labels": {
+        "first_name": "First Name *",
+        "last_name": "Last Name *",
+        "email": "Email *",
+        "phone": "Phone (Optional)",
+        "subject": "Subject *",
+        "message": "Message *"
+      },
+      "placeholders": {
+        "message": "Tell us more about your property needs..."
+      },
+      "select_subject": "Select a subject...",
+      "errors": {
+        "first_name_required": "First name is required",
+        "last_name_required": "Last name is required",
+        "email_required": "Email is required",
+        "email_invalid": "Please enter a valid email",
+        "phone_too_long": "Phone number is too long",
+        "subject_required": "Please select a subject",
+        "message_required": "Message is required",
+        "message_min": "Message must be at least 10 characters"
+      },
+      "submit": {
+        "failed": "Failed to send message. Please try again.",
+        "wrong": "Something went wrong. Please try again.",
+        "network": "Network error. Please check your connection and try again."
+      },
+      "success": "✓ Message sent successfully! We'll get back to you soon.",
+      "buttons": {
+        "send": "Send Message",
+        "sending": "Sending..."
+      },
+      "privacy": "By submitting this form, you agree to our privacy policy."
+    },
+    "Admin": {
+      "Dashboard": {
+        "nav_aria": "Admin sections",
+        "Tabs": {
+          "properties": "Properties",
+          "messages": "Messages",
+          "newsletter": "Newsletter"
+        },
+        "Headings": {
+          "properties": "Properties",
+          "messages": "Messages",
+          "newsletter": "Newsletter"
+        },
+        "logout": "Log out",
+        "add_property": "Add property",
+        "Empty": {
+          "no_properties": "No properties yet."
+        },
+        "DeleteDialog": {
+          "title": "Delete property?",
+          "description": "{title} will be removed. You can undo for 8 seconds."
+        },
+        "Buttons": {
+          "cancel": "Cancel",
+          "delete": "Delete",
+          "undo": "Undo"
+        },
+        "Toast": {
+          "deleted": "Property deleted."
+        },
+        "Errors": {
+          "delete_failed": "Failed to delete property.",
+          "restore_failed": "Failed to restore property."
+        }
+      },
+      "LoginForm": {
+        "title": "Admin sign in",
+        "subtitle": "Use your admin account to access the dashboard.",
+        "labels": {
+          "username": "Username",
+          "password": "Password"
+        },
+        "errors": {
+          "missing_credentials": "Please enter both username and password.",
+          "invalid_credentials": "Invalid username or password.",
+          "signin_failed": "Sign-in failed. Please try again.",
+          "network": "Unable to reach the server. Please try again."
+        },
+        "buttons": {
+          "sign_in": "Sign in",
+          "signing_in": "Signing in…"
+        }
+      },
+      "PropertyTable": {
+        "caption": "Properties",
+        "Columns": {
+          "title": "Title",
+          "type": "Type",
+          "location": "Location",
+          "price": "Price",
+          "status": "Status",
+          "actions": "Actions"
+        },
+        "Mobile": {
+          "type": "Type",
+          "location": "Location",
+          "price": "Price"
+        },
+        "Empty": {
+          "none": "No properties yet."
+        },
+        "Buttons": {
+          "edit": "Edit",
+          "delete": "Delete"
+        },
+        "Aria": {
+          "edit_property": "Edit {title}",
+          "delete_property": "Delete {title}"
+        }
+      },
+      "MessagesList": {
+        "loading": "Loading…",
+        "retry": "Retry",
+        "empty": "No messages yet.",
+        "sr": {
+          "read": "Mark as read",
+          "unread": "Mark as unread"
+        },
+        "Aria": {
+          "delete_message": "Delete message from {name}"
+        },
+        "Dialog": {
+          "title": "Delete this message?",
+          "description": "This will permanently remove the message from {name}. You can undo for 8 seconds."
+        },
+        "Buttons": {
+          "cancel": "Cancel",
+          "delete": "Delete",
+          "undo": "Undo"
+        },
+        "Toast": {
+          "deleted": "Message deleted."
+        }
+      },
+      "NewsletterSubscribers": {
+        "loading": "Loading…",
+        "retry": "Retry",
+        "empty": "No subscribers yet.",
+        "Labels": {
+          "subscribed_at": "Subscribed {date}"
+        },
+        "Buttons": {
+          "remove": "Remove",
+          "cancel": "Cancel",
+          "undo": "Undo"
+        },
+        "Aria": {
+          "remove_subscriber": "Remove {email}"
+        },
+        "Dialog": {
+          "title": "Remove subscriber?",
+          "description": "{email} will be removed from the newsletter list. You can undo for 8 seconds."
+        },
+        "Toast": {
+          "removed": "Subscriber removed."
+        }
+      },
+      "PropertyFormModal": {
+        "Titles": {
+          "edit": "Edit property",
+          "add": "Add property"
+        },
+        "Aria": {
+          "close_dialog": "Close dialog"
+        },
+        "Fields": {
+          "title": "Title *",
+          "type": "Type",
+          "subtitle": "Subtitle",
+          "sale_type": "Sale type",
+          "location": "Location",
+          "neighborhood": "Neighborhood",
+          "city": "City",
+          "region": "Region",
+          "country": "Country",
+          "currency": "Currency",
+          "price": "Price",
+          "sqmt": "Sqmt",
+          "rooms": "Rooms",
+          "bedrooms": "Bedrooms",
+          "bathrooms": "Bathrooms",
+          "year_built": "Year built",
+          "floor": "Floor",
+          "coordsLat": "Latitude",
+          "coordsLng": "Longitude"
+        },
+        "Textareas": {
+          "description": "Description",
+          "meta_description": "Meta description",
+          "inclusions": "Inclusions",
+          "gallery_urls": "Gallery URLs"
+        },
+        "Hints": {
+          "one_per_line": "One per line",
+          "one_url_per_line": "One URL per line"
+        },
+        "Parking": {
+          "available": "Parking available"
+        },
+        "Labels": {
+          "card_image": "Card image",
+          "upload_image_file": "Upload image file",
+          "floor_plan": "Floor plan",
+          "gallery_images": "Gallery images"
+        },
+        "Buttons": {
+          "cancel": "Cancel",
+          "save": "Save",
+          "saving": "Saving…"
+        },
+        "Validation": {
+          "title_required": "Title is required.",
+          "must_be_number": "Must be a number.",
+          "something_wrong": "Something went wrong.",
+          "read_failed_single": "Failed to read the selected image.",
+          "read_failed_multi": "Failed to read one or more selected images."
+        }
+      }
     }
   },
   "Pages": {
@@ -35,6 +310,7 @@
       },
       "Hero": {
         "image_alt": "Premium real estate properties with stunning views",
+        "slideshow_aria": "Featured properties slideshow",
         "title": "Find Your Dream Property!",
         "subtitle": "Discover premium real estate with expert guidance and unmatched service",
         "buy_btn": "Buy Properties",
@@ -79,6 +355,33 @@
       "StayUpdated": {
         "title": "Stay Updated",
         "subtitle": "Subscribe for new property listings, market insights, and exclusive opportunities."
+      },
+      "SocialCards": {
+        "instagram": {
+          "tagline": "Daily updates",
+          "description": "Follow QMAX Realty for property photos, new listings, and standout homes worldwide.",
+          "cta_text": "Follow Us"
+        },
+        "facebook": {
+          "tagline": "Community updates",
+          "description": "Join our community for market insights, local tips, and exclusive property announcements.",
+          "cta_text": "Like Page"
+        },
+        "tiktok": {
+          "tagline": "Short property clips",
+          "description": "Quick, engaging property clips and behind-the-scenes moments from our listing team.",
+          "cta_text": "Follow"
+        },
+        "telegram": {
+          "tagline": "Instant updates",
+          "description": "Get instant notifications about new property listings, price changes, and market news.",
+          "cta_text": "Join Channel"
+        },
+        "whatsapp": {
+          "tagline": "24/7 support",
+          "description": "Direct communication for property inquiries, viewing requests, and buying or renting support.",
+          "cta_text": "Message Us"
+        }
       }
     },
     "Listings": {
@@ -114,7 +417,8 @@
         "bed": "Bed",
         "beds": "Beds",
         "btn": "View Details",
-        "enquire": "Enquire"
+        "enquire": "Enquire",
+        "whatsapp_prefill": "Hi! I'm interested in {title} listed at ${price}"
       },
       "WhyUs": {
         "title": "Why QMAX Realty?",
@@ -135,7 +439,240 @@
       "ContactBanner": {
         "title": "Looking for Something Specific?",
         "description": "Tell us what you're looking for and we'll find the perfect property for you.",
-        "btn": "Ask Us on WhatsApp"
+        "btn": "Ask Us on WhatsApp",
+        "whatsapp_prefill": "Hi! I'm looking for a property."
+      },
+      "PageMeta": {
+        "title": "Properties for Sale & Rent - QMAX Realty",
+        "description": "Browse all properties for sale and rent. Apartments, houses, commercial real estate and more."
+      },
+      "Filters": {
+        "for_sale": "For Sale",
+        "for_rent": "For Rent",
+        "Aria": {
+          "type_filter": "Filter by property type",
+          "remove_search": "Remove search filter",
+          "remove_offer": "Remove offer filter",
+          "remove_bedrooms": "Remove bedrooms filter",
+          "remove_bathrooms": "Remove bathrooms filter",
+          "remove_price": "Remove price filter",
+          "remove_item": "Remove {item} filter",
+          "open": "Filter properties",
+          "close": "Close filters"
+        },
+        "Labels": {
+          "sort": "Sort:",
+          "active": "Active:",
+          "search_chip": "Search: \"{term}\"",
+          "offer_chip": "For {offer}",
+          "beds_chip": "{n}+ Beds",
+          "baths_chip": "{n}+ Baths",
+          "availability": "Availability",
+          "property_type": "Property Type",
+          "country": "Country",
+          "city": "City",
+          "bedrooms": "Bedrooms",
+          "bathrooms": "Bathrooms",
+          "price_range": "Price Range (USD)",
+          "filter_properties": "Filter Properties",
+          "clear_all": "Clear all",
+          "apply": "Apply filters"
+        },
+        "Presets": {
+          "under_200k": "Under $200k",
+          "r_200_400": "$200k – $400k",
+          "r_400_600": "$400k – $600k",
+          "over_600k": "Over $600k"
+        },
+        "Options": {
+          "all_countries": "All countries",
+          "all_cities": "All cities",
+          "any": "Any"
+        }
+      },
+      "Results": {
+        "showing": "Showing <b>{shown}</b> of {total} properties",
+        "no_results_title": "No properties found",
+        "no_results_text": "Try a different search term or clear your filters.",
+        "clear_all_filters": "Clear all filters"
+      },
+      "Fallback": {
+        "property": "Property",
+        "city": "Tbilisi"
+      }
+    },
+    "Contact": {
+      "Metadata": {
+        "title": "Contact QMAX Realty - Get in Touch",
+        "description": "Contact QMAX Realty for expert guidance on buying, selling, or renting property."
+      },
+      "Hero": {
+        "title": "Contact Us",
+        "subtitle": "Have questions? Our team is here to help. Reach out and let's talk about your property goals."
+      },
+      "Channels": {
+        "email": "Email",
+        "phone": "Phone",
+        "whatsapp": "WhatsApp",
+        "office": "Office",
+        "availability": "Available 24/7"
+      },
+      "WhatsappCard": {
+        "title": "Prefer to chat?",
+        "description": "Connect with our team instantly on WhatsApp for quick responses.",
+        "btn": "Start Chat"
+      },
+      "ReadyCta": {
+        "title": "Ready to Get Started?",
+        "subtitle": "Browse our listings or schedule a consultation with one of our experts today."
+      },
+      "Buttons": {
+        "browse": "Browse Properties",
+        "whatsapp": "Chat on WhatsApp"
+      }
+    },
+    "About": {
+      "Metadata": {
+        "title": "About QMAX Realty - Trusted International Real Estate Agency",
+        "description": "Learn about QMAX Realty - an international real estate agency. Expert guidance for buying, selling, and renting premium property."
+      },
+      "Hero": {
+        "title": "About QMAX Realty",
+        "subtitle": "Your trusted partner for buying, selling, and renting premium property worldwide."
+      },
+      "Story": {
+        "image_alt": "Premium properties with QMAX Realty",
+        "title": "Our Story",
+        "p1": "QMAX Realty is an international real estate agency built on a simple promise: honest guidance, transparent deals, and a genuine understanding of the local market. From historic Old Town apartments to modern luxury penthouses, we help buyers, sellers, and investors navigate property markets with confidence.",
+        "p2": "Whether you're searching for your first home in the city or expanding an investment portfolio, our team combines local knowledge with international standards of service - and we speak your language."
+      },
+      "Stats": {
+        "years_excellence": "Years of Excellence",
+        "properties_sold": "Properties Sold",
+        "client_satisfaction": "Client Satisfaction"
+      },
+      "Buttons": {
+        "browse": "Browse Properties",
+        "get_in_touch": "Get in Touch",
+        "whatsapp": "Chat on WhatsApp",
+        "contact": "Contact Us"
+      },
+      "WhatWeDo": {
+        "title": "What We Do",
+        "subtitle": "Full-cycle support across every stage of your property journey."
+      },
+      "Services": {
+        "buying": {
+          "title": "Buying",
+          "text": "Carefully selected listings matched to your budget, lifestyle, and investment goals."
+        },
+        "selling": {
+          "title": "Selling",
+          "text": "Accurate valuations, professional photography, and targeted marketing to sell faster."
+        },
+        "renting": {
+          "title": "Renting",
+          "text": "Verified rental properties with clear contracts and reliable long-term tenancy support."
+        },
+        "investing": {
+          "title": "Investing",
+          "text": "Market research and yield analysis to help you make confident investment decisions."
+        }
+      },
+      "WhyChoose": {
+        "title": "Why Choose QMAX Realty",
+        "subtitle": "What sets us apart."
+      },
+      "WhyUs": {
+        "local_expertise": {
+          "title": "Local Expertise",
+          "text": "Deep knowledge of Tbilisi neighborhoods - from Sololaki to Vake and beyond."
+        },
+        "multilingual_team": {
+          "title": "Multilingual Team",
+          "text": "We work with international clients in English, Russian, and Georgian."
+        },
+        "transparent_deals": {
+          "title": "Transparent Deals",
+          "text": "Clear contracts, verified documentation, and no hidden fees."
+        },
+        "personal_service": {
+          "title": "Personal Service",
+          "text": "A dedicated agent who knows your needs and stays with you start to finish."
+        },
+        "fast_response": {
+          "title": "Fast Response",
+          "text": "Questions answered within hours, viewings arranged at your convenience."
+        },
+        "verified_listings": {
+          "title": "Verified Listings",
+          "text": "Every property is checked and represented honestly - what you see is what you get."
+        }
+      },
+      "ReadyCta": {
+        "title": "Ready to Find Your Property?",
+        "subtitle": "Talk to our team today and let us help you make the right move."
+      }
+    },
+    "PropertyDetails": {
+      "Metadata": {
+        "not_found": "Property Not Found",
+        "premium": "Premium property",
+        "for_sale_type": "for {sale_type}",
+        "sqmt": "{sqmt} sqm",
+        "bedrooms_count": "{bedrooms} bedrooms"
+      },
+      "Details": {
+        "back_to_listings": "Back to Listings",
+        "location": "Location",
+        "rooms": "Rooms",
+        "bedrooms": "Bedrooms",
+        "bathrooms": "Bathrooms",
+        "sqm": "sqm",
+        "about": "About this property",
+        "floor_plan": "Floor Plan",
+        "included": "What's Included"
+      },
+      "Facts": {
+        "year_built": "Year Built",
+        "floor": "Floor",
+        "parking": "Parking",
+        "available": "Available",
+        "none": "None"
+      },
+      "Sidebar": {
+        "title": "Interested?",
+        "description": "Contact us to arrange a viewing or get more information about this property.",
+        "whatsapp": "Message on WhatsApp",
+        "viewing": "Schedule a Viewing",
+        "whatsapp_prefill": "I'm interested in {title}"
+      },
+      "Alts": {
+        "floor_plan": "{title} floor plan"
+      },
+      "Fallback": {
+        "property": "Property",
+        "country": "Georgia"
+      }
+    },
+    "NotFound": {
+      "Metadata": {
+        "title": "Page Not Found - QMAX Realty",
+        "description": "The page you are looking for could not be found. Browse our premium real estate listings instead."
+      },
+      "title": "Page Not Found",
+      "description": "The page you're looking for doesn't exist or may have moved. Let's get you back on the right path.",
+      "go_home": "Go Home",
+      "browse": "Browse Properties"
+    },
+    "Admin": {
+      "Metadata": {
+        "title": "Admin"
+      },
+      "Login": {
+        "Metadata": {
+          "title": "Admin login"
+        }
       }
     }
   }

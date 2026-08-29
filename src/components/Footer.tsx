@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Mail } from "lucide-react";
 import ContactLinks from "./ContactLinks";
+import { getTranslations } from "next-intl/server";
 
 // Optional: Define props if you want dynamic data, or define fallback constants
 interface FooterProps {
@@ -12,7 +13,8 @@ interface FooterProps {
   telegramUrl?: string;
 }
 
-export default function Footer({}: FooterProps) {
+export default async function Footer({}: FooterProps) {
+  const t = await getTranslations("Components.Footer");
   const currentYear = new Date().getFullYear();
 
   return (
@@ -21,7 +23,7 @@ export default function Footer({}: FooterProps) {
         <div className="flex flex-col items-center justify-between gap-8 md:flex-row">
           {/* Logo */}
           <div className="logo-container">
-            <Link href="/" aria-label="QMAX Realty homepage">
+            <Link href="/" aria-label={t("home_aria")}>
               <Image
                 src="/img/Light/Logo550.webp"
                 alt="QMAX Realty Logo Light"
@@ -54,7 +56,7 @@ export default function Footer({}: FooterProps) {
         {/* Map */}
         <div className="map-container mt-8 mb-8">
           <iframe
-            title="QMAX Realty Office Location"
+            title={t("map_title")}
             src="https://www.google.com/maps?q=Rustaveli+Ave+12,+Tbilisi,+Georgia&output=embed"
             className="h-80 w-full rounded-lg border-0"
             allowFullScreen
@@ -68,7 +70,7 @@ export default function Footer({}: FooterProps) {
           className="border-t border-gray-200 pt-6 text-center text-sm text-gray-500
             dark:border-gray-800 dark:text-gray-400"
         >
-          <p>&copy; {currentYear} QMAX Realty. All rights reserved.</p>
+          <p>{t("copyright", { currentYear })}</p>{" "}
         </div>
       </div>
     </footer>

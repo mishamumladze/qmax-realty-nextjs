@@ -1,13 +1,11 @@
 "use client";
 
 import { useState, useEffect, useRef, useCallback } from "react";
-import Link from "next/link";
+import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
-import { usePathname } from "next/navigation";
 import { motion } from "framer-motion";
-import { LanguageSelector } from "./LanguageSelector";
 import { useTranslations } from "next-intl";
-
+import LanguageSelector from "@/components/LanguageSelector";
 import { Menu, X, Home, Share2, Users, Building2, Info } from "lucide-react";
 
 export default function Navbar() {
@@ -23,6 +21,8 @@ export default function Navbar() {
 
   const [isOpen, setIsOpen] = useState(false);
   const pathname = usePathname();
+
+  const localizedPathname = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, "") || "/";
 
   const drawerRef = useRef<HTMLDivElement>(null);
   const hamburgerRef = useRef<HTMLButtonElement>(null);
@@ -94,6 +94,33 @@ export default function Navbar() {
 
   return (
     <>
+      {/* Mobile-only: Logo + Brand at top-right */}
+      <div className="fixed top-4 right-4 z-40 md:hidden">
+        <Link
+          href="/"
+          className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white/80 px-3 py-2
+            shadow-lg backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80"
+        >
+          <Image
+            src="/img/Light/Logo200.webp"
+            alt="QMAX Realty Logo Light"
+            width={40}
+            height={40}
+            className="block h-7 w-7 dark:hidden"
+            priority={false}
+          />
+          <Image
+            src="/img/Dark/Logo200.webp"
+            alt="QMAX Realty Logo Dark"
+            width={40}
+            height={40}
+            className="hidden h-7 w-7 dark:block"
+            priority={false}
+          />
+          <span className="text-sm font-bold text-gray-800 dark:text-white">QMAX Realty</span>
+        </Link>
+      </div>
+
       {/* Desktop & Mobile Fixed Navbar Bar */}
       <nav
         id="navbar"
@@ -123,7 +150,8 @@ export default function Navbar() {
                   priority={false}
                 />
                 <span
-                  className="inline text-base font-bold text-gray-800 md:text-xl dark:text-white"
+                  className="hidden text-base font-bold text-gray-800 md:inline md:text-xl
+                    dark:text-white"
                 >
                   QMAX Realty
                 </span>
@@ -134,7 +162,7 @@ export default function Navbar() {
             <div className="hidden md:flex md:items-center md:gap-8">
               <div className="flex items-baseline space-x-6">
                 {navLinks.map((link) => {
-                  const isActive = pathname === link.href;
+                  const isActive = localizedPathname === link.href;
                   return (
                     <Link
                       key={link.href}
@@ -169,7 +197,7 @@ export default function Navbar() {
             {/* Right Side: Mobile Menu Toggle & Language Selector */}
             <div className="flex min-w-0 items-center justify-end gap-3 md:hidden">
               {/* Mobile Language Selector */}
-              <LanguageSelector />
+              <LanguageSelector dropDirection="up" />
 
               <button
                 ref={hamburgerRef}
@@ -179,7 +207,7 @@ export default function Navbar() {
                   items-center gap-1.5 rounded-lg p-2 text-gray-600 transition-all duration-200
                   hover:bg-gray-100 focus:ring-2 focus:outline-none dark:text-gray-300
                   dark:hover:bg-gray-800"
-                aria-label={isOpen ? "Close main menu" : "Open main menu"}
+                aria-label={isOpen ? t("Aria.close_menu") : t("Aria.open_menu")}
                 aria-expanded={isOpen}
                 aria-controls="mobile-menu"
               >
@@ -200,7 +228,7 @@ export default function Navbar() {
         id="mobile-menu"
         role="dialog"
         aria-modal="true"
-        aria-label="Main menu"
+        aria-label={t("Aria.main_menu")}
         className={`fixed inset-x-0 bottom-0 z-40 transform transition-transform duration-300
           ease-in-out md:hidden ${isOpen ? "translate-y-0" : "translate-y-full"}`}
       >
@@ -218,7 +246,7 @@ export default function Navbar() {
           <div className="space-y-1 px-4 pt-2 pb-12">
             {navLinks.map((link) => {
               const Icon = link.icon;
-              const isActive = pathname === link.href;
+              const isActive = localizedPathname === link.href;
               return (
                 <Link
                   key={link.href}

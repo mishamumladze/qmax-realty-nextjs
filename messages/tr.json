@@ -1,21 +1,18 @@
 {
   "Components": {
-    "Navbar": {
-      "Home": "Ana Sayfa",
-      "Socials": "Toplum bilimleri",
-      "Listings": "İlanlar",
-      "Contact": "İletişim",
-      "About": "Hakkında"
-    },
-    "Pcarousel": {
-      "title": "Bu Hafta En Çok Görüntülenen Emlaklar",
-      "description": "Bu gayrimenkuller şu anda alıcılar ve yatırımcılar arasında büyük ilgi görüyor"
-    },
     "PCarousel": {
       "title": "Bu Hafta En Çok Görüntülenen Emlaklar",
-      "description": "Bu gayrimenkuller şu anda alıcılar ve yatırımcılar arasında büyük ilgi görüyor",
+      "subtitle": "Bu gayrimenkuller şu anda alıcılar ve yatırımcılar arasında büyük ilgi görüyor",
       "details": "Ayrıntıları Görüntüle",
-      "subtitle": "Bu gayrimenkuller şu anda alıcılar ve yatırımcılar arasında büyük ilgi görüyor"
+      "Aria": {
+        "previous": "Önceki mülkler",
+        "next": "Sonraki mülkler",
+        "go_to_slide": "{n} slaytına git"
+      },
+      "Fallback": {
+        "property": "Mülk",
+        "location": "Gürcistan"
+      }
     },
     "NewsForm": {
       "input": {
@@ -29,56 +26,295 @@
         "success": "Abone olduğunuz için teşekkür ederiz! En son güncellemelerimizi yakında alacaksınız.",
         "network": "Ağ hatası. Lütfen bağlantınızı kontrol edin ve tekrar deneyin."
       }
-    }
-  },
-  "HomePage": {
-    "Metadata": {
-      "title": "Hayalinizdeki Gayrimenkulü Bulun",
-      "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın veya kiralayın.",
-      "og_alt": "Seçkin Gayrimenkuller - QMAX Realty"
     },
-    "Hero": {
-      "image_alt": "Muhteşem manzaralı birinci sınıf gayrimenkuller",
-      "title": "Hayalinizdeki Gayrimenkulü Bulun!",
-      "subtitle": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin",
-      "buy_btn": "Gayrimenkul Satın Alın",
-      "rent_btn": "Kiralık Emlaklar",
-      "sell_btn": "Evinizi Satın"
+    "Navbar": {
+      "Home": "Ana Sayfa",
+      "Socials": "Sosyal etkinlikler",
+      "Listings": "İlanlar",
+      "Contact": "İletişim",
+      "About": "Hakkında",
+      "Aria": {
+        "open_menu": "Ana menüyü aç",
+        "close_menu": "Ana menüyü kapat",
+        "main_menu": "Ana menü"
+      }
     },
-    "WhyUs": {
-      "title": "Neden QMAX Realty'yi Seçmelisiniz?",
-      "years_excellence": "Mükemmelliğin Yılları",
-      "properties_sold": "Satılan Gayrimenkuller",
-      "client_satisfaction": "Müşteri Memnuniyeti",
-      "experts_title": "Piyasa Uzmanları",
-      "experts_desc": "Yerel emlak piyasaları, eğilimler ve yatırım fırsatları hakkında derinlemesine bilgi.",
-      "service_title": "5 Yıldızlı Hizmet",
-      "service_desc": "Memnun kalan alıcılar, satıcılar ve yatırımcılardan gelen yüzlerce 5 yıldızlı yorum.",
-      "approach_title": "Kişiye Özel Yaklaşım",
-      "approach_desc": "Benzersiz gayrimenkul ihtiyaçlarınız için size özel çözümler ve bire bir danışmanlık.",
-      "trusted_title": "Güvenilir ve Şeffaf",
-      "trusted_desc": "İşleminizin başından sonuna kadar net iletişim, etik uygulamalar ve tam destek."
+    "Layout": {
+      "skip_to_content": "İçeriğe atla"
     },
-    "ContactBanner": {
-      "title": "Hayalinizdeki Gayrimenkulü Bulmaya Hazır mısınız?",
-      "description": "Görüşme ayarlamak veya uzman tavsiyesi almak için hemen bizimle iletişime geçin. Bir saat içinde yanıt veriyoruz.",
-      "whatsapp_btn": "WhatsApp'tan bize mesaj gönderin",
-      "view_all_btn": "Tüm Emlakları Görüntüle"
+    "ThemeToggle": {
+      "Aria": {
+        "to_light": "Aydınlık moda geç",
+        "to_dark": "Koyu moda geç"
+      }
+    },
+    "LanguageSelector": {
+      "Aria": {
+        "select_language": "Dili seçin"
+      }
+    },
+    "PropertyGallery": {
+      "title": "Galeri",
+      "Aria": {
+        "close": "Kapat",
+        "previous": "Önceki",
+        "next": "Sonraki"
+      },
+      "photo_alt": "{title} - fotoğraf {n}"
+    },
+    "Footer": {
+      "map_title": "QMAX Emlak Ofisinin Konumu",
+      "home_aria": "QMAX Realty ana sayfası",
+      "copyright": "© {currentYear} QMAX Realty. Tüm hakları saklıdır."
+    },
+    "ContactForm": {
+      "title": "Bize bir mesaj gönderin",
+      "subjects": {
+        "buying": "Satın almakla ilgileniyorum",
+        "selling": "Gayrimenkulümü satmak istiyorum",
+        "renting": "Kiralamak istiyorum",
+        "valuation": "Bir gayrimenkul değerlemesi yaptırmam gerekiyor",
+        "investment": "Yatırım yapmak istiyorum",
+        "general": "Genel bilgi talebi"
+      },
+      "labels": {
+        "first_name": "Ad *",
+        "last_name": "Soyadı *",
+        "email": "E-posta *",
+        "phone": "Telefon (İsteğe bağlı)",
+        "subject": "Konu *",
+        "message": "Mesaj *"
+      },
+      "placeholders": {
+        "message": "Gayrimenkul ihtiyaçlarınız hakkında bize daha fazla bilgi verin..."
+      },
+      "select_subject": "Bir konu seçin...",
+      "errors": {
+        "first_name_required": "Ad alanı zorunludur",
+        "last_name_required": "Soyadı zorunludur",
+        "email_required": "E-posta adresi zorunludur",
+        "email_invalid": "Lütfen geçerli bir e-posta adresi girin",
+        "phone_too_long": "Telefon numarası çok uzun",
+        "subject_required": "Lütfen bir konu seçin",
+        "message_required": "Mesaj girilmesi zorunludur",
+        "message_min": "Mesaj en az 10 karakterden oluşmalıdır"
+      },
+      "submit": {
+        "failed": "Mesaj gönderilemedi. Lütfen tekrar deneyin.",
+        "wrong": "Bir hata oluştu. Lütfen tekrar deneyin.",
+        "network": "Ağ hatası. Lütfen bağlantınızı kontrol edin ve tekrar deneyin."
+      },
+      "success": "✓ Mesajınız başarıyla gönderildi! Size en kısa sürede geri dönüş yapacağız.",
+      "buttons": {
+        "send": "Mesaj Gönder",
+        "sending": "Gönderiliyor..."
+      },
+      "privacy": "Bu formu göndererek gizlilik politikamızı kabul etmiş olursunuz."
+    },
+    "Admin": {
+      "Dashboard": {
+        "nav_aria": "Yönetici bölümleri",
+        "Tabs": {
+          "properties": "Özellikler",
+          "messages": "Mesajlar",
+          "newsletter": "Haber Bülteni"
+        },
+        "Headings": {
+          "properties": "Özellikler",
+          "messages": "Mesajlar",
+          "newsletter": "Haber Bülteni"
+        },
+        "logout": "Çıkış",
+        "add_property": "Özellik ekle",
+        "Empty": {
+          "no_properties": "Henüz hiçbir mülk yok."
+        },
+        "DeleteDialog": {
+          "title": "Özelliği silmek mi?",
+          "description": "{title} kaldırılacaktır. Bu işlemi 8 saniye içinde geri alabilirsiniz."
+        },
+        "Buttons": {
+          "cancel": "İptal et",
+          "delete": "Sil",
+          "undo": "Geri Al"
+        },
+        "Toast": {
+          "deleted": "Öğe silindi."
+        },
+        "Errors": {
+          "delete_failed": "Özelliği silinemedi.",
+          "restore_failed": "Özelliğin geri yüklenmesi başarısız oldu."
+        }
+      },
+      "LoginForm": {
+        "title": "Yönetici girişi",
+        "subtitle": "Kontrol paneline erişmek için yönetici hesabınızı kullanın.",
+        "labels": {
+          "username": "Kullanıcı adı",
+          "password": "Şifre"
+        },
+        "errors": {
+          "missing_credentials": "Lütfen hem kullanıcı adınızı hem de şifrenizi girin.",
+          "invalid_credentials": "Kullanıcı adı veya şifre geçersiz.",
+          "signin_failed": "Giriş başarısız oldu. Lütfen tekrar deneyin.",
+          "network": "Sunucuya ulaşılamıyor. Lütfen tekrar deneyin."
+        },
+        "buttons": {
+          "sign_in": "Giriş yap",
+          "signing_in": "Giriş yapılıyor…"
+        }
+      },
+      "PropertyTable": {
+        "caption": "Özellikler",
+        "Columns": {
+          "title": "Başlık",
+          "type": "Tür",
+          "location": "Konum",
+          "price": "Fiyat",
+          "status": "Durum",
+          "actions": "Eylemler"
+        },
+        "Mobile": {
+          "type": "Tür",
+          "location": "Konum",
+          "price": "Fiyat"
+        },
+        "Empty": {
+          "none": "Henüz hiçbir mülk yok."
+        },
+        "Buttons": {
+          "edit": "Düzenle",
+          "delete": "Sil"
+        },
+        "Aria": {
+          "edit_property": "{title}'ı düzenle",
+          "delete_property": "{title}'ı sil"
+        }
+      },
+      "MessagesList": {
+        "loading": "Yükleniyor…",
+        "retry": "Tekrar dene",
+        "empty": "Henüz mesaj yok.",
+        "sr": {
+          "read": "Okundu olarak işaretle",
+          "unread": "Okunmamış olarak işaretle"
+        },
+        "Aria": {
+          "delete_message": "{name}'dan mesajı sil"
+        },
+        "Dialog": {
+          "title": "Bu mesajı silmek ister misiniz?",
+          "description": "Bu işlem, mesajı {name}'dan kalıcı olarak silecektir. 8 saniye boyunca işlemi geri alabilirsiniz."
+        },
+        "Buttons": {
+          "cancel": "İptal et",
+          "delete": "Sil",
+          "undo": "Geri Al"
+        },
+        "Toast": {
+          "deleted": "Mesaj silindi."
+        }
+      },
+      "NewsletterSubscribers": {
+        "loading": "Yükleniyor…",
+        "retry": "Tekrar dene",
+        "empty": "Henüz abone yok.",
+        "Labels": {
+          "subscribed_at": "Abone oldunuz {date}"
+        },
+        "Buttons": {
+          "remove": "Kaldır",
+          "cancel": "İptal et",
+          "undo": "Geri Al"
+        },
+        "Aria": {
+          "remove_subscriber": "{email} öğesini kaldır"
+        },
+        "Dialog": {
+          "title": "Aboneyi silmek mi?",
+          "description": "{email} haber bülteni listesinden kaldırılacaktır. Bu işlemi 8 saniye içinde geri alabilirsiniz."
+        },
+        "Toast": {
+          "removed": "Abone kaldırıldı."
+        }
+      },
+      "PropertyFormModal": {
+        "Titles": {
+          "edit": "Özelliği düzenle",
+          "add": "Özellik ekle"
+        },
+        "Aria": {
+          "close_dialog": "İletişim kutusunu kapat"
+        },
+        "Fields": {
+          "title": "Başlık *",
+          "type": "Tür",
+          "subtitle": "Altyazı",
+          "sale_type": "Satış türü",
+          "location": "Konum",
+          "neighborhood": "Mahalle",
+          "city": "Şehir",
+          "region": "Bölge",
+          "country": "Ülke",
+          "currency": "Para birimi",
+          "price": "Fiyat",
+          "sqmt": "Önemsiz bir mesele",
+          "rooms": "Odalar",
+          "bedrooms": "Yatak odaları",
+          "bathrooms": "Banyolar",
+          "year_built": "Üretim yılı",
+          "floor": "Zemin",
+          "coordsLat": "Enlem",
+          "coordsLng": "Boylam"
+        },
+        "Textareas": {
+          "description": "Açıklama",
+          "meta_description": "Meta açıklaması",
+          "inclusions": "İçerikler",
+          "gallery_urls": "Galeri URL'leri"
+        },
+        "Hints": {
+          "one_per_line": "Her satıra bir tane",
+          "one_url_per_line": "Her satıra bir URL"
+        },
+        "Parking": {
+          "available": "Otopark mevcuttur"
+        },
+        "Labels": {
+          "card_image": "Kart görüntüsü",
+          "upload_image_file": "Resim dosyasını yükle",
+          "floor_plan": "Kat planı",
+          "gallery_images": "Galeri resimleri"
+        },
+        "Buttons": {
+          "cancel": "İptal et",
+          "save": "Kaydet",
+          "saving": "Kaydediliyor…"
+        },
+        "Validation": {
+          "title_required": "Başlık zorunludur.",
+          "must_be_number": "Bir sayı olmalı.",
+          "something_wrong": "Bir sorun oluştu.",
+          "read_failed_single": "Seçilen resim okunamadı.",
+          "read_failed_multi": "Seçilen bir veya daha fazla resim okunamadı."
+        }
+      }
     }
   },
   "Pages": {
     "HomePage": {
       "Metadata": {
         "title": "Hayalinizdeki Gayrimenkulü Bulun",
-        "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın veya kiralayın.",
-        "og_alt": "Seçkin Gayrimenkuller - QMAX Emlak"
+        "description": "Uzman rehberliği ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın ya da kiralayın.",
+        "og_alt": "Seçkin Gayrimenkuller - QMAX Realty"
       },
       "Hero": {
         "image_alt": "Muhteşem manzaralı birinci sınıf gayrimenkuller",
+        "slideshow_aria": "Öne çıkan mülkler slayt gösterisi",
         "title": "Hayalinizdeki Gayrimenkulü Bulun!",
         "subtitle": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin",
         "buy_btn": "Gayrimenkul Satın Alın",
-        "rent_btn": "Kiralık Emlaklar",
+        "rent_btn": "Kiralık Gayrimenkuller",
         "sell_btn": "Evinizi Satın"
       },
       "WhyUs": {
@@ -91,13 +327,13 @@
         "service_title": "5 Yıldızlı Hizmet",
         "service_desc": "Memnun kalan alıcılar, satıcılar ve yatırımcılardan gelen yüzlerce 5 yıldızlı yorum.",
         "approach_title": "Kişiye Özel Yaklaşım",
-        "approach_desc": "Benzersiz gayrimenkul ihtiyaçlarınız için size özel çözümler ve bire bir rehberlik.",
+        "approach_desc": "Benzersiz gayrimenkul ihtiyaçlarınız için size özel çözümler ve bire bir danışmanlık.",
         "trusted_title": "Güvenilir ve Şeffaf",
         "trusted_desc": "İşleminiz boyunca net iletişim, etik uygulamalar ve tam destek."
       },
       "ContactBanner": {
         "title": "Hayalinizdeki gayrimenkulü bulmaya hazır mısınız?",
-        "description": "Görüşme randevusu almak veya uzman tavsiyesi almak için hemen bizimle iletişime geçin. Bir saat içinde yanıt veriyoruz.",
+        "description": "Görüşme ayarlamak veya uzman tavsiyesi almak için hemen bizimle iletişime geçin. Bir saat içinde yanıt veriyoruz.",
         "whatsapp_btn": "WhatsApp'tan bize mesaj gönderin",
         "view_all_btn": "Tüm Emlakları Görüntüle"
       }
@@ -105,8 +341,8 @@
     "Socials": {
       "Metadata": {
         "title": "Hayalinizdeki Gayrimenkulü Bulun",
-        "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın veya kiralayın.",
-        "og_alt": "Seçkin Gayrimenkuller - QMAX Emlak"
+        "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Gürcistan’da gayrimenkul satın alın, satın veya kiralayın.",
+        "og_alt": "Seçkin Gayrimenkuller - QMAX Realty"
       },
       "Hero": {
         "title": "Bizimle İletişime Geçin",
@@ -119,36 +355,54 @@
       "StayUpdated": {
         "title": "Gelişmelerden Haberdar Olun",
         "subtitle": "Yeni emlak ilanları, piyasa bilgileri ve özel fırsatlardan haberdar olmak için abone olun."
+      },
+      "SocialCards": {
+        "instagram": {
+          "tagline": "Günlük güncellemeler",
+          "description": "QMAX Realty’yi takip ederek dünya çapındaki emlak fotoğraflarına, yeni ilanlara ve öne çıkan evlere göz atın.",
+          "cta_text": "Bizi Takip Edin"
+        },
+        "facebook": {
+          "tagline": "Topluluk haberleri",
+          "description": "Piyasa analizleri, yerel ipuçları ve özel emlak duyuruları için topluluğumuza katılın.",
+          "cta_text": "Sayfayı Beğen"
+        },
+        "tiktok": {
+          "tagline": "Kısa emlak videoları",
+          "description": "Emlak listeleme ekibimizden hazırlanan kısa, ilgi çekici emlak videoları ve kamera arkası görüntüleri.",
+          "cta_text": "Takip et"
+        },
+        "telegram": {
+          "tagline": "Anlık güncellemeler",
+          "description": "Yeni emlak ilanları, fiyat değişiklikleri ve piyasa haberleri hakkında anında bildirimler alın.",
+          "cta_text": "Kanal'a katıl"
+        },
+        "whatsapp": {
+          "tagline": "7/24 destek",
+          "description": "Gayrimenkul ile ilgili sorular, ev gezme talepleri ve satın alma ya da kiralama konusunda destek için doğrudan iletişim.",
+          "cta_text": "Bize Mesaj Gönderin"
+        }
       }
     },
     "Listings": {
       "Metadata": {
         "title": "Hayalinizdeki Gayrimenkulü Bulun",
-        "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın ya da kiralayın.",
-        "og_alt": "Seçkin Gayrimenkuller - QMAX Realty"
+        "description": "Uzman rehberlik ve eşsiz hizmetle birinci sınıf gayrimenkulleri keşfedin. Georgia’da gayrimenkul satın alın, satın veya kiralayın.",
+        "og_alt": "Seçkin Gayrimenkuller - QMAX Emlak"
       },
       "Hero": {
         "title": "Gayrimenkuller ve İlanlar",
         "subtitle": "Dünya çapında gayrimenkul satın alın veya kiralayın.",
-        "search": "Başlığa, konuma, mahalleye göre arama yapın…",
+        "search": "Emlakları ara",
         "search_text": "Başlığa, konuma, mahalleye göre arama yapın…"
       },
       "Sort": {
         "all": "Tümü",
         "apartments": "Daireler",
         "houses": "Evler",
-        "revelance": "Alaka düzeyi",
-        "price-asc": "Fiyat: Düşük → Yüksek",
-        "price-desc": "Fiyat: Yüksek → Düşük ",
-        "sqmt-asc": "Boyut: En küçük",
-        "sqmt-desc": "Boyut: En büyük",
         "Filters": {
           "title": "Filtreler",
           "revelance": "Alaka düzeyi",
-          "price-asc": "Fiyat: Düşük → Yüksek",
-          "price-desc": "Fiyat: Yüksek → Düşük ",
-          "sqmt-asc": "Boyut: En küçük",
-          "sqmt-desc": "Boyut: En büyük",
           "price_asc": "Fiyat: Düşük → Yüksek",
           "price_desc": "Fiyat: Yüksek → Düşük ",
           "sqmt_asc": "Boyut: En küçük",
@@ -162,13 +416,13 @@
         "rooms": "Odalar",
         "bed": "Dünya",
         "beds": "Yataklar",
-        "view": "Ayrıntıları Görüntüle",
+        "btn": "Ayrıntıları Görüntüle",
         "enquire": "Bilgi Alın",
-        "btn": "Ayrıntıları Görüntüle"
+        "whatsapp_prefill": "Merhaba! ${price}'de listelenen {title} ile ilgileniyorum."
       },
       "WhyUs": {
         "title": "Neden QMAX Realty?",
-        "subtitle": "Gayrimenkul alım, satım veya kiralama konusunda uzman danışmanlığı.",
+        "subtitle": "Gayrimenkul alım, satım veya kiralama konusunda uzman rehberliği.",
         "rated_title": "5 Yıldızlı",
         "rated_desc": "Memnun müşterilerimizden gelen yüzlerce 5 yıldızlı yorum.",
         "trust_title": "Güvenilir ve Şeffaf",
@@ -176,12 +430,245 @@
         "expertise_title": "Yerel Uzmanlık",
         "expertise_desc": "Tiflis’in mahalleleri ve gelişmekte olan pazarlar hakkında derinlemesine bilgi.",
         "support_title": "7/24 Destek",
-        "support_desc": "WhatsApp üzerinden haftanın 7 günü bize ulaşabilirsiniz."
+        "support_desc": "WhatsApp üzerinden haftanın 7 günü ulaşılabilir durumdayız."
       },
       "ContactBanner": {
         "title": "Belirli bir şey mi arıyorsunuz?",
         "description": "Bize ne aradığınızı söyleyin, sizin için en uygun gayrimenkulü bulalım.",
-        "btn": "WhatsApp'tan bize sorun"
+        "btn": "WhatsApp üzerinden bize sorun",
+        "whatsapp_prefill": "Merhaba! Bir ev arıyorum."
+      },
+      "PageMeta": {
+        "title": "Satılık ve Kiralık Emlaklar - QMAX Realty",
+        "description": "Satılık ve kiralık tüm gayrimenkulleri inceleyin. Daireler, evler, ticari gayrimenkuller ve daha fazlası."
+      },
+      "Filters": {
+        "for_sale": "Satılık",
+        "for_rent": "Kiralık",
+        "Aria": {
+          "type_filter": "Mülk türüne göre filtrele",
+          "remove_search": "Arama filtresini kaldır",
+          "remove_offer": "Teklif filtresini kaldır",
+          "remove_bedrooms": "Yatak odaları filtresini kaldır",
+          "remove_bathrooms": "Banyolar filtresini kaldır",
+          "remove_price": "Fiyat filtresini kaldır",
+          "remove_item": "{item} filtresini kaldır",
+          "open": "Filtre özellikleri",
+          "close": "Filtreleri kapat"
+        },
+        "Labels": {
+          "sort": "Sonuç:",
+          "active": "Etkin:",
+          "search_chip": "Arama: \"{term}\"",
+          "offer_chip": "{offer} için",
+          "beds_chip": "{n}+ Yatak",
+          "baths_chip": "{n}+ Banyolar",
+          "availability": "Stok Durumu",
+          "property_type": "Mülk Türü",
+          "country": "Ülke",
+          "city": "Şehir",
+          "bedrooms": "Yatak odaları",
+          "bathrooms": "Banyolar",
+          "price_range": "Fiyat Aralığı (ABD Doları)",
+          "filter_properties": "Filtre Özellikleri",
+          "clear_all": "Tümünü temizle",
+          "apply": "Filtreleri uygula"
+        },
+        "Presets": {
+          "under_200k": "200 bin doların altında",
+          "r_200_400": "200 bin – 400 bin dolar",
+          "r_400_600": "400 bin dolar – 600 bin dolar",
+          "over_600k": "600 bin doların üzerinde"
+        },
+        "Options": {
+          "all_countries": "Tüm ülkeler",
+          "all_cities": "Tüm şehirler",
+          "any": "Orada"
+        }
+      },
+      "Results": {
+        "showing": "{total} özelliklerinden <b>{shown}</b> gösteriliyor",
+        "no_results_title": "Hiçbir emlak bulunamadı",
+        "no_results_text": "Farklı bir arama terimi deneyin veya filtrelerinizi temizleyin.",
+        "clear_all_filters": "Tüm filtreleri temizle"
+      },
+      "Fallback": {
+        "property": "Mülk",
+        "city": "Tiflis"
+      }
+    },
+    "Contact": {
+      "Metadata": {
+        "title": "QMAX Realty ile İletişime Geçin - Bize Ulaşın",
+        "description": "Gayrimenkul alımı, satımı veya kiralaması konusunda uzman tavsiyesi için QMAX Realty ile iletişime geçin."
+      },
+      "Hero": {
+        "title": "Bize Ulaşın",
+        "subtitle": "Sorularınız mı var? Ekibimiz size yardımcı olmaya hazır. Bize ulaşın ve gayrimenkul hedefleriniz hakkında konuşalım."
+      },
+      "Channels": {
+        "email": "E-posta",
+        "phone": "Telefon",
+        "whatsapp": "WhatsApp",
+        "office": "Ofis",
+        "availability": "7 gün 24 saat hizmetinizde"
+      },
+      "WhatsappCard": {
+        "title": "Sohbet etmeyi mi tercih edersiniz?",
+        "description": "Hızlı yanıtlar almak için WhatsApp üzerinden ekibimizle anında iletişime geçin.",
+        "btn": "Sohbete Başla"
+      },
+      "ReadyCta": {
+        "title": "Başlamaya hazır mısınız?",
+        "subtitle": "İlanlarımıza göz atın veya bugün uzmanlarımızdan biriyle bir danışma randevusu alın."
+      },
+      "Buttons": {
+        "browse": "Emlaklara Göz Atın",
+        "whatsapp": "WhatsApp'ta sohbet et"
+      }
+    },
+    "About": {
+      "Metadata": {
+        "title": "QMAX Realty Hakkında - Güvenilir Uluslararası Emlak Acentesi",
+        "description": "Uluslararası bir emlak acentesi olan QMAX Realty hakkında bilgi edinin. Birinci sınıf gayrimenkullerin satın alınması, satılması ve kiralanması konusunda uzman danışmanlık hizmetleri."
+      },
+      "Hero": {
+        "title": "QMAX Realty Hakkında",
+        "subtitle": "Dünya çapında birinci sınıf gayrimenkul alım, satım ve kiralama konusunda güvenilir iş ortağınız."
+      },
+      "Story": {
+        "image_alt": "QMAX Realty ile birinci sınıf gayrimenkuller",
+        "title": "Hikayemiz",
+        "p1": "QMAX Realty, basit bir vaad üzerine kurulmuş uluslararası bir emlak acentesidir: dürüst danışmanlık, şeffaf işlemler ve yerel pazara dair gerçek bir anlayış. Tarihi Eski Şehir’deki dairelerden modern lüks çatı katı dairelerine kadar, alıcıların, satıcıların ve yatırımcıların emlak piyasalarında güvenle yol almalarına yardımcı oluyoruz.",
+        "p2": "İster şehirde ilk evinizi arıyor olun, ister yatırım portföyünüzü genişletmek istiyor olun, ekibimiz yerel bilgi birikimini uluslararası hizmet standartlarıyla birleştiriyor – ve sizin dilinizi konuşuyoruz."
+      },
+      "Stats": {
+        "years_excellence": "Mükemmelliğin Yılları",
+        "properties_sold": "Satılan Gayrimenkuller",
+        "client_satisfaction": "Müşteri Memnuniyeti"
+      },
+      "Buttons": {
+        "browse": "Emlakları İncele",
+        "get_in_touch": "Bize Ulaşın",
+        "whatsapp": "WhatsApp'ta sohbet et",
+        "contact": "Bize Ulaşın"
+      },
+      "WhatWeDo": {
+        "title": "Ne Yapıyoruz?",
+        "subtitle": "Gayrimenkul serüveninizin her aşamasında tam kapsamlı destek."
+      },
+      "Services": {
+        "buying": {
+          "title": "Satın alma",
+          "text": "Bütçenize, yaşam tarzınıza ve yatırım hedeflerinize uygun, özenle seçilmiş ilanlar."
+        },
+        "selling": {
+          "title": "Satış",
+          "text": "Daha hızlı satış için doğru değerlemeler, profesyonel fotoğraf çekimleri ve hedef odaklı pazarlama."
+        },
+        "renting": {
+          "title": "Kiralama",
+          "text": "Net sözleşmelere sahip, doğrulanmış kiralık mülkler ve güvenilir uzun vadeli kiracılık desteği."
+        },
+        "investing": {
+          "title": "Yatırım",
+          "text": "Güvenli yatırım kararları almanıza yardımcı olacak pazar araştırması ve getiri analizi."
+        }
+      },
+      "WhyChoose": {
+        "title": "Neden QMAX Realty’yi Seçmelisiniz?",
+        "subtitle": "Bizi diğerlerinden ayıran şey."
+      },
+      "WhyUs": {
+        "local_expertise": {
+          "title": "Yerel Uzmanlık",
+          "text": "Tiflis mahalleleri hakkında derinlemesine bilgi – Sololaki’den Vake’ye ve ötesine."
+        },
+        "multilingual_team": {
+          "title": "Çok Dilli Ekip",
+          "text": "Uluslararası müşterilerimizle İngilizce, Rusça ve Gürcüce dillerinde çalışıyoruz."
+        },
+        "transparent_deals": {
+          "title": "Şeffaf Anlaşmalar",
+          "text": "Şeffaf sözleşmeler, doğrulanmış belgeler ve hiçbir gizli ücret yok."
+        },
+        "personal_service": {
+          "title": "Kişisel Hizmet",
+          "text": "İhtiyaçlarınızı bilen ve baştan sona size eşlik eden, size özel bir temsilci."
+        },
+        "fast_response": {
+          "title": "Hızlı Yanıt",
+          "text": "Sorularınız birkaç saat içinde yanıtlanır, ev gezileri sizin uygun olduğunuz zamanda ayarlanır."
+        },
+        "verified_listings": {
+          "title": "Doğrulanmış İlanlar",
+          "text": "Her mülk titizlikle incelenir ve dürüst bir şekilde tanıtılır – gördüğünüz neyse, alacağınız da odur."
+        }
+      },
+      "ReadyCta": {
+        "title": "Gayrimenkulünüzü bulmaya hazır mısınız?",
+        "subtitle": "Hemen ekibimizle iletişime geçin ve doğru adımı atmanıza yardımcı olalım."
+      }
+    },
+    "PropertyDetails": {
+      "Metadata": {
+        "not_found": "Öğe Bulunamadı",
+        "premium": "Birinci sınıf gayrimenkul",
+        "for_sale_type": "{sale_type} için",
+        "sqmt": "{sqmt} m²",
+        "bedrooms_count": "{bedrooms} yatak odası"
+      },
+      "Details": {
+        "back_to_listings": "Listelere Geri Dön",
+        "location": "Konum",
+        "rooms": "Odalar",
+        "bedrooms": "Yatak odaları",
+        "bathrooms": "Banyolar",
+        "sqm": "m²",
+        "about": "Bu mülk hakkında",
+        "floor_plan": "Kat Planı",
+        "included": "Paket İçeriği"
+      },
+      "Facts": {
+        "year_built": "İnşa Yılı",
+        "floor": "Zemin",
+        "parking": "Otopark",
+        "available": "Mevcut",
+        "none": "Yok"
+      },
+      "Sidebar": {
+        "title": "İlginizi çekti mi?",
+        "description": "Bu gayrimenkul hakkında daha fazla bilgi almak veya bir randevu ayarlamak için bizimle iletişime geçin.",
+        "whatsapp": "WhatsApp'ta mesaj",
+        "viewing": "Görüşme Randevusu Alın",
+        "whatsapp_prefill": "{title} ile ilgileniyorum"
+      },
+      "Alts": {
+        "floor_plan": "{title} kat planı"
+      },
+      "Fallback": {
+        "property": "Mülk",
+        "country": "Gürcistan"
+      }
+    },
+    "NotFound": {
+      "Metadata": {
+        "title": "Sayfa Bulunamadı - QMAX Realty",
+        "description": "Aradığınız sayfa bulunamadı. Bunun yerine, seçkin emlak ilanlarımıza göz atın."
+      },
+      "title": "Sayfa Bulunamadı",
+      "description": "Aradığınız sayfa mevcut değil veya başka bir yere taşınmış olabilir. Sizi doğru yola yönlendirelim.",
+      "go_home": "Eve Git",
+      "browse": "Emlaklara Göz Atın"
+    },
+    "Admin": {
+      "Metadata": {
+        "title": "Yönetici"
+      },
+      "Login": {
+        "Metadata": {
+          "title": "Yönetici girişi"
+        }
       }
     }
   }

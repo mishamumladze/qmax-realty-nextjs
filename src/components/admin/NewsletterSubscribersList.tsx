@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import { useCallback, useEffect, useId, useRef, useState } from 'react';
-import type { NewsletterSubscriber } from '@/types/admin';
-import { AdminButton } from '@/components/ui/AdminButton';
-import { Trash2 } from 'lucide-react';
+import { useCallback, useEffect, useId, useRef, useState } from "react";
+import type { NewsletterSubscriber } from "@/types/admin";
+import { AdminButton } from "@/components/ui/AdminButton";
+import { Trash2 } from "lucide-react";
+import { useTranslations } from "next-intl";
 
 function sortByNewest(list: NewsletterSubscriber[]): NewsletterSubscriber[] {
   return [...list].sort((a, b) => {
@@ -22,48 +23,41 @@ function formatDateTime(iso: string): string {
 }
 
 async function adminFetch<T>(url: string, init?: RequestInit): Promise<T> {
-  const token = window.localStorage.getItem('admin_token');
+  const token = window.localStorage.getItem("admin_token");
   const headers = new Headers(init?.headers);
-  headers.set('Content-Type', 'application/json');
-  if (token) headers.set('Authorization', `Bearer ${token}`);
+  headers.set("Content-Type", "application/json");
+  if (token) headers.set("Authorization", `Bearer ${token}`);
 
   let res: Response;
   try {
     res = await fetch(url, { ...init, headers });
   } catch {
-    throw new Error('Network request failed.');
+    throw new Error("Network request failed.");
   }
 
   let parsed: unknown;
   try {
     parsed = await res.json();
   } catch {
-    throw new Error('Unexpected server response.');
+    throw new Error("Unexpected server response.");
   }
 
   if (!res.ok) {
     const record = (parsed ?? {}) as { error?: string };
-    throw new Error(
-      record.error || res.statusText || `Request failed (${res.status})`
-    );
+    throw new Error(record.error || res.statusText || `Request failed (${res.status})`);
   }
 
   return parsed as T;
 }
 
 export function NewsletterSubscribersList() {
-  const [subscribers, setSubscribers] = useState<NewsletterSubscriber[] | null>(
-    null
-  );
+  const t = useTranslations("Components.Admin.NewsletterSubscribers");
+  const [subscribers, setSubscribers] = useState<NewsletterSubscriber[] | null>(null);
   const [loadError, setLoadError] = useState<string | null>(null);
   const [rowErrors, setRowErrors] = useState<Record<number, string>>({});
   const [globalError, setGlobalError] = useState<string | null>(null);
-  const [confirmTarget, setConfirmTarget] = useState<NewsletterSubscriber | null>(
-    null
-  );
-  const [undoItem, setUndoItem] = useState<{ sub: NewsletterSubscriber } | null>(
-    null
-  );
+  const [confirmTarget, setConfirmTarget] = useState<NewsletterSubscriber | null>(null);
+  const [undoItem, setUndoItem] = useState<{ sub: NewsletterSubscriber } | null>(null);
 
   const timerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const triggerRef = useRef<HTMLElement | null>(null);
@@ -77,7 +71,7 @@ export function NewsletterSubscribersList() {
     try {
       const data = await adminFetch<{
         subscribers: NewsletterSubscriber[];
-      }>('/api/admin/newsletter');
+      }>("/api/admin/newsletter");
       setLoadError(null);
       setSubscribers(sortByNewest(data.subscribers));
     } catch (err) {
@@ -100,8 +94,7 @@ export function NewsletterSubscribersList() {
 
   useEffect(() => {
     if (confirmTarget) {
-      const cancel =
-        panelRef.current?.querySelector<HTMLButtonElement>('button');
+      const cancel = panelRef.current?.querySelector<HTMLButtonElement>("button");
       cancelRef.current = cancel ?? null;
       cancelRef.current?.focus();
     } else {
@@ -130,7 +123,7 @@ export function NewsletterSubscribersList() {
     closeDialog();
 
     try {
-      await adminFetch(`/api/admin/newsletter?id=${id}`, { method: 'DELETE' });
+      await adminFetch(`/api/admin/newsletter?id=${id}`, { method: "DELETE" });
       if (timerRef.current) clearTimeout(timerRef.current);
       setUndoItem({ sub });
       timerRef.current = setTimeout(() => setUndoItem(null), 8000);
@@ -146,13 +139,10 @@ export function NewsletterSubscribersList() {
     const sub = undoItem.sub;
 
     try {
-      const data = await adminFetch<{ subscriber: NewsletterSubscriber }>(
-        '/api/admin/newsletter',
-        {
-          method: 'POST',
-          body: JSON.stringify({ email: sub.email }),
-        }
-      );
+      const data = await adminFetch<{ subscriber: NewsletterSubscriber }>("/api/admin/newsletter", {
+        method: "POST",
+        body: JSON.stringify({ email: sub.email }),
+      });
       if (timerRef.current) {
         clearTimeout(timerRef.current);
         timerRef.current = null;
@@ -183,9 +173,12 @@ export function NewsletterSubscribersList() {
       </p>
 
       {subscribers === null && !loadError ? (
-        <p className="text-gray-600 dark:text-gray-300">Loading…</p>
+        <p className="text-gray-600 dark:text-gray-300">{t("loading")}</p>
       ) : loadError ? (
-        <div className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 dark:border-red-900 dark:bg-red-950 dark:text-red-300">
+        <div
+          className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 dark:border-red-900
+            dark:bg-red-950 dark:text-red-300"
+        >
           <p className="mb-3 text-sm">{loadError}</p>
           <AdminButton
             variant="secondary"
@@ -195,39 +188,37 @@ export function NewsletterSubscribersList() {
               void load();
             }}
           >
-            Retry
+            {t("retry")}
           </AdminButton>
         </div>
       ) : !subscribers || subscribers.length === 0 ? (
-        <p className="text-gray-600 dark:text-gray-300">No subscribers yet.</p>
+        <p className="text-gray-600 dark:text-gray-300">{t("empty")}</p>
       ) : (
         <ul className="divide-y divide-gray-200 dark:divide-gray-700">
           {subscribers.map((s) => (
             <li key={s.id} className="py-4">
-              <div className="flex justify-between items-center gap-4">
+              <div className="flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <span className="block truncate font-medium text-gray-900 dark:text-gray-100">
                     {s.email}
                   </span>
                   <span className="block text-xs text-gray-500 dark:text-gray-400">
-                    Subscribed {formatDateTime(s.created_at)}
+                    {t("Labels.subscribed_at", { date: formatDateTime(s.created_at) })}
                   </span>
                 </div>
                 <AdminButton
                   variant="destructive"
                   size="sm"
                   className="min-h-[44px]"
-                  aria-label={`Remove ${s.email}`}
+                  aria-label={t("Aria.remove_subscriber", { email: s.email })}
                   onClick={(e) => requestRemove(s, e)}
                 >
-                  <Trash2 aria-hidden="true"/>
-                  Remove
+                  <Trash2 aria-hidden="true" />
+                  {t("Buttons.remove")}
                 </AdminButton>
               </div>
               {rowErrors[s.id] ? (
-                <p className="mt-2 text-sm text-red-600 dark:text-red-400">
-                  {rowErrors[s.id]}
-                </p>
+                <p className="mt-2 text-sm text-red-600 dark:text-red-400">{rowErrors[s.id]}</p>
               ) : null}
             </li>
           ))}
@@ -236,7 +227,7 @@ export function NewsletterSubscribersList() {
 
       {confirmTarget ? (
         <div
-          className="fixed inset-0 z-50 bg-black/50 flex items-center justify-center p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/50 p-4"
           onMouseDown={(e) => {
             if (e.target === e.currentTarget) closeDialog();
           }}
@@ -247,9 +238,9 @@ export function NewsletterSubscribersList() {
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={descId}
-            className="bg-white dark:bg-gray-800 rounded-lg p-6 max-w-sm w-full"
+            className="w-full max-w-sm rounded-lg bg-white p-6 dark:bg-gray-800"
             onKeyDown={(e) => {
-              if (e.key === 'Escape') closeDialog();
+              if (e.key === "Escape") closeDialog();
             }}
             onClick={(e) => e.stopPropagation()}
           >
@@ -257,11 +248,10 @@ export function NewsletterSubscribersList() {
               id={titleId}
               className="mb-2 text-lg font-semibold text-gray-900 dark:text-gray-100"
             >
-              Remove subscriber?
+              {t("Dialog.title")}
             </h2>
             <p id={descId} className="mb-6 text-sm text-gray-600 dark:text-gray-300">
-              {confirmTarget.email} will be removed from the newsletter list. You
-              can undo for 8 seconds.
+              {t("Dialog.description", { email: confirmTarget.email })}
             </p>
             <div className="flex justify-end gap-3">
               <AdminButton
@@ -270,14 +260,10 @@ export function NewsletterSubscribersList() {
                 className="min-h-[44px]"
                 onClick={closeDialog}
               >
-                Cancel
+                {t("Buttons.cancel")}
               </AdminButton>
-              <AdminButton
-                variant="destructive"
-                className="min-h-[44px]"
-                onClick={confirmRemove}
-              >
-                Remove
+              <AdminButton variant="destructive" className="min-h-[44px]" onClick={confirmRemove}>
+                {t("Buttons.remove")}
               </AdminButton>
             </div>
           </div>
@@ -287,16 +273,12 @@ export function NewsletterSubscribersList() {
       {undoItem ? (
         <div
           role="status"
-          className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 bg-gray-900 text-white dark:bg-white dark:text-gray-900 rounded-lg px-4 py-3 shadow-lg flex gap-3 items-center"
+          className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3
+            rounded-lg bg-gray-900 px-4 py-3 text-white shadow-lg dark:bg-white dark:text-gray-900"
         >
-          <span className="text-sm">Subscriber removed.</span>
-          <AdminButton
-            variant="secondary"
-            size="sm"
-            className="min-h-[44px]"
-            onClick={performUndo}
-          >
-            Undo
+          <span className="text-sm">{t("Toast.removed")}</span>
+          <AdminButton variant="secondary" size="sm" className="min-h-[44px]" onClick={performUndo}>
+            {t("Buttons.undo")}
           </AdminButton>
         </div>
       ) : null}

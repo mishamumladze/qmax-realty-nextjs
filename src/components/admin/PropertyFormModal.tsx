@@ -4,6 +4,7 @@ import { Fragment, useEffect, useId, useState } from "react";
 import type { PropertyFormData } from "@/types/admin";
 import type { Property } from "@/types/property";
 import { AdminButton } from "@/components/ui/AdminButton";
+import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 
 interface PropertyFormModalProps {
@@ -56,47 +57,19 @@ const fileInputClass =
 
 interface ShortField {
   name: string;
-  label: string;
 }
 
 const SHORT_ROWS: Array<[ShortField, ShortField | "parking"]> = [
-  [
-    { name: "title", label: "Title *" },
-    { name: "type", label: "Type" },
-  ],
-  [
-    { name: "subtitle", label: "Subtitle" },
-    { name: "sale_type", label: "Sale type" },
-  ],
-  [
-    { name: "location", label: "Location" },
-    { name: "neighborhood", label: "Neighborhood" },
-  ],
-  [
-    { name: "city", label: "City" },
-    { name: "region", label: "Region" },
-  ],
-  [
-    { name: "country", label: "Country" },
-    { name: "currency", label: "Currency" },
-  ],
-  [
-    { name: "price", label: "Price" },
-    { name: "sqmt", label: "Sqmt" },
-  ],
-  [
-    { name: "rooms", label: "Rooms" },
-    { name: "bedrooms", label: "Bedrooms" },
-  ],
-  [
-    { name: "bathrooms", label: "Bathrooms" },
-    { name: "year_built", label: "Year built" },
-  ],
-  [{ name: "floor", label: "Floor" }, "parking"],
-  [
-    { name: "coordsLat", label: "Latitude" },
-    { name: "coordsLng", label: "Longitude" },
-  ],
+  [{ name: "title" }, { name: "type" }],
+  [{ name: "subtitle" }, { name: "sale_type" }],
+  [{ name: "location" }, { name: "neighborhood" }],
+  [{ name: "city" }, { name: "region" }],
+  [{ name: "country" }, { name: "currency" }],
+  [{ name: "price" }, { name: "sqmt" }],
+  [{ name: "rooms" }, { name: "bedrooms" }],
+  [{ name: "bathrooms" }, { name: "year_built" }],
+  [{ name: "floor" }, "parking"],
+  [{ name: "coordsLat" }, { name: "coordsLng" }],
 ];
 
 const VALIDATION_ORDER = [
@@ -152,6 +125,7 @@ function readFileAsDataUrl(file: File): Promise<string> {
 }
 
 export function PropertyFormModal({ open, property, onClose, onSaved }: PropertyFormModalProps) {
+  const t = useTranslations("Components.Admin.PropertyFormModal");
   const [fields, setFields] = useState<Record<string, string>>(defaultFields);
   const [parking, setParking] = useState(false);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -217,14 +191,14 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
   const validate = (): Record<string, string> => {
     const nextErrors: Record<string, string> = {};
     if (getValue("title").trim() === "") {
-      nextErrors.title = "Title is required.";
+      nextErrors.title = t("Validation.title_required");
     }
     const numericKeys: string[] = [...NUMERIC_KEYS, "coordsLat", "coordsLng"];
     for (const key of numericKeys) {
       const raw = getValue(key).trim();
       if (raw === "") continue;
       if (!Number.isFinite(Number(raw))) {
-        nextErrors[key] = "Must be a number.";
+        nextErrors[key] = t("Validation.must_be_number");
       }
     }
     return nextErrors;
@@ -307,7 +281,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       });
       onSaved(data.property);
     } catch (error) {
-      setFormError(error instanceof Error ? error.message : "Something went wrong.");
+      setFormError(error instanceof Error ? error.message : t("Validation.something_wrong"));
     } finally {
       setSubmitting(false);
     }
@@ -318,7 +292,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
     if (!file) return;
     void readFileAsDataUrl(file)
       .then((dataUrl) => setField(key, dataUrl))
-      .catch(() => setFormError("Failed to read the selected image."));
+      .catch(() => setFormError(t("Validation.read_failed_single")));
   };
 
   const handleGalleryFiles = (files: FileList | null) => {
@@ -331,7 +305,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           return { ...prev, galleryText: combined };
         });
       })
-      .catch(() => setFormError("Failed to read one or more selected images."));
+      .catch(() => setFormError(t("Validation.read_failed_multi")));
   };
 
   const renderTextInput = (field: ShortField) => {
@@ -340,7 +314,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
     return (
       <div>
         <label htmlFor={id} className={labelClass}>
-          {field.label}
+          {t(`Fields.${field.name}`)}
         </label>
         <input
           id={id}
@@ -355,13 +329,13 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
     );
   };
 
-  const renderTextarea = (name: string, label: string, rows: number, hint?: string) => {
+  const renderTextarea = (name: string, labelKey: string, rows: number, hintKey?: string) => {
     const id = fieldId(name);
     const error = errors[name];
     return (
       <div className="col-span-2">
         <label htmlFor={id} className={labelClass}>
-          {label}
+          {t(labelKey)}
         </label>
         <textarea
           id={id}
@@ -372,7 +346,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           className={`${inputClass}${error ? errorBorderClass : ""}`}
         />
         {error ? <p className={errorTextClass}>{error}</p> : null}
-        {hint ? <p className={hintClass}>{hint}</p> : null}
+        {hintKey ? <p className={hintClass}>{t(hintKey)}</p> : null}
       </div>
     );
   };
@@ -394,13 +368,13 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       >
         <div className="mb-4 flex items-center justify-between gap-4">
           <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
-            {property ? "Edit property" : "Add property"}
+            {property ? t("Titles.edit") : t("Titles.add")}
           </h2>
           <AdminButton
             variant="secondary"
             size="sm"
             onClick={onClose}
-            aria-label="Close dialog"
+            aria-label={t("Aria.close_dialog")}
             className="min-h-[44px] min-w-[44px]"
           >
             <X className="h-5 w-5" aria-hidden="true" />
@@ -426,7 +400,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
                         onChange={(e) => setParking(e.target.checked)}
                         className="accent-brand-600 dark:accent-brand-500 h-5 w-5 cursor-pointer"
                       />
-                      Parking available
+                      {t("Parking.available")}
                     </label>
                   </div>
                 ) : (
@@ -435,14 +409,14 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
               </Fragment>
             ))}
 
-            {renderTextarea("description", "Description", 3)}
-            {renderTextarea("meta_description", "Meta description", 3)}
-            {renderTextarea("inclusionsText", "Inclusions", 4, "One per line")}
-            {renderTextarea("galleryText", "Gallery URLs", 4, "One URL per line")}
+            {renderTextarea("description", "Textareas.description", 3)}
+            {renderTextarea("meta_description", "Textareas.meta_description", 3)}
+            {renderTextarea("inclusionsText", "Textareas.inclusions", 4, "Hints.one_per_line")}
+            {renderTextarea("galleryText", "Textareas.gallery_urls", 4, "Hints.one_url_per_line")}
 
             <div className="col-span-2">
               <label htmlFor={fieldId("card_image")} className={labelClass}>
-                Card image
+                {t("Labels.card_image")}
               </label>
               <input
                 id={fieldId("card_image")}
@@ -455,7 +429,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
                 htmlFor={fieldId("card_image_file")}
                 className="mt-2 block text-xs font-medium text-gray-500 dark:text-gray-400"
               >
-                Upload image file
+                {t("Labels.upload_image_file")}
               </label>
               <input
                 id={fieldId("card_image_file")}
@@ -468,7 +442,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
 
             <div className="col-span-2">
               <label htmlFor={fieldId("floor_plan")} className={labelClass}>
-                Floor plan
+                {t("Labels.floor_plan")}
               </label>
               <input
                 id={fieldId("floor_plan")}
@@ -481,7 +455,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
                 htmlFor={fieldId("floor_plan_file")}
                 className="mt-2 block text-xs font-medium text-gray-500 dark:text-gray-400"
               >
-                Upload image file
+                {t("Labels.upload_image_file")}
               </label>
               <input
                 id={fieldId("floor_plan_file")}
@@ -494,7 +468,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
 
             <div className="col-span-2">
               <label htmlFor={fieldId("gallery_files")} className={labelClass}>
-                Gallery images
+                {t("Labels.gallery_images")}
               </label>
               <input
                 id={fieldId("gallery_files")}
@@ -518,7 +492,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
               onClick={onClose}
               className="min-h-[44px]"
             >
-              Cancel
+              {t("Buttons.cancel")}
             </AdminButton>
             <AdminButton
               variant="primary"
@@ -526,7 +500,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
               disabled={submitting}
               className="min-h-[44px]"
             >
-              {submitting ? "Saving…" : "Save"}
+              {submitting ? t("Buttons.saving") : t("Buttons.save")}
             </AdminButton>
           </div>
         </form>

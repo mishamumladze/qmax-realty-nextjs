@@ -86,7 +86,7 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
       <div className="relative mx-auto max-w-5xl">
         <button
           onClick={handlePrev}
-          aria-label="Previous properties"
+          aria-label={t("Aria.previous")}
           className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 left-0 z-10 flex
             h-12 w-12 -translate-x-4 -translate-y-1/2 cursor-pointer items-center justify-center
             rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-all
@@ -112,7 +112,7 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
               const bathrooms = p.bathrooms ?? 0;
               const sqmt = p.sqmt ?? 0;
               const price = p.price ?? 0;
-              const title = p.title || "Property";
+              const title = p.title || t("Fallback.property");
 
               return (
                 <article
@@ -190,7 +190,7 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
 
         <button
           onClick={handleNext}
-          aria-label="Next properties"
+          aria-label={t("Aria.next")}
           className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 right-0 z-10 flex
             h-12 w-12 translate-x-4 -translate-y-1/2 cursor-pointer items-center justify-center
             rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-all
@@ -204,7 +204,7 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
             <button
               key={i}
               onClick={() => setCurrentIndex(i)}
-              aria-label={`Go to slide ${i + 1}`}
+              aria-label={t("Aria.go_to_slide", { n: i + 1 })}
               className={`h-2 w-2 rounded-full transition-colors duration-200 ${
                 i === currentIndex ? "bg-brand-500" : "bg-gray-300 dark:bg-gray-600"
               }`}

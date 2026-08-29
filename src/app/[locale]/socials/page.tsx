@@ -79,12 +79,14 @@ export default async function SocialsPage() {
                   {/* <ExternalLink className="w-5 h-5 shrink-0 text-white/80" aria-hidden="true"/> */}
                 </div>
 
-                <p className="mb-6 text-sm leading-relaxed text-white">{s.description}</p>
+                <p className="mb-6 text-sm leading-relaxed text-white">
+                  {t(`SocialCards.${s.key}.description`)}
+                </p>
               </div>
 
               <div className="flex items-center justify-between border-t border-white/10 pt-4">
-                <span className="text-sm text-white">{s.tagline}</span>
-                <SocialsButton href={s.cta_url} label={s.cta_text} />
+                <span className="text-sm text-white">{t(`SocialCards.${s.key}.tagline`)}</span>
+                <SocialsButton href={s.cta_url} label={t(`SocialCards.${s.key}.cta_text`)} />
               </div>
             </div>
           ))}

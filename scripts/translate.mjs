@@ -3,12 +3,11 @@ import path from "path";
 import * as deepl from "deepl-node";
 import dotenv from "dotenv";
 
-// Load environment variables explicitly from .env.local
 dotenv.config({ path: ".env.local" });
 
 const apiKey = process.env.DEEPL_API_KEY;
 if (!apiKey) {
-  console.error("❌ DEEPL_API_KEY is missing in .env.local");
+  console.error("❌ DEEPL_API_KEY missing");
   process.exit(1);
 }
 
@@ -23,117 +22,164 @@ const TARGET_LOCALES = {
   pl: "pl",
 };
 
-const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+// Free-tier friendly
+const BATCH_SIZE = 50;
+const MAX_CONCURRENT = 2;
+const BASE_DELAY_MS = 100;
+const RATE_LIMIT_DELAY_MS = 5000;
 
-/**
- * Compares source vs target objects and returns ONLY keys that need translation.
- */
-function getMissingKeys(sourceObj, targetObj = {}) {
-  const missing = {};
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
-  for (const [key, value] of Object.entries(sourceObj)) {
-    if (typeof value === "object" && value !== null) {
-      const nestedMissing = getMissingKeys(value, targetObj[key] || {});
-      if (Object.keys(nestedMissing).length > 0) {
-        missing[key] = nestedMissing;
-      }
-    } else if (typeof value === "string") {
-      // Key needs translation if missing, empty, or untranslated
-      if (targetObj[key] === undefined || targetObj[key] === "") {
-        missing[key] = value;
-      }
-    }
-  }
-
-  return missing;
+function protectPlaceholders(text) {
+  const placeholders = [];
+  const protectedText = text.replace(/\{([a-zA-Z_][a-zA-Z0-9_]*)\}/g, (_, p) => {
+    placeholders.push(p);
+    return `__ICU_${placeholders.length - 1}__`;
+  });
+  return { protectedText, placeholders };
 }
 
-/**
- * Translates missing strings and merges them recursively into target object.
- */
-async function translateAndMerge(missingObj, targetObj, targetLang) {
-  const merged = { ...targetObj };
+function restorePlaceholders(text, placeholders) {
+  return text.replace(/__ICU_(\d+)__/g, (_, i) => `{${placeholders[i]}}`);
+}
 
-  for (const [key, value] of Object.entries(missingObj)) {
-    if (typeof value === "object" && value !== null) {
-      merged[key] = await translateAndMerge(value, targetObj[key] || {}, targetLang);
-    } else if (typeof value === "string") {
-      let success = false;
-      let retries = 3;
-
-      while (!success && retries > 0) {
-        try {
-          console.log(` Translating [${targetLang}] key "${key}": "${value}"`);
-          const result = await translator.translateText(value, null, targetLang, {
-            preserveFormatting: true,
-          });
-          merged[key] = result.text;
-          success = true;
-
-          // Delay to stay clear of rate limits
-          await sleep(200);
-        } catch (error) {
-          if (
-            error.name === "TooManyRequestsError" ||
-            error.message.includes("Too many requests")
-          ) {
-            console.warn(`⏳ Rate limit hit on key "${key}". Pausing 5s...`);
-            await sleep(5000);
-            retries--;
-          } else {
-            throw error;
-          }
-        }
-      }
-
-      if (!success) {
-        console.error(`❌ Failed to translate "${key}". Using English fallback.`);
-        merged[key] = value;
+function flattenMissing(source, target, prefix = "") {
+  const out = [];
+  for (const [k, v] of Object.entries(source)) {
+    const p = prefix ? `${prefix}.${k}` : k;
+    const targetVal = target?.[k];
+    if (typeof v === "object" && v !== null) {
+      out.push(...flattenMissing(v, targetVal, p));
+    } else if (typeof v === "string") {
+      if (targetVal === undefined || targetVal === "") {
+        out.push({ path: p, ...protectPlaceholders(v) });
       }
     }
   }
+  return out;
+}
 
+function unflatten(results) {
+  const root = {};
+  for (const { path, translated } of results) {
+    const parts = path.split(".");
+    let cur = root;
+    for (let i = 0; i < parts.length - 1; i++) {
+      cur[parts[i]] = cur[parts[i]] || {};
+      cur = cur[parts[i]];
+    }
+    cur[parts[parts.length - 1]] = translated;
+  }
+  return root;
+}
+
+function mergeTranslations(target, translated) {
+  const merged = { ...target };
+  for (const [k, v] of Object.entries(translated)) {
+    merged[k] = typeof v === "object" ? mergeTranslations(target[k] || {}, v) : v;
+  }
   return merged;
+}
+
+class Semaphore {
+  constructor(max) {
+    this.max = max;
+    this.current = 0;
+    this.queue = [];
+  }
+  async acquire() {
+    if (this.current < this.max) {
+      this.current++;
+      return;
+    }
+    await new Promise((r) => this.queue.push(r));
+  }
+  release() {
+    this.current--;
+    if (this.queue.length) {
+      this.current++;
+      this.queue.shift()();
+    }
+  }
+}
+
+async function translateLocale(locale, deeplCode, enContent, targetContent) {
+  const missing = flattenMissing(enContent, targetContent);
+  if (!missing.length) {
+    console.log(`\n✨ [${locale.toUpperCase()}] Up to date.`);
+    return targetContent;
+  }
+  console.log(
+    `\n🌐 ${locale.toUpperCase()}: ${missing.length} keys in batches of ${BATCH_SIZE}...`
+  );
+
+  const results = [];
+  let delay = BASE_DELAY_MS;
+
+  for (let i = 0; i < missing.length; i += BATCH_SIZE) {
+    const batch = missing.slice(i, i + BATCH_SIZE);
+    const texts = batch.map((b) => b.protectedText);
+    let retries = 3;
+    let ok = false;
+    while (!ok && retries--) {
+      try {
+        const res = await translator.translateText(texts, null, deeplCode, {
+          preserveFormatting: true,
+        });
+        const arr = Array.isArray(res) ? res : [res];
+        for (let j = 0; j < batch.length; j++) {
+          results.push({
+            path: batch[j].path,
+            translated: restorePlaceholders(arr[j].text, batch[j].placeholders),
+          });
+        }
+        console.log(
+          `  ✓ Batch ${Math.floor(i / BATCH_SIZE) + 1}/${Math.ceil(missing.length / BATCH_SIZE)}`
+        );
+        ok = true;
+        await sleep(delay);
+      } catch (e) {
+        if (e.name === "TooManyRequestsError" || e.message.includes("Too many requests")) {
+          console.warn(`  ⏳ Rate limit, waiting ${RATE_LIMIT_DELAY_MS}ms...`);
+          await sleep(RATE_LIMIT_DELAY_MS);
+          delay = Math.min(delay * 2, 2000);
+        } else throw e;
+      }
+    }
+    if (!ok) for (const b of batch) results.push({ path: b.path, translated: b.original });
+  }
+  return mergeTranslations(targetContent, unflatten(results));
 }
 
 async function run() {
   if (!fs.existsSync(SOURCE_FILE)) {
-    console.error(`❌ Source file missing at ${SOURCE_FILE}.`);
+    console.error(`❌ Missing ${SOURCE_FILE}`);
     return;
   }
-
-  const enContent = JSON.parse(fs.readFileSync(SOURCE_FILE, "utf-8"));
-
-  for (const [locale, deeplCode] of Object.entries(TARGET_LOCALES)) {
-    const targetFilePath = path.join(MESSAGES_DIR, `${locale}.json`);
-    let targetContent = {};
-
-    // Load existing target translation file if present
-    if (fs.existsSync(targetFilePath)) {
-      try {
-        targetContent = JSON.parse(fs.readFileSync(targetFilePath, "utf-8"));
-      } catch (err) {
-        console.warn(`⚠️ Could not parse existing ${locale}.json. Recreating...`);
-      }
-    }
-
-    // 1. Diff source against existing file
-    const missingKeys = getMissingKeys(enContent, targetContent);
-
-    if (Object.keys(missingKeys).length === 0) {
-      console.log(`\n✨ [${locale.toUpperCase()}] All keys up to date. Skipping.`);
-      continue;
-    }
-
-    console.log(`\n🌐 Translating missing keys for [${locale.toUpperCase()}]...`);
-
-    // 2. Only translate missing keys and merge into existing translations
-    const updatedContent = await translateAndMerge(missingKeys, targetContent, deeplCode);
-
-    // 3. Write merged JSON back to disk
-    fs.writeFileSync(targetFilePath, JSON.stringify(updatedContent, null, 2), "utf-8");
-    console.log(`✅ Updated messages/${locale}.json`);
-  }
+  const en = JSON.parse(fs.readFileSync(SOURCE_FILE, "utf-8"));
+  const sem = new Semaphore(MAX_CONCURRENT);
+  await Promise.all(
+    Object.entries(TARGET_LOCALES).map(([loc, code]) =>
+      (async () => {
+        await sem.acquire();
+        try {
+          const fp = path.join(MESSAGES_DIR, `${loc}.json`);
+          let tgt = {};
+          if (fs.existsSync(fp)) {
+            try {
+              tgt = JSON.parse(fs.readFileSync(fp, "utf-8"));
+            } catch {}
+          }
+          const updated = await translateLocale(loc, code, en, tgt);
+          fs.writeFileSync(fp, JSON.stringify(updated, null, 2), "utf-8");
+          console.log(`✅ messages/${loc}.json`);
+        } finally {
+          sem.release();
+        }
+      })()
+    )
+  );
+  console.log("\n🎉 Done.");
 }
 
 run();
