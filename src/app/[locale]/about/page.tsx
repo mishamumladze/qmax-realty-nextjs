@@ -61,13 +61,13 @@ export default async function AboutPage() {
           overflow-hidden bg-gradient-to-r py-16 text-white md:py-24"
       >
         <div className="relative container mx-auto px-4 text-center">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl">{t("Hero.title")}</h1>
-          <p className="mx-auto max-w-2xl text-lg md:text-xl">{t("Hero.subtitle")}</p>
+          <h1 className="mb-4 text-4xl md:text-5xl lg:text-6xl font-bold">{t("Hero.title")}</h1>
+          <p className="mx-auto max-w-2xl text-base md:text-lg">{t("Hero.subtitle")}</p>
         </div>
       </section>
 
       {/* Our Story */}
-      <section className="section grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
+      <section className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 grid grid-cols-1 items-center gap-10 lg:grid-cols-2">
         <div className="overflow-hidden rounded-2xl shadow-lg">
           <img
             src="/img/hero.webp"
@@ -78,11 +78,11 @@ export default async function AboutPage() {
           />
         </div>
         <div>
-          <h2 className="mb-4 text-3xl font-bold text-gray-800 dark:text-white">
+          <h2 className="mb-4 text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">
             {t("Story.title")}
           </h2>
-          <p className="mb-4 leading-relaxed text-gray-600 dark:text-gray-300">{t("Story.p1")}</p>
-          <p className="mb-6 leading-relaxed text-gray-600 dark:text-gray-300">{t("Story.p2")}</p>
+          <p className="mb-4 leading-relaxed text-base md:text-lg text-gray-600 dark:text-gray-300">{t("Story.p1")}</p>
+          <p className="mb-6 leading-relaxed text-base md:text-lg text-gray-600 dark:text-gray-300">{t("Story.p2")}</p>
           <div className="flex flex-col gap-4 sm:flex-row">
             <Link
               href="/listings"
@@ -103,7 +103,7 @@ export default async function AboutPage() {
       </section>
 
       {/* Stats */}
-      <section className="section grid grid-cols-2 gap-6 text-center md:grid-cols-4">
+      <section className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 grid grid-cols-2 gap-6 text-center md:grid-cols-4">
         {STATS.map((stat) => {
           const Icon = stat.icon;
           return (
@@ -118,7 +118,7 @@ export default async function AboutPage() {
               >
                 <Icon className="text-brand-600 dark:text-brand-400 h-5 w-5" aria-hidden="true" />
               </div>
-              <p className="text-3xl font-bold text-gray-800 dark:text-white">{stat.value}</p>
+              <p className="text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">{stat.value}</p>
               <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                 {t(`Stats.${stat.labelKey}`)}
               </p>
@@ -128,11 +128,11 @@ export default async function AboutPage() {
       </section>
 
       {/* What We Do */}
-      <section className="section text-center">
-        <h2 className="mb-2 text-3xl font-bold text-gray-800 dark:text-white">
+      <section className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 text-center">
+        <h2 className="mb-2 text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">
           {t("WhatWeDo.title")}
         </h2>
-        <p className="mb-8 text-gray-600 dark:text-gray-300">{t("WhatWeDo.subtitle")}</p>
+        <p className="mb-8 text-base md:text-lg text-gray-600 dark:text-gray-300">{t("WhatWeDo.subtitle")}</p>
         <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-2">
           {SERVICES.map((service) => {
             const Icon = service.icon;
@@ -148,7 +148,7 @@ export default async function AboutPage() {
                 >
                   <Icon className="text-brand-600 dark:text-brand-400 h-5 w-5" aria-hidden="true" />
                 </div>
-                <h3 className="mb-2 text-lg font-semibold text-gray-800 dark:text-white">
+                <h3 className="mb-2 text-xl md:text-2xl font-semibold text-gray-800 dark:text-white">
                   {t(`Services.${service.slug}.title`)}
                 </h3>
                 <p className="text-sm leading-relaxed text-gray-600 dark:text-gray-300">
@@ -161,11 +161,11 @@ export default async function AboutPage() {
       </section>
 
       {/* Why Choose Us */}
-      <section className="section rounded-2xl bg-gray-50 text-center dark:bg-gray-900">
-        <h2 className="mb-2 text-center text-3xl font-bold text-gray-800 dark:text-white">
+      <section className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 rounded-2xl bg-gray-50 text-center dark:bg-gray-900">
+        <h2 className="mb-2 text-center text-3xl md:text-4xl font-bold text-gray-800 dark:text-white">
           {t("WhyChoose.title")}
         </h2>
-        <p className="mb-10 text-center text-gray-600 dark:text-gray-300">
+        <p className="mb-10 text-center text-base md:text-lg text-gray-600 dark:text-gray-300">
           {t("WhyChoose.subtitle")}
         </p>
         <div className="grid grid-cols-1 gap-6 text-center md:grid-cols-2 lg:grid-cols-3">
@@ -188,7 +188,7 @@ export default async function AboutPage() {
                         aria-hidden="true"
                       />
                     </div>
-                    <h3 className="text-center font-semibold text-gray-800 dark:text-white">
+                    <h3 className="text-center text-xl md:text-2xl font-semibold text-gray-800 dark:text-white">
                       {t(`WhyUs.${reason.slug}.title`)}
                     </h3>
                   </div>
@@ -204,10 +204,10 @@ export default async function AboutPage() {
 
       {/* CTA */}
       <section
-        className="section from-brand-600 to-brand-700 bg-gradient-to-r text-center text-white"
+        className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 from-brand-600 to-brand-700 bg-gradient-to-r text-center text-white"
       >
-        <h2 className="mb-3 text-3xl font-bold">{t("ReadyCta.title")}</h2>
-        <p className="mx-auto mb-8 max-w-2xl text-lg">{t("ReadyCta.subtitle")}</p>
+        <h2 className="mb-3 text-2xl md:text-3xl font-bold">{t("ReadyCta.title")}</h2>
+        <p className="mx-auto mb-8 max-w-2xl text-base md:text-lg">{t("ReadyCta.subtitle")}</p>
         <div className="flex flex-col justify-center gap-4 sm:flex-row">
           <a
             href={CONTACT_INFO.whatsapp.href}

@@ -58,7 +58,8 @@ export default async function Footer({}: FooterProps) {
           <iframe
             title={t("map_title")}
             src="https://www.google.com/maps?q=Rustaveli+Ave+12,+Tbilisi,+Georgia&output=embed"
-            className="h-80 w-full rounded-lg border-0"
+            className="h-80 w-full rounded-lg border-0 dark:opacity-80 dark:contrast-125
+              dark:hue-rotate-180 dark:invert dark:saturate-85 dark:filter"
             allowFullScreen
             loading="lazy"
             referrerPolicy="no-referrer-when-downgrade"

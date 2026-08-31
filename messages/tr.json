@@ -16,6 +16,7 @@
     },
     "NewsForm": {
       "input": {
+        "label": "E-posta adresi",
         "text": "E-posta adresinizi girin",
         "sub": "Abone ol",
         "loading": "yükleniyor",
@@ -60,7 +61,12 @@
         "previous": "Önceki",
         "next": "Sonraki"
       },
-      "photo_alt": "{title} - fotoğraf {n}"
+      "photo_alt": "{title} - fotoğraf {n}",
+      "empty_gallery": "Bu mülk için fotoğraf yok."
+    },
+    "OfflineIndicator": {
+      "offline": "Çevrimdışısınız. Değişiklikler çevrimiçi olduğunuzda kaydedilecektir.",
+      "back_online": "Tekrar çevrimiçisiniz!"
     },
     "Footer": {
       "map_title": "QMAX Emlak Ofisinin Konumu",
@@ -627,7 +633,9 @@
         "sqm": "m²",
         "about": "Bu mülk hakkında",
         "floor_plan": "Kat Planı",
-        "included": "Paket İçeriği"
+        "included": "Paket İçeriği",
+        "key_features": "Önemli Özellikler!",
+        "additional": "Ek Bilgiler"
       },
       "Facts": {
         "year_built": "İnşa Yılı",

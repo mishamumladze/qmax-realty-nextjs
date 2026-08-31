@@ -1,17 +1,23 @@
 "use client";
 
-import { useState, useEffect, useCallback, useTransition } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { ChevronLeft, ChevronRight, Bed, Bath, Square, ArrowRight } from "lucide-react";
 import { Property } from "@/types/property";
 import { useTranslations } from "next-intl";
+import { CarouselCardSkeleton } from "@/components/ui/Skeleton";
+import { useHapticAndVisualFeedback } from "@/components/ui/HapticFeedback";
 
 interface PropertiesCarouselProps {
   properties: Property[];
+  isLoading?: boolean;
 }
 
-export default function PropertiesCarousel({ properties }: PropertiesCarouselProps) {
+export default function PropertiesCarousel({
+  properties,
+  isLoading = false,
+}: PropertiesCarouselProps) {
   const t = useTranslations("Components.PCarousel");
   // Ensure exactly 6 properties are selected for the homepage carousel
   const homepageProperties = properties.slice(0, 6);
@@ -19,6 +25,9 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
   const [currentIndex, setCurrentIndex] = useState(0);
   const [visibleCount, setVisibleCount] = useState(1);
   const [touchStart, setTouchStart] = useState<number | null>(null);
+  const [isPaused, setIsPaused] = useState(false);
+  const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+  const { trigger: triggerHaptic } = useHapticAndVisualFeedback();
 
   const total = homepageProperties.length;
 
@@ -65,7 +74,63 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
     setTouchStart(null);
   };
 
+  useEffect(() => {
+    if (total <= visibleCount) return;
+
+    const startInterval = () => {
+      if (intervalRef.current) return;
+      intervalRef.current = setInterval(() => {
+        if (!isPaused) {
+          handleNext();
+        }
+      }, 5000);
+    };
+
+    const stopInterval = () => {
+      if (intervalRef.current) {
+        clearInterval(intervalRef.current);
+        intervalRef.current = null;
+      }
+    };
+
+    const handleMouseEnter = () => setIsPaused(true);
+    const handleMouseLeave = () => setIsPaused(false);
+    const handleFocus = () => setIsPaused(true);
+    const handleBlur = () => setIsPaused(false);
+
+    startInterval();
+
+    return () => {
+      stopInterval();
+    };
+  }, [total, visibleCount, isPaused, maxIndex]);
+
   if (!homepageProperties || homepageProperties.length === 0) {
+    if (isLoading) {
+      return (
+        <section
+          className="container mx-auto px-4 py-8 md:py-12"
+          aria-labelledby="most-viewed-heading"
+        >
+          <div className="mb-8 text-center md:mb-12">
+            <h2
+              id="most-viewed-heading"
+              className="text-brand-600 mb-4 text-2xl font-bold md:text-3xl lg:text-4xl"
+            >
+              {t("title")}
+            </h2>
+            <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">{t("subtitle")}</p>
+          </div>
+          <div className="relative mx-auto max-w-5xl" aria-busy="true" aria-live="polite">
+            <div className="flex gap-4 md:gap-6">
+              {Array.from({ length: 6 }).map((_, i) => (
+                <CarouselCardSkeleton key={i} />
+              ))}
+            </div>
+          </div>
+        </section>
+      );
+    }
     return null;
   }
 
@@ -85,20 +150,27 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
 
       <div className="relative mx-auto max-w-5xl">
         <button
-          onClick={handlePrev}
+          onClick={() => {
+            triggerHaptic();
+            handlePrev();
+          }}
           aria-label={t("Aria.previous")}
           className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 left-0 z-10 flex
-            h-12 w-12 -translate-x-4 -translate-y-1/2 cursor-pointer items-center justify-center
-            rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-all
-            duration-200 md:-translate-x-6"
+            h-12 min-h-11 w-12 min-w-11 -translate-x-4 -translate-y-1/2 cursor-pointer items-center
+            justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
+            transition-all duration-200 md:-translate-x-6"
         >
-          <ChevronLeft className="h-5 w-5" aria-hidden="true" />
+          <ChevronLeft className="h-6 w-6" aria-hidden="true" />
         </button>
 
         <div
           className="overflow-hidden max-sm:px-[calc(10vw-1rem)]"
           onTouchStart={handleTouchStart}
           onTouchEnd={handleTouchEnd}
+          onMouseEnter={() => setIsPaused(true)}
+          onMouseLeave={() => setIsPaused(false)}
+          onFocus={() => setIsPaused(true)}
+          onBlur={() => setIsPaused(false)}
         >
           <div
             className="flex gap-4 transition-transform duration-500 ease-in-out
@@ -189,14 +261,17 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
         </div>
 
         <button
-          onClick={handleNext}
+          onClick={() => {
+            triggerHaptic();
+            handleNext();
+          }}
           aria-label={t("Aria.next")}
           className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 right-0 z-10 flex
-            h-12 w-12 translate-x-4 -translate-y-1/2 cursor-pointer items-center justify-center
-            rounded-full border border-gray-200 bg-white text-gray-600 shadow-md transition-all
-            duration-200 md:translate-x-6"
+            h-12 min-h-11 w-12 min-w-11 translate-x-4 -translate-y-1/2 cursor-pointer items-center
+            justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
+            transition-all duration-200 md:translate-x-6"
         >
-          <ChevronRight className="h-5 w-5" aria-hidden="true" />
+          <ChevronRight className="h-6 w-6" aria-hidden="true" />
         </button>
 
         <div className="mt-6 flex justify-center gap-2">
@@ -205,10 +280,20 @@ export default function PropertiesCarousel({ properties }: PropertiesCarouselPro
               key={i}
               onClick={() => setCurrentIndex(i)}
               aria-label={t("Aria.go_to_slide", { n: i + 1 })}
-              className={`h-2 w-2 rounded-full transition-colors duration-200 ${
-                i === currentIndex ? "bg-brand-500" : "bg-gray-300 dark:bg-gray-600"
+              className={`relative flex min-h-11 min-w-11 items-center justify-center rounded-full
+              transition-colors duration-200 ${
+                i === currentIndex
+                  ? "bg-brand-500"
+                  : "bg-transparent hover:bg-gray-200 dark:hover:bg-gray-700"
               }`}
-            />
+            >
+              <span
+                className={`h-2.5 w-2.5 rounded-full transition-colors duration-200 ${
+                  i === currentIndex ? "bg-brand-500" : "bg-gray-400 dark:bg-gray-600"
+                }`}
+                aria-hidden="true"
+              />
+            </button>
           ))}
         </div>
       </div>

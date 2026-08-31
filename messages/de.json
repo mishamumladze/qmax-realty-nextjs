@@ -16,6 +16,7 @@
     },
     "NewsForm": {
       "input": {
+        "label": "E-Mail-Adresse",
         "text": "Geben Sie Ihre E-Mail-Adresse ein",
         "sub": "Abonnieren",
         "loading": "Wird geladen",
@@ -60,7 +61,12 @@
         "previous": "Zurück",
         "next": "Weiter"
       },
-      "photo_alt": "{title} – Foto {n}"
+      "photo_alt": "{title} – Foto {n}",
+      "empty_gallery": "Keine Fotos für diese Immobilie verfügbar."
+    },
+    "OfflineIndicator": {
+      "offline": "Sie sind offline. Änderungen werden erst gespeichert, wenn Sie wieder online sind.",
+      "back_online": "Sie sind wieder online!"
     },
     "Footer": {
       "map_title": "Standort der QMAX Realty-Niederlassung",
@@ -627,7 +633,9 @@
         "sqm": "m²",
         "about": "Über diese Immobilie",
         "floor_plan": "Grundriss",
-        "included": "Lieferumfang"
+        "included": "Lieferumfang",
+        "key_features": "Die wichtigsten Funktionen!",
+        "additional": "Weitere Details"
       },
       "Facts": {
         "year_built": "Baujahr",

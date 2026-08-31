@@ -2,7 +2,7 @@
 
 import React from "react";
 import { Property } from "@/types/property";
-import { AdminButton } from "@/components/ui/AdminButton";
+import { Button } from "@/components/ui/Buttons";
 import { useTranslations } from "next-intl";
 
 type PropertyTableProps = {
@@ -50,22 +50,22 @@ function ActionButtons({
   const t = useTranslations("Components.Admin.PropertyTable");
   return (
     <div className="flex items-center gap-2">
-      <AdminButton
+      <Button
         variant="secondary"
         size="sm"
         onClick={() => onEdit?.(property)}
         aria-label={t("Aria.edit_property", { title: property.title })}
       >
         {t("Buttons.edit")}
-      </AdminButton>
-      <AdminButton
+      </Button>
+      <Button
         variant="destructive"
         size="sm"
         onClick={() => onDelete?.(property)}
         aria-label={t("Aria.delete_property", { title: property.title })}
       >
         {t("Buttons.delete")}
-      </AdminButton>
+      </Button>
     </div>
   );
 }

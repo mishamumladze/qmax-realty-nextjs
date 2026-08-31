@@ -9,7 +9,7 @@ import { PropertyTable } from "@/components/admin/PropertyTable";
 import { MessagesList } from "@/components/admin/MessagesList";
 import { NewsletterSubscribersList } from "@/components/admin/NewsletterSubscribersList";
 import { PropertyFormModal } from "@/components/admin/PropertyFormModal";
-import { AdminButton } from "@/components/ui/AdminButton";
+import { Button } from "@/components/ui/Buttons";
 
 type Tab = "properties" | "messages" | "newsletter";
 
@@ -213,28 +213,28 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
           {tabs.map(({ id, label, icon: Icon }) => {
             const active = activeTab === id;
             return (
-              <AdminButton
+              <Button
                 key={id}
                 variant={active ? "primary" : "secondary"}
-                className="min-h-[44px] w-full justify-start"
+                className="min-h-11 w-full justify-start"
                 aria-current={active ? "true" : undefined}
                 onClick={() => setActiveTab(id)}
               >
                 <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>{label}</span>
-              </AdminButton>
+              </Button>
             );
           })}
           <div className="hidden flex-1 md:block" />
-          <AdminButton
+          <Button
             variant="destructive"
             size="sm"
-            className="min-h-[44px] w-full"
+            className="min-h-11 w-full"
             onClick={handleLogout}
           >
             <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
             <span>{t("logout")}</span>
-          </AdminButton>
+          </Button>
         </div>
       </nav>
 
@@ -245,9 +245,9 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
               <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
                 {t("Headings.properties")}
               </h1>
-              <AdminButton
+              <Button
                 variant="primary"
-                className="min-h-[44px]"
+                className="min-h-11"
                 onClick={() => {
                   setEditing(null);
                   setModalOpen(true);
@@ -255,7 +255,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
               >
                 <Plus className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>{t("add_property")}</span>
-              </AdminButton>
+              </Button>
             </div>
             {properties.length === 0 ? (
               <p className="text-gray-600 dark:text-gray-300">{t("Empty.no_properties")}</p>
@@ -316,23 +316,23 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
               {t("DeleteDialog.description", { title: deleteTarget.title })}
             </p>
             <div className="mt-6 flex justify-end gap-3">
-              <AdminButton
+              <Button
                 variant="secondary"
-                className="min-h-[44px]"
+                className="min-h-11"
                 autoFocus
                 onClick={cancelDialog}
               >
                 {t("DeleteDialog.Buttons.cancel")}
-              </AdminButton>
-              <AdminButton
+              </Button>
+              <Button
                 variant="destructive"
-                className="min-h-[44px]"
+                className="min-h-11"
                 onClick={() => {
                   void confirmDelete();
                 }}
               >
                 {t("DeleteDialog.Buttons.delete")}
-              </AdminButton>
+              </Button>
             </div>
           </div>
         </div>
@@ -345,16 +345,16 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             rounded-lg bg-gray-900 px-4 py-3 text-white shadow-lg dark:bg-white dark:text-gray-900"
         >
           <span>{t("Toast.deleted")}</span>
-          <AdminButton
+          <Button
             variant="secondary"
             size="sm"
-            className="min-h-[44px]"
+            className="min-h-11"
             onClick={() => {
               void performUndo();
             }}
           >
             {t("DeleteDialog.Buttons.undo")}
-          </AdminButton>
+          </Button>
         </div>
       )}
 

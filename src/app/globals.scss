@@ -1,22 +1,8 @@
 /* ─── Tailwind v4 Import ─────────────────────────────────────────────── */
 @use "tailwindcss";
 
-:root {
-  /* 1. Standard color definitions */
-  --color-emerald-50: #ecfdf5;
-  --color-emerald-100: #d1fae5;
-  --color-emerald-200: #a7f3d0;
-  --color-emerald-300: #6ee7b7;
-  --color-emerald-400: #34d399;
-  --color-emerald-500: #10b981;
-  --color-emerald-600: #059669;
-  --color-emerald-700: #047857;
-  --color-emerald-800: #065f46;
-  --color-emerald-900: #064e3b;
-  --color-emerald-950: #022c22;
-}
-
 @theme {
+  /* 1. Brand Aliases (Directly referencing Tailwind's built-in emerald) */
   --color-brand-50: var(--color-emerald-50);
   --color-brand-100: var(--color-emerald-100);
   --color-brand-200: var(--color-emerald-200);
@@ -28,19 +14,45 @@
   --color-brand-800: var(--color-emerald-800);
   --color-brand-900: var(--color-emerald-900);
   --color-brand-950: var(--color-emerald-950);
+
+  /* Set default font family (Apply `font-sans` to your <body>) */
+  --font-sans: Inter, var(--font-inter), system-ui, sans-serif;
+
+  /* ─── Typography Scale (Fluid clamp for responsive) ─────────────────────── */
+  --text-display: clamp(2.5rem, 5vw, 4rem); /* Hero / Page hero */
+  --text-h1: clamp(2rem, 4vw, 3rem); /* Page titles */
+  --text-h2: clamp(1.5rem, 3vw, 2.25rem); /* Section headers */
+  --text-h3: 1.25rem; /* Card titles / Subsection */
+  --text-body: 1rem; /* Body copy */
+  --text-caption: 0.875rem; /* Metadata / Secondary info */
+  --text-footnote: 0.75rem; /* Legal / Copyright */
+
+  /* ─── Touch Targets ─────────────────────────────────────────────────────── */
+  --touch-target-min: 44px;
+
+  /* ─── Motion / Animation ────────────────────────────────────────────────── */
+  --duration-fast: 150ms;
+  --duration-normal: 200ms;
+  --duration-slow: 300ms;
+  --easing-standard: cubic-bezier(0.4, 0, 0.2, 1);
+  --easing-emphasized: cubic-bezier(0.2, 0, 0, 1);
+
+  /* ─── Focus Ring ────────────────────────────────────────────────────────── */
+  --focus-ring-width: 2px;
+  --focus-ring-color: var(--color-brand-500);
+  --focus-ring-offset: 2px;
 }
-/* ─── Dark Mode Variant (Tailwind v4) ──────────────────────────────────── */
+
+/* ─── Dark Mode Variant (Tailwind v4 class-based override) ─────────────── */
 @custom-variant dark (&:where(.dark, .dark *));
 
-/* ─── Global ────────────────────────────────────────────────────────────── */
-* {
-  font-family: Inter, var(--font-inter), system-ui, sans-serif;
+/* ─── Global Focus Visible Styles ───────────────────────────────────────── */
+*:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
 }
 
-html {
-  scroll-behavior: smooth;
-}
-
+/* ─── Custom Utilities/Components ───────────────────────────────────────── */
 .section {
   @apply container mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12;
 }

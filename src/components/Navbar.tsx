@@ -3,13 +3,16 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { Link, usePathname } from "@/i18n/routing";
 import Image from "next/image";
-import { motion } from "framer-motion";
+import { motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import LanguageSelector from "@/components/LanguageSelector";
 import { Menu, X, Home, Share2, Users, Building2, Info } from "lucide-react";
+import { useHapticAndVisualFeedback } from "@/components/ui/HapticFeedback";
 
 export default function Navbar() {
   const t = useTranslations("Components.Navbar");
+  const shouldReduceMotion = useReducedMotion();
+  const { ref: hapticRef, trigger: triggerHaptic } = useHapticAndVisualFeedback();
 
   const navLinks = [
     { href: "/", page: "home", label: t("Home"), icon: Home },
@@ -20,6 +23,8 @@ export default function Navbar() {
   ];
 
   const [isOpen, setIsOpen] = useState(false);
+  const [navVisible, setNavVisible] = useState(true);
+  const [lastScrollY, setLastScrollY] = useState(0);
   const pathname = usePathname();
 
   const localizedPathname = pathname.replace(/^\/[a-z]{2}(?=\/|$)/, "") || "/";
@@ -92,6 +97,40 @@ export default function Navbar() {
     }
   }, [isOpen]);
 
+  // Mobile navbar scroll behavior (show on scroll up, hide on scroll down) - only on mobile
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+    
+    // Only apply scroll behavior on mobile (navbar at bottom)
+    const isMobile = window.innerWidth < 768; // md breakpoint
+    if (!isMobile) return;
+    
+    let ticking = false;
+    
+    const handleScroll = () => {
+      if (!ticking) {
+        window.requestAnimationFrame(() => {
+          const currentScrollY = window.scrollY;
+          const direction = currentScrollY > lastScrollY ? "down" : "up";
+          
+          if (direction === "down" && currentScrollY > 100) {
+            setNavVisible(false);
+          } else if (direction === "up") {
+            setNavVisible(true);
+          }
+          
+          setLastScrollY(currentScrollY);
+          ticking = false;
+        });
+        
+        ticking = true;
+      }
+    };
+
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, [lastScrollY]);
+
   return (
     <>
       {/* Mobile-only: Logo + Brand at top-right */}
@@ -124,9 +163,11 @@ export default function Navbar() {
       {/* Desktop & Mobile Fixed Navbar Bar */}
       <nav
         id="navbar"
-        className="fixed bottom-0 z-50 w-full border-t border-gray-200 bg-white/95 shadow-sm
+        className={`fixed bottom-0 z-50 w-full border-t border-gray-200 bg-white/95 shadow-sm
           backdrop-blur-lg md:top-0 md:bottom-auto md:border-t-0 md:border-b dark:border-gray-700
-          dark:bg-gray-900/95"
+          dark:bg-gray-900/95 transition-transform duration-300 ease-in-out ${
+            navVisible ? "translate-y-0" : "translate-y-full"
+          }`}
       >
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
@@ -177,11 +218,17 @@ export default function Navbar() {
                     >
                       <span className="relative z-10">{link.label}</span>
                       {isActive && (
-                        <motion.div
-                          layoutId="desktop-active-pill"
-                          className="bg-brand-600 absolute inset-x-0 bottom-0 h-0.5"
-                          transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                        />
+                        shouldReduceMotion ? (
+                          <div
+                            className="bg-brand-600 absolute inset-x-0 bottom-0 h-0.5"
+                          />
+                        ) : (
+                          <motion.div
+                            layoutId="desktop-active-pill"
+                            className="bg-brand-600 absolute inset-x-0 bottom-0 h-0.5"
+                            transition={{ type: "spring", stiffness: 380, damping: 30 }}
+                          />
+                        )
                       )}
                     </Link>
                   );
@@ -197,12 +244,18 @@ export default function Navbar() {
             {/* Right Side: Mobile Menu Toggle & Language Selector */}
             <div className="flex min-w-0 items-center justify-end gap-3 md:hidden">
               {/* Mobile Language Selector */}
-              <LanguageSelector dropDirection="up" />
+              <LanguageSelector />
 
               <button
-                ref={hamburgerRef}
+                ref={(el) => {
+                  hamburgerRef.current = el;
+                  hapticRef.current = el;
+                }}
                 type="button"
-                onClick={toggleMenu}
+                onClick={() => {
+                  triggerHaptic();
+                  toggleMenu();
+                }}
                 className="hover:text-brand-600 focus:ring-brand-500 dark:hover:text-brand-400 flex
                   items-center gap-1.5 rounded-lg p-2 text-gray-600 transition-all duration-200
                   hover:bg-gray-100 focus:ring-2 focus:outline-none dark:text-gray-300

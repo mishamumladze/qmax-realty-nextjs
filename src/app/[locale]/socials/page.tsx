@@ -2,7 +2,7 @@ import { Metadata } from "next";
 import { SOCIAL_MEDIAS } from "@/config/contact";
 import ContactLinks from "@/components/ContactLinks";
 import NewsletterForm from "@/components/NewsletterForm";
-import { SocialsButton } from "@/components/ui/Buttons";
+import { TertiaryButton } from "@/components/ui/Buttons";
 import { getTranslations } from "next-intl/server";
 
 export async function generateMetadata(): Promise<Metadata> {
@@ -36,17 +36,17 @@ export default async function SocialsPage() {
     <>
       <header className="pt-12 text-center md:pt-20">
         <h1
-          className="mb-4 text-3xl font-bold text-gray-800 md:text-4xl lg:text-5xl dark:text-white"
+          className="mb-4 text-4xl md:text-5xl lg:text-6xl font-bold text-gray-800 dark:text-white"
         >
           {t("Hero.title")}
         </h1>
-        <p className="mx-auto max-w-3xl text-lg text-gray-600 md:text-xl dark:text-gray-300">
+        <p className="mx-auto max-w-3xl text-base md:text-lg text-gray-600 dark:text-gray-300">
           {t("Hero.subtitle")}
         </p>
       </header>
 
       {/* Social Cards Grid */}
-      <div className="section">
+      <div className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12">
         <div className="grid grid-cols-1 gap-6 md:grid-cols-2 md:gap-8 lg:grid-cols-3">
           {SOCIAL_MEDIAS.map((s) => (
             <div
@@ -72,7 +72,7 @@ export default async function SocialsPage() {
                       </svg>
                     </div>
                     <div>
-                      <h2 className="text-xl font-bold">{s.name}</h2>
+                      <h3 className="text-xl md:text-2xl font-bold">{s.name}</h3>
                       <p className="text-sm text-white">{s.handle}</p>
                     </div>
                   </div>
@@ -86,18 +86,18 @@ export default async function SocialsPage() {
 
               <div className="flex items-center justify-between border-t border-white/10 pt-4">
                 <span className="text-sm text-white">{t(`SocialCards.${s.key}.tagline`)}</span>
-                <SocialsButton href={s.cta_url} label={t(`SocialCards.${s.key}.cta_text`)} />
+                <TertiaryButton href={s.cta_url} label={t(`SocialCards.${s.key}.cta_text`)} />
               </div>
             </div>
           ))}
         </div>
       </div>
 
-      <section className="section rounded-2xl bg-gray-50 text-center shadow-lg dark:bg-gray-800">
-        <h2 className="mb-4 text-2xl font-bold text-gray-800 md:text-3xl dark:text-white">
+      <section className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 rounded-2xl bg-gray-50 text-center shadow-lg dark:bg-gray-800">
+        <h2 className="mb-4 text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
           {t("GetInTouch.title")}
         </h2>
-        <p className="mx-auto mb-8 max-w-2xl text-gray-600 dark:text-gray-300">
+        <p className="mx-auto mb-8 max-w-2xl text-base md:text-lg text-gray-600 dark:text-gray-300">
           {t("GetInTouch.subtitle")}
         </p>
         <div className="flex justify-center">
@@ -106,12 +106,12 @@ export default async function SocialsPage() {
       </section>
 
       <section
-        className="section bg-brand-50 dark:bg-brand-900/20 rounded-2xl text-center shadow-lg"
+        className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 bg-brand-50 dark:bg-brand-900/20 rounded-2xl text-center shadow-lg"
       >
-        <h2 className="mb-4 text-2xl font-bold text-gray-800 md:text-3xl dark:text-white">
+        <h2 className="mb-4 text-2xl md:text-3xl font-bold text-gray-800 dark:text-white">
           {t("StayUpdated.title")}
         </h2>
-        <p className="mb-6 text-gray-600 dark:text-gray-300">{t("StayUpdated.subtitle")}</p>
+        <p className="mb-6 text-base md:text-lg text-gray-600 dark:text-gray-300">{t("StayUpdated.subtitle")}</p>
         <NewsletterForm />
       </section>
     </>

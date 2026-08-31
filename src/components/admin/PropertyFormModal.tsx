@@ -3,7 +3,7 @@
 import { Fragment, useEffect, useId, useState } from "react";
 import type { PropertyFormData } from "@/types/admin";
 import type { Property } from "@/types/property";
-import { AdminButton } from "@/components/ui/AdminButton";
+import { Button } from "@/components/ui/Buttons";
 import { useTranslations } from "next-intl";
 import { X } from "lucide-react";
 
@@ -48,7 +48,7 @@ function toStr(value: unknown): string {
 
 const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300";
 const inputClass =
-  "mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/40 min-h-[44px]";
+  "mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/40 min-h-11";
 const errorBorderClass = " border-red-500 dark:border-red-500";
 const errorTextClass = "mt-1 text-sm text-red-600 dark:text-red-400";
 const hintClass = "mt-1 text-xs text-gray-500 dark:text-gray-400";
@@ -370,15 +370,15 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
             {property ? t("Titles.edit") : t("Titles.add")}
           </h2>
-          <AdminButton
+          <Button
             variant="secondary"
             size="sm"
             onClick={onClose}
             aria-label={t("Aria.close_dialog")}
-            className="min-h-[44px] min-w-[44px]"
+            className="min-h-11 min-w-11"
           >
             <X className="h-5 w-5" aria-hidden="true" />
-          </AdminButton>
+          </Button>
         </div>
 
         <form onSubmit={handleSubmit} noValidate>
@@ -486,22 +486,12 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           </div>
 
           <div className="flex justify-end gap-3 border-t border-gray-200 pt-4 dark:border-gray-700">
-            <AdminButton
-              variant="secondary"
-              type="button"
-              onClick={onClose}
-              className="min-h-[44px]"
-            >
+            <Button variant="secondary" type="button" onClick={onClose} className="min-h-11">
               {t("Buttons.cancel")}
-            </AdminButton>
-            <AdminButton
-              variant="primary"
-              type="submit"
-              disabled={submitting}
-              className="min-h-[44px]"
-            >
+            </Button>
+            <Button variant="primary" type="submit" disabled={submitting} className="min-h-11">
               {submitting ? t("Buttons.saving") : t("Buttons.save")}
-            </AdminButton>
+            </Button>
           </div>
         </form>
       </div>

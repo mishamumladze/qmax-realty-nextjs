@@ -84,12 +84,70 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
     e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
+
+    // Apply phone mask for phone field
+    let processedValue = value;
+    if (name === "phone") {
+      processedValue = formatPhoneNumber(value);
+    }
+
     setFormData((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: processedValue,
     }));
     // Clear error for this field when user starts typing
     if (errors[name as keyof FormErrors]) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: undefined,
+      }));
+    }
+  };
+
+  // Phone number formatter
+  const formatPhoneNumber = (value: string): string => {
+    const cleaned = value.replace(/[^\d+]/g, "");
+    return cleaned.slice(0, 20);
+  };
+
+  const validateField = (name: string, value: string): string | undefined => {
+    switch (name) {
+      case "firstName":
+        if (!value.trim()) return t("errors.first_name_required");
+        break;
+      case "lastName":
+        if (!value.trim()) return t("errors.last_name_required");
+        break;
+      case "email":
+        if (!value.trim()) return t("errors.email_required");
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (!emailRegex.test(value)) return t("errors.email_invalid");
+        break;
+      case "phone":
+        if (value && value.length > 30) return t("errors.phone_too_long");
+        break;
+      case "subject":
+        if (!value) return t("errors.subject_required");
+        break;
+      case "message":
+        if (!value.trim()) return t("errors.message_required");
+        if (value.length < 10) return t("errors.message_min");
+        break;
+    }
+    return undefined;
+  };
+
+  const handleBlur = (
+    e: React.FocusEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
+  ) => {
+    const { name, value } = e.target;
+    const error = validateField(name, value);
+    if (error) {
+      setErrors((prev) => ({
+        ...prev,
+        [name]: error,
+      }));
+    } else if (errors[name as keyof FormErrors]) {
       setErrors((prev) => ({
         ...prev,
         [name]: undefined,
@@ -162,10 +220,13 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
 
   return (
     <div className="rounded-2xl bg-white p-8 shadow-lg md:p-10 dark:bg-gray-800">
-      <h2 className="mb-6 text-2xl font-bold text-gray-900">{t("title")}</h2>
+      <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">{t("title")}</h2>
 
       {success && (
         <div
+          id="form-success"
+          role="status"
+          aria-live="polite"
           className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800
             dark:bg-green-900/20"
         >
@@ -175,6 +236,8 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
 
       {errors.submit && (
         <div
+          id="form-submit-error"
+          role="alert"
           className="mb-6 rounded-lg border border-red-200 bg-red-50 p-4 dark:border-red-800
             dark:bg-red-900/20"
         >
@@ -182,7 +245,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
         </div>
       )}
 
-      <form onSubmit={handleSubmit} className="space-y-5">
+      <form onSubmit={handleSubmit} className="space-y-5" aria-busy={loading}>
         {/* Name Row */}
         <div className="grid grid-cols-1 gap-5 sm:grid-cols-2">
           <div>
@@ -198,16 +261,22 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               name="firstName"
               value={formData.firstName}
               onChange={handleChange}
+              onBlur={handleBlur}
               className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
                 focus:outline-none ${
                   errors.firstName
                     ? "border-red-500 bg-red-50"
-                    : "border-gray-300 dark:border-gray-500 dark:bg-gray-900"
+                    : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
                 }`}
               placeholder="John"
               disabled={loading}
+              autoComplete="given-name"
             />
-            {errors.firstName && <p className="mt-1 text-sm text-red-600">{errors.firstName}</p>}
+            {errors.firstName && (
+              <p id="firstName-error" className="mt-1 text-sm text-red-600" role="alert">
+                {errors.firstName}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -222,16 +291,24 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               name="lastName"
               value={formData.lastName}
               onChange={handleChange}
+              onBlur={handleBlur}
               className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
                 focus:outline-none ${
                   errors.lastName
                     ? "border-red-500 bg-red-50"
-                    : "border-gray-300 dark:border-gray-500 dark:bg-gray-900"
+                    : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
                 }`}
               placeholder="Doe"
               disabled={loading}
+              autoComplete="family-name"
+              aria-describedby={errors.lastName ? "lastName-error" : undefined}
+              aria-invalid={errors.lastName ? "true" : "false"}
             />
-            {errors.lastName && <p className="mt-1 text-sm text-red-600">{errors.lastName}</p>}
+            {errors.lastName && (
+              <p id="lastName-error" className="mt-1 text-sm text-red-600" role="alert">
+                {errors.lastName}
+              </p>
+            )}
           </div>
         </div>
 
@@ -249,16 +326,24 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             name="email"
             value={formData.email}
             onChange={handleChange}
+            onBlur={handleBlur}
             className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
               focus:outline-none ${
                 errors.email
                   ? "border-red-500 bg-red-50"
-                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900"
+                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
               }`}
             placeholder="john@example.com"
             disabled={loading}
+            autoComplete="email"
+            aria-describedby={errors.email ? "email-error" : undefined}
+            aria-invalid={errors.email ? "true" : "false"}
           />
-          {errors.email && <p className="mt-1 text-sm text-red-600">{errors.email}</p>}
+          {errors.email && (
+            <p id="email-error" className="mt-1 text-sm text-red-600" role="alert">
+              {errors.email}
+            </p>
+          )}
         </div>
 
         {/* Phone */}
@@ -275,16 +360,24 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             name="phone"
             value={formData.phone}
             onChange={handleChange}
+            onBlur={handleBlur}
             className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
               focus:outline-none ${
                 errors.phone
                   ? "border-red-500 bg-red-50"
-                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900"
+                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
               }`}
             placeholder={CONTACT_INFO.phone.display}
             disabled={loading}
+            autoComplete="tel"
+            aria-describedby={errors.phone ? "phone-error" : undefined}
+            aria-invalid={errors.phone ? "true" : "false"}
           />
-          {errors.phone && <p className="mt-1 text-sm text-red-600">{errors.phone}</p>}
+          {errors.phone && (
+            <p id="phone-error" className="mt-1 text-sm text-red-600" role="alert">
+              {errors.phone}
+            </p>
+          )}
         </div>
 
         {/* Subject */}
@@ -300,13 +393,17 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             name="subject"
             value={formData.subject}
             onChange={handleChange}
+            onBlur={handleBlur}
             className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
               focus:outline-none ${
                 errors.subject
                   ? "border-red-500 bg-red-50"
-                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900"
+                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
               }`}
             disabled={loading}
+            autoComplete="off"
+            aria-describedby={errors.subject ? "subject-error" : undefined}
+            aria-invalid={errors.subject ? "true" : "false"}
           >
             <option value="">{t("select_subject")}</option>
             {CONTACT_SUBJECTS.map((subj) => (
@@ -315,7 +412,11 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               </option>
             ))}
           </select>
-          {errors.subject && <p className="mt-1 text-sm text-red-600">{errors.subject}</p>}
+          {errors.subject && (
+            <p id="subject-error" className="mt-1 text-sm text-red-600" role="alert">
+              {errors.subject}
+            </p>
+          )}
         </div>
 
         {/* Message */}
@@ -331,23 +432,31 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             name="message"
             value={formData.message}
             onChange={handleChange}
+            onBlur={handleBlur}
             rows={6}
             className={`focus:ring-brand-500 w-full resize-none rounded-lg border px-4 py-3
               focus:ring-2 focus:outline-none ${
                 errors.message
                   ? "border-red-500 bg-red-50"
-                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900"
+                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
               }`}
             placeholder={t("placeholders.message")}
             disabled={loading}
+            aria-describedby={errors.message ? "message-error" : undefined}
+            aria-invalid={errors.message ? "true" : "false"}
           />
-          {errors.message && <p className="mt-1 text-sm text-red-600">{errors.message}</p>}
+          {errors.message && (
+            <p id="message-error" className="mt-1 text-sm text-red-600" role="alert">
+              {errors.message}
+            </p>
+          )}
         </div>
 
         {/* Submit Button */}
         <button
           type="submit"
           disabled={loading}
+          aria-busy={loading}
           className="bg-brand-600 hover:bg-brand-700 dark:bg-brand-500 dark:hover:bg-brand-600
             w-full rounded-lg py-3 font-semibold text-white transition-colors duration-200
             disabled:bg-gray-400 dark:text-gray-900"

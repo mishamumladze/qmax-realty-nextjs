@@ -29,6 +29,7 @@ import {
 } from "lucide-react";
 import { Property } from "@/types/property";
 import { CONTACT_INFO } from "@/config/contact";
+import { PropertyCardSkeleton } from "@/components/ui/Skeleton";
 
 interface ListingsContentProps {
   initialProperties: Property[];
@@ -36,6 +37,7 @@ interface ListingsContentProps {
   geoCities: string[];
   initialFilter?: string;
   initialOffer?: string;
+  isLoading?: boolean;
 }
 
 export default function ListingsContent({
@@ -44,6 +46,7 @@ export default function ListingsContent({
   geoCities,
   initialFilter = "all",
   initialOffer = "all",
+  isLoading = false,
 }: ListingsContentProps) {
   const t = useTranslations("Pages.Listings");
 
@@ -277,8 +280,8 @@ export default function ListingsContent({
       >
         <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
         <div className="relative container mx-auto px-4 text-center">
-          <h1 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">{t("Hero.title")}</h1>
-          <p className="mx-auto mb-8 max-w-2xl text-lg md:text-xl">{t("Hero.subtitle")}</p>
+          <h1 className="text-display mb-4 font-bold">{t("Hero.title")}</h1>
+          <p className="text-body mx-auto mb-8 max-w-2xl md:text-lg">{t("Hero.subtitle")}</p>
           <div className="relative mx-auto max-w-xl">
             <label htmlFor="property-search" className="sr-only">
               {t("Hero.search")}
@@ -318,6 +321,7 @@ export default function ListingsContent({
               className="scrollbar-hide flex gap-2 overflow-x-auto pb-1 sm:pb-0"
               aria-label={t("Filters.Aria.type_filter")}
             >
+              <h3 className="sr-only">{t("Filters.Aria.type_filter")}</h3>
               {[
                 { key: "all", label: t("Sort.all"), icon: LayoutGrid },
                 { key: "apartment", label: t("Sort.apartments"), icon: Building2 },
@@ -409,12 +413,12 @@ export default function ListingsContent({
               className="flex flex-wrap items-center gap-2 border-t border-gray-200 py-2.5
                 dark:border-gray-700"
             >
-              <span
+              <h3
                 className="text-xs font-semibold tracking-wide text-gray-600 uppercase
                   dark:text-gray-400"
               >
                 {t("Filters.Labels.active")}
-              </span>
+              </h3>
               <div className="flex flex-wrap items-center gap-2">
                 {searchTerm && (
                   <span
@@ -425,10 +429,11 @@ export default function ListingsContent({
                     {t("Filters.Labels.search_chip", { term: searchTerm })}
                     <button
                       onClick={() => setSearchTerm("")}
-                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
+                        min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_search")}
                     >
-                      <X className="h-3 w-3" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </span>
                 )}
@@ -441,10 +446,11 @@ export default function ListingsContent({
                     {t("Filters.Labels.offer_chip", { offer: offerFilter })}
                     <button
                       onClick={() => setOfferFilter("all")}
-                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
+                        min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_offer")}
                     >
-                      <X className="h-3 w-3" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </span>
                 )}
@@ -457,10 +463,11 @@ export default function ListingsContent({
                     {countryFilter}
                     <button
                       onClick={() => setCountryFilter("")}
-                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
+                        min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_item", { item: countryFilter })}
                     >
-                      <X className="h-3 w-3" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </span>
                 )}
@@ -473,10 +480,11 @@ export default function ListingsContent({
                     {cityFilter}
                     <button
                       onClick={() => setCityFilter("")}
-                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
+                        min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_item", { item: cityFilter })}
                     >
-                      <X className="h-3 w-3" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </span>
                 )}
@@ -489,10 +497,11 @@ export default function ListingsContent({
                     {t("Filters.Labels.beds_chip", { n: bedroomsFilter })}
                     <button
                       onClick={() => setBedroomsFilter(0)}
-                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
+                        min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_bedrooms")}
                     >
-                      <X className="h-3 w-3" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </span>
                 )}
@@ -505,10 +514,11 @@ export default function ListingsContent({
                     {t("Filters.Labels.baths_chip", { n: bathroomsFilter })}
                     <button
                       onClick={() => setBathroomsFilter(0)}
-                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
+                        min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_bathrooms")}
                     >
-                      <X className="h-3 w-3" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </span>
                 )}
@@ -524,10 +534,11 @@ export default function ListingsContent({
                         setMinPrice("");
                         setMaxPrice("");
                       }}
-                      className="hover:text-brand-900 dark:hover:text-brand-100"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
+                        min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_price")}
                     >
-                      <X className="h-3 w-3" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true" />
                     </button>
                   </span>
                 )}
@@ -574,9 +585,8 @@ export default function ListingsContent({
                 <button
                   type="button"
                   onClick={closeModal}
-                  className="flex min-h-[44px] min-w-[44px] cursor-pointer items-center
-                    justify-center rounded-lg p-2 text-gray-600 hover:text-gray-800
-                    dark:hover:text-gray-200"
+                  className="flex min-h-11 min-w-11 cursor-pointer items-center justify-center
+                    rounded-lg p-2 text-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
                   aria-label={t("Filters.Aria.close")}
                 >
                   <X className="h-5 w-5" />
@@ -864,15 +874,27 @@ export default function ListingsContent({
       {/* Results Area */}
       <div className="bg-gray-50 py-10 md:py-14 dark:bg-gray-900">
         <div className="container mx-auto px-4">
-          <p className="mb-6 text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
-            {t.rich("Results.showing", {
-              shown: filteredProperties.length,
-              total: initialProperties.length,
-              b: (chunks) => <span className="font-semibold">{chunks}</span>,
-            })}
-          </p>
+          {!isLoading && (
+            <p className="mb-6 text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
+              {t.rich("Results.showing", {
+                shown: filteredProperties.length,
+                total: initialProperties.length,
+                b: (chunks) => <span className="font-semibold">{chunks}</span>,
+              })}
+            </p>
+          )}
 
-          {filteredProperties.length > 0 ? (
+          {isLoading ? (
+            <div
+              className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+              aria-busy="true"
+              aria-live="polite"
+            >
+              {Array.from({ length: 6 }).map((_, i) => (
+                <PropertyCardSkeleton key={i} />
+              ))}
+            </div>
+          ) : filteredProperties.length > 0 ? (
             <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
               {filteredProperties.map((property) => {
                 const type = property.type || "apartment";
@@ -1032,13 +1054,10 @@ export default function ListingsContent({
       >
         <div className="container mx-auto px-4">
           <div className="mb-10 text-center">
-            <h2
-              id="why-heading"
-              className="mb-3 text-3xl font-bold text-gray-800 md:text-4xl dark:text-white"
-            >
+            <h2 id="why-heading" className="text-h1 mb-3 font-bold text-gray-800 dark:text-white">
               {t("WhyUs.title")}
             </h2>
-            <p className="mx-auto max-w-xl text-gray-600 dark:text-gray-400">
+            <p className="text-body mx-auto max-w-xl text-gray-600 dark:text-gray-400">
               {t("WhyUs.subtitle")}
             </p>
           </div>
@@ -1078,7 +1097,7 @@ export default function ListingsContent({
                   >
                     <Icon className="text-brand-600 dark:text-brand-400 h-7 w-7" />
                   </div>
-                  <h3 className="mb-1 font-semibold text-gray-800 dark:text-white">
+                  <h3 className="text-h3 mb-1 font-semibold text-gray-800 dark:text-white">
                     {item.title}
                     {item.hasStar && (
                       <Star
@@ -1098,10 +1117,10 @@ export default function ListingsContent({
       {/* WhatsApp CTA Section */}
       <section className="section">
         <div className="rounded-2xl bg-gray-50 p-8 text-center dark:bg-gray-800">
-          <h2 className="mb-2 text-2xl font-bold text-gray-800 dark:text-white">
+          <h2 className="text-h2 mb-2 font-bold text-gray-800 dark:text-white">
             {t("ContactBanner.title")}
           </h2>
-          <p className="mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-400">
+          <p className="text-body mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-400">
             {t("ContactBanner.description")}
           </p>
           <a

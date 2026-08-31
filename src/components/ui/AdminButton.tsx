@@ -14,16 +14,16 @@ const baseStyles = `inline-flex items-center justify-center gap-2 rounded-lg fon
 // (brand palette maps to the emerald scale, see globals.scss @theme).
 const variantStyles: Record<AdminButtonVariant, string> = {
   primary:
-    "bg-brand-700 text-white hover:bg-brand-800 dark:bg-brand-500 dark:text-gray-900 dark:hover:bg-brand-400 disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-gray-700 dark:disabled:text-gray-500",
+    "bg-brand-700 text-white hover:bg-brand-800 dark:bg-brand-500 dark:text-white dark:hover:bg-brand-400 disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-gray-700 dark:disabled:text-gray-500",
   secondary:
-    "border-2 border-brand-700 bg-white text-brand-700 hover:bg-brand-50 dark:border-brand-400 dark:bg-transparent dark:text-brand-400 dark:hover:bg-white/5 disabled:border-gray-300 disabled:bg-transparent disabled:text-gray-400 dark:disabled:border-gray-600 dark:disabled:text-gray-500",
+    "border-2 border-brand-700 bg-white text-brand-700 hover:bg-brand-50 dark:border-brand-400 dark:bg-brand-900/30 dark:text-brand-300 dark:hover:bg-brand-900/50 disabled:border-gray-300 disabled:bg-transparent disabled:text-gray-400 dark:disabled:border-gray-600 dark:disabled:text-gray-500",
   destructive:
     "bg-red-700 text-white hover:bg-red-800 dark:bg-red-600 dark:text-white dark:hover:bg-red-500 disabled:bg-gray-300 disabled:text-gray-500 dark:disabled:bg-gray-700 dark:disabled:text-gray-500",
 };
 
 const sizeStyles: Record<AdminButtonSize, string> = {
-  sm: "min-h-[36px] px-3 text-sm",
-  md: "min-h-[44px] px-5 text-base",
+  sm: "min-h-11 px-3 text-sm",
+  md: "min-h-11 px-5 text-base",
 };
 
 export function AdminButton({

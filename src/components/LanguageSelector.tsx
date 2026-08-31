@@ -61,7 +61,7 @@ export default function LanguageSelector() {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         className="border-brand-300 hover:border-brand-600 focus:ring-brand-500
-          dark:border-brand-800 dark:hover:border-brand-400 inline-flex w-full items-center
+          dark:border-brand-800 dark:hover:border-brand-400 inline-flex min-h-11 w-full items-center
           justify-between gap-x-2 rounded-lg border bg-white px-3.5 py-2 text-sm font-medium
           text-gray-700 shadow-sm transition-colors focus:ring-2 focus:ring-offset-2
           focus:outline-none dark:bg-gray-900 dark:text-gray-200"
@@ -87,8 +87,8 @@ export default function LanguageSelector() {
         <div
           className={`ring-opacity-5 border-brand-200 dark:border-brand-800 /* Mobile-first: Open UP
           */ /* Desktop (sm and up): Open DOWN */ absolute right-0 bottom-full z-50 mb-2 w-40
-          rounded-lg border bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none sm:top-full
-          sm:bottom-auto sm:mt-2 sm:mb-0 dark:bg-gray-900`}
+          rounded-lg border bg-white py-1 shadow-lg ring-1 ring-black focus:outline-none md:top-full
+          md:bottom-auto md:mt-2 md:mb-0 dark:bg-gray-900`}
         >
           {LANGUAGES.map((lang) => {
             const isActive = lang.code === currentLocale;

@@ -16,6 +16,7 @@
     },
     "NewsForm": {
       "input": {
+        "label": "Email address",
         "text": "Enter your email",
         "sub": "Subscribe",
         "loading": "loading",
@@ -60,7 +61,12 @@
         "previous": "Previous",
         "next": "Next"
       },
-      "photo_alt": "{title} - photo {n}"
+      "photo_alt": "{title} - photo {n}",
+      "empty_gallery": "No photos available for this property."
+    },
+    "OfflineIndicator": {
+      "offline": "You're offline. Changes won't be saved until you're back online.",
+      "back_online": "You're back online!"
     },
     "Footer": {
       "map_title": "QMAX Realty Office Location",
@@ -623,6 +629,7 @@
         "bedrooms_count": "{bedrooms} bedrooms"
       },
       "Details": {
+        "key_features": "Key Features!",
         "back_to_listings": "Back to Listings",
         "location": "Location",
         "rooms": "Rooms",
@@ -630,6 +637,7 @@
         "bathrooms": "Bathrooms",
         "sqm": "sqm",
         "about": "About this property",
+        "additional": "Additional Details",
         "floor_plan": "Floor Plan",
         "included": "What's Included"
       },

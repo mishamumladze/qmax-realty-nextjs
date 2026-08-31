@@ -1,5 +1,6 @@
 import Footer from "@/components/Footer";
 import Navbar from "@/components/Navbar";
+import OfflineIndicator from "@/components/OfflineIndicator";
 
 import ThemeToggle from "@/components/ThemeToggle";
 import { SpeedInsights } from "@vercel/speed-insights/next";
@@ -52,6 +53,7 @@ export default async function RootLayout({
           </a>
           <Navbar />
           <ThemeToggle />
+          <OfflineIndicator />
           <main
             id="main-content"
             className="transition-fade min-h-screen flex-grow pb-20 md:pt-16 md:pb-0"

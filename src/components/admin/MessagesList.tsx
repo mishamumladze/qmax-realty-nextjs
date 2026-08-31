@@ -3,7 +3,7 @@
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { MouseEvent as ReactMouseEvent } from "react";
 import type { MessageSummary } from "@/types/admin";
-import { AdminButton } from "@/components/ui/AdminButton";
+import { Button } from "@/components/ui/Buttons";
 import { AlertCircle, Mail, MailOpen, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -128,8 +128,11 @@ export function MessagesList() {
     }
   };
 
-  const requestDelete = (msg: InboxMessage, e: ReactMouseEvent<HTMLButtonElement>): void => {
-    triggerRef.current = e.currentTarget;
+  const requestDelete = (
+    msg: InboxMessage,
+    e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement> | undefined
+  ): void => {
+    if (e?.currentTarget) triggerRef.current = e.currentTarget;
     setDeleteTarget(msg);
   };
 
@@ -210,14 +213,14 @@ export function MessagesList() {
           <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
           <div>
             <p>{loadError}</p>
-            <AdminButton
+            <Button
               variant="secondary"
               size="sm"
-              className="mt-3 min-h-[44px]"
+              className="mt-3 min-h-11"
               onClick={() => setReloadKey((k) => k + 1)}
             >
               {t("retry")}
-            </AdminButton>
+            </Button>
           </div>
         </div>
       ) : messages === null ? null : messages.length === 0 ? (
@@ -249,10 +252,10 @@ export function MessagesList() {
                 ) : null}
               </div>
               <div className="flex shrink-0 gap-2">
-                <AdminButton
+                <Button
                   variant="secondary"
                   size="sm"
-                  className="min-h-[44px]"
+                  className="min-h-11"
                   onClick={() => void toggleRead(m)}
                 >
                   {m.read === 0 ? (
@@ -261,16 +264,16 @@ export function MessagesList() {
                     <Mail className="h-4 w-4" aria-hidden="true" />
                   )}
                   <span className="sr-only">{m.read === 0 ? t("sr.read") : t("sr.unread")}</span>
-                </AdminButton>
-                <AdminButton
+                </Button>
+                <Button
                   variant="destructive"
                   size="sm"
-                  className="min-h-[44px]"
+                  className="min-h-11"
                   aria-label={t("Aria.delete_message", { name: m.name })}
                   onClick={(e) => requestDelete(m, e)}
                 >
                   <Trash2 className="h-4 w-4" aria-hidden="true" />
-                </AdminButton>
+                </Button>
               </div>
             </li>
           ))}
@@ -303,21 +306,21 @@ export function MessagesList() {
               {t("Dialog.description", { name: deleteTarget.name })}
             </p>
             <div className="mt-6 flex justify-end gap-2">
-              <AdminButton
+              <Button
                 variant="secondary"
                 autoFocus
                 onClick={closeDialog}
-                className="min-h-[44px]"
+                className="min-h-11"
               >
                 {t("Buttons.cancel")}
-              </AdminButton>
-              <AdminButton
+              </Button>
+              <Button
                 variant="destructive"
                 onClick={() => void confirmDelete()}
-                className="min-h-[44px]"
+                className="min-h-11"
               >
                 {t("Buttons.delete")}
-              </AdminButton>
+              </Button>
             </div>
           </div>
         </div>
@@ -330,14 +333,14 @@ export function MessagesList() {
             rounded-lg bg-gray-900 px-4 py-3 text-white shadow-lg dark:bg-white dark:text-gray-900"
         >
           <span>{t("Toast.deleted")}</span>
-          <AdminButton
+          <Button
             variant="secondary"
             size="sm"
-            className="min-h-[44px]"
+            className="min-h-11"
             onClick={() => void performUndo()}
           >
             {t("Buttons.undo")}
-          </AdminButton>
+          </Button>
         </div>
       ) : null}
     </section>

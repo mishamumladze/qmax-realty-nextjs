@@ -43,21 +43,21 @@ export default function ContactLinks({
       label: CONTACT_INFO.phone.display,
       href: CONTACT_INFO.phone.href,
       renderIcon: (cls: string) => <Phone className={cls} />,
-      color: "bg-blue-600 hover:bg-blue-700 text-white",
+      color: "bg-blue-600 hover:bg-blue-700 text-white dark:bg-blue-500 dark:hover:bg-blue-600",
     },
     {
       key: "email" as ContactKey,
       label: CONTACT_INFO.email.display,
       href: CONTACT_INFO.email.href,
       renderIcon: (cls: string) => <Mail className={cls} />,
-      color: "bg-gray-700 hover:bg-gray-800 text-white",
+      color: "bg-gray-700 hover:bg-gray-800 text-white dark:bg-gray-600 dark:hover:bg-gray-700",
     },
     {
       key: "address" as ContactKey,
       label: CONTACT_INFO.address.display,
       href: CONTACT_INFO.address.href,
       renderIcon: (cls: string) => <MapPin className={cls} />,
-      color: "bg-gray-700 hover:bg-gray-800 text-white",
+      color: "bg-gray-700 hover:bg-gray-800 text-white dark:bg-gray-600 dark:hover:bg-gray-700",
       target: "_blank",
     },
     {
@@ -65,7 +65,7 @@ export default function ContactLinks({
       label: "WhatsApp",
       href: CONTACT_INFO.whatsapp.href,
       renderIcon: (cls: string) => <SimpleIcon icon={siWhatsapp} className={cls} />,
-      color: "bg-[#25D366] hover:bg-[#20bd5a] text-white",
+      color: "bg-[#25D366] hover:bg-[#20bd5a] text-white dark:bg-[#25D366] dark:hover:bg-[#20bd5a]",
       target: "_blank",
     },
     {
@@ -73,7 +73,7 @@ export default function ContactLinks({
       label: "Telegram",
       href: CONTACT_INFO.telegram.href,
       renderIcon: (cls: string) => <SimpleIcon icon={siTelegram} className={cls} />,
-      color: "bg-[#24A1DE] hover:bg-[#208fc7] text-white",
+      color: "bg-[#24A1DE] hover:bg-[#208fc7] text-white dark:bg-[#24A1DE] dark:hover:bg-[#208fc7]",
       target: "_blank",
     },
   ];

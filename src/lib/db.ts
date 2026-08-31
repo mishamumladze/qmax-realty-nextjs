@@ -8,10 +8,95 @@ const dbPath = path.join(process.cwd(), "data", "qmax.sqlite");
 
 initTables();
 
-export function getActiveProperties(): Property[] {
+const TRANSLATABLE_FIELDS = [
+  "title",
+  "subtitle",
+  "location",
+  "neighborhood",
+  "city",
+  "region",
+  "country",
+  "meta_description",
+  "description",
+  "sale_type",
+  "floor_plan",
+  "card_image",
+] as const;
+
+const TRANSLATABLE_LOCALES = ["de", "tr", "ru", "pl"] as const;
+
+function applyTranslations(
+  property: Property,
+  translationRow: Record<string, unknown> | undefined,
+  locale: string
+): Property {
+  if (!translationRow) return property;
+
+  const result = { ...property };
+
+  for (const field of TRANSLATABLE_FIELDS) {
+    const value = translationRow[field];
+    if (value !== null && value !== undefined) {
+      const key = `${field}_${locale}` as keyof Property;
+      (result as Record<string, unknown>)[key] = value;
+    }
+  }
+
+  const inclusionsValue = translationRow.inclusions;
+  if (inclusionsValue !== null && inclusionsValue !== undefined) {
+    const key = `inclusions_${locale}` as keyof Property;
+    (result as Record<string, unknown>)[key] = parseJsonArrayColumn(inclusionsValue);
+  }
+
+  return result;
+}
+
+export function getActiveProperties(locale?: string): Property[] {
   const db = new Database(dbPath);
 
-  const stmt = db.prepare(`
+  const useTranslations = locale && locale !== "en" && TRANSLATABLE_LOCALES.includes(locale as typeof TRANSLATABLE_LOCALES[number]);
+
+  let stmt: Database.Statement;
+
+  if (useTranslations) {
+    stmt = db.prepare(`
+      SELECT p.*, t.title as t_title, t.subtitle as t_subtitle, t.location as t_location,
+             t.neighborhood as t_neighborhood, t.city as t_city, t.region as t_region,
+             t.country as t_country, t.meta_description as t_meta_description,
+             t.description as t_description, t.sale_type as t_sale_type,
+             t.inclusions as t_inclusions, t.floor_plan as t_floor_plan,
+             t.card_image as t_card_image
+      FROM properties p
+      LEFT JOIN property_translations t ON t.property_id = p.id AND t.locale = ?
+      WHERE p.status = 'active'
+      ORDER BY p.id ASC
+    `);
+    return stmt
+      .all(locale)
+      .map((r) => {
+        const row = r as Record<string, unknown>;
+        const translationRow = {
+          title: row.t_title,
+          subtitle: row.t_subtitle,
+          location: row.t_location,
+          neighborhood: row.t_neighborhood,
+          city: row.t_city,
+          region: row.t_region,
+          country: row.t_country,
+          meta_description: row.t_meta_description,
+          description: row.t_description,
+          sale_type: row.t_sale_type,
+          inclusions: row.t_inclusions,
+          floor_plan: row.t_floor_plan,
+          card_image: row.t_card_image,
+        };
+        const property = normalizePropertyRow(row);
+        return property ? applyTranslations(property, translationRow, locale!) : undefined;
+      })
+      .filter((p): p is Property => p !== undefined);
+  }
+
+  stmt = db.prepare(`
     SELECT * FROM properties 
     WHERE status = 'active'
     ORDER BY id ASC
@@ -23,11 +108,57 @@ export function getActiveProperties(): Property[] {
     .filter((p): p is Property => p !== undefined);
 }
 
-export function getPropertyById(id: number): Property | undefined {
+export function getPropertyById(id: number, locale?: string): Property | undefined {
   try {
     const db = new Database(dbPath);
-    const stmt = db.prepare("SELECT * FROM properties WHERE id = ? AND status = 'active'");
-    return normalizePropertyRow(stmt.get(id) as Record<string, unknown> | undefined);
+
+    const useTranslations = locale && locale !== "en" && TRANSLATABLE_LOCALES.includes(locale as typeof TRANSLATABLE_LOCALES[number]);
+
+    let row: Record<string, unknown> | undefined;
+
+    if (useTranslations) {
+      const stmt = db.prepare(`
+        SELECT p.*, t.title as t_title, t.subtitle as t_subtitle, t.location as t_location,
+               t.neighborhood as t_neighborhood, t.city as t_city, t.region as t_region,
+               t.country as t_country, t.meta_description as t_meta_description,
+               t.description as t_description, t.sale_type as t_sale_type,
+               t.inclusions as t_inclusions, t.floor_plan as t_floor_plan,
+               t.card_image as t_card_image
+        FROM properties p
+        LEFT JOIN property_translations t ON t.property_id = p.id AND t.locale = ?
+        WHERE p.id = ? AND p.status = 'active'
+      `);
+      row = stmt.get(locale, id) as Record<string, unknown> | undefined;
+    } else {
+      const stmt = db.prepare("SELECT * FROM properties WHERE id = ? AND status = 'active'");
+      row = stmt.get(id) as Record<string, unknown> | undefined;
+    }
+
+    if (!row) return undefined;
+
+    const property = normalizePropertyRow(row);
+    if (!property) return undefined;
+
+    if (useTranslations) {
+      const translationRow = {
+        title: row.t_title,
+        subtitle: row.t_subtitle,
+        location: row.t_location,
+        neighborhood: row.t_neighborhood,
+        city: row.t_city,
+        region: row.t_region,
+        country: row.t_country,
+        meta_description: row.t_meta_description,
+        description: row.t_description,
+        sale_type: row.t_sale_type,
+        inclusions: row.t_inclusions,
+        floor_plan: row.t_floor_plan,
+        card_image: row.t_card_image,
+      };
+      return applyTranslations(property, translationRow, locale!);
+    }
+
+    return property;
   } catch {
     return undefined;
   }
@@ -98,6 +229,28 @@ export function initTables(): void {
     if (!messageColumns.map((c) => c.name).includes("read")) {
       db.exec("ALTER TABLE messages ADD COLUMN read INTEGER DEFAULT 0");
     }
+
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS property_translations (
+        property_id INTEGER NOT NULL,
+        locale TEXT NOT NULL,
+        title TEXT,
+        subtitle TEXT,
+        location TEXT,
+        neighborhood TEXT,
+        city TEXT,
+        region TEXT,
+        country TEXT,
+        meta_description TEXT,
+        description TEXT,
+        sale_type TEXT,
+        inclusions TEXT,
+        floor_plan TEXT,
+        card_image TEXT,
+        PRIMARY KEY (property_id, locale),
+        FOREIGN KEY (property_id) REFERENCES properties(id) ON DELETE CASCADE
+      )
+    `);
   } catch {
     // silently fail — tables may not be writable
   }
@@ -426,5 +579,74 @@ export function insertAdminSubscriber(email: string): NewsletterSubscriber | nul
     return (select.get(info.lastInsertRowid as number) as NewsletterSubscriber | undefined) ?? null;
   } catch {
     return null;
+  }
+}
+
+export interface PropertyTranslationsFields {
+  title?: string;
+  subtitle?: string;
+  location?: string;
+  neighborhood?: string;
+  city?: string;
+  region?: string;
+  country?: string;
+  meta_description?: string;
+  description?: string;
+  sale_type?: string;
+  inclusions?: string[];
+  floor_plan?: string;
+  card_image?: string;
+}
+
+export function upsertPropertyTranslations(
+  propertyId: number,
+  translations: Record<"de" | "tr" | "ru" | "pl", PropertyTranslationsFields>
+): boolean {
+  try {
+    const db = new Database(dbPath);
+    const stmt = db.prepare(`
+      INSERT INTO property_translations (
+        property_id, locale, title, subtitle, location, neighborhood, city, region, country,
+        meta_description, description, sale_type, inclusions, floor_plan, card_image
+      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+      ON CONFLICT(property_id, locale) DO UPDATE SET
+        title = excluded.title,
+        subtitle = excluded.subtitle,
+        location = excluded.location,
+        neighborhood = excluded.neighborhood,
+        city = excluded.city,
+        region = excluded.region,
+        country = excluded.country,
+        meta_description = excluded.meta_description,
+        description = excluded.description,
+        sale_type = excluded.sale_type,
+        inclusions = excluded.inclusions,
+        floor_plan = excluded.floor_plan,
+        card_image = excluded.card_image
+    `);
+
+    for (const [locale, fields] of Object.entries(translations)) {
+      stmt.run(
+        propertyId,
+        locale,
+        fields.title ?? null,
+        fields.subtitle ?? null,
+        fields.location ?? null,
+        fields.neighborhood ?? null,
+        fields.city ?? null,
+        fields.region ?? null,
+        fields.country ?? null,
+        fields.meta_description ?? null,
+        fields.description ?? null,
+        fields.sale_type ?? null,
+        fields.inclusions ? JSON.stringify(fields.inclusions) : null,
+        fields.floor_plan ?? null,
+        fields.card_image ?? null
+      );
+    }
+    return true;
+  } catch (err) {
+    console.error("Failed to upsert property translations:", err);
+    return false;
   }
 }

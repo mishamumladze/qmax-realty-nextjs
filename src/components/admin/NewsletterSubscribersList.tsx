@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import type { NewsletterSubscriber } from "@/types/admin";
-import { AdminButton } from "@/components/ui/AdminButton";
+import { Button } from "@/components/ui/Buttons";
 import { Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 
@@ -108,9 +108,9 @@ export function NewsletterSubscribersList() {
 
   const requestRemove = (
     sub: NewsletterSubscriber,
-    event: { currentTarget: HTMLElement | null }
+    e: React.MouseEvent<HTMLButtonElement | HTMLAnchorElement> | undefined
   ) => {
-    triggerRef.current = event.currentTarget;
+    if (e?.currentTarget) triggerRef.current = e.currentTarget;
     setConfirmTarget(sub);
   };
 
@@ -180,16 +180,16 @@ export function NewsletterSubscribersList() {
             dark:bg-red-950 dark:text-red-300"
         >
           <p className="mb-3 text-sm">{loadError}</p>
-          <AdminButton
+          <Button
             variant="secondary"
             size="sm"
-            className="min-h-[44px]"
+            className="min-h-11"
             onClick={() => {
               void load();
             }}
           >
             {t("retry")}
-          </AdminButton>
+          </Button>
         </div>
       ) : !subscribers || subscribers.length === 0 ? (
         <p className="text-gray-600 dark:text-gray-300">{t("empty")}</p>
@@ -206,16 +206,16 @@ export function NewsletterSubscribersList() {
                     {t("Labels.subscribed_at", { date: formatDateTime(s.created_at) })}
                   </span>
                 </div>
-                <AdminButton
+                <Button
                   variant="destructive"
                   size="sm"
-                  className="min-h-[44px]"
+                  className="min-h-11"
                   aria-label={t("Aria.remove_subscriber", { email: s.email })}
                   onClick={(e) => requestRemove(s, e)}
                 >
                   <Trash2 aria-hidden="true" />
                   {t("Buttons.remove")}
-                </AdminButton>
+                </Button>
               </div>
               {rowErrors[s.id] ? (
                 <p className="mt-2 text-sm text-red-600 dark:text-red-400">{rowErrors[s.id]}</p>
@@ -254,17 +254,17 @@ export function NewsletterSubscribersList() {
               {t("Dialog.description", { email: confirmTarget.email })}
             </p>
             <div className="flex justify-end gap-3">
-              <AdminButton
+              <Button
                 variant="secondary"
                 autoFocus
-                className="min-h-[44px]"
+                className="min-h-11"
                 onClick={closeDialog}
               >
                 {t("Buttons.cancel")}
-              </AdminButton>
-              <AdminButton variant="destructive" className="min-h-[44px]" onClick={confirmRemove}>
+              </Button>
+              <Button variant="destructive" className="min-h-11" onClick={confirmRemove}>
                 {t("Buttons.remove")}
-              </AdminButton>
+              </Button>
             </div>
           </div>
         </div>
@@ -277,9 +277,9 @@ export function NewsletterSubscribersList() {
             rounded-lg bg-gray-900 px-4 py-3 text-white shadow-lg dark:bg-white dark:text-gray-900"
         >
           <span className="text-sm">{t("Toast.removed")}</span>
-          <AdminButton variant="secondary" size="sm" className="min-h-[44px]" onClick={performUndo}>
+          <Button variant="secondary" size="sm" className="min-h-11" onClick={performUndo}>
             {t("Buttons.undo")}
-          </AdminButton>
+          </Button>
         </div>
       ) : null}
     </div>

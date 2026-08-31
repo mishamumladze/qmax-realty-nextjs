@@ -16,6 +16,7 @@
     },
     "NewsForm": {
       "input": {
+        "label": "Adres e-mail",
         "text": "Wpisz swój adres e-mail",
         "sub": "Subskrybuj",
         "loading": "ładowanie",
@@ -60,7 +61,12 @@
         "previous": "Poprzedni",
         "next": "Dalej"
       },
-      "photo_alt": "{title} – zdjęcie {n}"
+      "photo_alt": "{title} – zdjęcie {n}",
+      "empty_gallery": "Brak zdjęć dla tej nieruchomości."
+    },
+    "OfflineIndicator": {
+      "offline": "Jesteś offline. Zmiany zostaną zapisane, gdy wrócisz online.",
+      "back_online": "Jesteś z powrotem online!"
     },
     "Footer": {
       "map_title": "Lokalizacja biura QMAX Realty",
@@ -627,7 +633,9 @@
         "sqm": "m²",
         "about": "Informacje o tej nieruchomości",
         "floor_plan": "Plan piętra",
-        "included": "Co wchodzi w skład zestawu"
+        "included": "Co wchodzi w skład zestawu",
+        "key_features": "Najważniejsze cechy!",
+        "additional": "Dodatkowe informacje"
       },
       "Facts": {
         "year_built": "Rok budowy",

@@ -1,7 +1,14 @@
 import { NextResponse } from "next/server";
-import { deleteProperty, getAllProperties, insertProperty, updateProperty } from "@/lib/db";
+import {
+  deleteProperty,
+  getAllProperties,
+  insertProperty,
+  updateProperty,
+  upsertPropertyTranslations,
+} from "@/lib/db";
 import { verifyToken } from "@/lib/admin-auth";
 import { PropertyFormData } from "@/types/admin";
+import { translateToAllLocales, TranslationFields } from "@/lib/translations";
 
 const NUMERIC_FIELDS = ["rooms", "bedrooms", "bathrooms", "sqmt", "price", "year_built"] as const;
 const TEXT_FIELDS = [
@@ -127,6 +134,35 @@ function parsePropertyPayload(record: Record<string, unknown>): ParseResult {
   return { data: clean };
 }
 
+function buildTranslationFields(data: Record<string, unknown>): TranslationFields {
+  const fields: TranslationFields = {};
+
+  const translatableKeys: (keyof TranslationFields)[] = [
+    "title",
+    "subtitle",
+    "location",
+    "neighborhood",
+    "city",
+    "region",
+    "country",
+    "meta_description",
+    "description",
+    "sale_type",
+    "inclusions",
+    "floor_plan",
+    "card_image",
+  ];
+
+  for (const key of translatableKeys) {
+    const value = data[key];
+    if (value !== undefined) {
+      (fields as Record<string, unknown>)[key] = value;
+    }
+  }
+
+  return fields;
+}
+
 export async function GET(request: Request) {
   const auth = request.headers.get("authorization") ?? "";
   const token = auth.replace(/^Bearer\s+/i, "");
@@ -167,6 +203,16 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Failed to create property" }, { status: 500 });
     }
 
+    const translatableFields = buildTranslationFields(parsed.data);
+    if (Object.keys(translatableFields).length > 0) {
+      try {
+        const translations = await translateToAllLocales("en", translatableFields);
+        upsertPropertyTranslations(property.id, translations);
+      } catch (err) {
+        console.error("Translation failed for new property:", err);
+      }
+    }
+
     return NextResponse.json({ property });
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });
@@ -201,6 +247,16 @@ export async function PUT(request: Request) {
     const property = updateProperty(id, parsed.data as Partial<PropertyFormData>);
     if (!property) {
       return NextResponse.json({ error: "Property not found" }, { status: 404 });
+    }
+
+    const translatableFields = buildTranslationFields(parsed.data);
+    if (Object.keys(translatableFields).length > 0) {
+      try {
+        const translations = await translateToAllLocales("en", translatableFields);
+        upsertPropertyTranslations(property.id, translations);
+      } catch (err) {
+        console.error("Translation failed for updated property:", err);
+      }
     }
 
     return NextResponse.json({ property });

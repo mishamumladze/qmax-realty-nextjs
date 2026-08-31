@@ -3,7 +3,7 @@
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { AdminButton } from "@/components/ui/AdminButton";
+import { Button } from "@/components/ui/Buttons";
 import type { AdminCredentials } from "@/types/admin";
 
 const inputClasses =
@@ -105,7 +105,7 @@ export function LoginForm() {
           />
         </div>
 
-        <AdminButton
+        <Button
           type="submit"
           variant="primary"
           size="md"
@@ -113,7 +113,7 @@ export function LoginForm() {
           disabled={submitting}
         >
           {submitting ? t("buttons.signing_in") : t("buttons.sign_in")}
-        </AdminButton>
+        </Button>
 
         <div aria-live="polite">
           {error ? (
