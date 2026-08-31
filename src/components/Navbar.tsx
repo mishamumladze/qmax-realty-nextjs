@@ -100,29 +100,29 @@ export default function Navbar() {
   // Mobile navbar scroll behavior (show on scroll up, hide on scroll down) - only on mobile
   useEffect(() => {
     if (typeof window === "undefined") return;
-    
+
     // Only apply scroll behavior on mobile (navbar at bottom)
     const isMobile = window.innerWidth < 768; // md breakpoint
     if (!isMobile) return;
-    
+
     let ticking = false;
-    
+
     const handleScroll = () => {
       if (!ticking) {
         window.requestAnimationFrame(() => {
           const currentScrollY = window.scrollY;
           const direction = currentScrollY > lastScrollY ? "down" : "up";
-          
+
           if (direction === "down" && currentScrollY > 100) {
             setNavVisible(false);
           } else if (direction === "up") {
             setNavVisible(true);
           }
-          
+
           setLastScrollY(currentScrollY);
           ticking = false;
         });
-        
+
         ticking = true;
       }
     };
@@ -164,8 +164,8 @@ export default function Navbar() {
       <nav
         id="navbar"
         className={`fixed bottom-0 z-50 w-full border-t border-gray-200 bg-white/95 shadow-sm
-          backdrop-blur-lg md:top-0 md:bottom-auto md:border-t-0 md:border-b dark:border-gray-700
-          dark:bg-gray-900/95 transition-transform duration-300 ease-in-out ${
+          backdrop-blur-lg transition-transform duration-300 ease-in-out md:top-0 md:bottom-auto
+          md:border-t-0 md:border-b dark:border-gray-700 dark:bg-gray-900/95 ${
             navVisible ? "translate-y-0" : "translate-y-full"
           }`}
       >
@@ -217,19 +217,16 @@ export default function Navbar() {
                       }`}
                     >
                       <span className="relative z-10">{link.label}</span>
-                      {isActive && (
-                        shouldReduceMotion ? (
-                          <div
-                            className="bg-brand-600 absolute inset-x-0 bottom-0 h-0.5"
-                          />
+                      {isActive &&
+                        (shouldReduceMotion ? (
+                          <div className="bg-brand-600 absolute inset-x-0 bottom-0 h-0.5" />
                         ) : (
                           <motion.div
                             layoutId="desktop-active-pill"
                             className="bg-brand-600 absolute inset-x-0 bottom-0 h-0.5"
                             transition={{ type: "spring", stiffness: 380, damping: 30 }}
                           />
-                        )
-                      )}
+                        ))}
                     </Link>
                   );
                 })}

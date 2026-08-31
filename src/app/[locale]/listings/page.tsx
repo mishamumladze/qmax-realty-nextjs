@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import { getActiveProperties } from "@/lib/db";
 import ListingsContent from "@/components/ListingsContent";
 
@@ -23,9 +23,10 @@ export default async function ListingsPage({ searchParams }: ListingsPageProps) 
   const resolvedParams = await searchParams;
   const initialFilter = resolvedParams.filter || "all";
   const initialOffer = resolvedParams.offer || "all";
+  const locale = await getLocale();
 
   // Fetch properties via SQLite helper
-  const allProperties = getActiveProperties();
+  const allProperties = getActiveProperties(locale);
 
   // Compute dynamic lists for unique countries & cities
   const geoCountriesSet = new Set<string>();

@@ -105,13 +105,7 @@ export function LoginForm() {
           />
         </div>
 
-        <Button
-          type="submit"
-          variant="primary"
-          size="md"
-          className="w-full"
-          disabled={submitting}
-        >
+        <Button type="submit" variant="primary" size="md" className="w-full" disabled={submitting}>
           {submitting ? t("buttons.signing_in") : t("buttons.sign_in")}
         </Button>
 

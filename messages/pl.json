@@ -303,6 +303,52 @@
           "something_wrong": "Coś poszło nie tak.",
           "read_failed_single": "Nie udało się odczytać wybranego obrazu.",
           "read_failed_multi": "Nie udało się odczytać jednego lub kilku wybranych obrazów."
+        },
+        "Placeholders": {
+          "title": "Wpisz tytuł nieruchomości",
+          "subtitle": "Wpisz podtytuł",
+          "location": "Wpisz lokalizację",
+          "neighborhood": "Wpisz dzielnicę",
+          "city": "Wpisz miasto",
+          "region": "Wpisz region",
+          "country": "Wpisz kraj",
+          "floor": "Wpisz numer piętra",
+          "price": "Wpisz cenę",
+          "sqmt": "Wpisz powierzchnię w m²",
+          "rooms": "Wpisz liczbę pokoi",
+          "bedrooms": "Wpisz liczbę sypialni",
+          "bathrooms": "Wpisz liczbę łazienek",
+          "year_built": "Wpisz rok budowy",
+          "coordsLat": "Wpisz szerokość geograficzną",
+          "coordsLng": "Wpisz długość geograficzną",
+          "card_image": "Wpisz URL zdjęcia lub wgraj plik",
+          "floor_plan": "Wpisz URL planu piętra lub wgraj plik",
+          "description": "Wpisz opis nieruchomości",
+          "meta_description": "Wpisz opis meta",
+          "inclusionsText": "Wpisz wyposażenie (po jednym w wierszu)",
+          "galleryText": "Wpisz URL galerii (po jednym w wierszu)",
+          "type": "Wybierz typ nieruchomości",
+          "sale_type": "Wybierz typ transakcji",
+          "currency": "Wybierz walutę"
+        },
+        "SelectOptions": {
+          "type": {
+            "apartment": "Mieszkanie",
+            "house": "Dom",
+            "room": "Pokój",
+            "commercial": "Komercyjne",
+            "land": "Działka"
+          },
+          "sale_type": {
+            "for_sale": "Na sprzedaż",
+            "for_rent": "Na wynajem"
+          },
+          "currency": {
+            "EUR": "EUR (€)",
+            "USD": "USD ($)",
+            "GEL": "GEL (₾)",
+            "GBP": "GBP (£)"
+          }
         }
       }
     }

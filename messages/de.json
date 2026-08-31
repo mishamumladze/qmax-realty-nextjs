@@ -303,6 +303,52 @@
           "something_wrong": "Es ist ein Fehler aufgetreten.",
           "read_failed_single": "Das ausgewählte Bild konnte nicht gelesen werden.",
           "read_failed_multi": "Ein oder mehrere ausgewählte Bilder konnten nicht gelesen werden."
+        },
+        "Placeholders": {
+          "title": "Immobilientitel eingeben",
+          "subtitle": "Untertitel eingeben",
+          "location": "Standort eingeben",
+          "neighborhood": "Nachbarschaft eingeben",
+          "city": "Stadt eingeben",
+          "region": "Region eingeben",
+          "country": "Land eingeben",
+          "floor": "Etage eingeben",
+          "price": "Preis eingeben",
+          "sqmt": "Fläche in qm eingeben",
+          "rooms": "Anzahl Zimmer eingeben",
+          "bedrooms": "Anzahl Schlafzimmer eingeben",
+          "bathrooms": "Anzahl Badezimmer eingeben",
+          "year_built": "Baujahr eingeben",
+          "coordsLat": "Breitengrad eingeben",
+          "coordsLng": "Längengrad eingeben",
+          "card_image": "Bild-URL eingeben oder hochladen",
+          "floor_plan": "Grundriss-URL eingeben oder hochladen",
+          "description": "Immobilienbeschreibung eingeben",
+          "meta_description": "Meta-Beschreibung eingeben",
+          "inclusionsText": "Ausstattungen eingeben (je eine pro Zeile)",
+          "galleryText": "Galerien-URLs eingeben (eine pro Zeile)",
+          "type": "Immobilientyp auswählen",
+          "sale_type": "Verkaufsart auswählen",
+          "currency": "Währung auswählen"
+        },
+        "SelectOptions": {
+          "type": {
+            "apartment": "Wohnung",
+            "house": "Haus",
+            "room": "Zimmer",
+            "commercial": "Gewerbe",
+            "land": "Grundstück"
+          },
+          "sale_type": {
+            "for_sale": "Zum Kauf",
+            "for_rent": "Zur Miete"
+          },
+          "currency": {
+            "EUR": "EUR (€)",
+            "USD": "USD ($)",
+            "GEL": "GEL (₾)",
+            "GBP": "GBP (£)"
+          }
         }
       }
     }

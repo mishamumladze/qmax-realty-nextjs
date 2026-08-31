@@ -2,7 +2,7 @@ import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
-import { getTranslations } from "next-intl/server";
+import { getLocale, getTranslations } from "next-intl/server";
 import {
   ArrowLeft,
   MessageCircle,
@@ -32,7 +32,8 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { id } = await params;
   const t = await getTranslations("Pages.PropertyDetails.Metadata");
-  const property = getPropertyById(Number(id));
+  const locale = await getLocale();
+  const property = getPropertyById(Number(id), locale);
   if (!property) return { title: t("not_found") };
 
   const metaDesc =
@@ -57,7 +58,8 @@ export async function generateMetadata({
 export default async function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const t = await getTranslations("Pages.PropertyDetails");
-  const property = getPropertyById(Number(id));
+  const locale = await getLocale();
+  const property = getPropertyById(Number(id), locale);
 
   if (!property) {
     notFound();

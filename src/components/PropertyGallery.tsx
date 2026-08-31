@@ -31,9 +31,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
 
     const lightbox = lightboxRef.current;
     const getFocusable = () =>
-      lightbox.querySelectorAll<HTMLElement>(
-        'button, [href], [tabindex]:not([tabindex="-1"])'
-      );
+      lightbox.querySelectorAll<HTMLElement>('button, [href], [tabindex]:not([tabindex="-1"])');
 
     // Focus first focusable element (close button)
     const timer = setTimeout(() => {
@@ -82,13 +80,16 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
     };
   }, [selectedIndex, images.length, closeLightbox]);
 
-return (
+  return (
     <>
       <div>
         <h2 className="mb-6 text-xl font-bold text-gray-900 dark:text-white">{t("title")}</h2>
 
         {images.length === 0 ? (
-          <div className="aspect-square flex flex-col items-center justify-center rounded-xl border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800">
+          <div
+            className="flex aspect-square flex-col items-center justify-center rounded-xl border
+              border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800"
+          >
             <div className="text-center">
               <p className="text-gray-500 dark:text-gray-400">{t("empty_gallery")}</p>
             </div>
@@ -107,10 +108,10 @@ return (
                     lastFocusedThumbnail.current = thumbnailRefs.current[idx] ?? null;
                     setSelectedIndex(idx);
                   }}
-                  className="group relative aspect-square overflow-hidden rounded-xl border
-                    border-gray-200 transition-all hover:border-gray-400 dark:border-gray-700
-                    dark:hover:border-gray-600 focus-visible:outline-2 focus-visible:outline-brand-500
-                    focus-visible:outline-offset-2"
+                  className="group focus-visible:outline-brand-500 relative aspect-square
+                    overflow-hidden rounded-xl border border-gray-200 transition-all
+                    hover:border-gray-400 focus-visible:outline-2 focus-visible:outline-offset-2
+                    dark:border-gray-700 dark:hover:border-gray-600"
                 >
                   <Image
                     src={img}
@@ -118,13 +119,15 @@ return (
                     fill
                     className="object-cover transition-transform group-hover:scale-105"
                   />
-                  <div className="absolute inset-0 bg-black/0 transition-colors group-hover:bg-black/10" />
+                  <div
+                    className="absolute inset-0 bg-black/0 transition-colors
+                      group-hover:bg-black/10"
+                  />
                 </button>
               ))}
             </div>
           </>
         )}
-
       </div>
 
       {/* Modal Lightbox */}
@@ -134,13 +137,14 @@ return (
           role="dialog"
           aria-modal="true"
           aria-label={t("title")}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/90 dark:bg-gray-950/90 p-4"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/90 p-4
+            dark:bg-gray-950/90"
         >
           <button
             onClick={closeLightbox}
             className="absolute top-4 right-4 rounded-full bg-white/20 p-2 text-white
-              transition-colors hover:bg-white/30 focus-visible:outline-2 focus-visible:outline-white
-              focus-visible:outline-offset-2"
+              transition-colors hover:bg-white/30 focus-visible:outline-2
+              focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.close")}
           >
             <X className="h-6 w-6" />
@@ -161,7 +165,7 @@ return (
             onClick={() => setSelectedIndex((selectedIndex - 1 + images.length) % images.length)}
             className="absolute top-1/2 left-4 -translate-y-1/2 rounded-full bg-white/20 p-3
               text-white transition-colors hover:bg-white/30 focus-visible:outline-2
-              focus-visible:outline-white focus-visible:outline-offset-2"
+              focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.previous")}
           >
             <ChevronLeft className="h-6 w-6" />
@@ -171,7 +175,7 @@ return (
             onClick={() => setSelectedIndex((selectedIndex + 1) % images.length)}
             className="absolute top-1/2 right-4 -translate-y-1/2 rounded-full bg-white/20 p-3
               text-white transition-colors hover:bg-white/30 focus-visible:outline-2
-              focus-visible:outline-white focus-visible:outline-offset-2"
+              focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.next")}
           >
             <ChevronRight className="h-6 w-6" />

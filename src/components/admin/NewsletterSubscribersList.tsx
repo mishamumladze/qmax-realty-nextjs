@@ -254,12 +254,7 @@ export function NewsletterSubscribersList() {
               {t("Dialog.description", { email: confirmTarget.email })}
             </p>
             <div className="flex justify-end gap-3">
-              <Button
-                variant="secondary"
-                autoFocus
-                className="min-h-11"
-                onClick={closeDialog}
-              >
+              <Button variant="secondary" autoFocus className="min-h-11" onClick={closeDialog}>
                 {t("Buttons.cancel")}
               </Button>
               <Button variant="destructive" className="min-h-11" onClick={confirmRemove}>

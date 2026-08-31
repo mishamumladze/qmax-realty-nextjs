@@ -33,8 +33,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           overflow-hidden bg-gradient-to-r py-16 text-white md:py-24"
       >
         <div className="relative container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-4">{t("Hero.title")}</h1>
-          <p className="text-base md:text-lg mx-auto max-w-2xl">{t("Hero.subtitle")}</p>
+          <h1 className="mb-4 text-4xl font-bold md:text-5xl lg:text-6xl">{t("Hero.title")}</h1>
+          <p className="mx-auto max-w-2xl text-base md:text-lg">{t("Hero.subtitle")}</p>
         </div>
       </section>
 
@@ -54,7 +54,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-semibold mb-1 text-gray-900 dark:text-white">
+                  <h3
+                    className="mb-1 text-xl font-semibold text-gray-900 md:text-2xl dark:text-white"
+                  >
                     {t("Channels.email")}
                   </h3>
                   <a
@@ -77,7 +79,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-semibold mb-1 text-gray-900 dark:text-white">
+                  <h3
+                    className="mb-1 text-xl font-semibold text-gray-900 md:text-2xl dark:text-white"
+                  >
                     {t("Channels.phone")}
                   </h3>
                   <a href={CONTACT_INFO.phone.href} className="text-brand-700 hover:text-brand-800">
@@ -97,7 +101,9 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-semibold mb-1 text-gray-900 dark:text-white">
+                  <h3
+                    className="mb-1 text-xl font-semibold text-gray-900 md:text-2xl dark:text-white"
+                  >
                     {t("Channels.whatsapp")}
                   </h3>
                   <a
@@ -125,10 +131,12 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   </div>
                 </div>
                 <div>
-                  <h3 className="text-xl md:text-2xl font-semibold mb-1 text-gray-900 dark:text-white">
+                  <h3
+                    className="mb-1 text-xl font-semibold text-gray-900 md:text-2xl dark:text-white"
+                  >
                     {t("Channels.office")}
                   </h3>
-                  <p className="text-base md:text-lg text-gray-600 dark:text-gray-300">
+                  <p className="text-base text-gray-600 md:text-lg dark:text-gray-300">
                     {CONTACT_INFO.address.display}
                   </p>
                 </div>
@@ -139,10 +147,10 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 className="bg-brand-50 dark:bg-brand-900/20 border-brand-200 dark:border-brand-800
                   mt-8 rounded-2xl border p-6"
               >
-                <h3 className="text-xl md:text-2xl font-semibold mb-2 text-gray-900 dark:text-white">
+                <h3 className="mb-2 text-xl font-semibold text-gray-900 md:text-2xl dark:text-white">
                   {t("WhatsappCard.title")}
                 </h3>
-                <p className="text-sm mb-4 text-gray-600 dark:text-gray-300">
+                <p className="mb-4 text-sm text-gray-600 dark:text-gray-300">
                   {t("WhatsappCard.description")}
                 </p>
                 <a
@@ -172,10 +180,12 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
           py-12"
       >
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-2xl md:text-3xl font-bold mb-4 text-gray-900 dark:text-white">
+          <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl dark:text-white">
             {t("ReadyCta.title")}
           </h2>
-          <p className="text-base md:text-lg mx-auto mb-8 max-w-2xl text-gray-600 dark:text-gray-300">
+          <p
+            className="mx-auto mb-8 max-w-2xl text-base text-gray-600 md:text-lg dark:text-gray-300"
+          >
             {t("ReadyCta.subtitle")}
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">

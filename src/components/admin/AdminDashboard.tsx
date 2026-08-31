@@ -316,12 +316,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
               {t("DeleteDialog.description", { title: deleteTarget.title })}
             </p>
             <div className="mt-6 flex justify-end gap-3">
-              <Button
-                variant="secondary"
-                className="min-h-11"
-                autoFocus
-                onClick={cancelDialog}
-              >
+              <Button variant="secondary" className="min-h-11" autoFocus onClick={cancelDialog}>
                 {t("DeleteDialog.Buttons.cancel")}
               </Button>
               <Button

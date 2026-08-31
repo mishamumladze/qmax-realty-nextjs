@@ -306,12 +306,7 @@ export function MessagesList() {
               {t("Dialog.description", { name: deleteTarget.name })}
             </p>
             <div className="mt-6 flex justify-end gap-2">
-              <Button
-                variant="secondary"
-                autoFocus
-                onClick={closeDialog}
-                className="min-h-11"
-              >
+              <Button variant="secondary" autoFocus onClick={closeDialog} className="min-h-11">
                 {t("Buttons.cancel")}
               </Button>
               <Button

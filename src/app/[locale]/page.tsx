@@ -91,7 +91,7 @@ export default async function HomePage() {
               className="mx-auto mb-6 flex h-full w-4/5 flex-col items-center justify-end
                 text-white"
             >
-              <h1 className="mb-2 text-4xl md:text-5xl lg:text-6xl font-bold">{t("Hero.title")}</h1>
+              <h1 className="mb-2 text-4xl font-bold md:text-5xl lg:text-6xl">{t("Hero.title")}</h1>
               <p className="mx-auto mb-6 max-w-2xl text-base md:text-lg">{t("Hero.subtitle")}</p>
             </div>
             <div className="flex flex-wrap items-center justify-center gap-4">
@@ -119,11 +119,14 @@ export default async function HomePage() {
       <PropertiesCarousel properties={properties} />
 
       {/* Why Choose Us Section */}
-      <section className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 dark:bg-gray-900" aria-labelledby="why-us-heading">
+      <section
+        className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 dark:bg-gray-900"
+        aria-labelledby="why-us-heading"
+      >
         <div className="mb-12 text-center">
           <h2
             id="why-us-heading"
-            className="mb-12 text-3xl md:text-4xl font-bold text-gray-800 dark:text-white"
+            className="mb-12 text-3xl font-bold text-gray-800 md:text-4xl dark:text-white"
           >
             {t("WhyUs.title")}
           </h2>
@@ -131,7 +134,7 @@ export default async function HomePage() {
           {/* Stats Grid */}
           <div className="mx-auto grid max-w-3xl grid-cols-2 gap-6 md:grid-cols-3">
             <div className="text-center">
-              <p className="text-brand-600 dark:text-brand-400 text-2xl md:text-3xl font-black">
+              <p className="text-brand-600 dark:text-brand-400 text-2xl font-black md:text-3xl">
                 15+
               </p>
               <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
@@ -139,7 +142,7 @@ export default async function HomePage() {
               </p>
             </div>
             <div className="text-center">
-              <p className="text-brand-600 dark:text-brand-400 text-2xl md:text-3xl font-black">
+              <p className="text-brand-600 dark:text-brand-400 text-2xl font-black md:text-3xl">
                 1,200+
               </p>
               <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
@@ -147,7 +150,7 @@ export default async function HomePage() {
               </p>
             </div>
             <div className="text-center max-md:col-span-2">
-              <p className="text-brand-600 dark:text-brand-400 text-2xl md:text-3xl font-black">
+              <p className="text-brand-600 dark:text-brand-400 text-2xl font-black md:text-3xl">
                 99%
               </p>
               <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
@@ -169,9 +172,7 @@ export default async function HomePage() {
                 >
                   <Icon className="text-brand-600 h-8 w-8" aria-hidden="true" />
                 </div>
-                <h3
-                  className="mb-2 text-xl md:text-2xl font-semibold text-gray-800 dark:text-white"
-                >
+                <h3 className="mb-2 text-xl font-semibold text-gray-800 md:text-2xl dark:text-white">
                   {item.title}
                   {item.hasStar && (
                     <Star
@@ -190,8 +191,8 @@ export default async function HomePage() {
       {/* Quick Contact CTA Banner */}
       <section className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 dark:bg-gray-900">
         <div className="bg-brand-600 rounded-2xl p-8 text-center text-white md:p-12">
-          <h2 className="mb-4 text-2xl md:text-3xl font-bold">{t("ContactBanner.title")}</h2>
-          <p className="mx-auto mb-6 max-w-xl text-base md:text-lg text-white">
+          <h2 className="mb-4 text-2xl font-bold md:text-3xl">{t("ContactBanner.title")}</h2>
+          <p className="mx-auto mb-6 max-w-xl text-base text-white md:text-lg">
             {t("ContactBanner.description")}
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">

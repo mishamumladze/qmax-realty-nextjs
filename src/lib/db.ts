@@ -36,7 +36,8 @@ function applyTranslations(
 
   for (const field of TRANSLATABLE_FIELDS) {
     const value = translationRow[field];
-    if (value !== null && value !== undefined) {
+    if (value !== null && value !== undefined && value !== "") {
+      (result as Record<string, unknown>)[field] = value;
       const key = `${field}_${locale}` as keyof Property;
       (result as Record<string, unknown>)[key] = value;
     }
@@ -44,8 +45,12 @@ function applyTranslations(
 
   const inclusionsValue = translationRow.inclusions;
   if (inclusionsValue !== null && inclusionsValue !== undefined) {
-    const key = `inclusions_${locale}` as keyof Property;
-    (result as Record<string, unknown>)[key] = parseJsonArrayColumn(inclusionsValue);
+    const parsedInclusions = parseJsonArrayColumn(inclusionsValue);
+    if (parsedInclusions.length > 0) {
+      (result as Record<string, unknown>).inclusions = parsedInclusions;
+      const key = `inclusions_${locale}` as keyof Property;
+      (result as Record<string, unknown>)[key] = parsedInclusions;
+    }
   }
 
   return result;
@@ -54,7 +59,10 @@ function applyTranslations(
 export function getActiveProperties(locale?: string): Property[] {
   const db = new Database(dbPath);
 
-  const useTranslations = locale && locale !== "en" && TRANSLATABLE_LOCALES.includes(locale as typeof TRANSLATABLE_LOCALES[number]);
+  const useTranslations =
+    locale &&
+    locale !== "en" &&
+    TRANSLATABLE_LOCALES.includes(locale as (typeof TRANSLATABLE_LOCALES)[number]);
 
   let stmt: Database.Statement;
 
@@ -112,7 +120,10 @@ export function getPropertyById(id: number, locale?: string): Property | undefin
   try {
     const db = new Database(dbPath);
 
-    const useTranslations = locale && locale !== "en" && TRANSLATABLE_LOCALES.includes(locale as typeof TRANSLATABLE_LOCALES[number]);
+    const useTranslations =
+      locale &&
+      locale !== "en" &&
+      TRANSLATABLE_LOCALES.includes(locale as (typeof TRANSLATABLE_LOCALES)[number]);
 
     let row: Record<string, unknown> | undefined;
 

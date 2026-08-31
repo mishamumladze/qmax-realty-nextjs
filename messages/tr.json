@@ -303,6 +303,52 @@
           "something_wrong": "Bir sorun oluştu.",
           "read_failed_single": "Seçilen resim okunamadı.",
           "read_failed_multi": "Seçilen bir veya daha fazla resim okunamadı."
+        },
+        "Placeholders": {
+          "title": "Gayrimenkul başlığı girin",
+          "subtitle": "Alt başlık girin",
+          "location": "Konum girin",
+          "neighborhood": "Mahalle girin",
+          "city": "Şehir girin",
+          "region": "Bölge girin",
+          "country": "Ülke girin",
+          "floor": "Kat numarası girin",
+          "price": "Fiyat girin",
+          "sqmt": "Alan (m²) girin",
+          "rooms": "Oda sayısı girin",
+          "bedrooms": "Yatak odası sayısı girin",
+          "bathrooms": "Banyo sayısı girin",
+          "year_built": "İnşa yılı girin",
+          "coordsLat": "Enlem girin",
+          "coordsLng": "Boylam girin",
+          "card_image": "Resim URL'si girin veya yükleyin",
+          "floor_plan": "Kat planı URL'si girin veya yükleyin",
+          "description": "Gayrimenkul açıklaması girin",
+          "meta_description": "Meta açıklaması girin",
+          "inclusionsText": "Dahil olanları girin (her satıra bir tane)",
+          "galleryText": "Galeri URL'lerini girin (her satıra bir tane)",
+          "type": "Gayrimenkul türünü seçin",
+          "sale_type": "Satış türünü seçin",
+          "currency": "Para birimini seçin"
+        },
+        "SelectOptions": {
+          "type": {
+            "apartment": "Daire",
+            "house": "Ev",
+            "room": "Oda",
+            "commercial": "Ticari",
+            "land": "Arsa"
+          },
+          "sale_type": {
+            "for_sale": "Satılık",
+            "for_rent": "Kiralık"
+          },
+          "currency": {
+            "EUR": "EUR (€)",
+            "USD": "USD ($)",
+            "GEL": "GEL (₾)",
+            "GBP": "GBP (£)"
+          }
         }
       }
     }

@@ -303,6 +303,52 @@
           "something_wrong": "Something went wrong.",
           "read_failed_single": "Failed to read the selected image.",
           "read_failed_multi": "Failed to read one or more selected images."
+        },
+        "Placeholders": {
+          "title": "Enter property title",
+          "subtitle": "Enter subtitle",
+          "location": "Enter location",
+          "neighborhood": "Enter neighborhood",
+          "city": "Enter city",
+          "region": "Enter region",
+          "country": "Enter country",
+          "floor": "Enter floor number",
+          "price": "Enter price",
+          "sqmt": "Enter area in sqm",
+          "rooms": "Enter number of rooms",
+          "bedrooms": "Enter number of bedrooms",
+          "bathrooms": "Enter number of bathrooms",
+          "year_built": "Enter year built",
+          "coordsLat": "Enter latitude",
+          "coordsLng": "Enter longitude",
+          "card_image": "Enter image URL or upload",
+          "floor_plan": "Enter floor plan URL or upload",
+          "description": "Enter property description",
+          "meta_description": "Enter meta description",
+          "inclusionsText": "Enter inclusions (one per line)",
+          "galleryText": "Enter gallery URLs (one per line)",
+          "type": "Select property type",
+          "sale_type": "Select sale type",
+          "currency": "Select currency"
+        },
+        "SelectOptions": {
+          "type": {
+            "apartment": "Apartment",
+            "house": "House",
+            "room": "Room",
+            "commercial": "Commercial",
+            "land": "Land"
+          },
+          "sale_type": {
+            "for_sale": "For Sale",
+            "for_rent": "For Rent"
+          },
+          "currency": {
+            "EUR": "EUR (€)",
+            "USD": "USD ($)",
+            "GEL": "GEL (₾)",
+            "GBP": "GBP (£)"
+          }
         }
       }
     }

@@ -17,14 +17,11 @@ interface PropertyFormModalProps {
 const TEXT_KEYS = [
   "title",
   "subtitle",
-  "type",
   "location",
   "neighborhood",
   "city",
   "region",
   "country",
-  "currency",
-  "sale_type",
   "floor",
   "meta_description",
   "description",
@@ -32,7 +29,19 @@ const TEXT_KEYS = [
   "card_image",
 ] as const;
 
+const SELECT_KEYS = ["type", "sale_type", "currency"] as const;
+
 const NUMERIC_KEYS = ["rooms", "bedrooms", "bathrooms", "sqmt", "price", "year_built"] as const;
+
+const TYPE_OPTIONS = ["apartment", "house", "room", "commercial", "land"] as const;
+const SALE_TYPE_OPTIONS = ["for_sale", "for_rent"] as const;
+const CURRENCY_OPTIONS = ["EUR", "USD", "GEL", "GBP"] as const;
+
+const SELECT_OPTIONS: Record<string, readonly string[]> = {
+  type: TYPE_OPTIONS,
+  sale_type: SALE_TYPE_OPTIONS,
+  currency: CURRENCY_OPTIONS,
+} as const;
 
 function defaultFields(): Record<string, string> {
   const next: Record<string, string> = {};
@@ -311,6 +320,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
   const renderTextInput = (field: ShortField) => {
     const id = fieldId(field.name);
     const error = errors[field.name];
+    const placeholderKey = `Placeholders.${field.name}`;
     return (
       <div>
         <label htmlFor={id} className={labelClass}>
@@ -323,6 +333,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           onChange={(e) => setField(field.name, e.target.value)}
           aria-invalid={error ? true : undefined}
           className={`${inputClass}${error ? errorBorderClass : ""}`}
+          placeholder={t(placeholderKey)}
         />
         {error ? <p className={errorTextClass}>{error}</p> : null}
       </div>
@@ -347,6 +358,35 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
         />
         {error ? <p className={errorTextClass}>{error}</p> : null}
         {hintKey ? <p className={hintClass}>{t(hintKey)}</p> : null}
+      </div>
+    );
+  };
+
+  const renderSelect = (field: ShortField) => {
+    const id = fieldId(field.name);
+    const error = errors[field.name];
+    const options = SELECT_OPTIONS[field.name] ?? [];
+    const placeholderKey = `Placeholders.${field.name}`;
+    return (
+      <div>
+        <label htmlFor={id} className={labelClass}>
+          {t(`Fields.${field.name}`)}
+        </label>
+        <select
+          id={id}
+          value={getValue(field.name)}
+          onChange={(e) => setField(field.name, e.target.value)}
+          aria-invalid={error ? true : undefined}
+          className={`${inputClass}${error ? errorBorderClass : ""}`}
+        >
+          <option value="">{t(placeholderKey)}</option>
+          {options.map((opt) => (
+            <option key={opt} value={opt}>
+              {t(`SelectOptions.${field.name}.${opt}`)}
+            </option>
+          ))}
+        </select>
+        {error ? <p className={errorTextClass}>{error}</p> : null}
       </div>
     );
   };
@@ -385,7 +425,9 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             {SHORT_ROWS.map(([left, right]) => (
               <Fragment key={left.name}>
-                {renderTextInput(left)}
+                {SELECT_KEYS.includes(left.name as (typeof SELECT_KEYS)[number])
+                  ? renderSelect(left)
+                  : renderTextInput(left)}
                 {right === "parking" ? (
                   <div className="flex items-end pb-2">
                     <label
@@ -403,6 +445,8 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
                       {t("Parking.available")}
                     </label>
                   </div>
+                ) : SELECT_KEYS.includes(right.name as (typeof SELECT_KEYS)[number]) ? (
+                  renderSelect(right)
                 ) : (
                   renderTextInput(right)
                 )}
@@ -424,6 +468,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
                 value={getValue("card_image")}
                 onChange={(e) => setField("card_image", e.target.value)}
                 className={inputClass}
+                placeholder={t("Placeholders.card_image")}
               />
               <label
                 htmlFor={fieldId("card_image_file")}
@@ -450,6 +495,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
                 value={getValue("floor_plan")}
                 onChange={(e) => setField("floor_plan", e.target.value)}
                 className={inputClass}
+                placeholder={t("Placeholders.floor_plan")}
               />
               <label
                 htmlFor={fieldId("floor_plan_file")}
