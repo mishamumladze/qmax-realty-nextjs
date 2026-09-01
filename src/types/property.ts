@@ -6,6 +6,10 @@ export interface Property {
   title_ru?: string;
   title_pl?: string;
   type?: string;
+  // These fields are retained ONLY for backward compatibility with existing DB
+  // rows and out-of-scope consumer files. They are no longer written by the
+  // form (PropertyFormData excludes them); new properties simply leave them
+  // unset. DB columns are kept for backward compat.
   subtitle?: string;
   subtitle_de?: string;
   subtitle_tr?: string;
@@ -16,6 +20,12 @@ export interface Property {
   location_tr?: string;
   location_ru?: string;
   location_pl?: string;
+  parking?: boolean;
+  inclusions?: string[];
+  inclusions_de?: string[];
+  inclusions_tr?: string[];
+  inclusions_ru?: string[];
+  inclusions_pl?: string[];
   neighborhood?: string;
   neighborhood_de?: string;
   neighborhood_tr?: string;
@@ -49,7 +59,6 @@ export interface Property {
   sale_type_pl?: string;
   year_built?: number;
   floor?: number | string;
-  parking?: boolean;
   meta_description?: string;
   meta_description_de?: string;
   meta_description_tr?: string;
@@ -60,11 +69,6 @@ export interface Property {
   description_tr?: string;
   description_ru?: string;
   description_pl?: string;
-  inclusions?: string[];
-  inclusions_de?: string[];
-  inclusions_tr?: string[];
-  inclusions_ru?: string[];
-  inclusions_pl?: string[];
   gallery?: string[];
   floor_plan?: string;
   floor_plan_de?: string;
@@ -77,4 +81,33 @@ export interface Property {
   card_image_tr?: string;
   card_image_ru?: string;
   card_image_pl?: string;
+  property_subtype?: string;
+  furnishing?: string;
+  balcony?: boolean;
+  balcony_sqmt?: number;
+  lot_sqmt?: number;
+  view?: string[];
+  video_url?: string;
+  virtual_tour_url?: string;
+  listing_status?: string;
+  is_featured?: boolean;
+  street_address?: string;
+  building_status?: string;
+  condition?: string;
+  project_type?: string;
+  ceiling_height?: number;
+  heating_type?: string;
+  hot_water_type?: string;
+  parking_type?: string;
+  kitchen_appliances?: string[];
+  total_floors?: number;
+  natural_gas?: boolean;
+  internet?: boolean;
+  water_supply?: boolean;
+  electricity?: boolean;
+  tv?: boolean;
+  sewerage?: boolean;
+  elevator?: boolean;
+  ac?: boolean;
+  security?: boolean;
 }
