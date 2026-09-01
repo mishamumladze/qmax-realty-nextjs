@@ -245,12 +245,19 @@
         }
       },
       "PropertyFormModal": {
+        "Tabs": {
+          "general": "Ogólne",
+          "specs": "Specyfikacja",
+          "amenities": "Udogodnienia",
+          "media": "Media"
+        },
         "Titles": {
-          "edit": "Edytuj właściwości",
+          "edit": "Edytuj nieruchomość",
           "add": "Dodaj nieruchomość"
         },
         "Aria": {
-          "close_dialog": "Zamknij okno dialogowe"
+          "close_dialog": "Zamknij okno dialogowe",
+          "tabs": "Karty formularza nieruchomości"
         },
         "Fields": {
           "title": "Tytuł *",
@@ -271,7 +278,38 @@
           "year_built": "Rok produkcji",
           "floor": "Podłoga",
           "coordsLat": "Szerokość geograficzna",
-          "coordsLng": "Długość geograficzna"
+          "coordsLng": "Długość geograficzna",
+          "listing_status": "Status oferty",
+          "is_featured": "Polecane",
+          "property_subtype": "Podtyp nieruchomości",
+          "street_address": "Adres ulicowy",
+          "lot_sqmt": "Powierzchnia działki (m²)",
+          "ceiling_height": "Wysokość sufitu (m)",
+          "total_floors": "Liczba pięter",
+          "building_status": "Status budowy",
+          "condition": "Stan",
+          "project_type": "Typ projektu",
+          "furnishing": "Wyposażenie",
+          "view": "Widok",
+          "balcony": "Balkon",
+          "balcony_sqmt": "Powierzchnia balkonu (m²)",
+          "heating_type": "Typ ogrzewania",
+          "hot_water_type": "Typ ciepłej wody",
+          "parking_type": "Typ parkingu",
+          "kitchen_appliances": "Sprzęt kuchenny",
+          "video_url": "Adres URL wideo",
+          "virtual_tour_url": "Adres URL wirtualnego spaceru",
+          "meta_title": "Tytuł meta",
+          "slug": "Slug",
+          "natural_gas": "Gaz ziemny",
+          "internet": "Internet",
+          "water_supply": "Wodociąg",
+          "electricity": "Prąd",
+          "tv": "TV",
+          "sewerage": "Kanalizacja",
+          "elevator": "Winda",
+          "ac": "Klimatyzacja",
+          "security": "Ochrona"
         },
         "Textareas": {
           "description": "Opis",
@@ -290,7 +328,8 @@
           "card_image": "Zdjęcie karty",
           "upload_image_file": "Prześlij plik graficzny",
           "floor_plan": "Plan piętra",
-          "gallery_images": "Zdjęcia z galerii"
+          "gallery_images": "Zdjęcia z galerii",
+          "property_media": "Media nieruchomości"
         },
         "Buttons": {
           "cancel": "Anuluj",
@@ -329,7 +368,25 @@
           "galleryText": "Wpisz URL galerii (po jednym w wierszu)",
           "type": "Wybierz typ nieruchomości",
           "sale_type": "Wybierz typ transakcji",
-          "currency": "Wybierz walutę"
+          "currency": "Wybierz walutę",
+          "street_address": "Wpisz adres ulicowy",
+          "lot_sqmt": "Wpisz powierzchnię działki w m²",
+          "ceiling_height": "Wpisz wysokość sufitu w metrach",
+          "total_floors": "Wpisz liczbę pięter",
+          "video_url": "Wpisz adres URL wideo",
+          "virtual_tour_url": "Wpisz adres URL wirtualnego spaceru",
+          "meta_title": "Wpisz tytuł meta",
+          "slug": "Wpisz slug URL",
+          "listing_status": "Wybierz status oferty",
+          "property_subtype": "Wybierz podtyp nieruchomości",
+          "building_status": "Wybierz status budowy",
+          "condition": "Wybierz stan",
+          "project_type": "Wybierz typ projektu",
+          "furnishing": "Wybierz wyposażenie",
+          "heating_type": "Wybierz typ ogrzewania",
+          "hot_water_type": "Wybierz typ ciepłej wody",
+          "parking_type": "Wybierz typ parkingu",
+          "coords": "Wybierz lokalizację na mapie"
         },
         "SelectOptions": {
           "type": {
@@ -348,6 +405,78 @@
             "USD": "USD ($)",
             "GEL": "GEL (₾)",
             "GBP": "GBP (£)"
+          },
+          "listing_status": {
+            "draft": "Szkic",
+            "published": "Opublikowano",
+            "under_offer": "Pod ofertą",
+            "sold": "Sprzedane",
+            "archived": "Zarchiwizowane"
+          },
+          "furnishing": {
+            "unfurnished": "Niewyposażone",
+            "semi_furnished": "Częściowo wyposażone",
+            "furnished": "W pełni wyposażone"
+          },
+          "parking_type": {
+            "none": "Brak",
+            "garage": "Garaż",
+            "carport": "Wiata",
+            "street": "Ulica",
+            "underground": "Parking podziemny"
+          },
+          "building_status": {
+            "new_construction": "Nowa budowa",
+            "under_construction": "W budowie",
+            "ready": "Gotowe"
+          },
+          "condition": {
+            "excellent": "Doskonały",
+            "good": "Dobry",
+            "fair": "Przeciętny",
+            "needs_renovation": "Wymaga remontu"
+          },
+          "project_type": {
+            "residential": "Mieszkalny",
+            "commercial": "Komercyjny",
+            "mixed_use": "Mieszany"
+          },
+          "heating_type": {
+            "central": "Centralne",
+            "individual": "Indywidualne",
+            "floor": "Podłogowe",
+            "wall": "Ścienne",
+            "electric": "Elektryczne"
+          },
+          "hot_water_type": {
+            "central": "Centralne",
+            "electric": "Elektryczne",
+            "gas": "Gazowe",
+            "solar": "Słoneczne"
+          },
+          "property_subtype": {
+            "penthouse": "Penthouse",
+            "duplex": "Duplex",
+            "townhouse": "Townhouse",
+            "villa": "Willa",
+            "studio": "Studio",
+            "office": "Biurowy",
+            "land": "Działka"
+          },
+          "view": {
+            "city": "Miasto",
+            "mountain": "Góry",
+            "sea": "Morze",
+            "courtyard": "Dwór",
+            "park": "Park"
+          },
+          "kitchen_appliances": {
+            "oven": "Piekarnik",
+            "stove": "Kuchenka",
+            "refrigerator": "Lodówka",
+            "microwave": "Mikrofala",
+            "dishwasher": "Zmywarka",
+            "washing_machine": "Pralka"
           }
         }
       }

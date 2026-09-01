@@ -12,7 +12,8 @@
     "i18n": "npm run extract && npm run translate",
     "i18n:extract": "i18next-parser",
     "i18n:translate": "node scripts/translate.mjs",
-    "test": "vitest run"
+    "test": "vitest run",
+    "test:e2e": "playwright test"
   },
   "dependencies": {
     "@radix-ui/react-dropdown-menu": "^2.1.24",
@@ -36,6 +37,7 @@
   },
   "devDependencies": {
     "@formatjs/cli": "^6.16.19",
+    "@playwright/test": "^1.62.1",
     "@tailwindcss/postcss": "^4",
     "@types/better-sqlite3": "^9.6.0",
     "@types/leaflet": "^1.9.22",
@@ -48,6 +50,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.3.1",
     "i18next-parser": "^9.0.2",
+    "playwright": "^1.62.1",
     "prettier": "3.9.6",
     "prettier-plugin-classnames": "^0.10.4",
     "prettier-plugin-merge": "^0.10.1",

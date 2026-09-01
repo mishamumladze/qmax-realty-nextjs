@@ -10,11 +10,20 @@ import { verifyToken } from "@/lib/admin-auth";
 import { PropertyFormData } from "@/types/admin";
 import { translateToAllLocales, TranslationFields } from "@/lib/translations";
 
-const NUMERIC_FIELDS = ["rooms", "bedrooms", "bathrooms", "sqmt", "price", "year_built"] as const;
+const NUMERIC_FIELDS = [
+  "rooms",
+  "bedrooms",
+  "bathrooms",
+  "sqmt",
+  "price",
+  "year_built",
+  "balcony_sqmt",
+  "lot_sqmt",
+  "ceiling_height",
+  "total_floors",
+] as const;
 const TEXT_FIELDS = [
   "type",
-  "subtitle",
-  "location",
   "neighborhood",
   "city",
   "region",
@@ -25,8 +34,33 @@ const TEXT_FIELDS = [
   "description",
   "floor_plan",
   "card_image",
+  "property_subtype",
+  "furnishing",
+  "listing_status",
+  "street_address",
+  "video_url",
+  "virtual_tour_url",
+  "building_status",
+  "condition",
+  "project_type",
+  "heating_type",
+  "hot_water_type",
+  "parking_type",
 ] as const;
-const ARRAY_FIELDS = ["inclusions", "gallery"] as const;
+const ARRAY_FIELDS = ["gallery", "view", "kitchen_appliances"] as const;
+const BOOLEAN_FIELDS = [
+  "balcony",
+  "is_featured",
+  "natural_gas",
+  "internet",
+  "water_supply",
+  "electricity",
+  "tv",
+  "sewerage",
+  "elevator",
+  "ac",
+  "security",
+] as const;
 
 function coerceNumber(value: unknown): number | null {
   if (typeof value === "number" && Number.isFinite(value)) return value;
@@ -75,14 +109,6 @@ function parsePropertyPayload(record: Record<string, unknown>): ParseResult {
     }
   }
 
-  if (record.parking !== undefined) {
-    const parking = coerceBoolean(record.parking);
-    if (parking === null) {
-      return { error: "Invalid parking value" };
-    }
-    clean.parking = parking;
-  }
-
   for (const field of ARRAY_FIELDS) {
     const raw = record[field];
     if (raw === undefined) continue;
@@ -90,6 +116,15 @@ function parsePropertyPayload(record: Record<string, unknown>): ParseResult {
       return { error: `${field} must be an array of strings` };
     }
     clean[field] = raw;
+  }
+
+  for (const field of BOOLEAN_FIELDS) {
+    if (record[field] === undefined) continue;
+    const bool = coerceBoolean(record[field]);
+    if (bool === null) {
+      return { error: `Invalid ${field} value` };
+    }
+    clean[field] = bool;
   }
 
   if (record.coords !== undefined) {
@@ -124,6 +159,27 @@ function parsePropertyPayload(record: Record<string, unknown>): ParseResult {
     clean[field] = record[field];
   }
 
+  if (record.furnishing !== undefined) {
+    const allowedFurnishing = ["unfurnished", "semi_furnished", "furnished"] as const;
+    if (!allowedFurnishing.includes(record.furnishing as (typeof allowedFurnishing)[number])) {
+      return { error: "Invalid furnishing value" };
+    }
+  }
+
+  if (record.listing_status !== undefined) {
+    const allowedListingStatus = ["draft", "published", "under_offer", "sold", "archived"] as const;
+    if (!allowedListingStatus.includes(record.listing_status as (typeof allowedListingStatus)[number])) {
+      return { error: "Invalid listing_status value" };
+    }
+  }
+
+  if (record.parking_type !== undefined) {
+    const allowedParkingType = ["none", "garage", "carport", "street", "underground"] as const;
+    if (!allowedParkingType.includes(record.parking_type as (typeof allowedParkingType)[number])) {
+      return { error: "Invalid parking_type value" };
+    }
+  }
+
   if (record.slug !== undefined) {
     if (typeof record.slug !== "string" || !record.slug.trim()) {
       return { error: "Invalid slug" };
@@ -139,8 +195,6 @@ function buildTranslationFields(data: Record<string, unknown>): TranslationField
 
   const translatableKeys: (keyof TranslationFields)[] = [
     "title",
-    "subtitle",
-    "location",
     "neighborhood",
     "city",
     "region",
@@ -148,7 +202,6 @@ function buildTranslationFields(data: Record<string, unknown>): TranslationField
     "meta_description",
     "description",
     "sale_type",
-    "inclusions",
     "floor_plan",
     "card_image",
   ];
