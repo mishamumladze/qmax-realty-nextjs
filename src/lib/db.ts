@@ -235,6 +235,117 @@ export function initTables(): void {
     if (!columnNames.includes("coordinates")) {
       db.exec("ALTER TABLE properties ADD COLUMN coordinates TEXT");
     }
+    if (!columnNames.includes("property_subtype")) {
+      db.exec("ALTER TABLE properties ADD COLUMN property_subtype TEXT");
+    }
+    if (!columnNames.includes("furnishing")) {
+      db.exec("ALTER TABLE properties ADD COLUMN furnishing TEXT");
+    }
+    if (!columnNames.includes("balcony")) {
+      db.exec("ALTER TABLE properties ADD COLUMN balcony BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("balcony_sqmt")) {
+      db.exec("ALTER TABLE properties ADD COLUMN balcony_sqmt REAL");
+    }
+    if (!columnNames.includes("lot_sqmt")) {
+      db.exec("ALTER TABLE properties ADD COLUMN lot_sqmt REAL");
+    }
+    if (!columnNames.includes("view")) {
+      db.exec("ALTER TABLE properties ADD COLUMN view TEXT");
+    }
+    if (!columnNames.includes("video_url")) {
+      db.exec("ALTER TABLE properties ADD COLUMN video_url TEXT");
+    }
+    if (!columnNames.includes("virtual_tour_url")) {
+      db.exec("ALTER TABLE properties ADD COLUMN virtual_tour_url TEXT");
+    }
+    if (!columnNames.includes("listing_status")) {
+      db.exec("ALTER TABLE properties ADD COLUMN listing_status TEXT DEFAULT 'draft'");
+    }
+    if (!columnNames.includes("is_featured")) {
+      db.exec("ALTER TABLE properties ADD COLUMN is_featured BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("street_address")) {
+      db.exec("ALTER TABLE properties ADD COLUMN street_address TEXT");
+    }
+    if (!columnNames.includes("building_status")) {
+      db.exec("ALTER TABLE properties ADD COLUMN building_status TEXT");
+    }
+    if (!columnNames.includes("condition")) {
+      db.exec("ALTER TABLE properties ADD COLUMN condition TEXT");
+    }
+    if (!columnNames.includes("project_type")) {
+      db.exec("ALTER TABLE properties ADD COLUMN project_type TEXT");
+    }
+    if (!columnNames.includes("ceiling_height")) {
+      db.exec("ALTER TABLE properties ADD COLUMN ceiling_height REAL");
+    }
+    if (!columnNames.includes("heating_type")) {
+      db.exec("ALTER TABLE properties ADD COLUMN heating_type TEXT");
+    }
+    if (!columnNames.includes("hot_water_type")) {
+      db.exec("ALTER TABLE properties ADD COLUMN hot_water_type TEXT");
+    }
+    if (!columnNames.includes("parking_type")) {
+      db.exec("ALTER TABLE properties ADD COLUMN parking_type TEXT");
+    }
+    if (!columnNames.includes("kitchen_appliances")) {
+      db.exec("ALTER TABLE properties ADD COLUMN kitchen_appliances TEXT");
+    }
+    if (!columnNames.includes("total_floors")) {
+      db.exec("ALTER TABLE properties ADD COLUMN total_floors INTEGER");
+    }
+    if (!columnNames.includes("natural_gas")) {
+      db.exec("ALTER TABLE properties ADD COLUMN natural_gas BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("internet")) {
+      db.exec("ALTER TABLE properties ADD COLUMN internet BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("water_supply")) {
+      db.exec("ALTER TABLE properties ADD COLUMN water_supply BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("electricity")) {
+      db.exec("ALTER TABLE properties ADD COLUMN electricity BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("tv")) {
+      db.exec("ALTER TABLE properties ADD COLUMN tv BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("sewerage")) {
+      db.exec("ALTER TABLE properties ADD COLUMN sewerage BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("elevator")) {
+      db.exec("ALTER TABLE properties ADD COLUMN elevator BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("ac")) {
+      db.exec("ALTER TABLE properties ADD COLUMN ac BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("security")) {
+      db.exec("ALTER TABLE properties ADD COLUMN security BOOLEAN DEFAULT 0");
+    }
+
+    const indexes = db.prepare("PRAGMA index_list(properties)").all() as { name: string }[];
+    const indexNames = indexes.map((i) => i.name);
+    if (!indexNames.includes("idx_properties_listing_status")) {
+      try {
+        db.exec("CREATE INDEX idx_properties_listing_status ON properties(listing_status)");
+      } catch {
+        // index may already exist
+      }
+    }
+    if (!indexNames.includes("idx_properties_is_featured")) {
+      try {
+        db.exec("CREATE INDEX idx_properties_is_featured ON properties(is_featured)");
+      } catch {
+        // index may already exist
+      }
+    }
+    if (!indexNames.includes("idx_properties_city")) {
+      try {
+        db.exec("CREATE INDEX idx_properties_city ON properties(city)");
+      } catch {
+        // index may already exist
+      }
+    }
 
     const messageColumns = db.prepare("PRAGMA table_info(messages)").all() as { name: string }[];
     if (!messageColumns.map((c) => c.name).includes("read")) {
@@ -308,7 +419,7 @@ export function insertSubscriber(email: string): { success: boolean; alreadyExis
   }
 }
 
-const JSON_COLUMNS = new Set<string>(["inclusions", "gallery", "coords"]);
+const JSON_COLUMNS = new Set<string>(["inclusions", "gallery", "coords", "view", "kitchen_appliances"]);
 
 function toColumnValue(
   key: string,
@@ -370,12 +481,16 @@ function parseCoordsColumn(value: unknown): [number, number] | undefined {
 
 function normalizePropertyRow(row: Record<string, unknown> | undefined): Property | undefined {
   if (!row || typeof row !== "object" || !("id" in row)) return undefined;
-  return {
-    ...row,
-    inclusions: parseJsonArrayColumn(row.inclusions),
-    gallery: parseJsonArrayColumn(row.gallery),
-    coords: parseCoordsColumn(row.coords),
-  } as Property;
+  const base = row as Record<string, unknown>;
+  const result = {
+    ...base,
+    inclusions: parseJsonArrayColumn(base.inclusions),
+    gallery: parseJsonArrayColumn(base.gallery),
+    view: parseJsonArrayColumn(base.view),
+    kitchen_appliances: parseJsonArrayColumn(base.kitchen_appliances),
+    coords: parseCoordsColumn(base.coords),
+  };
+  return result as unknown as Property;
 }
 
 export function getAllProperties(): Property[] {
@@ -488,8 +603,6 @@ export function insertProperty(data: PropertyFormData & { slug?: string }): Prop
     > = {
       title: data.title,
       type: data.type,
-      subtitle: data.subtitle,
-      location: data.location,
       neighborhood: data.neighborhood,
       city: data.city,
       region: data.region,
@@ -503,14 +616,41 @@ export function insertProperty(data: PropertyFormData & { slug?: string }): Prop
       sale_type: data.sale_type,
       year_built: data.year_built,
       floor: data.floor,
-      parking: data.parking,
       meta_description: data.meta_description,
       description: data.description,
-      inclusions: data.inclusions,
       gallery: data.gallery,
       floor_plan: data.floor_plan,
       coords: data.coords,
       card_image: data.card_image,
+      property_subtype: data.property_subtype,
+      furnishing: data.furnishing,
+      balcony: data.balcony,
+      balcony_sqmt: data.balcony_sqmt,
+      lot_sqmt: data.lot_sqmt,
+      view: data.view,
+      video_url: data.video_url,
+      virtual_tour_url: data.virtual_tour_url,
+      listing_status: data.listing_status,
+      is_featured: data.is_featured,
+      street_address: data.street_address,
+      building_status: data.building_status,
+      condition: data.condition,
+      project_type: data.project_type,
+      ceiling_height: data.ceiling_height,
+      heating_type: data.heating_type,
+      hot_water_type: data.hot_water_type,
+      parking_type: data.parking_type,
+      kitchen_appliances: data.kitchen_appliances,
+      total_floors: data.total_floors,
+      natural_gas: data.natural_gas,
+      internet: data.internet,
+      water_supply: data.water_supply,
+      electricity: data.electricity,
+      tv: data.tv,
+      sewerage: data.sewerage,
+      elevator: data.elevator,
+      ac: data.ac,
+      security: data.security,
     };
 
     const entries = Object.entries(candidates).filter(
