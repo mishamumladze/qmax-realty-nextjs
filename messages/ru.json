@@ -245,12 +245,19 @@
         }
       },
       "PropertyFormModal": {
+        "Tabs": {
+          "general": "Общее",
+          "specs": "Характеристики",
+          "amenities": "Удобства",
+          "media": "Медиа"
+        },
         "Titles": {
           "edit": "Изменить свойства",
           "add": "Добавить свойство"
         },
         "Aria": {
-          "close_dialog": "Закрыть диалоговое окно"
+          "close_dialog": "Закрыть диалоговое окно",
+          "tabs": "Вкладки формы недвижимости"
         },
         "Fields": {
           "title": "Название *",
@@ -271,7 +278,38 @@
           "year_built": "Год постройки",
           "floor": "Пол",
           "coordsLat": "Широта",
-          "coordsLng": "Долгота"
+          "coordsLng": "Долгота",
+          "listing_status": "Статус объявления",
+          "is_featured": "Рекомендуемое",
+          "property_subtype": "Подтип недвижимости",
+          "street_address": "Улица и номер дома",
+          "lot_sqmt": "Площадь участка (кв.м)",
+          "ceiling_height": "Высота потолков (м)",
+          "total_floors": "Всего этажей",
+          "building_status": "Статус здания",
+          "condition": "Состояние",
+          "project_type": "Тип проекта",
+          "furnishing": "Меблировка",
+          "view": "Вид",
+          "balcony": "Балкон",
+          "balcony_sqmt": "Площадь балкона (кв.м)",
+          "heating_type": "Тип отопления",
+          "hot_water_type": "Тип горячей воды",
+          "parking_type": "Тип парковки",
+          "kitchen_appliances": "Кухонная техника",
+          "video_url": "URL видео",
+          "virtual_tour_url": "URL виртуального тура",
+          "meta_title": "Meta title",
+          "slug": "Slug",
+          "natural_gas": "Природный газ",
+          "internet": "Интернет",
+          "water_supply": "Водоснабжение",
+          "electricity": "Электричество",
+          "tv": "ТВ",
+          "sewerage": "Канализация",
+          "elevator": "Лифт",
+          "ac": "Кондиционер",
+          "security": "Охрана"
         },
         "Textareas": {
           "description": "Описание",
@@ -283,14 +321,12 @@
           "one_per_line": "По одному в строке",
           "one_url_per_line": "Один URL-адрес в строке"
         },
-        "Parking": {
-          "available": "Имеется парковка"
-        },
         "Labels": {
           "card_image": "Изображение карты",
           "upload_image_file": "Загрузить файл с изображением",
           "floor_plan": "План этажа",
-          "gallery_images": "Изображения из галереи"
+          "gallery_images": "Изображения из галереи",
+          "property_media": "Медиа недвижимости"
         },
         "Buttons": {
           "cancel": "Отменить",
@@ -329,7 +365,25 @@
           "galleryText": "Введите URL галереи (по одному в строке)",
           "type": "Выберите тип недвижимости",
           "sale_type": "Выберите тип сделки",
-          "currency": "Выберите валюту"
+          "currency": "Выберите валюту",
+          "street_address": "Введите улицу и номер дома",
+          "lot_sqmt": "Введите площадь участка в кв.м",
+          "ceiling_height": "Введите высоту потолков в метрах",
+          "total_floors": "Введите общее количество этажей",
+          "video_url": "Введите URL видео",
+          "virtual_tour_url": "Введите URL виртуального тура",
+          "meta_title": "Введите meta title",
+          "slug": "Введите URL slug",
+          "listing_status": "Выберите статус объявления",
+          "property_subtype": "Выберите подтип недвижимости",
+          "building_status": "Выберите статус здания",
+          "condition": "Выберите состояние",
+          "project_type": "Выберите тип проекта",
+          "furnishing": "Выберите меблировку",
+          "heating_type": "Выберите тип отопления",
+          "hot_water_type": "Выберите тип горячей воды",
+          "parking_type": "Выберите тип парковки",
+          "coords": "Выберите местоположение на карте"
         },
         "SelectOptions": {
           "type": {
@@ -348,6 +402,78 @@
             "USD": "USD ($)",
             "GEL": "GEL (₾)",
             "GBP": "GBP (£)"
+          },
+          "listing_status": {
+            "draft": "Черновик",
+            "published": "Опубликовано",
+            "under_offer": "Под предложением",
+            "sold": "Продано",
+            "archived": "В архиве"
+          },
+          "furnishing": {
+            "unfurnished": "Без мебели",
+            "semi_furnished": "Частично с мебелью",
+            "furnished": "С мебелью"
+          },
+          "parking_type": {
+            "none": "Нет",
+            "garage": "Гараж",
+            "carport": "Навес для авто",
+            "street": "Улица",
+            "underground": "Подземная парковка"
+          },
+          "building_status": {
+            "new_construction": "Новостройка",
+            "under_construction": "В стройке",
+            "ready": "Готово"
+          },
+          "condition": {
+            "excellent": "Отличное",
+            "good": "Хорошее",
+            "fair": "Удовлетворительное",
+            "needs_renovation": "Требует ремонта"
+          },
+          "project_type": {
+            "residential": "Жилая",
+            "commercial": "Коммерческая",
+            "mixed_use": "Смешанного назначения"
+          },
+          "heating_type": {
+            "central": "Центральное",
+            "individual": "Индивидуальное",
+            "floor": "Теплый пол",
+            "wall": "Настенное",
+            "electric": "Электрическое"
+          },
+          "hot_water_type": {
+            "central": "Центральное",
+            "electric": "Электрическое",
+            "gas": "Газовое",
+            "solar": "Солнечное"
+          },
+          "property_subtype": {
+            "penthouse": "Пентхаус",
+            "duplex": "Дуплекс",
+            "townhouse": "Таунхаус",
+            "villa": "Вилла",
+            "studio": "Студия",
+            "office": "Офис",
+            "land": "Земля"
+          },
+          "view": {
+            "city": "Город",
+            "mountain": "Горы",
+            "sea": "Море",
+            "courtyard": "Двор",
+            "park": "Парк"
+          },
+          "kitchen_appliances": {
+            "oven": "Духовка",
+            "stove": "Плита",
+            "refrigerator": "Холодильник",
+            "microwave": "Микроволновка",
+            "dishwasher": "Посудомойка",
+            "washing_machine": "Стиральная машина"
           }
         }
       }

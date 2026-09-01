@@ -245,19 +245,24 @@
         }
       },
       "PropertyFormModal": {
+        "Tabs": {
+          "general": "General",
+          "specs": "Specs",
+          "amenities": "Amenities",
+          "media": "Media"
+        },
         "Titles": {
           "edit": "Edit property",
           "add": "Add property"
         },
         "Aria": {
-          "close_dialog": "Close dialog"
+          "close_dialog": "Close dialog",
+          "tabs": "Property form tabs"
         },
         "Fields": {
           "title": "Title *",
           "type": "Type",
-          "subtitle": "Subtitle",
           "sale_type": "Sale type",
-          "location": "Location",
           "neighborhood": "Neighborhood",
           "city": "City",
           "region": "Region",
@@ -271,26 +276,53 @@
           "year_built": "Year built",
           "floor": "Floor",
           "coordsLat": "Latitude",
-          "coordsLng": "Longitude"
+          "coordsLng": "Longitude",
+          "listing_status": "Listing status",
+          "is_featured": "Featured",
+          "property_subtype": "Property subtype",
+          "street_address": "Street address",
+          "lot_sqmt": "Lot size (sqm)",
+          "ceiling_height": "Ceiling height (m)",
+          "total_floors": "Total floors",
+          "building_status": "Building status",
+          "condition": "Condition",
+          "project_type": "Project type",
+          "furnishing": "Furnishing",
+          "view": "View",
+          "balcony": "Balcony",
+          "balcony_sqmt": "Balcony size (sqm)",
+          "heating_type": "Heating type",
+          "hot_water_type": "Hot water type",
+          "parking_type": "Parking type",
+          "kitchen_appliances": "Kitchen appliances",
+          "video_url": "Video URL",
+          "virtual_tour_url": "Virtual tour URL",
+          "meta_title": "Meta title",
+          "slug": "Slug",
+          "natural_gas": "Natural gas",
+          "internet": "Internet",
+          "water_supply": "Water supply",
+          "electricity": "Electricity",
+          "tv": "TV",
+          "sewerage": "Sewerage",
+          "elevator": "Elevator",
+          "ac": "Air conditioning",
+          "security": "Security"
         },
         "Textareas": {
           "description": "Description",
-          "meta_description": "Meta description",
-          "inclusions": "Inclusions",
-          "gallery_urls": "Gallery URLs"
+          "meta_description": "Meta description"
         },
         "Hints": {
           "one_per_line": "One per line",
           "one_url_per_line": "One URL per line"
         },
-        "Parking": {
-          "available": "Parking available"
-        },
         "Labels": {
           "card_image": "Card image",
           "upload_image_file": "Upload image file",
           "floor_plan": "Floor plan",
-          "gallery_images": "Gallery images"
+          "gallery_images": "Gallery images",
+          "property_media": "Property media"
         },
         "Buttons": {
           "cancel": "Cancel",
@@ -306,8 +338,6 @@
         },
         "Placeholders": {
           "title": "Enter property title",
-          "subtitle": "Enter subtitle",
-          "location": "Enter location",
           "neighborhood": "Enter neighborhood",
           "city": "Enter city",
           "region": "Enter region",
@@ -321,15 +351,29 @@
           "year_built": "Enter year built",
           "coordsLat": "Enter latitude",
           "coordsLng": "Enter longitude",
-          "card_image": "Enter image URL or upload",
-          "floor_plan": "Enter floor plan URL or upload",
+          "street_address": "Enter street address",
+          "lot_sqmt": "Enter lot size in sqm",
+          "ceiling_height": "Enter ceiling height in meters",
+          "total_floors": "Enter total floors",
           "description": "Enter property description",
           "meta_description": "Enter meta description",
-          "inclusionsText": "Enter inclusions (one per line)",
-          "galleryText": "Enter gallery URLs (one per line)",
+          "video_url": "Enter video URL",
+          "virtual_tour_url": "Enter virtual tour URL",
+          "meta_title": "Enter meta title",
+          "slug": "Enter URL slug",
           "type": "Select property type",
           "sale_type": "Select sale type",
-          "currency": "Select currency"
+          "currency": "Select currency",
+          "listing_status": "Select listing status",
+          "property_subtype": "Select property subtype",
+          "building_status": "Select building status",
+          "condition": "Select condition",
+          "project_type": "Select project type",
+          "furnishing": "Select furnishing",
+          "heating_type": "Select heating type",
+          "hot_water_type": "Select hot water type",
+          "parking_type": "Select parking type",
+          "coords": "Select location on map"
         },
         "SelectOptions": {
           "type": {
@@ -348,6 +392,78 @@
             "USD": "USD ($)",
             "GEL": "GEL (₾)",
             "GBP": "GBP (£)"
+          },
+          "listing_status": {
+            "draft": "Draft",
+            "published": "Published",
+            "under_offer": "Under Offer",
+            "sold": "Sold",
+            "archived": "Archived"
+          },
+          "furnishing": {
+            "unfurnished": "Unfurnished",
+            "semi_furnished": "Semi-furnished",
+            "furnished": "Furnished"
+          },
+          "parking_type": {
+            "none": "None",
+            "garage": "Garage",
+            "carport": "Carport",
+            "street": "Street",
+            "underground": "Underground"
+          },
+          "building_status": {
+            "new_construction": "New Construction",
+            "under_construction": "Under Construction",
+            "ready": "Ready"
+          },
+          "condition": {
+            "excellent": "Excellent",
+            "good": "Good",
+            "fair": "Fair",
+            "needs_renovation": "Needs Renovation"
+          },
+          "project_type": {
+            "residential": "Residential",
+            "commercial": "Commercial",
+            "mixed_use": "Mixed Use"
+          },
+          "heating_type": {
+            "central": "Central",
+            "individual": "Individual",
+            "floor": "Floor Heating",
+            "wall": "Wall Heating",
+            "electric": "Electric"
+          },
+          "hot_water_type": {
+            "central": "Central",
+            "electric": "Electric",
+            "gas": "Gas",
+            "solar": "Solar"
+          },
+          "property_subtype": {
+            "penthouse": "Penthouse",
+            "duplex": "Duplex",
+            "townhouse": "Townhouse",
+            "villa": "Villa",
+            "studio": "Studio",
+            "office": "Office",
+            "land": "Land"
+          },
+          "view": {
+            "city": "City",
+            "mountain": "Mountain",
+            "sea": "Sea",
+            "courtyard": "Courtyard",
+            "park": "Park"
+          },
+          "kitchen_appliances": {
+            "oven": "Oven",
+            "stove": "Stove",
+            "refrigerator": "Refrigerator",
+            "microwave": "Microwave",
+            "dishwasher": "Dishwasher",
+            "washing_machine": "Washing Machine"
           }
         }
       }

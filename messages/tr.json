@@ -250,47 +250,73 @@
           "add": "Özellik ekle"
         },
         "Aria": {
-          "close_dialog": "İletişim kutusunu kapat"
+          "close_dialog": "İletişim kutusunu kapat",
+          "tabs": "Mülk formu sekmeleri"
         },
         "Fields": {
           "title": "Başlık *",
           "type": "Tür",
-          "subtitle": "Altyazı",
           "sale_type": "Satış türü",
-          "location": "Konum",
           "neighborhood": "Mahalle",
           "city": "Şehir",
           "region": "Bölge",
           "country": "Ülke",
           "currency": "Para birimi",
           "price": "Fiyat",
-          "sqmt": "Önemsiz bir mesele",
+          "sqmt": "Metrekare (m²)",
           "rooms": "Odalar",
           "bedrooms": "Yatak odaları",
           "bathrooms": "Banyolar",
-          "year_built": "Üretim yılı",
-          "floor": "Zemin",
+          "year_built": "İnşa yılı",
+          "floor": "Kat",
           "coordsLat": "Enlem",
-          "coordsLng": "Boylam"
+          "coordsLng": "Boylam",
+          "listing_status": "İlan durumu",
+          "is_featured": "Öne çıkan",
+          "property_subtype": "Alt tür",
+          "street_address": "Sokak adresi",
+          "lot_sqmt": "Arazi alanı (m²)",
+          "ceiling_height": "Tavan yüksekliği (m)",
+          "total_floors": "Toplam kat sayısı",
+          "building_status": "Bina durumu",
+          "condition": "Durum",
+          "project_type": "Proje türü",
+          "furnishing": "Eşya durumu",
+          "view": "Manzara",
+          "balcony": "Balkon",
+          "balcony_sqmt": "Balkon alanı (m²)",
+          "heating_type": "Isıtma türü",
+          "hot_water_type": "Sıcak su türü",
+          "parking_type": "Otopark türü",
+          "kitchen_appliances": "Mutfak ekipmanları",
+          "video_url": "Video URL",
+          "virtual_tour_url": "Sanal tur URL",
+          "meta_title": "Meta başlığı",
+          "slug": "Slug (URL yolu)",
+          "natural_gas": "Doğalgaz",
+          "internet": "İnternet",
+          "water_supply": "Su kaynaklı",
+          "electricity": "Elektrik",
+          "tv": "TV",
+          "sewerage": "Kanalizasyon",
+          "elevator": "Asansör",
+          "ac": "Klima",
+          "security": "Güvenlik"
         },
         "Textareas": {
           "description": "Açıklama",
-          "meta_description": "Meta açıklaması",
-          "inclusions": "İçerikler",
-          "gallery_urls": "Galeri URL'leri"
+          "meta_description": "Meta açıklaması"
         },
         "Hints": {
           "one_per_line": "Her satıra bir tane",
           "one_url_per_line": "Her satıra bir URL"
         },
-        "Parking": {
-          "available": "Otopark mevcuttur"
-        },
         "Labels": {
           "card_image": "Kart görüntüsü",
           "upload_image_file": "Resim dosyasını yükle",
           "floor_plan": "Kat planı",
-          "gallery_images": "Galeri resimleri"
+          "gallery_images": "Galeri resimleri",
+          "property_media": "Mülk medyası"
         },
         "Buttons": {
           "cancel": "İptal et",
@@ -306,8 +332,6 @@
         },
         "Placeholders": {
           "title": "Gayrimenkul başlığı girin",
-          "subtitle": "Alt başlık girin",
-          "location": "Konum girin",
           "neighborhood": "Mahalle girin",
           "city": "Şehir girin",
           "region": "Bölge girin",
@@ -321,15 +345,29 @@
           "year_built": "İnşa yılı girin",
           "coordsLat": "Enlem girin",
           "coordsLng": "Boylam girin",
-          "card_image": "Resim URL'si girin veya yükleyin",
-          "floor_plan": "Kat planı URL'si girin veya yükleyin",
           "description": "Gayrimenkul açıklaması girin",
           "meta_description": "Meta açıklaması girin",
-          "inclusionsText": "Dahil olanları girin (her satıra bir tane)",
-          "galleryText": "Galeri URL'lerini girin (her satıra bir tane)",
           "type": "Gayrimenkul türünü seçin",
           "sale_type": "Satış türünü seçin",
-          "currency": "Para birimini seçin"
+          "currency": "Para birimini seçin",
+          "street_address": "Sokak adresi girin",
+          "lot_sqmt": "Arazi alanını m² cinsinden girin",
+          "ceiling_height": "Tavan yüksekliğini metre cinsinden girin",
+          "total_floors": "Toplam kat sayısını girin",
+          "video_url": "Video URL'si girin",
+          "virtual_tour_url": "Sanal tur URL'si girin",
+          "meta_title": "Meta başlığını girin",
+          "slug": "URL slug'ını girin",
+          "listing_status": "İlan durumunu seçin",
+          "property_subtype": "Alt türü seçin",
+          "building_status": "Bina durumunu seçin",
+          "condition": "Durumu seçin",
+          "project_type": "Proje türünü seçin",
+          "furnishing": "Eşya durumunu seçin",
+          "heating_type": "Isıtma türünü seçin",
+          "hot_water_type": "Sıcak su türünü seçin",
+          "parking_type": "Otopark türünü seçin",
+          "coords": "Haritada konum seçin"
         },
         "SelectOptions": {
           "type": {
@@ -348,7 +386,85 @@
             "USD": "USD ($)",
             "GEL": "GEL (₾)",
             "GBP": "GBP (£)"
+          },
+          "listing_status": {
+            "draft": "Taslak",
+            "published": "Yayında",
+            "under_offer": "Satış Teklifi Altında",
+            "sold": "Satıldı",
+            "archived": "Arşivlendi"
+          },
+          "furnishing": {
+            "unfurnished": "Eşyasız",
+            "semi_furnished": "Yarı Eşyalı",
+            "furnished": "Eşyalı"
+          },
+          "parking_type": {
+            "none": "Yok",
+            "garage": "Garaj",
+            "carport": "Karabük/Çatılı Otopark",
+            "street": "Sokak",
+            "underground": "Yeraltı Otoparkı"
+          },
+          "building_status": {
+            "new_construction": "Yeni İnşa",
+            "under_construction": "İnşaat Aşamasında",
+            "ready": "Hazır"
+          },
+          "condition": {
+            "excellent": "Mükemmel",
+            "good": "İyi",
+            "fair": "Orta",
+            "needs_renovation": "Yenileme Gerekli"
+          },
+          "project_type": {
+            "residential": "Konut",
+            "commercial": "Ticari",
+            "mixed_use": "Karma Kullanım"
+          },
+          "heating_type": {
+            "central": "Merkezi",
+            "individual": "İndividual",
+            "floor": "Yerde Isıtma",
+            "wall": "Duvar Isıtması",
+            "electric": "Elektrikli"
+          },
+          "hot_water_type": {
+            "central": "Merkezi",
+            "electric": "Elektrikli",
+            "gas": "Gaz",
+            "solar": "Güneş"
+          },
+          "property_subtype": {
+            "penthouse": "Çatı Katı",
+            "duplex": "Dubleks",
+            "townhouse": "Satır Ev",
+            "villa": "Villa",
+            "studio": "Stüdyo",
+            "office": "Ofis",
+            "land": "Arsa"
+          },
+          "view": {
+            "city": "Şehir",
+            "mountain": "Dağ",
+            "sea": "Deniz",
+            "courtyard": "Avlu",
+            "park": "Park"
+          },
+          "kitchen_appliances": {
+            "oven": "Fırın",
+            "stove": "Ocak",
+            "refrigerator": "Buzdolabı",
+            "microwave": "Mikrodalga",
+            "dishwasher": "Bulaşık Makinesi",
+            "washing_machine": "Çamaşır Makinesi"
           }
+        },
+        "Tabs": {
+          "general": "Genel",
+          "specs": "Özellikler",
+          "amenities": "Sosyal Alanlar",
+          "media": "Medya"
         }
       }
     }

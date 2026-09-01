@@ -250,7 +250,8 @@
           "add": "Eigenschaft hinzufügen"
         },
         "Aria": {
-          "close_dialog": "Dialogfeld schließen"
+          "close_dialog": "Dialogfeld schließen",
+          "tabs": "Eigentumsformular-Registerkarten"
         },
         "Fields": {
           "title": "Titel *",
@@ -271,7 +272,38 @@
           "year_built": "Baujahr",
           "floor": "Etage",
           "coordsLat": "Breitengrad",
-          "coordsLng": "Längengrad"
+          "coordsLng": "Längengrad",
+          "listing_status": "Anzeigenstatus",
+          "is_featured": "Hervorgehoben",
+          "property_subtype": "Objektuntertyp",
+          "street_address": "Straßenadresse",
+          "lot_sqmt": "Grundstücksgröße (qm)",
+          "ceiling_height": "Deckenhöhe (m)",
+          "total_floors": "Gesamtetagen",
+          "building_status": "Bauzustand",
+          "condition": "Zustand",
+          "project_type": "Projekttyp",
+          "furnishing": "Möblierung",
+          "view": "Aussicht",
+          "balcony": "Balkon",
+          "balcony_sqmt": "Balkongröße (qm)",
+          "heating_type": "Heizungsart",
+          "hot_water_type": "Warmwasserart",
+          "parking_type": "Parkplatzart",
+          "kitchen_appliances": "Küchengeräte",
+          "video_url": "Video-URL",
+          "virtual_tour_url": "Virtueller Rundgang URL",
+          "meta_title": "Meta-Titel",
+          "slug": "Slug",
+          "natural_gas": "Erdgas",
+          "internet": "Internet",
+          "water_supply": "Wasserversorgung",
+          "electricity": "Strom",
+          "tv": "TV",
+          "sewerage": "Kanalisation",
+          "elevator": "Aufzug",
+          "ac": "Klimaanlage",
+          "security": "Sicherheit"
         },
         "Textareas": {
           "description": "Beschreibung",
@@ -290,7 +322,8 @@
           "card_image": "Kartenbild",
           "upload_image_file": "Bilddatei hochladen",
           "floor_plan": "Grundriss",
-          "gallery_images": "Bilder aus der Galerie"
+          "gallery_images": "Bilder aus der Galerie",
+          "property_media": "Immobilien-Medien"
         },
         "Buttons": {
           "cancel": "Abbrechen",
@@ -329,7 +362,25 @@
           "galleryText": "Galerien-URLs eingeben (eine pro Zeile)",
           "type": "Immobilientyp auswählen",
           "sale_type": "Verkaufsart auswählen",
-          "currency": "Währung auswählen"
+          "currency": "Währung auswählen",
+          "street_address": "Straßenadresse eingeben",
+          "lot_sqmt": "Grundstücksgröße in qm eingeben",
+          "ceiling_height": "Deckenhöhe in Metern eingeben",
+          "total_floors": "Gesamtzahl der Etagen eingeben",
+          "video_url": "Video-URL eingeben",
+          "virtual_tour_url": "URL für virtuellen Rundgang eingeben",
+          "meta_title": "Meta-Titel eingeben",
+          "slug": "URL-Slug eingeben",
+          "listing_status": "Anzeigenstatus auswählen",
+          "property_subtype": "Objektuntertyp auswählen",
+          "building_status": "Bauzustand auswählen",
+          "condition": "Zustand auswählen",
+          "project_type": "Projekttyp auswählen",
+          "furnishing": "Möblierung auswählen",
+          "heating_type": "Heizungsart auswählen",
+          "hot_water_type": "Warmwasserart auswählen",
+          "parking_type": "Parkplatzart auswählen",
+          "coords": "Standort auf Karte auswählen"
         },
         "SelectOptions": {
           "type": {
@@ -348,7 +399,85 @@
             "USD": "USD ($)",
             "GEL": "GEL (₾)",
             "GBP": "GBP (£)"
+          },
+          "listing_status": {
+            "draft": "Entwurf",
+            "published": "Veröffentlicht",
+            "under_offer": "Unter Angebot",
+            "sold": "Verkauft",
+            "archived": "Archiviert"
+          },
+          "furnishing": {
+            "unfurnished": "Unmöbliert",
+            "semi_furnished": "Teilmöbliert",
+            "furnished": "Möbliert"
+          },
+          "parking_type": {
+            "none": "Keiner",
+            "garage": "Garage",
+            "carport": "Carport",
+            "street": "Straße",
+            "underground": "Tiefgarage"
+          },
+          "building_status": {
+            "new_construction": "Neubau",
+            "under_construction": "Im Bau",
+            "ready": "Bezugsfertig"
+          },
+          "condition": {
+            "excellent": "Ausgezeichnet",
+            "good": "Gut",
+            "fair": "Akzeptabel",
+            "needs_renovation": "Sanierungsbedürftig"
+          },
+          "project_type": {
+            "residential": "Wohnen",
+            "commercial": "Gewerbe",
+            "mixed_use": "Gemischte Nutzung"
+          },
+          "heating_type": {
+            "central": "Zentralheizung",
+            "individual": "Etagenheizung",
+            "floor": "Fußbodenheizung",
+            "wall": "Wandheizung",
+            "electric": "Elektrisch"
+          },
+          "hot_water_type": {
+            "central": "Zentral",
+            "electric": "Elektrisch",
+            "gas": "Gas",
+            "solar": "Solar"
+          },
+          "property_subtype": {
+            "penthouse": "Penthouse",
+            "duplex": "Duplex",
+            "townhouse": "Reihenhaus",
+            "villa": "Villa",
+            "studio": "Studio",
+            "office": "Büro",
+            "land": "Grundstück"
+          },
+          "view": {
+            "city": "Stadt",
+            "mountain": "Berg",
+            "sea": "Meer",
+            "courtyard": "Innenhof",
+            "park": "Park"
+          },
+          "kitchen_appliances": {
+            "oven": "Backofen",
+            "stove": "Herd",
+            "refrigerator": "Kühlschrank",
+            "microwave": "Mikrowelle",
+            "dishwasher": "Geschirrspüler",
+            "washing_machine": "Waschmaschine"
           }
+        },
+        "Tabs": {
+          "general": "Allgemein",
+          "specs": "Spezifikationen",
+          "amenities": "Ausstattung",
+          "media": "Medien"
         }
       }
     }
