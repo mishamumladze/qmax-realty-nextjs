@@ -325,7 +325,8 @@ export function MessagesList() {
         <div
           role="status"
           className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3
-            rounded-lg bg-gray-900 px-4 py-3 text-white shadow-lg dark:bg-white dark:text-gray-900"
+            rounded-lg bg-gray-200 px-4 py-3 text-gray-700 shadow-lg dark:bg-gray-800
+            dark:text-gray-300"
         >
           <span>{t("Toast.deleted")}</span>
           <Button

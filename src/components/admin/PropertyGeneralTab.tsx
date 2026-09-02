@@ -2,7 +2,21 @@
 
 import { useEffect, useId } from "react";
 import type { Property } from "@/types/property";
-import { PropertyMapPicker } from "./PropertyMapPicker";
+import dynamic from "next/dynamic";
+const PropertyMapPicker = dynamic(
+  () => import("./PropertyMapPicker").then((mod) => mod.PropertyMapPicker),
+  {
+    ssr: false,
+    loading: () => (
+      <div
+        className="flex h-[400px] w-full animate-pulse items-center justify-center rounded-md
+          bg-gray-200 dark:bg-gray-800"
+      >
+        Loading map...
+      </div>
+    ),
+  }
+);
 
 interface SharedTabProps {
   fields: Record<string, string>;
@@ -10,7 +24,7 @@ interface SharedTabProps {
   setBoolean: (name: string, value: boolean) => void;
   getValue: (name: string) => string;
   errors: Record<string, string>;
-  t: (key: string) => string;
+  t: ((key: string) => string) & { raw: (key: string) => any };
 }
 
 interface PropertyGeneralTabProps extends SharedTabProps {
@@ -94,6 +108,9 @@ export function PropertyGeneralTab({
   const renderSelect = (name: string, placeholderKey: string, optionsKey: string) => {
     const id = fieldId(name);
     const error = errors[name];
+
+    const optionsObject = t.raw(`SelectOptions.${optionsKey}`);
+
     return (
       <div>
         <label htmlFor={id} className={labelClass}>
@@ -107,7 +124,7 @@ export function PropertyGeneralTab({
           className={`${inputClass}${error ? errorBorderClass : ""}`}
         >
           <option value="">{t(`Placeholders.${placeholderKey}`)}</option>
-          {Object.entries(t(`SelectOptions.${optionsKey}`)).map(([value, label]) => (
+          {Object.entries(optionsObject).map(([value, label]) => (
             <option key={value} value={value}>
               {label as string}
             </option>
@@ -145,7 +162,10 @@ export function PropertyGeneralTab({
     const checked = getValue(name) === "true";
     return (
       <div>
-        <label htmlFor={id} className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor={id}
+          className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           <input
             id={id}
             type="checkbox"

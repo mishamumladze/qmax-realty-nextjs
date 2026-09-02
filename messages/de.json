@@ -137,7 +137,12 @@
         },
         "DeleteDialog": {
           "title": "Eigenschaft löschen?",
-          "description": "{title} wird entfernt. Sie können den Vorgang innerhalb von 8 Sekunden rückgängig machen."
+          "description": "{title} wird entfernt. Sie können den Vorgang innerhalb von 8 Sekunden rückgängig machen.",
+          "Buttons": {
+            "cancel": "Abbrechen",
+            "delete": "Löschen",
+            "undo": "Rückgängig"
+          }
         },
         "Buttons": {
           "cancel": "Abbrechen",
@@ -303,7 +308,8 @@
           "sewerage": "Kanalisation",
           "elevator": "Aufzug",
           "ac": "Klimaanlage",
-          "security": "Sicherheit"
+          "security": "Sicherheit",
+          "coords": "Kartenkoordinaten"
         },
         "Textareas": {
           "description": "Beschreibung",

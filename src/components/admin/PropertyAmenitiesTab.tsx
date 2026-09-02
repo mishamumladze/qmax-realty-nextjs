@@ -8,11 +8,10 @@ interface SharedTabProps {
   setBoolean: (name: string, value: boolean) => void;
   getValue: (name: string) => string;
   errors: Record<string, string>;
-  t: (key: string) => string;
+  t: ((key: string) => string) & { raw: (key: string) => any };
   kitchenAppliances: string[];
   setKitchenAppliances: (appliances: string[]) => void;
 }
-
 interface PropertyAmenitiesTabProps extends SharedTabProps {}
 
 const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300";
@@ -60,7 +59,10 @@ export function PropertyAmenitiesTab({
     const checked = getValue(name) === "true";
     return (
       <div>
-        <label htmlFor={id} className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor={id}
+          className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           <input
             id={id}
             type="checkbox"
@@ -77,6 +79,10 @@ export function PropertyAmenitiesTab({
   const renderSelect = (name: string, placeholderKey: string, optionsKey: string) => {
     const id = fieldId(name);
     const error = errors[name];
+
+    // Fetch the object using t.raw() here
+    const optionsObject = t.raw(`SelectOptions.${optionsKey}`);
+
     return (
       <div>
         <label htmlFor={id} className={labelClass}>
@@ -90,7 +96,8 @@ export function PropertyAmenitiesTab({
           className={`${inputClass}${error ? errorBorderClass : ""}`}
         >
           <option value="">{t(`Placeholders.${placeholderKey}`)}</option>
-          {Object.entries(t(`SelectOptions.${optionsKey}`)).map(([value, label]) => (
+          {/* Map over the extracted object */}
+          {Object.entries(optionsObject).map(([value, label]) => (
             <option key={value} value={value}>
               {label as string}
             </option>
@@ -116,14 +123,20 @@ export function PropertyAmenitiesTab({
 
       <div className="md:col-span-3">
         <label className={labelClass}>{t("Fields.kitchen_appliances")}</label>
-        <div className="mt-1 flex flex-wrap gap-2" role="group" aria-label={t("Fields.kitchen_appliances")}>
+        <div
+          className="mt-1 flex flex-wrap gap-2"
+          role="group"
+          aria-label={t("Fields.kitchen_appliances")}
+        >
           {KITCHEN_APPLIANCES.map((appliance) => (
             <label
               key={appliance}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm cursor-pointer border transition-colors ${
+              className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3
+              py-1.5 text-sm transition-colors ${
                 kitchenAppliances.includes(appliance)
                   ? "bg-brand-600 border-brand-600 text-white"
-                  : "bg-gray-100 border-gray-300 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : `border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200
+                    dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700`
               }`}
             >
               <input
@@ -139,7 +152,7 @@ export function PropertyAmenitiesTab({
         {errors.kitchen_appliances && <p className={errorTextClass}>{errors.kitchen_appliances}</p>}
       </div>
 
-      <div className="md:col-span-3 grid grid-cols-1 gap-4 md:grid-cols-3">
+      <div className="grid grid-cols-1 gap-4 md:col-span-3 md:grid-cols-3">
         {renderSelect("heating_type", "heating_type", "heating_type")}
         {renderSelect("hot_water_type", "hot_water_type", "hot_water_type")}
         {renderSelect("parking_type", "parking_type", "parking_type")}

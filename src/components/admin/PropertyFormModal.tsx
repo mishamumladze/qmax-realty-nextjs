@@ -58,6 +58,7 @@ function defaultFormState(): FormState {
       condition: "",
       project_type: "",
       furnishing: "",
+      balcony_sqmt: "",
       heating_type: "",
       hot_water_type: "",
       parking_type: "",
@@ -111,7 +112,11 @@ function parseDraft(draft: string): FormState | null {
   }
 }
 
-function imagesToStrings(images: MediaImage[]): { gallery: string[]; card_image: string | undefined; floor_plan: string | undefined } {
+function imagesToStrings(images: MediaImage[]): {
+  gallery: string[];
+  card_image: string | undefined;
+  floor_plan: string | undefined;
+} {
   const gallery = images.map((img) => img.url);
   const coverImage = images.find((img) => img.isCover);
   const floorPlanImage = images.find((img) => img.isFloorPlan);
@@ -122,7 +127,11 @@ function imagesToStrings(images: MediaImage[]): { gallery: string[]; card_image:
   };
 }
 
-function stringsToImages(gallery: string[] | undefined, card_image: string | undefined, floor_plan: string | undefined): MediaImage[] {
+function stringsToImages(
+  gallery: string[] | undefined,
+  card_image: string | undefined,
+  floor_plan: string | undefined
+): MediaImage[] {
   const images: MediaImage[] = [];
   const galleryUrls = gallery || [];
   const coverUrl = card_image;
@@ -253,6 +262,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
         condition: prop.condition ?? "",
         project_type: prop.project_type ?? "",
         furnishing: prop.furnishing ?? "",
+        balcony_sqmt: prop.balcony_sqmt?.toString() ?? "",
         heating_type: prop.heating_type ?? "",
         hot_water_type: prop.hot_water_type ?? "",
         parking_type: prop.parking_type ?? "",
@@ -353,13 +363,17 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       const checkRequired = (name: string, labelKey: string) => {
         const value = fields[name]?.trim();
         if (!value) {
-          nextErrors[name] = t("Validation.title_required").replace("Title", t(`Fields.${labelKey}`));
+          nextErrors[name] = t("Validation.title_required").replace(
+            "Title",
+            t(`Fields.${labelKey}`)
+          );
         }
       };
 
       const checkNumeric = (name: string) => {
         const raw = fields[name]?.trim();
-        if (raw !== "" && !Number.isFinite(Number(raw))) {
+        if (!raw || raw.trim() === "") return;
+        if (!Number.isFinite(Number(raw.trim()))) {
           nextErrors[name] = t("Validation.must_be_number");
         }
       };
@@ -535,12 +549,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
 
   if (!open) return null;
 
-  const tabLabels = [
-    t("Tabs.general"),
-    t("Tabs.specs"),
-    t("Tabs.amenities"),
-    t("Tabs.media"),
-  ];
+  const tabLabels = [t("Tabs.general"), t("Tabs.specs"), t("Tabs.amenities"), t("Tabs.media")];
 
   return (
     <div
@@ -553,7 +562,8 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="my-8 w-full max-w-4xl rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800 max-h-[90vh] flex flex-col"
+        className="my-8 flex max-h-[90vh] w-full max-w-4xl flex-col rounded-lg bg-white p-6
+          shadow-xl dark:bg-gray-800"
       >
         <div className="mb-4 flex items-center justify-between gap-4">
           <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
@@ -570,7 +580,11 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           </Button>
         </div>
 
-        <div role="tablist" className="flex border-b border-gray-200 dark:border-gray-700 mb-4" aria-label={t("Aria.tabs")}>
+        <div
+          role="tablist"
+          className="mb-4 flex border-b border-gray-200 dark:border-gray-700"
+          aria-label={t("Aria.tabs")}
+        >
           {tabLabels.map((label, index) => (
             <button
               key={index}
@@ -581,10 +595,11 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
               tabIndex={activeTab === index ? 0 : -1}
               onClick={() => handleTabChange(index)}
               onKeyDown={(e) => handleKeyDownTab(e, index)}
-              className={`px-4 py-2 text-sm font-medium border-b-2 transition-colors ${
+              className={`border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
                 activeTab === index
                   ? "border-brand-600 text-brand-600 dark:text-brand-400"
-                  : "border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  : `border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400
+                    dark:hover:text-gray-200`
               }`}
             >
               {label}
@@ -593,7 +608,12 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
         </div>
 
         <form onSubmit={handleSubmit} noValidate className="flex-1 overflow-y-auto">
-          <div id="tabpanel-0" role="tabpanel" aria-labelledby="tab-0" style={{ display: activeTab !== 0 ? "none" : "block" }}>
+          <div
+            id="tabpanel-0"
+            role="tabpanel"
+            aria-labelledby="tab-0"
+            style={{ display: activeTab !== 0 ? "none" : "block" }}
+          >
             <PropertyGeneralTab
               fields={formState.fields}
               setField={setField}
@@ -608,7 +628,12 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
             />
           </div>
 
-          <div id="tabpanel-1" role="tabpanel" aria-labelledby="tab-1" style={{ display: activeTab !== 1 ? "none" : "block" }}>
+          <div
+            id="tabpanel-1"
+            role="tabpanel"
+            aria-labelledby="tab-1"
+            style={{ display: activeTab !== 1 ? "none" : "block" }}
+          >
             <PropertySpecsTab
               fields={formState.fields}
               setField={setField}
@@ -623,7 +648,12 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
             />
           </div>
 
-          <div id="tabpanel-2" role="tabpanel" aria-labelledby="tab-2" style={{ display: activeTab !== 2 ? "none" : "block" }}>
+          <div
+            id="tabpanel-2"
+            role="tabpanel"
+            aria-labelledby="tab-2"
+            style={{ display: activeTab !== 2 ? "none" : "block" }}
+          >
             <PropertyAmenitiesTab
               fields={formState.fields}
               setField={setField}
@@ -636,7 +666,12 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
             />
           </div>
 
-          <div id="tabpanel-3" role="tabpanel" aria-labelledby="tab-3" style={{ display: activeTab !== 3 ? "none" : "block" }}>
+          <div
+            id="tabpanel-3"
+            role="tabpanel"
+            aria-labelledby="tab-3"
+            style={{ display: activeTab !== 3 ? "none" : "block" }}
+          >
             <PropertyMediaTab
               fields={formState.fields}
               setField={setField}
@@ -650,10 +685,15 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           </div>
 
           <div aria-live="polite" className="mt-4">
-            {formError ? <p className="text-sm text-red-600 dark:text-red-400">{formError}</p> : null}
+            {formError ? (
+              <p className="text-sm text-red-600 dark:text-red-400">{formError}</p>
+            ) : null}
           </div>
 
-          <div className="flex justify-end gap-3 border-t border-gray-200 pt-4 dark:border-gray-700 mt-4">
+          <div
+            className="mt-4 flex justify-end gap-3 border-t border-gray-200 pt-4
+              dark:border-gray-700"
+          >
             <Button variant="secondary" type="button" onClick={onClose} className="min-h-11">
               {t("Buttons.cancel")}
             </Button>

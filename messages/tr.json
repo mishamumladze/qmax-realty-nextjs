@@ -137,7 +137,12 @@
         },
         "DeleteDialog": {
           "title": "Özelliği silmek mi?",
-          "description": "{title} kaldırılacaktır. Bu işlemi 8 saniye içinde geri alabilirsiniz."
+          "description": "{title} kaldırılacaktır. Bu işlemi 8 saniye içinde geri alabilirsiniz.",
+          "Buttons": {
+            "cancel": "İptal et",
+            "delete": "Sil",
+            "undo": "Geri Al"
+          }
         },
         "Buttons": {
           "cancel": "İptal et",
@@ -301,7 +306,8 @@
           "sewerage": "Kanalizasyon",
           "elevator": "Asansör",
           "ac": "Klima",
-          "security": "Güvenlik"
+          "security": "Güvenlik",
+          "coords": "Harita Koordinatları"
         },
         "Textareas": {
           "description": "Açıklama",

@@ -8,7 +8,7 @@ interface SharedTabProps {
   setBoolean: (name: string, value: boolean) => void;
   getValue: (name: string) => string;
   errors: Record<string, string>;
-  t: (key: string) => string;
+  t: ((key: string) => string) & { raw: (key: string) => any };
   view: string[];
   setView: (view: string[]) => void;
   kitchenAppliances: string[];
@@ -74,6 +74,7 @@ export function PropertySpecsTab({
   const renderSelect = (name: string, placeholderKey: string, optionsKey: string) => {
     const id = fieldId(name);
     const error = errors[name];
+    const optionsObject = t.raw(`SelectOptions.${optionsKey}`);
     return (
       <div>
         <label htmlFor={id} className={labelClass}>
@@ -87,7 +88,7 @@ export function PropertySpecsTab({
           className={`${inputClass}${error ? errorBorderClass : ""}`}
         >
           <option value="">{t(`Placeholders.${placeholderKey}`)}</option>
-          {Object.entries(t(`SelectOptions.${optionsKey}`)).map(([value, label]) => (
+          {Object.entries(optionsObject).map(([value, label]) => (
             <option key={value} value={value}>
               {label as string}
             </option>
@@ -103,7 +104,10 @@ export function PropertySpecsTab({
     const checked = getValue(name) === "true";
     return (
       <div>
-        <label htmlFor={id} className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300">
+        <label
+          htmlFor={id}
+          className="flex items-center gap-2 text-sm font-medium text-gray-700 dark:text-gray-300"
+        >
           <input
             id={id}
             type="checkbox"
@@ -140,9 +144,7 @@ export function PropertySpecsTab({
   };
 
   const toggleView = (value: string) => {
-    const newView = view.includes(value)
-      ? view.filter((v) => v !== value)
-      : [...view, value];
+    const newView = view.includes(value) ? view.filter((v) => v !== value) : [...view, value];
     setView(newView);
   };
 
@@ -189,10 +191,12 @@ export function PropertySpecsTab({
           {VIEW_OPTIONS.map((option) => (
             <label
               key={option}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm cursor-pointer border transition-colors ${
+              className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3
+              py-1.5 text-sm transition-colors ${
                 view.includes(option)
                   ? "bg-brand-600 border-brand-600 text-white"
-                  : "bg-gray-100 border-gray-300 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : `border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200
+                    dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700`
               }`}
             >
               <input
@@ -214,14 +218,20 @@ export function PropertySpecsTab({
 
       <div className="col-span-2">
         <label className={labelClass}>{t("Fields.kitchen_appliances")}</label>
-        <div className="mt-1 flex flex-wrap gap-2" role="group" aria-label={t("Fields.kitchen_appliances")}>
+        <div
+          className="mt-1 flex flex-wrap gap-2"
+          role="group"
+          aria-label={t("Fields.kitchen_appliances")}
+        >
           {KITCHEN_APPLIANCES.map((appliance) => (
             <label
               key={appliance}
-              className={`inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full text-sm cursor-pointer border transition-colors ${
+              className={`inline-flex cursor-pointer items-center gap-1.5 rounded-full border px-3
+              py-1.5 text-sm transition-colors ${
                 kitchenAppliances.includes(appliance)
                   ? "bg-brand-600 border-brand-600 text-white"
-                  : "bg-gray-100 border-gray-300 text-gray-700 dark:bg-gray-800 dark:border-gray-600 dark:text-gray-300 hover:bg-gray-200 dark:hover:bg-gray-700"
+                  : `border-gray-300 bg-gray-100 text-gray-700 hover:bg-gray-200
+                    dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700`
               }`}
             >
               <input

@@ -137,13 +137,14 @@
         },
         "DeleteDialog": {
           "title": "Delete property?",
-          "description": "{title} will be removed. You can undo for 8 seconds."
+          "description": "{title} will be removed. You can undo for 8 seconds.",
+          "Buttons": {
+            "cancel": "Cancel",
+            "delete": "Delete",
+            "undo": "Undo"
+          }
         },
-        "Buttons": {
-          "cancel": "Cancel",
-          "delete": "Delete",
-          "undo": "Undo"
-        },
+
         "Toast": {
           "deleted": "Property deleted."
         },
@@ -275,6 +276,7 @@
           "bathrooms": "Bathrooms",
           "year_built": "Year built",
           "floor": "Floor",
+          "coords": "Map Coordinates",
           "coordsLat": "Latitude",
           "coordsLng": "Longitude",
           "listing_status": "Listing status",

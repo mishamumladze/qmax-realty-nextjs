@@ -137,7 +137,12 @@
         },
         "DeleteDialog": {
           "title": "Usunąć właściwość?",
-          "description": "{title} zostanie usunięte. Możesz cofnąć tę czynność w ciągu 8 sekund."
+          "description": "{title} zostanie usunięte. Możesz cofnąć tę czynność w ciągu 8 sekund.",
+          "Buttons": {
+            "cancel": "Anuluj",
+            "delete": "Usuń",
+            "undo": "Cofnij"
+          }
         },
         "Buttons": {
           "cancel": "Anuluj",
@@ -309,7 +314,8 @@
           "sewerage": "Kanalizacja",
           "elevator": "Winda",
           "ac": "Klimatyzacja",
-          "security": "Ochrona"
+          "security": "Ochrona",
+          "coords": "Współrzędne na mapie"
         },
         "Textareas": {
           "description": "Opis",
