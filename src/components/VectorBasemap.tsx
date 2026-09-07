@@ -15,10 +15,7 @@ interface VectorBasemapProps {
  * MapLibre GL Leaflet binding. The binding is loaded with a dynamic import
  * so maplibre-gl is never evaluated during SSR and lands in its own chunk.
  */
-export default function VectorBasemap({
-  styleUrl,
-  attribution,
-}: VectorBasemapProps): null {
+export default function VectorBasemap({ styleUrl, attribution }: VectorBasemapProps): null {
   const map = useMap();
   const layerRef = useRef<L.MaplibreGL | null>(null);
   const styleRef = useRef(styleUrl);

@@ -126,7 +126,7 @@ export default async function AboutPage() {
                 className="bg-brand-50 dark:bg-brand-900/40 mx-auto mb-3 flex h-12 w-12 items-center
                   justify-center rounded-xl"
               >
-                <Icon className="text-brand-600 dark:text-brand-400 h-5 w-5" aria-hidden="true"/>
+                <Icon className="text-brand-600 dark:text-brand-400 h-5 w-5" aria-hidden="true" />
               </div>
               <p className="text-2xl font-bold text-gray-800 md:text-3xl dark:text-white">
                 {stat.value}
@@ -160,7 +160,7 @@ export default async function AboutPage() {
                   className="bg-brand-50 dark:bg-brand-900/40 mx-auto mb-3 flex h-12 w-12
                     items-center justify-center rounded-xl"
                 >
-                  <Icon className="text-brand-600 dark:text-brand-400 h-5 w-5" aria-hidden="true"/>
+                  <Icon className="text-brand-600 dark:text-brand-400 h-5 w-5" aria-hidden="true" />
                 </div>
                 <h3 className="mb-2 text-xl font-semibold text-gray-800 md:text-2xl dark:text-white">
                   {t(`Services.${service.slug}.title`)}

@@ -5,7 +5,7 @@ import { useMounted } from "@/hooks/useMounted";
 
 const OfficeMapInner = dynamic(() => import("./OfficeMapInner"), {
   ssr: false,
-  loading: () => <OfficeMapSkeleton/>,
+  loading: () => <OfficeMapSkeleton />,
 });
 
 function OfficeMapSkeleton(): React.ReactElement {
@@ -24,6 +24,6 @@ interface OfficeMapProps {
 
 export default function OfficeMap({ title }: OfficeMapProps): React.ReactElement {
   const mounted = useMounted();
-  if (!mounted) return <OfficeMapSkeleton/>;
-  return <OfficeMapInner title={title}/>;
+  if (!mounted) return <OfficeMapSkeleton />;
+  return <OfficeMapInner title={title} />;
 }

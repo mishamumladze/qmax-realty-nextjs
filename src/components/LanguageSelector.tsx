@@ -79,7 +79,7 @@ export default function LanguageSelector() {
           stroke="currentColor"
           viewBox="0 0 24 24"
         >
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7"/>
+          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M19 9l-7 7-7-7" />
         </svg>
       </button>
 
@@ -110,7 +110,7 @@ export default function LanguageSelector() {
                   <span>{lang.label}</span>
                 </span>
                 {isActive && (
-                  <span className="bg-brand-600 dark:bg-brand-400 h-1.5 w-1.5 rounded-full"/>
+                  <span className="bg-brand-600 dark:bg-brand-400 h-1.5 w-1.5 rounded-full" />
                 )}
               </Link>
             );

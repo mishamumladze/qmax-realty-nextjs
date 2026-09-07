@@ -53,12 +53,12 @@ export default function OfflineIndicator() {
     >
       {isOnline ? (
         <>
-          <Wifi className="h-4 w-4" aria-hidden="true"/>
+          <Wifi className="h-4 w-4" aria-hidden="true" />
           <span>{t("back_online")}</span>
         </>
       ) : (
         <>
-          <WifiOff className="h-4 w-4" aria-hidden="true"/>
+          <WifiOff className="h-4 w-4" aria-hidden="true" />
           <span>{t("offline")}</span>
         </>
       )}

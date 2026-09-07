@@ -127,7 +127,7 @@ export default function PropertiesCarousel({
           <div className="relative mx-auto max-w-5xl" aria-busy="true" aria-live="polite">
             <div className="flex gap-4 md:gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
-                <CarouselCardSkeleton key={i}/>
+                <CarouselCardSkeleton key={i} />
               ))}
             </div>
           </div>
@@ -163,7 +163,7 @@ export default function PropertiesCarousel({
             justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
             transition-all duration-200 md:-translate-x-6"
         >
-          <ChevronLeft className="h-6 w-6" aria-hidden="true"/>
+          <ChevronLeft className="h-6 w-6" aria-hidden="true" />
         </button>
 
         <div
@@ -235,13 +235,13 @@ export default function PropertiesCarousel({
                         dark:text-gray-400"
                     >
                       <span className="flex items-center gap-1">
-                        <Bed className="h-4 w-4"/> {bedrooms}
+                        <Bed className="h-4 w-4" /> {bedrooms}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Bath className="h-4 w-4"/> {bathrooms}
+                        <Bath className="h-4 w-4" /> {bathrooms}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Square className="h-4 w-4"/> {sqmt} m²
+                        <Square className="h-4 w-4" /> {sqmt} m²
                       </span>
                     </div>
 
@@ -274,7 +274,7 @@ export default function PropertiesCarousel({
             justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
             transition-all duration-200 md:translate-x-6"
         >
-          <ChevronRight className="h-6 w-6" aria-hidden="true"/>
+          <ChevronRight className="h-6 w-6" aria-hidden="true" />
         </button>
 
         <div className="mt-6 flex justify-center gap-2">

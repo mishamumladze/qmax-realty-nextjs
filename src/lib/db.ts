@@ -215,9 +215,6 @@ export function initTables(): void {
     if (!columnNames.includes("floor")) {
       db.exec("ALTER TABLE properties ADD COLUMN floor TEXT");
     }
-    if (!columnNames.includes("parking")) {
-      db.exec("ALTER TABLE properties ADD COLUMN parking BOOLEAN DEFAULT 0");
-    }
     if (!columnNames.includes("meta_description")) {
       db.exec("ALTER TABLE properties ADD COLUMN meta_description TEXT");
     }
@@ -232,9 +229,6 @@ export function initTables(): void {
     }
     if (!columnNames.includes("floor_plan")) {
       db.exec("ALTER TABLE properties ADD COLUMN floor_plan TEXT");
-    }
-    if (!columnNames.includes("coordinates")) {
-      db.exec("ALTER TABLE properties ADD COLUMN coordinates TEXT");
     }
     if (!columnNames.includes("property_subtype")) {
       db.exec("ALTER TABLE properties ADD COLUMN property_subtype TEXT");
@@ -468,7 +462,13 @@ export function insertSubscriber(email: string): { success: boolean; alreadyExis
   }
 }
 
-const JSON_COLUMNS = new Set<string>(["inclusions", "gallery", "coords", "view", "kitchen_appliances"]);
+const JSON_COLUMNS = new Set<string>([
+  "inclusions",
+  "gallery",
+  "coords",
+  "view",
+  "kitchen_appliances",
+]);
 
 function toColumnValue(
   key: string,
@@ -567,11 +567,7 @@ const LOCALE_ALIASED_FIELDS = [
 ] as const;
 
 export function getAllPropertiesWithLocale(locale: string): Property[] {
-  if (
-    !locale ||
-    locale === "en" ||
-    !(TRANSLATABLE_LOCALES as readonly string[]).includes(locale)
-  ) {
+  if (!locale || locale === "en" || !(TRANSLATABLE_LOCALES as readonly string[]).includes(locale)) {
     return getAllProperties();
   }
 

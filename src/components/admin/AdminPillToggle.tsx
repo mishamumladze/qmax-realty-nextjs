@@ -25,7 +25,7 @@ export function AdminPillToggle({ checked, onChange, icon: Icon, children }: Adm
               dark:text-gray-300`
         }`}
     >
-      <input type="checkbox" checked={checked} onChange={onChange} className="sr-only"/>
+      <input type="checkbox" checked={checked} onChange={onChange} className="sr-only" />
       <Icon
         className={`h-4 w-4 shrink-0 transition-transform duration-200 ${
           checked ? "motion-safe:scale-110" : "opacity-70"

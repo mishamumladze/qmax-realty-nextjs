@@ -22,7 +22,12 @@ type AppLocale = (typeof ALL_LOCALES)[number];
 
 function normalizeSourceLocale(sourceLocale: string): AppLocale {
   if (sourceLocale.startsWith("en")) return "en";
-  if (sourceLocale === "de" || sourceLocale === "tr" || sourceLocale === "ru" || sourceLocale === "pl") {
+  if (
+    sourceLocale === "de" ||
+    sourceLocale === "tr" ||
+    sourceLocale === "ru" ||
+    sourceLocale === "pl"
+  ) {
     return sourceLocale;
   }
   return "en";

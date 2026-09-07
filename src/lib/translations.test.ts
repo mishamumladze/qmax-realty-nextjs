@@ -327,11 +327,9 @@ describe("translateToAllLocales", () => {
   });
 
   it('dynamic targets: source "ru" yields {en,de,tr,pl} with no ru key', async () => {
-    mockTranslateText.mockImplementation(
-      async (text: string, _source: string, target: string) => ({
-        text: `[${target}] ${text}`,
-      })
-    );
+    mockTranslateText.mockImplementation(async (text: string, _source: string, target: string) => ({
+      text: `[${target}] ${text}`,
+    }));
 
     const result = await translateToAllLocales("ru", {
       title: "Тест",

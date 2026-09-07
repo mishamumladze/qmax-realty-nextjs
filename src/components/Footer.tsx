@@ -45,7 +45,7 @@ export default async function Footer({}: FooterProps) {
           </div>
 
           {/* Contact Info */}
-          <ContactLinks variant="list" only={["email", "phone", "address"]}/>
+          <ContactLinks variant="list" only={["email", "phone", "address"]} />
           {/* Social Links */}
           <ContactLinks
             variant="icons-only"
@@ -56,7 +56,7 @@ export default async function Footer({}: FooterProps) {
 
         {/* Map */}
         <div className="map-container mt-8 mb-8">
-          <OfficeMap title={t("map_title")}/>
+          <OfficeMap title={t("map_title")} />
         </div>
 
         {/* Bottom Bar */}

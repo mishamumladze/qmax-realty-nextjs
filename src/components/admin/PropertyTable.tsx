@@ -110,9 +110,9 @@ function Checkbox({
         }`}
     >
       {indeterminate ? (
-        <Minus className="h-3 w-3" strokeWidth={3}/>
+        <Minus className="h-3 w-3" strokeWidth={3} />
       ) : checked ? (
-        <Check className="h-3 w-3" strokeWidth={3}/>
+        <Check className="h-3 w-3" strokeWidth={3} />
       ) : null}
     </button>
   );
@@ -151,9 +151,9 @@ function SortableHeader({
       {isActive && (
         <span className="flex flex-col leading-none">
           {direction === "asc" ? (
-            <ChevronUp className="text-brand-500 h-3 w-3"/>
+            <ChevronUp className="text-brand-500 h-3 w-3" />
           ) : (
-            <ChevronDown className="text-brand-500 h-3 w-3"/>
+            <ChevronDown className="text-brand-500 h-3 w-3" />
           )}
         </span>
       )}
@@ -257,25 +257,28 @@ export function PropertyTable({
   const isAllSelected = selectedIds.size === properties.length && properties.length > 0;
   const isIndeterminate = selectedIds.size > 0 && selectedIds.size < properties.length;
 
-  const handleDeactivate = useCallback(async (newStatus: "active" | "inactive") => {
-    const ids = sortedProperties.filter((p) => selectedIds.has(p.id)).map((p) => p.id);
-    if (ids.length === 0) return;
+  const handleDeactivate = useCallback(
+    async (newStatus: "active" | "inactive") => {
+      const ids = sortedProperties.filter((p) => selectedIds.has(p.id)).map((p) => p.id);
+      if (ids.length === 0) return;
 
-    try {
-      const res = await fetch("/api/admin/properties", {
-        method: "PATCH",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
-        },
-        body: JSON.stringify({ ids, status: newStatus }),
-      });
-      if (!res.ok) throw new Error("Failed to update status");
-      setSelectedIds(new Set());
-    } catch (err) {
-      console.error("Failed to update status:", err);
-    }
-  }, [sortedProperties, selectedIds]);
+      try {
+        const res = await fetch("/api/admin/properties", {
+          method: "PATCH",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${localStorage.getItem("admin_token")}`,
+          },
+          body: JSON.stringify({ ids, status: newStatus }),
+        });
+        if (!res.ok) throw new Error("Failed to update status");
+        setSelectedIds(new Set());
+      } catch (err) {
+        console.error("Failed to update status:", err);
+      }
+    },
+    [sortedProperties, selectedIds]
+  );
 
   const [bulkDeleting, setBulkDeleting] = useState(false);
 
@@ -283,7 +286,9 @@ export function PropertyTable({
     const ids = sortedProperties.filter((p) => selectedIds.has(p.id)).map((p) => p.id);
     if (ids.length === 0) return;
 
-    const confirmed = window.confirm(`Are you sure you want to delete ${ids.length} property${ids.length > 1 ? "ies" : "y"}? This cannot be undone.`);
+    const confirmed = window.confirm(
+      `Are you sure you want to delete ${ids.length} property${ids.length > 1 ? "ies" : "y"}? This cannot be undone.`
+    );
     if (!confirmed) return;
 
     setBulkDeleting(true);
@@ -297,7 +302,7 @@ export function PropertyTable({
         body: JSON.stringify({ ids }),
       });
       if (!res.ok) throw new Error("Failed to delete properties");
-      
+
       const data = await res.json();
       console.log(`Deleted ${data.deleted} properties`);
       setSelectedIds(new Set());
@@ -335,20 +340,12 @@ export function PropertyTable({
             <Button variant="secondary" size="sm" onClick={() => setSelectedIds(new Set())}>
               {t("Buttons.deselect_all")}
             </Button>
-            <Button
-              variant="secondary"
-              size="sm"
-              onClick={() => handleDeactivate("inactive")}
-            >
-              <Power className="mr-1.5 h-3.5 w-3.5"/>
+            <Button variant="secondary" size="sm" onClick={() => handleDeactivate("inactive")}>
+              <Power className="mr-1.5 h-3.5 w-3.5" />
               {t("Buttons.deactivate_selected")}
             </Button>
-            <Button
-              variant="primary"
-              size="sm"
-              onClick={() => handleDeactivate("active")}
-            >
-              <Power className="mr-1.5 h-3.5 w-3.5"/>
+            <Button variant="primary" size="sm" onClick={() => handleDeactivate("active")}>
+              <Power className="mr-1.5 h-3.5 w-3.5" />
               {t("Buttons.activate_selected")}
             </Button>
             <Button
@@ -357,7 +354,7 @@ export function PropertyTable({
               onClick={handleBulkDelete}
               disabled={bulkDeleting}
             >
-              <Trash2 className="mr-1.5 h-3.5 w-3.5"/>
+              <Trash2 className="mr-1.5 h-3.5 w-3.5" />
               {bulkDeleting ? t("Buttons.deleting") : t("Buttons.delete_selected")}
             </Button>
           </div>
@@ -513,10 +510,10 @@ export function PropertyTable({
                       {formatPrice(p)}
                     </td>
                     <td className="px-3 py-3">
-                      <StatusBadge status={status}/>
+                      <StatusBadge status={status} />
                     </td>
                     <td className="px-3 py-3">
-                      <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete}/>
+                      <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete} />
                     </td>
                   </tr>
                 );
@@ -554,7 +551,7 @@ export function PropertyTable({
                     {displayTitle(p, locale)}
                   </h3>
                 </div>
-                <StatusBadge status={status}/>
+                <StatusBadge status={status} />
               </div>
               <dl className="mt-3 space-y-1.5 text-sm">
                 <div className="flex justify-between gap-4">
@@ -575,7 +572,7 @@ export function PropertyTable({
                 </div>
               </dl>
               <div className="mt-4 border-t border-gray-200 pt-3 dark:border-gray-700">
-                <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete}/>
+                <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete} />
               </div>
             </div>
           );

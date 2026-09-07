@@ -83,7 +83,7 @@ export function PropertyActionsTab({
           id="danger-zone-heading"
           className="flex items-center gap-2 text-sm font-semibold text-red-600 dark:text-red-400"
         >
-          <AlertCircle className="h-4 w-4" aria-hidden="true"/>
+          <AlertCircle className="h-4 w-4" aria-hidden="true" />
           {t("Sections.danger_zone")}
         </h3>
         <div
@@ -99,7 +99,7 @@ export function PropertyActionsTab({
             onClick={() => setShowDeleteConfirm(true)}
             disabled={deleting}
           >
-            <Trash2 className="mr-2 h-4 w-4" aria-hidden="true"/>
+            <Trash2 className="mr-2 h-4 w-4" aria-hidden="true" />
             {deleting ? t("Buttons.deleting") : t("Buttons.delete_property")}
           </Button>
         </div>
@@ -140,7 +140,7 @@ export function PropertyActionsTab({
           id="status-actions-heading"
           className="flex items-center gap-2 text-sm font-semibold text-gray-900 dark:text-gray-100"
         >
-          <Power className="h-4 w-4" aria-hidden="true"/>
+          <Power className="h-4 w-4" aria-hidden="true" />
           {t("Sections.status_actions")}
         </h3>
         <div className="space-y-3 rounded-lg border border-gray-200 p-4 dark:border-gray-700">
@@ -151,7 +151,7 @@ export function PropertyActionsTab({
               onClick={handleActivate}
               disabled={activating || deactivating}
             >
-              <Power className="mr-2 h-4 w-4" aria-hidden="true"/>
+              <Power className="mr-2 h-4 w-4" aria-hidden="true" />
               {activating ? t("Buttons.activating") : t("Buttons.activate")}
             </Button>
             <Button
@@ -160,7 +160,7 @@ export function PropertyActionsTab({
               onClick={handleDeactivate}
               disabled={activating || deactivating}
             >
-              <Power className="mr-2 h-4 w-4" aria-hidden="true"/>
+              <Power className="mr-2 h-4 w-4" aria-hidden="true" />
               {deactivating ? t("Buttons.deactivating") : t("Buttons.deactivate")}
             </Button>
           </div>
@@ -183,9 +183,9 @@ export function PropertyActionsTab({
           aria-live="polite"
         >
           {lastAction.type === "success" ? (
-            <CheckCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true"/>
+            <CheckCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
           ) : (
-            <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true"/>
+            <AlertCircle className="h-4 w-4 flex-shrink-0" aria-hidden="true" />
           )}
           <span>{lastAction.message}</span>
         </div>

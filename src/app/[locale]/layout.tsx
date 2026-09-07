@@ -40,7 +40,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <SpeedInsights/>
+      <SpeedInsights />
       <body className="flex min-h-screen flex-col dark:bg-gray-900 dark:text-gray-100">
         <NextIntlClientProvider messages={messages}>
           <a
@@ -50,16 +50,16 @@ export default async function RootLayout({
           >
             {tLayout("skip_to_content")}
           </a>
-          <Navbar/>
-          <ThemeToggle/>
-          <OfflineIndicator/>
+          <Navbar />
+          <ThemeToggle />
+          <OfflineIndicator />
           <main
             id="main-content"
             className="transition-fade min-h-screen flex-grow pb-20 md:pt-16 md:pb-0"
           >
             {children}
           </main>
-          <Footer/>
+          <Footer />
         </NextIntlClientProvider>
       </body>
     </html>

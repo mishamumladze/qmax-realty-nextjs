@@ -24,5 +24,5 @@ export default async function AdminPage() {
     properties = getAllProperties();
   }
 
-  return <AdminDashboard initialProperties={properties}/>;
+  return <AdminDashboard initialProperties={properties} />;
 }

@@ -168,8 +168,6 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
     if (typeof old.floor === "number" || (typeof old.floor === "string" && old.floor !== "")) {
       payload.floor = old.floor;
     }
-    const rawParking = (old as { parking?: unknown }).parking;
-    payload.parking = rawParking === true || rawParking === 1;
     if (isStrArray(old.inclusions)) payload.inclusions = old.inclusions;
     if (isStrArray(old.gallery)) payload.gallery = old.gallery;
     const coords = old.coords;
@@ -230,19 +228,19 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
                 aria-current={active ? "true" : undefined}
                 onClick={() => setActiveTab(id)}
               >
-                <Icon className="h-4 w-4 shrink-0" aria-hidden="true"/>
+                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>{label}</span>
               </Button>
             );
           })}
-          <div className="hidden flex-1 md:block"/>
+          <div className="hidden flex-1 md:block" />
           <Button
             variant="destructive"
             size="sm"
             className="min-h-11 w-full"
             onClick={handleLogout}
           >
-            <LogOut className="h-4 w-4 shrink-0" aria-hidden="true"/>
+            <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
             <span>{t("logout")}</span>
           </Button>
         </div>
@@ -263,7 +261,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
                   setModalOpen(true);
                 }}
               >
-                <Plus className="h-4 w-4 shrink-0" aria-hidden="true"/>
+                <Plus className="h-4 w-4 shrink-0" aria-hidden="true" />
                 <span>{t("add_property")}</span>
               </Button>
             </div>
@@ -301,7 +299,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
               {t("Headings.messages")}
             </h1>
-            <MessagesList/>
+            <MessagesList />
           </>
         )}
 
@@ -310,7 +308,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
               {t("Headings.newsletter")}
             </h1>
-            <NewsletterSubscribersList/>
+            <NewsletterSubscribersList />
           </>
         )}
       </main>

@@ -3,8 +3,12 @@ import Image from "next/image";
 import Link from "next/link";
 import { Metadata } from "next";
 import { getLocale, getTranslations } from "next-intl/server";
+import type { LucideIcon } from "lucide-react";
 import {
+  Accessibility,
+  AirVent,
   ArrowLeft,
+  ArrowUpDown,
   MessageCircle,
   Bed,
   Bath,
@@ -13,8 +17,31 @@ import {
   Home,
   Calendar,
   Building,
+  Building2,
+  Beef,
+  BellRing,
+  Briefcase,
   Car,
   ChevronRight,
+  Droplets,
+  Dumbbell,
+  ExternalLink,
+  Fence,
+  Flame,
+  FlameKindling,
+  Heater,
+  Package,
+  PawPrint,
+  PlugZap,
+  ShowerHead,
+  ShieldCheck,
+  Sofa,
+  Sparkles,
+  Tv,
+  Video,
+  WavesLadder,
+  Wifi,
+  Zap,
 } from "lucide-react";
 import { getActiveProperties, getPropertyById } from "@/lib/db";
 import { CONTACT_INFO } from "@/config/contact";
@@ -36,13 +63,36 @@ export async function generateMetadata({
   const property = getPropertyById(Number(id), locale);
   if (!property) return { title: t("not_found") };
 
+  // Enum labels live under Pages.PropertyDetails.Options; resolve with
+  // English fallback so metadata stays readable in every locale.
+  const tDetails = (await getTranslations("Pages.PropertyDetails")) as unknown as (
+    key: string
+  ) => string;
+  const tDetailsEn = (await getTranslations({
+    locale: "en",
+    namespace: "Pages.PropertyDetails",
+  })) as unknown as (key: string) => string;
+  const saleTypeKey = `Options.sale_type.${property.sale_type}`;
+  let saleTypeLabel = property.sale_type ?? "";
+  for (const translate of [tDetails, tDetailsEn]) {
+    try {
+      const v = translate(saleTypeKey);
+      if (typeof v === "string" && v !== saleTypeKey && v.trim() !== "") {
+        saleTypeLabel = v;
+        break;
+      }
+    } catch {
+      // Try the next locale.
+    }
+  }
+
   const metaDesc =
     property.meta_description ||
     [
       property.title,
       property.subtitle,
       property.location || property.city || t("premium"),
-      property.sale_type ? t("for_sale_type", { sale_type: property.sale_type }) : "",
+      property.sale_type ? t("for_sale_type", { sale_type: saleTypeLabel }) : "",
       property.sqmt ? t("sqmt", { sqmt: property.sqmt }) : "",
       property.bedrooms ? t("bedrooms_count", { bedrooms: property.bedrooms }) : "",
     ]
@@ -58,12 +108,65 @@ export async function generateMetadata({
 export default async function PropertyDetailsPage({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const t = await getTranslations("Pages.PropertyDetails");
+  const tEn = await getTranslations({ locale: "en", namespace: "Pages.PropertyDetails" });
+  const tAdmin = await getTranslations("Components.Admin.PropertyFormModal");
   const locale = await getLocale();
   const property = getPropertyById(Number(id), locale);
 
   if (!property) {
     notFound();
   }
+
+  const tLoose = t as unknown as (key: string) => string;
+  const tEnLoose = tEn as unknown as (key: string) => string;
+  const tAdminLoose = tAdmin as unknown as (key: string) => string;
+
+  // pick: current-locale label with English fallback (existing t() calls stay untouched).
+  const pick = (key: string): string => {
+    for (const translate of [tLoose, tEnLoose]) {
+      try {
+        const v = translate(key);
+        if (typeof v === "string" && v !== key && v.trim() !== "") return v;
+      } catch {
+        // Try the next locale.
+      }
+    }
+    return key;
+  };
+
+  // opt: resolve Options.<path>.<raw> with English fallback, raw string as last resort.
+  const opt = (path: string, raw: unknown): string => {
+    if (raw === null || raw === undefined || raw === "") return "";
+    const key = `Options.${path}.${String(raw)}`;
+    const label = pick(key);
+    return label !== key ? label : String(raw);
+  };
+
+  const AMENITY_ITEMS: { key: string; Icon: LucideIcon }[] = [
+    { key: "swimming_pool", Icon: WavesLadder },
+    { key: "sauna_jacuzzi", Icon: FlameKindling },
+    { key: "gym", Icon: Dumbbell },
+    { key: "private_yard", Icon: Fence },
+    { key: "bbq_area", Icon: Beef },
+    { key: "concierge", Icon: BellRing },
+    { key: "fireplace", Icon: Flame },
+    { key: "storage", Icon: Package },
+    { key: "intercom", Icon: Video },
+    { key: "pet_friendly", Icon: PawPrint },
+    { key: "wheelchair_accessible", Icon: Accessibility },
+    { key: "natural_gas", Icon: Flame },
+    { key: "internet", Icon: Wifi },
+    { key: "water_supply", Icon: Droplets },
+    { key: "electricity", Icon: PlugZap },
+    { key: "tv", Icon: Tv },
+    { key: "sewerage", Icon: ShowerHead },
+    { key: "elevator", Icon: ArrowUpDown },
+    { key: "ac", Icon: AirVent },
+    { key: "security", Icon: ShieldCheck },
+  ];
+  const propertyRecord = property as unknown as Record<string, unknown>;
+  const isTruthyFlag = (v: unknown): boolean => v === true || v === 1 || v === "1" || v === "true";
+  const activeAmenities = AMENITY_ITEMS.filter(({ key }) => isTruthyFlag(propertyRecord[key]));
 
   const imageSrc = property.card_image || "/img/placeholder_1.webp";
   const whatsappUrl =
@@ -105,7 +208,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
             className="inline-flex items-center gap-2 text-sm font-medium text-gray-600
               transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           >
-            <ArrowLeft className="h-4 w-4"/>
+            <ArrowLeft className="h-4 w-4" />
             {t("Details.back_to_listings")}
           </Link>
         </div>
@@ -113,7 +216,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
 
       {/* Hero Section */}
       <section className="relative h-screen max-h-[600px] w-full overflow-hidden bg-gray-900">
-        <Image src={imageSrc} alt={property.title} fill className="object-cover" priority/>
+        <Image src={imageSrc} alt={property.title} fill className="object-cover" priority />
         {/* Gradient Overlay */}
         <div
           className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"
@@ -123,16 +226,16 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
         <div className="absolute right-0 bottom-0 left-0 px-4 pb-8 sm:pb-12">
           <div className="mx-auto max-w-6xl">
             <div className="mb-2 flex items-center gap-2 text-sm font-medium text-gray-300">
-              <span>{property.type || t("Fallback.property")}</span>
+              <span>{property.type ? opt("type", property.type) : t("Fallback.property")}</span>
               {property.region && (
                 <>
-                  <ChevronRight className="h-4 w-4"/>
+                  <ChevronRight className="h-4 w-4" />
                   <span>{property.region}</span>
                 </>
               )}
               {property.city && (
                 <>
-                  <ChevronRight className="h-4 w-4"/>
+                  <ChevronRight className="h-4 w-4" />
                   <span>{property.city}</span>
                 </>
               )}
@@ -144,7 +247,24 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
               <p className="mb-4 text-base text-gray-200 md:text-lg">{property.subtitle}</p>
             )}
             {priceFormatted && (
-              <p className="text-2xl font-bold text-white md:text-3xl">{priceFormatted}</p>
+              <div className="flex flex-wrap items-center gap-3">
+                <p className="text-2xl font-bold text-white md:text-3xl">
+                  {priceFormatted}
+                  {property.price_type === "per_sqm" && (
+                    <span className="ml-2 text-base font-medium text-gray-200">
+                      / {pick("Details.per_sqm")}
+                    </span>
+                  )}
+                </p>
+                {property.price_type === "negotiable" && (
+                  <span
+                    className="inline-flex rounded-full bg-white/20 px-4 py-2 text-sm font-semibold
+                      text-white backdrop-blur"
+                  >
+                    {pick("Details.negotiable")}
+                  </span>
+                )}
+              </div>
             )}
           </div>
         </div>
@@ -163,20 +283,20 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     className="bg-brand-100 text-brand-900 dark:bg-brand-900/30 dark:text-brand-300
                       inline-flex rounded-full px-4 py-2 text-sm font-semibold"
                   >
-                    {property.sale_type}
+                    {opt("sale_type", property.sale_type)}
                   </span>
                 </div>
               )}
 
               {/* Gallery */}
               {gallery.length > 0 && (
-                <PropertyGallery images={gallery} propertyTitle={property.title}/>
+                <PropertyGallery images={gallery} propertyTitle={property.title} />
               )}
 
               {/* Location */}
               {(property.neighborhood || property.city) && (
                 <div className="flex items-start gap-3">
-                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-600"/>
+                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-600" />
                   <div>
                     <h2
                       className="mb-2 text-xl font-semibold text-gray-600 md:text-2xl
@@ -203,7 +323,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 <h3 className="sr-only">{t("Details.key_features")}</h3>
                 {property.rooms != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                    <Home className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400"/>
+                    <Home className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400" />
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.rooms}
                     </p>
@@ -212,7 +332,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 )}
                 {property.bedrooms != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                    <Bed className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400"/>
+                    <Bed className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400" />
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.bedrooms}
                     </p>
@@ -223,7 +343,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 )}
                 {property.bathrooms != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                    <Bath className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400"/>
+                    <Bath className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400" />
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.bathrooms}
                     </p>
@@ -234,7 +354,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 )}
                 {property.sqmt != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                    <Maximize className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400"/>
+                    <Maximize className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400" />
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.sqmt.toLocaleString()}
                     </p>
@@ -258,6 +378,29 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 </div>
               )}
 
+              {/* Amenities & Features */}
+              {activeAmenities.length > 0 && (
+                <div>
+                  <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl dark:text-white">
+                    {pick("Details.amenities")}
+                  </h2>
+                  <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
+                    {activeAmenities.map(({ key, Icon }) => (
+                      <div
+                        key={key}
+                        className="flex items-center gap-3 rounded-xl border border-gray-200 p-4
+                          dark:border-gray-700"
+                      >
+                        <Icon className="h-5 w-5 shrink-0 text-gray-600 dark:text-gray-400" />
+                        <span className="text-sm font-medium text-gray-900 dark:text-white">
+                          {tAdminLoose(`Fields.${key}`)}
+                        </span>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              )}
+
               {/* Additional Details */}
               <div>
                 <h2
@@ -268,7 +411,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {property.year_built && (
                     <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                      <Calendar className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400"/>
+                      <Calendar className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
                       <p className="text-xs text-gray-600 dark:text-gray-400">
                         {t("Facts.year_built")}
                       </p>
@@ -279,21 +422,117 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                   )}
                   {property.floor != null && (
                     <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                      <Building className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400"/>
+                      <Building className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
                       <p className="text-xs text-gray-600 dark:text-gray-400">{t("Facts.floor")}</p>
                       <p className="font-semibold text-gray-900 dark:text-white">
                         {property.floor}
                       </p>
                     </div>
                   )}
-                  {property.parking != null && (
+                  {property.energy_class && (
                     <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                      <Car className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400"/>
+                      <Zap className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
                       <p className="text-xs text-gray-600 dark:text-gray-400">
-                        {t("Facts.parking")}
+                        {pick("Facts.energy_class")}
                       </p>
                       <p className="font-semibold text-gray-900 dark:text-white">
-                        {property.parking ? t("Facts.available") : t("Facts.none")}
+                        <span
+                          className="inline-flex items-center rounded-md bg-green-100 px-2 py-0.5
+                            text-sm font-bold text-green-800 dark:bg-green-900/40
+                            dark:text-green-300"
+                        >
+                          {property.energy_class === "a_plus"
+                            ? "A+"
+                            : String(property.energy_class).toUpperCase()}
+                        </span>
+                      </p>
+                    </div>
+                  )}
+                  {property.renovation_year != null && (
+                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                      <Calendar className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {pick("Facts.renovation_year")}
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {property.renovation_year}
+                      </p>
+                    </div>
+                  )}
+                  {property.heating_type && (
+                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                      <Heater className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {pick("Facts.heating_type")}
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {opt("heating_type", property.heating_type)}
+                      </p>
+                    </div>
+                  )}
+                  {property.hot_water_type && (
+                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                      <Droplets className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {pick("Facts.hot_water_type")}
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {opt("hot_water_type", property.hot_water_type)}
+                      </p>
+                    </div>
+                  )}
+                  {property.parking_type && (
+                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                      <Car className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {pick("Facts.parking_type")}
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {opt("parking_type", property.parking_type)}
+                      </p>
+                    </div>
+                  )}
+                  {property.furnishing && (
+                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                      <Sofa className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {pick("Facts.furnishing")}
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {opt("furnishing", property.furnishing)}
+                      </p>
+                    </div>
+                  )}
+                  {property.condition && (
+                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                      <Sparkles className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {pick("Facts.condition")}
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {opt("condition", property.condition)}
+                      </p>
+                    </div>
+                  )}
+                  {property.building_status && (
+                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                      <Building2 className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {pick("Facts.building_status")}
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {opt("building_status", property.building_status)}
+                      </p>
+                    </div>
+                  )}
+                  {property.project_type && (
+                    <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
+                      <Briefcase className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <p className="text-xs text-gray-600 dark:text-gray-400">
+                        {pick("Facts.project_type")}
+                      </p>
+                      <p className="font-semibold text-gray-900 dark:text-white">
+                        {opt("project_type", property.project_type)}
                       </p>
                     </div>
                   )}
@@ -301,22 +540,38 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
               </div>
 
               {/* Floor Plan */}
-              {property.floor_plan && (
+              {(property.floor_plan || property.floor_plan_url) && (
                 <div>
                   <h2 className="mb-4 text-2xl font-bold text-gray-900 md:text-3xl dark:text-white">
                     {t("Details.floor_plan")}
                   </h2>
-                  <div
-                    className="relative aspect-square w-full max-w-lg overflow-hidden rounded-2xl
-                      border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800"
-                  >
-                    <Image
-                      src={property.floor_plan}
-                      alt={t("Alts.floor_plan", { title: property.title })}
-                      fill
-                      className="object-contain p-4"
-                    />
-                  </div>
+                  {property.floor_plan && (
+                    <div
+                      className="relative aspect-square w-full max-w-lg overflow-hidden rounded-2xl
+                        border border-gray-200 bg-gray-50 dark:border-gray-700 dark:bg-gray-800"
+                    >
+                      <Image
+                        src={property.floor_plan}
+                        alt={t("Alts.floor_plan", { title: property.title })}
+                        fill
+                        className="object-contain p-4"
+                      />
+                    </div>
+                  )}
+                  {property.floor_plan_url && (
+                    <a
+                      href={property.floor_plan_url}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="mt-4 inline-flex items-center gap-2 rounded-xl border-2
+                        border-gray-200 px-4 py-3 font-semibold text-gray-900 transition-all
+                        hover:bg-gray-50 active:scale-95 dark:border-gray-700 dark:text-white
+                        dark:hover:bg-gray-700"
+                    >
+                      <ExternalLink className="h-5 w-5" />
+                      {pick("Details.floor_plan_link")}
+                    </a>
+                  )}
                 </div>
               )}
 
@@ -329,7 +584,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                   <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {inclusions.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-3">
-                        <div className="bg-brand-500 mt-1 h-2 w-2 shrink-0 rounded-full"/>
+                        <div className="bg-brand-500 mt-1 h-2 w-2 shrink-0 rounded-full" />
                         <span className="text-gray-700 dark:text-gray-300">{item}</span>
                       </li>
                     ))}
@@ -358,7 +613,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     px-4 py-3 font-semibold text-white transition-all hover:bg-green-700
                     hover:shadow-lg active:scale-95"
                 >
-                  <MessageCircle className="h-5 w-5"/>
+                  <MessageCircle className="h-5 w-5" />
                   {t("Sidebar.whatsapp")}
                 </a>
                 <button

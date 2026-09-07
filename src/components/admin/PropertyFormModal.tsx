@@ -286,102 +286,105 @@ export function PropertyFormModal({
       return next;
     });
   }, []);
-  const loadFromProperty = useCallback((prop: Property) => {
-    const images = stringsToImages(prop.gallery, prop.card_image, prop.floor_plan);
-    const extra = prop as unknown as Record<string, unknown>;
-    const localizedText = (key: TranslatableKey, base: unknown): string => {
-      if (locale === "en") return (base as string | undefined) ?? "";
-      const variant = extra[`${key}_${locale}`] as string | undefined;
-      return variant ?? (base as string | undefined) ?? "";
-    };
-    const localized: Record<TranslatableKey, string> = {
-      title: localizedText("title", prop.title),
-      neighborhood: localizedText("neighborhood", prop.neighborhood),
-      city: localizedText("city", prop.city),
-      country: localizedText("country", prop.country),
-      meta_description: localizedText("meta_description", prop.meta_description),
-      description: localizedText("description", prop.description),
-      sale_type: localizedText("sale_type", prop.sale_type),
-    };
-    snapshotRef.current = { ...localized };
-    const nextState: FormState = {
-      fields: {
-        title: localized.title,
-        type: prop.type ?? "",
-        property_subtype: prop.property_subtype ?? "",
-        sale_type: localized.sale_type,
-        currency: prop.currency ?? "EUR",
-        country: localized.country,
-        city: localized.city,
-        neighborhood: localized.neighborhood,
-        street_address: prop.street_address ?? "",
-        listing_status: prop.listing_status ?? "",
-        price: prop.price?.toString() ?? "",
-        price_type: (extra.price_type as string | undefined) ?? "",
-        cadastral_code: (extra.cadastral_code as string | undefined) ?? "",
-        sqmt: prop.sqmt?.toString() ?? "",
-        lot_sqmt: prop.lot_sqmt?.toString() ?? "",
-        ceiling_height: prop.ceiling_height?.toString() ?? "",
-        bedrooms: prop.bedrooms?.toString() ?? "",
-        bathrooms: prop.bathrooms?.toString() ?? "",
-        floor: prop.floor?.toString() ?? "",
-        total_floors: prop.total_floors?.toString() ?? "",
-        year_built: prop.year_built?.toString() ?? "",
-        renovation_year: (extra.renovation_year as number | undefined)?.toString() ?? "",
-        energy_class: (extra.energy_class as string | undefined) ?? "",
-        building_status: prop.building_status ?? "",
-        condition: prop.condition ?? "",
-        project_type: prop.project_type ?? "",
-        furnishing: prop.furnishing ?? "",
-        balcony_sqmt: prop.balcony_sqmt?.toString() ?? "",
-        heating_type: prop.heating_type ?? "",
-        hot_water_type: prop.hot_water_type ?? "",
-        parking_type: prop.parking_type ?? "",
-        video_url: prop.video_url ?? "",
-        virtual_tour_url: prop.virtual_tour_url ?? "",
-        floor_plan_url: (extra.floor_plan_url as string | undefined) ?? "",
-        meta_title: (extra.meta_title as string | undefined) ?? "",
-        meta_description: localized.meta_description,
-        description: localized.description,
-        slug: "",
-      },
-      booleans: {
-        is_featured: prop.is_featured ?? false,
-        balcony: prop.balcony ?? false,
-        natural_gas: prop.natural_gas ?? false,
-        internet: prop.internet ?? false,
-        water_supply: prop.water_supply ?? false,
-        electricity: prop.electricity ?? false,
-        tv: prop.tv ?? false,
-        sewerage: prop.sewerage ?? false,
-        elevator: prop.elevator ?? false,
-        ac: prop.ac ?? false,
-        security: prop.security ?? false,
-        swimming_pool: prop.swimming_pool ?? false,
-        sauna_jacuzzi: prop.sauna_jacuzzi ?? false,
-        gym: prop.gym ?? false,
-        private_yard: prop.private_yard ?? false,
-        bbq_area: prop.bbq_area ?? false,
-        concierge: prop.concierge ?? false,
-        fireplace: prop.fireplace ?? false,
-        storage: prop.storage ?? false,
-        intercom: prop.intercom ?? false,
-        pet_friendly: prop.pet_friendly ?? false,
-        wheelchair_accessible: prop.wheelchair_accessible ?? false,
-      },
-      view: prop.view ?? [],
-      kitchenAppliances: prop.kitchen_appliances ?? [],
-      images,
-      lat: prop.coords ? prop.coords[0] : null,
-      lng: prop.coords ? prop.coords[1] : null,
-    };
-    // Batch state updates
-    setFormState(nextState);
-    setErrors({});
-    setFormError(null);
-    setSubmitting(false);
-    setActiveTab(0);
-  }, [locale]);
+  const loadFromProperty = useCallback(
+    (prop: Property) => {
+      const images = stringsToImages(prop.gallery, prop.card_image, prop.floor_plan);
+      const extra = prop as unknown as Record<string, unknown>;
+      const localizedText = (key: TranslatableKey, base: unknown): string => {
+        if (locale === "en") return (base as string | undefined) ?? "";
+        const variant = extra[`${key}_${locale}`] as string | undefined;
+        return variant ?? (base as string | undefined) ?? "";
+      };
+      const localized: Record<TranslatableKey, string> = {
+        title: localizedText("title", prop.title),
+        neighborhood: localizedText("neighborhood", prop.neighborhood),
+        city: localizedText("city", prop.city),
+        country: localizedText("country", prop.country),
+        meta_description: localizedText("meta_description", prop.meta_description),
+        description: localizedText("description", prop.description),
+        sale_type: localizedText("sale_type", prop.sale_type),
+      };
+      snapshotRef.current = { ...localized };
+      const nextState: FormState = {
+        fields: {
+          title: localized.title,
+          type: prop.type ?? "",
+          property_subtype: prop.property_subtype ?? "",
+          sale_type: localized.sale_type,
+          currency: prop.currency ?? "EUR",
+          country: localized.country,
+          city: localized.city,
+          neighborhood: localized.neighborhood,
+          street_address: prop.street_address ?? "",
+          listing_status: prop.listing_status ?? "",
+          price: prop.price?.toString() ?? "",
+          price_type: (extra.price_type as string | undefined) ?? "",
+          cadastral_code: (extra.cadastral_code as string | undefined) ?? "",
+          sqmt: prop.sqmt?.toString() ?? "",
+          lot_sqmt: prop.lot_sqmt?.toString() ?? "",
+          ceiling_height: prop.ceiling_height?.toString() ?? "",
+          bedrooms: prop.bedrooms?.toString() ?? "",
+          bathrooms: prop.bathrooms?.toString() ?? "",
+          floor: prop.floor?.toString() ?? "",
+          total_floors: prop.total_floors?.toString() ?? "",
+          year_built: prop.year_built?.toString() ?? "",
+          renovation_year: (extra.renovation_year as number | undefined)?.toString() ?? "",
+          energy_class: (extra.energy_class as string | undefined) ?? "",
+          building_status: prop.building_status ?? "",
+          condition: prop.condition ?? "",
+          project_type: prop.project_type ?? "",
+          furnishing: prop.furnishing ?? "",
+          balcony_sqmt: prop.balcony_sqmt?.toString() ?? "",
+          heating_type: prop.heating_type ?? "",
+          hot_water_type: prop.hot_water_type ?? "",
+          parking_type: prop.parking_type ?? "",
+          video_url: prop.video_url ?? "",
+          virtual_tour_url: prop.virtual_tour_url ?? "",
+          floor_plan_url: (extra.floor_plan_url as string | undefined) ?? "",
+          meta_title: (extra.meta_title as string | undefined) ?? "",
+          meta_description: localized.meta_description,
+          description: localized.description,
+          slug: "",
+        },
+        booleans: {
+          is_featured: prop.is_featured ?? false,
+          balcony: prop.balcony ?? false,
+          natural_gas: prop.natural_gas ?? false,
+          internet: prop.internet ?? false,
+          water_supply: prop.water_supply ?? false,
+          electricity: prop.electricity ?? false,
+          tv: prop.tv ?? false,
+          sewerage: prop.sewerage ?? false,
+          elevator: prop.elevator ?? false,
+          ac: prop.ac ?? false,
+          security: prop.security ?? false,
+          swimming_pool: prop.swimming_pool ?? false,
+          sauna_jacuzzi: prop.sauna_jacuzzi ?? false,
+          gym: prop.gym ?? false,
+          private_yard: prop.private_yard ?? false,
+          bbq_area: prop.bbq_area ?? false,
+          concierge: prop.concierge ?? false,
+          fireplace: prop.fireplace ?? false,
+          storage: prop.storage ?? false,
+          intercom: prop.intercom ?? false,
+          pet_friendly: prop.pet_friendly ?? false,
+          wheelchair_accessible: prop.wheelchair_accessible ?? false,
+        },
+        view: prop.view ?? [],
+        kitchenAppliances: prop.kitchen_appliances ?? [],
+        images,
+        lat: prop.coords ? prop.coords[0] : null,
+        lng: prop.coords ? prop.coords[1] : null,
+      };
+      // Batch state updates
+      setFormState(nextState);
+      setErrors({});
+      setFormError(null);
+      setSubmitting(false);
+      setActiveTab(0);
+    },
+    [locale]
+  );
 
   // Separate effect to load data when modal opens
   // This follows React patterns for initialization
@@ -685,7 +688,7 @@ export function PropertyFormModal({
             aria-label={t("Aria.close_dialog")}
             className="min-h-11 min-w-11"
           >
-            <X className="h-5 w-5" aria-hidden="true"/>
+            <X className="h-5 w-5" aria-hidden="true" />
           </Button>
         </div>
         <div

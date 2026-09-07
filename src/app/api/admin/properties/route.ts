@@ -181,21 +181,46 @@ function parsePropertyPayload(record: Record<string, unknown>): ParseResult {
   }
 
   if (record.furnishing !== undefined) {
-    const allowedFurnishing = ["unfurnished", "semi_furnished", "furnished", "kitchen_only"] as const;
+    const allowedFurnishing = [
+      "unfurnished",
+      "semi_furnished",
+      "furnished",
+      "kitchen_only",
+    ] as const;
     if (!allowedFurnishing.includes(record.furnishing as (typeof allowedFurnishing)[number])) {
       return { error: "Invalid furnishing value" };
     }
   }
 
   if (record.listing_status !== undefined) {
-    const allowedListingStatus = ["draft", "published", "under_offer", "sold", "archived", "reserved", "expired", "pending"] as const;
-    if (!allowedListingStatus.includes(record.listing_status as (typeof allowedListingStatus)[number])) {
+    const allowedListingStatus = [
+      "draft",
+      "published",
+      "under_offer",
+      "sold",
+      "archived",
+      "reserved",
+      "expired",
+      "pending",
+    ] as const;
+    if (
+      !allowedListingStatus.includes(record.listing_status as (typeof allowedListingStatus)[number])
+    ) {
       return { error: "Invalid listing_status value" };
     }
   }
 
   if (record.parking_type !== undefined) {
-    const allowedParkingType = ["none", "garage", "carport", "street", "underground", "driveway", "ev_charging", "covered"] as const;
+    const allowedParkingType = [
+      "none",
+      "garage",
+      "carport",
+      "street",
+      "underground",
+      "driveway",
+      "ev_charging",
+      "covered",
+    ] as const;
     if (!allowedParkingType.includes(record.parking_type as (typeof allowedParkingType)[number])) {
       return { error: "Invalid parking_type value" };
     }
@@ -387,10 +412,7 @@ function upsertTranslationsBestEffort(
   }
 }
 
-async function clearTranslationFieldsBestEffort(
-  propertyId: number,
-  keys: string[]
-): Promise<void> {
+async function clearTranslationFieldsBestEffort(propertyId: number, keys: string[]): Promise<void> {
   if (keys.length === 0) return;
   try {
     clearPropertyTranslationFields(propertyId, keys as (keyof TranslationFields)[]);
@@ -673,7 +695,7 @@ export async function PATCH(request: Request) {
     const placeholders = ids.map(() => "?").join(",");
     const stmt = db.prepare(`UPDATE properties SET status = ? WHERE id IN (${placeholders})`);
     const info = stmt.run(status, ...ids);
-    
+
     return NextResponse.json({ updated: info.changes });
   } catch {
     return NextResponse.json({ error: "Invalid request" }, { status: 400 });

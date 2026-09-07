@@ -20,7 +20,6 @@ export interface Property {
   location_tr?: string;
   location_ru?: string;
   location_pl?: string;
-  parking?: boolean;
   inclusions?: string[];
   inclusions_de?: string[];
   inclusions_tr?: string[];
