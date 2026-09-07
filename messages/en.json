@@ -267,7 +267,8 @@
           "specs": "Specs",
           "amenities": "Amenities",
           "media": "Media",
-          "actions": "Actions"
+          "actions": "Actions",
+          "seo": "SEO & Metadata"
         },
         "Titles": {
           "edit": "Edit property",
@@ -326,7 +327,23 @@
           "sewerage": "Sewerage",
           "elevator": "Elevator",
           "ac": "Air conditioning",
-          "security": "Security"
+          "security": "Security",
+          "price_type": "Price type",
+          "cadastral_code": "Cadastral Code / ID",
+          "energy_class": "Energy Class / Rating",
+          "renovation_year": "Renovation Year",
+          "floor_plan_url": "Floor Plan (URL)",
+          "swimming_pool": "Swimming Pool",
+          "sauna_jacuzzi": "Sauna / Jacuzzi",
+          "gym": "Gym",
+          "private_yard": "Private Yard / Garden",
+          "bbq_area": "BBQ Area",
+          "concierge": "Concierge / Security Guard",
+          "fireplace": "Fireplace",
+          "storage": "Storage Room / Basement",
+          "intercom": "Intercom / Video Access",
+          "pet_friendly": "Pet Friendly",
+          "wheelchair_accessible": "Wheelchair Accessible"
         },
         "Textareas": {
           "description": "Description",
@@ -392,19 +409,29 @@
           "heating_type": "Select heating type",
           "hot_water_type": "Select hot water type",
           "parking_type": "Select parking type",
-          "coords": "Select location on map"
+          "coords": "Select location on map",
+          "price_type": "Select price type",
+          "cadastral_code": "Enter cadastral code",
+          "energy_class": "Select energy class",
+          "renovation_year": "Enter renovation year",
+          "floor_plan_url": "Enter floor plan URL"
         },
         "SelectOptions": {
           "type": {
             "apartment": "Apartment",
             "house": "House",
-            "room": "Room",
             "commercial": "Commercial",
-            "land": "Land"
+            "land": "Land",
+            "garage": "Garage / Parking Space",
+            "warehouse": "Warehouse / Industrial",
+            "commercial_unit": "Commercial Unit"
           },
           "sale_type": {
             "for_sale": "For Sale",
-            "for_rent": "For Rent"
+            "for_rent": "For Rent",
+            "daily_rent": "Daily Rent / Short-Term",
+            "lease": "Lease",
+            "rent_to_own": "Rent-to-Own"
           },
           "currency": {
             "EUR": "EUR (€)",
@@ -417,48 +444,67 @@
             "published": "Published",
             "under_offer": "Under Offer",
             "sold": "Sold",
-            "archived": "Archived"
+            "archived": "Archived",
+            "reserved": "Reserved / Contingent",
+            "expired": "Expired",
+            "pending": "Pending"
           },
           "furnishing": {
             "unfurnished": "Unfurnished",
             "semi_furnished": "Semi-furnished",
-            "furnished": "Furnished"
+            "furnished": "Furnished",
+            "kitchen_only": "Kitchen Only / Partially Equipped"
           },
           "parking_type": {
             "none": "None",
             "garage": "Garage",
             "carport": "Carport",
             "street": "Street",
-            "underground": "Underground"
+            "underground": "Underground",
+            "driveway": "Off-Street Driveway",
+            "ev_charging": "EV Charging Station",
+            "covered": "Covered Space"
           },
           "building_status": {
             "new_construction": "New Construction",
             "under_construction": "Under Construction",
-            "ready": "Ready"
+            "ready": "Ready",
+            "shell_core": "Black Frame / Shell & Core",
+            "white_frame": "White Frame / Semi-Finished",
+            "renovation_required": "Renovation Required"
           },
           "condition": {
             "excellent": "Excellent",
             "good": "Good",
             "fair": "Fair",
-            "needs_renovation": "Needs Renovation"
+            "needs_renovation": "Needs Renovation",
+            "brand_new": "Brand New / Newly Renovated",
+            "cosmetic_fix": "Cosmetic Fix Needed"
           },
           "project_type": {
             "residential": "Residential",
             "commercial": "Commercial",
-            "mixed_use": "Mixed Use"
+            "mixed_use": "Mixed Use",
+            "industrial": "Industrial",
+            "agricultural": "Agricultural",
+            "hospitality": "Hospitality / Hotel"
           },
           "heating_type": {
             "central": "Central",
             "individual": "Individual",
             "floor": "Floor Heating",
             "wall": "Wall Heating",
-            "electric": "Electric"
+            "electric": "Electric",
+            "heat_pump": "Heat Pump",
+            "pellet_stove": "Pellet / Wood Stove"
           },
           "hot_water_type": {
             "central": "Central",
             "electric": "Electric",
             "gas": "Gas",
-            "solar": "Solar"
+            "solar": "Solar",
+            "heat_pump_boiler": "Heat Pump Boiler",
+            "tankless": "Tankless / Instant Electric"
           },
           "property_subtype": {
             "penthouse": "Penthouse",
@@ -467,7 +513,13 @@
             "villa": "Villa",
             "studio": "Studio",
             "office": "Office",
-            "land": "Land"
+            "cottage": "Cottage / Chalet",
+            "bungalow": "Bungalow",
+            "commercial_office": "Commercial Office",
+            "retail": "Retail / Storefront",
+            "residential_plot": "Residential Plot",
+            "commercial_plot": "Commercial Plot",
+            "agri_land": "Agricultural Land"
           },
           "view": {
             "city": "City",
@@ -483,6 +535,21 @@
             "microwave": "Microwave",
             "dishwasher": "Dishwasher",
             "washing_machine": "Washing Machine"
+          },
+          "price_type": {
+            "total": "Total Price",
+            "per_sqm": "Price per sq m",
+            "negotiable": "Negotiable"
+          },
+          "energy_class": {
+            "a_plus": "A+",
+            "a": "A",
+            "b": "B",
+            "c": "C",
+            "d": "D",
+            "e": "E",
+            "f": "F",
+            "g": "G"
           }
         }
       },

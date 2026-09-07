@@ -1,19 +1,29 @@
 "use client";
 import { useId } from "react";
 import {
+  Accessibility,
   AirVent,
   ArrowUpDown,
+  Beef,
+  BellRing,
   CookingPot,
   Droplets,
+  Dumbbell,
+  Fence,
   Flame,
+  FlameKindling,
   Microwave,
+  Package,
+  PawPrint,
   PlugZap,
   Refrigerator,
   ShieldCheck,
   ShowerHead,
   Tv,
   UtensilsCrossed,
+  Video,
   WashingMachine,
+  WavesLadder,
   Wifi,
 } from "lucide-react";
 import { AdminPillToggle } from "./AdminPillToggle";
@@ -42,6 +52,17 @@ const AMENITY_BOOLEANS = [
   { value: "elevator", icon: ArrowUpDown },
   { value: "ac", icon: AirVent },
   { value: "security", icon: ShieldCheck },
+  { value: "swimming_pool", icon: WavesLadder },
+  { value: "sauna_jacuzzi", icon: FlameKindling },
+  { value: "gym", icon: Dumbbell },
+  { value: "private_yard", icon: Fence },
+  { value: "bbq_area", icon: Beef },
+  { value: "concierge", icon: BellRing },
+  { value: "fireplace", icon: Flame },
+  { value: "storage", icon: Package },
+  { value: "intercom", icon: Video },
+  { value: "pet_friendly", icon: PawPrint },
+  { value: "wheelchair_accessible", icon: Accessibility },
 ] as const;
 const KITCHEN_APPLIANCES = [
   { value: "oven", icon: CookingPot },

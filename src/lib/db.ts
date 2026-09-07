@@ -3,6 +3,7 @@ import { randomBytes } from "crypto";
 import path from "path";
 import { Property } from "@/types/property";
 import { MessageSummary, NewsletterSubscriber, PropertyFormData } from "@/types/admin";
+import type { TranslationFields } from "@/lib/translations";
 
 const dbPath = path.join(process.cwd(), "data", "qmax.sqlite");
 
@@ -322,6 +323,54 @@ export function initTables(): void {
     if (!columnNames.includes("security")) {
       db.exec("ALTER TABLE properties ADD COLUMN security BOOLEAN DEFAULT 0");
     }
+    if (!columnNames.includes("price_type")) {
+      db.exec("ALTER TABLE properties ADD COLUMN price_type TEXT");
+    }
+    if (!columnNames.includes("cadastral_code")) {
+      db.exec("ALTER TABLE properties ADD COLUMN cadastral_code TEXT");
+    }
+    if (!columnNames.includes("energy_class")) {
+      db.exec("ALTER TABLE properties ADD COLUMN energy_class TEXT");
+    }
+    if (!columnNames.includes("renovation_year")) {
+      db.exec("ALTER TABLE properties ADD COLUMN renovation_year INTEGER");
+    }
+    if (!columnNames.includes("floor_plan_url")) {
+      db.exec("ALTER TABLE properties ADD COLUMN floor_plan_url TEXT");
+    }
+    if (!columnNames.includes("swimming_pool")) {
+      db.exec("ALTER TABLE properties ADD COLUMN swimming_pool BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("sauna_jacuzzi")) {
+      db.exec("ALTER TABLE properties ADD COLUMN sauna_jacuzzi BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("gym")) {
+      db.exec("ALTER TABLE properties ADD COLUMN gym BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("private_yard")) {
+      db.exec("ALTER TABLE properties ADD COLUMN private_yard BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("bbq_area")) {
+      db.exec("ALTER TABLE properties ADD COLUMN bbq_area BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("concierge")) {
+      db.exec("ALTER TABLE properties ADD COLUMN concierge BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("fireplace")) {
+      db.exec("ALTER TABLE properties ADD COLUMN fireplace BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("storage")) {
+      db.exec("ALTER TABLE properties ADD COLUMN storage BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("intercom")) {
+      db.exec("ALTER TABLE properties ADD COLUMN intercom BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("pet_friendly")) {
+      db.exec("ALTER TABLE properties ADD COLUMN pet_friendly BOOLEAN DEFAULT 0");
+    }
+    if (!columnNames.includes("wheelchair_accessible")) {
+      db.exec("ALTER TABLE properties ADD COLUMN wheelchair_accessible BOOLEAN DEFAULT 0");
+    }
 
     const indexes = db.prepare("PRAGMA index_list(properties)").all() as { name: string }[];
     const indexNames = indexes.map((i) => i.name);
@@ -507,6 +556,72 @@ export function getAllProperties(): Property[] {
     .filter((p): p is Property => p !== undefined);
 }
 
+const LOCALE_ALIASED_FIELDS = [
+  "title",
+  "neighborhood",
+  "city",
+  "country",
+  "meta_description",
+  "description",
+  "sale_type",
+] as const;
+
+export function getAllPropertiesWithLocale(locale: string): Property[] {
+  if (
+    !locale ||
+    locale === "en" ||
+    !(TRANSLATABLE_LOCALES as readonly string[]).includes(locale)
+  ) {
+    return getAllProperties();
+  }
+
+  const db = new Database(dbPath);
+
+  const stmt = db.prepare(`
+    SELECT p.*,
+           t.title AS t_title,
+           t.neighborhood AS t_neighborhood,
+           t.city AS t_city,
+           t.country AS t_country,
+           t.meta_description AS t_meta_description,
+           t.description AS t_description,
+           t.sale_type AS t_sale_type
+    FROM properties p
+    LEFT JOIN property_translations t ON t.property_id = p.id AND t.locale = ?
+    ORDER BY p.created_at DESC, p.id DESC
+  `);
+
+  return stmt
+    .all(locale)
+    .map((r) => {
+      const row = r as Record<string, unknown>;
+      const base: Record<string, unknown> = {};
+      for (const [key, value] of Object.entries(row)) {
+        if (!key.startsWith("t_")) base[key] = value;
+      }
+      const property = normalizePropertyRow(base);
+      if (!property) return undefined;
+      const record = property as unknown as Record<string, unknown>;
+      const translated: Record<string, unknown> = {
+        title: row.t_title,
+        neighborhood: row.t_neighborhood,
+        city: row.t_city,
+        country: row.t_country,
+        meta_description: row.t_meta_description,
+        description: row.t_description,
+        sale_type: row.t_sale_type,
+      };
+      for (const field of LOCALE_ALIASED_FIELDS) {
+        const value = translated[field];
+        if (value !== null && value !== undefined && value !== "") {
+          record[`${field}_${locale}`] = value;
+        }
+      }
+      return property;
+    })
+    .filter((p): p is Property => p !== undefined);
+}
+
 export function updateProperty(id: number, data: Partial<PropertyFormData>): Property | null {
   try {
     const entries = Object.entries(data).filter(([, value]) => value !== undefined) as [
@@ -614,7 +729,12 @@ export function insertProperty(data: PropertyFormData & { slug?: string }): Prop
       price: data.price,
       currency: data.currency,
       sale_type: data.sale_type,
+      price_type: data.price_type,
+      cadastral_code: data.cadastral_code,
+      energy_class: data.energy_class,
+      floor_plan_url: data.floor_plan_url,
       year_built: data.year_built,
+      renovation_year: data.renovation_year,
       floor: data.floor,
       meta_description: data.meta_description,
       description: data.description,
@@ -651,6 +771,17 @@ export function insertProperty(data: PropertyFormData & { slug?: string }): Prop
       elevator: data.elevator,
       ac: data.ac,
       security: data.security,
+      swimming_pool: data.swimming_pool,
+      sauna_jacuzzi: data.sauna_jacuzzi,
+      gym: data.gym,
+      private_yard: data.private_yard,
+      bbq_area: data.bbq_area,
+      concierge: data.concierge,
+      fireplace: data.fireplace,
+      storage: data.storage,
+      intercom: data.intercom,
+      pet_friendly: data.pet_friendly,
+      wheelchair_accessible: data.wheelchair_accessible,
     };
 
     const entries = Object.entries(candidates).filter(
@@ -749,55 +880,96 @@ export interface PropertyTranslationsFields {
   card_image?: string;
 }
 
+const TRANSLATION_COLUMNS = [
+  "title",
+  "subtitle",
+  "location",
+  "neighborhood",
+  "city",
+  "region",
+  "country",
+  "meta_description",
+  "description",
+  "sale_type",
+  "inclusions",
+  "floor_plan",
+  "card_image",
+] as const;
+
 export function upsertPropertyTranslations(
   propertyId: number,
   translations: Record<"de" | "tr" | "ru" | "pl", PropertyTranslationsFields>
 ): boolean {
   try {
     const db = new Database(dbPath);
-    const stmt = db.prepare(`
-      INSERT INTO property_translations (
-        property_id, locale, title, subtitle, location, neighborhood, city, region, country,
-        meta_description, description, sale_type, inclusions, floor_plan, card_image
-      ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
-      ON CONFLICT(property_id, locale) DO UPDATE SET
-        title = excluded.title,
-        subtitle = excluded.subtitle,
-        location = excluded.location,
-        neighborhood = excluded.neighborhood,
-        city = excluded.city,
-        region = excluded.region,
-        country = excluded.country,
-        meta_description = excluded.meta_description,
-        description = excluded.description,
-        sale_type = excluded.sale_type,
-        inclusions = excluded.inclusions,
-        floor_plan = excluded.floor_plan,
-        card_image = excluded.card_image
-    `);
+    const allowed = new Set<string>(TRANSLATION_COLUMNS);
+    const select = db.prepare(
+      "SELECT * FROM property_translations WHERE property_id = ? AND locale = ?"
+    );
 
     for (const [locale, fields] of Object.entries(translations)) {
-      stmt.run(
-        propertyId,
-        locale,
-        fields.title ?? null,
-        fields.subtitle ?? null,
-        fields.location ?? null,
-        fields.neighborhood ?? null,
-        fields.city ?? null,
-        fields.region ?? null,
-        fields.country ?? null,
-        fields.meta_description ?? null,
-        fields.description ?? null,
-        fields.sale_type ?? null,
-        fields.inclusions ? JSON.stringify(fields.inclusions) : null,
-        fields.floor_plan ?? null,
-        fields.card_image ?? null
+      if (!fields || typeof fields !== "object") continue;
+      const present = (Object.entries(fields) as [string, unknown][]).filter(
+        ([key, value]) => value !== undefined && allowed.has(key)
       );
+      if (present.length === 0) continue;
+
+      const values: Record<string, string | null> = {};
+      for (const [key, value] of present) {
+        try {
+          if (key === "inclusions") {
+            values[key] = Array.isArray(value) ? JSON.stringify(value) : JSON.stringify(value);
+          } else {
+            values[key] = value as string;
+          }
+        } catch {
+          continue;
+        }
+      }
+      const keys = Object.keys(values);
+      if (keys.length === 0) continue;
+
+      const existing = select.get(propertyId, locale) as Record<string, unknown> | undefined;
+      if (existing) {
+        // Column names come from the fixed TRANSLATION_COLUMNS whitelist — never from user input.
+        const setClause = keys.map((key) => `${key} = ?`).join(", ");
+        db.prepare(
+          `UPDATE property_translations SET ${setClause} WHERE property_id = ? AND locale = ?`
+        ).run(...keys.map((key) => values[key]), propertyId, locale);
+      } else {
+        // Column names come from the fixed TRANSLATION_COLUMNS whitelist — never from user input.
+        const columns = ["property_id", "locale", ...keys];
+        const placeholders = columns.map(() => "?").join(", ");
+        db.prepare(
+          `INSERT INTO property_translations (${columns.join(", ")}) VALUES (${placeholders})`
+        ).run(propertyId, locale, ...keys.map((key) => values[key]));
+      }
     }
     return true;
   } catch (err) {
     console.error("Failed to upsert property translations:", err);
+    return false;
+  }
+}
+
+export function clearPropertyTranslationFields(
+  propertyId: number,
+  keys: (keyof TranslationFields)[]
+): boolean {
+  try {
+    if (keys.length === 0) return true;
+    const allowed = new Set<string>(TRANSLATION_COLUMNS);
+    const columns = keys.filter((key) => allowed.has(key as string));
+    if (columns.length === 0) return true;
+    const db = new Database(dbPath);
+    // Column names come from the fixed TRANSLATION_COLUMNS whitelist — never from user input.
+    const setClause = columns.map((column) => `${column} = NULL`).join(", ");
+    db.prepare(`UPDATE property_translations SET ${setClause} WHERE property_id = ?`).run(
+      propertyId
+    );
+    return true;
+  } catch (err) {
+    console.error("Failed to clear property translation fields:", err);
     return false;
   }
 }

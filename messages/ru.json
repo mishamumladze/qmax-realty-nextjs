@@ -273,7 +273,8 @@
           "amenities": "Удобства",
           "media": "Медиа",
           "bulk_actions": "Массовые действия",
-          "actions": "Действия"
+          "actions": "Действия",
+          "seo": "SEO и метаданные"
         },
         "Titles": {
           "edit": "Изменить свойства",
@@ -334,7 +335,23 @@
           "elevator": "Лифт",
           "ac": "Кондиционер",
           "security": "Охрана",
-          "coords": "Координаты на карте"
+          "coords": "Координаты на карте",
+          "price_type": "Тип цены",
+          "cadastral_code": "Кадастровый код / ID",
+          "energy_class": "Класс энергоэффективности",
+          "renovation_year": "Год ремонта",
+          "floor_plan_url": "План этажа (URL)",
+          "swimming_pool": "Бассейн",
+          "sauna_jacuzzi": "Сауна / Джакузи",
+          "gym": "Спортзал",
+          "private_yard": "Частный двор / Сад",
+          "bbq_area": "Зона барбекю",
+          "concierge": "Консьерж / Охрана",
+          "fireplace": "Камин",
+          "storage": "Кладовая / Подвал",
+          "intercom": "Домофон / Видеодоступ",
+          "pet_friendly": "Можно с животными",
+          "wheelchair_accessible": "Доступно для инвалидных колясок"
         },
         "Textareas": {
           "description": "Описание",
@@ -408,19 +425,29 @@
           "heating_type": "Выберите тип отопления",
           "hot_water_type": "Выберите тип горячей воды",
           "parking_type": "Выберите тип парковки",
-          "coords": "Выберите местоположение на карте"
+          "coords": "Выберите местоположение на карте",
+          "price_type": "Выберите тип цены",
+          "cadastral_code": "Введите кадастровый код",
+          "energy_class": "Выберите класс энергоэффективности",
+          "renovation_year": "Введите год ремонта",
+          "floor_plan_url": "Введите URL плана этажа"
         },
         "SelectOptions": {
           "type": {
             "apartment": "Квартира",
             "house": "Дом",
-            "room": "Комната",
             "commercial": "Коммерческая",
-            "land": "Земля"
+            "land": "Земля",
+            "garage": "Гараж / Парковочное место",
+            "warehouse": "Склад / Промышленное",
+            "commercial_unit": "Коммерческое помещение"
           },
           "sale_type": {
             "for_sale": "Продажа",
-            "for_rent": "Аренда"
+            "for_rent": "Аренда",
+            "daily_rent": "Посуточная аренда",
+            "lease": "Аренда / Лизинг",
+            "rent_to_own": "Аренда с выкупом"
           },
           "currency": {
             "EUR": "EUR (€)",
@@ -433,48 +460,67 @@
             "published": "Опубликовано",
             "under_offer": "Под предложением",
             "sold": "Продано",
-            "archived": "В архиве"
+            "archived": "В архиве",
+            "reserved": "Зарезервировано / Условно",
+            "expired": "Истекло",
+            "pending": "В ожидании"
           },
           "furnishing": {
             "unfurnished": "Без мебели",
             "semi_furnished": "Частично с мебелью",
-            "furnished": "С мебелью"
+            "furnished": "С мебелью",
+            "kitchen_only": "Только кухня / Частично оборудовано"
           },
           "parking_type": {
             "none": "Нет",
             "garage": "Гараж",
             "carport": "Навес для авто",
             "street": "Улица",
-            "underground": "Подземная парковка"
+            "underground": "Подземная парковка",
+            "driveway": "Частный подъезд",
+            "ev_charging": "Зарядка для электромобилей",
+            "covered": "Крытое место"
           },
           "building_status": {
             "new_construction": "Новостройка",
             "under_construction": "В стройке",
-            "ready": "Готово"
+            "ready": "Готово",
+            "shell_core": "Черновой каркас / Shell & Core",
+            "white_frame": "Белый каркас / Получистовая",
+            "renovation_required": "Требуется ремонт"
           },
           "condition": {
             "excellent": "Отличное",
             "good": "Хорошее",
             "fair": "Удовлетворительное",
-            "needs_renovation": "Требует ремонта"
+            "needs_renovation": "Требует ремонта",
+            "brand_new": "Новое / После ремонта",
+            "cosmetic_fix": "Требуется косметический ремонт"
           },
           "project_type": {
             "residential": "Жилая",
             "commercial": "Коммерческая",
-            "mixed_use": "Смешанного назначения"
+            "mixed_use": "Смешанного назначения",
+            "industrial": "Промышленный",
+            "agricultural": "Сельскохозяйственный",
+            "hospitality": "Гостиничный / Отель"
           },
           "heating_type": {
             "central": "Центральное",
             "individual": "Индивидуальное",
             "floor": "Теплый пол",
             "wall": "Настенное",
-            "electric": "Электрическое"
+            "electric": "Электрическое",
+            "heat_pump": "Тепловой насос",
+            "pellet_stove": "Пеллетная / Дровяная печь"
           },
           "hot_water_type": {
             "central": "Центральное",
             "electric": "Электрическое",
             "gas": "Газовое",
-            "solar": "Солнечное"
+            "solar": "Солнечное",
+            "heat_pump_boiler": "Бойлер с тепловым насосом",
+            "tankless": "Проточный / Мгновенный электрический"
           },
           "property_subtype": {
             "penthouse": "Пентхаус",
@@ -483,7 +529,13 @@
             "villa": "Вилла",
             "studio": "Студия",
             "office": "Офис",
-            "land": "Земля"
+            "cottage": "Коттедж / Шале",
+            "bungalow": "Бунгало",
+            "commercial_office": "Коммерческий офис",
+            "retail": "Торговое / Витрина",
+            "residential_plot": "Участок под жильё",
+            "commercial_plot": "Коммерческий участок",
+            "agri_land": "Сельхозземля"
           },
           "view": {
             "city": "Город",
@@ -499,6 +551,21 @@
             "microwave": "Микроволновка",
             "dishwasher": "Посудомойка",
             "washing_machine": "Стиральная машина"
+          },
+          "price_type": {
+            "total": "Общая цена",
+            "per_sqm": "Цена за кв.м",
+            "negotiable": "Договорная"
+          },
+          "energy_class": {
+            "a_plus": "A+",
+            "a": "A",
+            "b": "B",
+            "c": "C",
+            "d": "D",
+            "e": "E",
+            "f": "F",
+            "g": "G"
           }
         },
         "PropertyBulkActionsTab": {

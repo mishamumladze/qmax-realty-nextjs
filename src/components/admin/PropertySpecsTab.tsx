@@ -27,6 +27,10 @@ interface SharedTabProps {
   kitchenAppliances: string[];
   setKitchenAppliances: (appliances: string[]) => void;
 }
+interface PropertySpecsTabProps extends SharedTabProps {
+  propertyType: string;
+  propertySubtype: string;
+}
 const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300";
 const inputClass =
   "mt-1 w-full rounded-md border border-gray-300 bg-white px-3 py-2 text-gray-900 dark:border-gray-600 dark:bg-gray-900 dark:text-gray-100 focus:border-brand-500 focus:outline-none focus:ring-2 focus:ring-brand-500/40 min-h-11";
@@ -59,7 +63,9 @@ export function PropertySpecsTab({
   setView,
   kitchenAppliances,
   setKitchenAppliances,
-}: SharedTabProps) {
+  propertyType,
+  propertySubtype,
+}: PropertySpecsTabProps) {
   const baseId = useId();
   const fieldId = (name: string) => `${baseId}-${name}`;
   const renderNumericInput = (name: string, placeholderKey: string) => {
@@ -157,12 +163,14 @@ export function PropertySpecsTab({
       {renderNumericInput("sqmt", "sqmt")}
       {renderNumericInput("lot_sqmt", "lot_sqmt")}
       {renderNumericInput("ceiling_height", "ceiling_height")}
-      {renderNumericInput("rooms", "rooms")}
       {renderNumericInput("bedrooms", "bedrooms")}
       {renderNumericInput("bathrooms", "bathrooms")}
-      {renderTextInput("floor", "floor")}
+      {!(propertyType === "house" || propertyType === "land" || propertySubtype === "villa") &&
+        renderTextInput("floor", "floor")}
       {renderNumericInput("total_floors", "total_floors")}
       {renderNumericInput("year_built", "year_built")}
+      {renderNumericInput("renovation_year", "renovation_year")}
+      {renderSelect("energy_class", "energy_class", "energy_class")}
       {renderSelect("building_status", "building_status", "building_status")}
       {renderSelect("condition", "condition", "condition")}
       {renderSelect("project_type", "project_type", "project_type")}

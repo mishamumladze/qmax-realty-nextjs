@@ -166,11 +166,12 @@ export function PropertyGeneralTab({
       {renderSelect("sale_type", "sale_type", "sale_type")}
       {renderNumericInput("price", "price")}
       {renderSelect("currency", "currency", "currency")}
+      {renderSelect("price_type", "price_type", "price_type")}
+      {renderTextInput("cadastral_code", "cadastral_code")}
       {renderTextInput("country", "country")}
       {renderTextInput("city", "city")}
       {renderTextInput("neighborhood", "neighborhood")}
       {renderTextInput("street_address", "street_address")}
-      {renderTextInput("region", "region")}
       <div className="col-span-2">
         <label className={labelClass}>{t("Fields.coords")}</label>
         <PropertyMapPicker
@@ -178,10 +179,10 @@ export function PropertyGeneralTab({
           lng={lng}
           onChange={onCoordsChange}
           placeholder={t("Placeholders.coords")}
+          showGeolocate={false}
         />
       </div>
       {renderTextarea("description", "Textareas.description", 4, "description")}
-      {renderTextarea("meta_description", "Textareas.meta_description", 3, "meta_description")}
     </div>
   );
 }

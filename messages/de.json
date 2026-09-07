@@ -326,7 +326,23 @@
           "elevator": "Aufzug",
           "ac": "Klimaanlage",
           "security": "Sicherheit",
-          "coords": "Kartenkoordinaten"
+          "coords": "Kartenkoordinaten",
+          "price_type": "Preisart",
+          "cadastral_code": "Kataster-Code / ID",
+          "energy_class": "Energieklasse / Rating",
+          "renovation_year": "Renovierungsjahr",
+          "floor_plan_url": "Grundriss (URL)",
+          "swimming_pool": "Swimmingpool",
+          "sauna_jacuzzi": "Sauna / Whirlpool",
+          "gym": "Fitnessraum",
+          "private_yard": "Privater Hof / Garten",
+          "bbq_area": "Grillbereich",
+          "concierge": "Concierge / Wachdienst",
+          "fireplace": "Kamin",
+          "storage": "Abstellraum / Keller",
+          "intercom": "Gegensprechanlage / Videozugang",
+          "pet_friendly": "Tierfreundlich",
+          "wheelchair_accessible": "Rollstuhlgerecht"
         },
         "Textareas": {
           "description": "Beschreibung",
@@ -403,19 +419,29 @@
           "heating_type": "Heizungsart auswählen",
           "hot_water_type": "Warmwasserart auswählen",
           "parking_type": "Parkplatzart auswählen",
-          "coords": "Standort auf Karte auswählen"
+          "coords": "Standort auf Karte auswählen",
+          "price_type": "Preisart auswählen",
+          "cadastral_code": "Kataster-Code eingeben",
+          "energy_class": "Energieklasse auswählen",
+          "renovation_year": "Renovierungsjahr eingeben",
+          "floor_plan_url": "Grundriss-URL eingeben"
         },
         "SelectOptions": {
           "type": {
             "apartment": "Wohnung",
             "house": "Haus",
-            "room": "Zimmer",
             "commercial": "Gewerbe",
-            "land": "Grundstück"
+            "land": "Grundstück",
+            "garage": "Garage / Stellplatz",
+            "warehouse": "Lager / Industrie",
+            "commercial_unit": "Gewerbeeinheit"
           },
           "sale_type": {
             "for_sale": "Zum Kauf",
-            "for_rent": "Zur Miete"
+            "for_rent": "Zur Miete",
+            "daily_rent": "Tagesmiete / Kurzzeit",
+            "lease": "Pacht / Leasing",
+            "rent_to_own": "Miete mit Kaufoption"
           },
           "currency": {
             "EUR": "EUR (€)",
@@ -428,48 +454,67 @@
             "published": "Veröffentlicht",
             "under_offer": "Unter Angebot",
             "sold": "Verkauft",
-            "archived": "Archiviert"
+            "archived": "Archiviert",
+            "reserved": "Reserviert / Bedingt",
+            "expired": "Abgelaufen",
+            "pending": "Ausstehend"
           },
           "furnishing": {
             "unfurnished": "Unmöbliert",
             "semi_furnished": "Teilmöbliert",
-            "furnished": "Möbliert"
+            "furnished": "Möbliert",
+            "kitchen_only": "Nur Küche / Teilweise ausgestattet"
           },
           "parking_type": {
             "none": "Keiner",
             "garage": "Garage",
             "carport": "Carport",
             "street": "Straße",
-            "underground": "Tiefgarage"
+            "underground": "Tiefgarage",
+            "driveway": "Private Einfahrt",
+            "ev_charging": "E-Ladestation",
+            "covered": "Überdachter Stellplatz"
           },
           "building_status": {
             "new_construction": "Neubau",
             "under_construction": "Im Bau",
-            "ready": "Bezugsfertig"
+            "ready": "Bezugsfertig",
+            "shell_core": "Rohbau / Shell & Core",
+            "white_frame": "Weißer Rahmen / Teilfertig",
+            "renovation_required": "Sanierung erforderlich"
           },
           "condition": {
             "excellent": "Ausgezeichnet",
             "good": "Gut",
             "fair": "Akzeptabel",
-            "needs_renovation": "Sanierungsbedürftig"
+            "needs_renovation": "Sanierungsbedürftig",
+            "brand_new": "Brandneu / Frisch renoviert",
+            "cosmetic_fix": "Schönheitsreparatur nötig"
           },
           "project_type": {
             "residential": "Wohnen",
             "commercial": "Gewerbe",
-            "mixed_use": "Gemischte Nutzung"
+            "mixed_use": "Gemischte Nutzung",
+            "industrial": "Industrie",
+            "agricultural": "Landwirtschaft",
+            "hospitality": "Gastgewerbe / Hotel"
           },
           "heating_type": {
             "central": "Zentralheizung",
             "individual": "Etagenheizung",
             "floor": "Fußbodenheizung",
             "wall": "Wandheizung",
-            "electric": "Elektrisch"
+            "electric": "Elektrisch",
+            "heat_pump": "Wärmepumpe",
+            "pellet_stove": "Pellet- / Holzofen"
           },
           "hot_water_type": {
             "central": "Zentral",
             "electric": "Elektrisch",
             "gas": "Gas",
-            "solar": "Solar"
+            "solar": "Solar",
+            "heat_pump_boiler": "Wärmepumpenboiler",
+            "tankless": "Durchlauferhitzer / Elektro-Sofort"
           },
           "property_subtype": {
             "penthouse": "Penthouse",
@@ -478,7 +523,13 @@
             "villa": "Villa",
             "studio": "Studio",
             "office": "Büro",
-            "land": "Grundstück"
+            "cottage": "Cottage / Chalet",
+            "bungalow": "Bungalow",
+            "commercial_office": "Gewerbebüro",
+            "retail": "Einzelhandel / Laden",
+            "residential_plot": "Wohngrundstück",
+            "commercial_plot": "Gewerbegrundstück",
+            "agri_land": "Agrarland"
           },
           "view": {
             "city": "Stadt",
@@ -494,6 +545,21 @@
             "microwave": "Mikrowelle",
             "dishwasher": "Geschirrspüler",
             "washing_machine": "Waschmaschine"
+          },
+          "price_type": {
+            "total": "Gesamtpreis",
+            "per_sqm": "Preis pro qm",
+            "negotiable": "Verhandelbar"
+          },
+          "energy_class": {
+            "a_plus": "A+",
+            "a": "A",
+            "b": "B",
+            "c": "C",
+            "d": "D",
+            "e": "E",
+            "f": "F",
+            "g": "G"
           }
         },
         "Tabs": {
@@ -502,7 +568,8 @@
           "amenities": "Ausstattung",
           "media": "Medien",
           "bulk_actions": "Massenaktionen",
-          "actions": "Maßnahmen"
+          "actions": "Maßnahmen",
+          "seo": "SEO & Metadaten"
         },
         "PropertyBulkActionsTab": {
           "Description": "{count} Eigenschaften ausgewählt",

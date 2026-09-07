@@ -3,7 +3,7 @@
 import React, { useState, useMemo, useEffect, useCallback } from "react";
 import { Property } from "@/types/property";
 import { Button } from "@/components/ui/Buttons";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { Check, ChevronUp, ChevronDown, Minus, Trash2, Power } from "lucide-react";
 
 type PropertyTableProps = {
@@ -46,8 +46,24 @@ function formatPrice(p: Property): string {
   return `${p.price ?? "—"} ${p.currency ?? ""}`.trim();
 }
 
-function formatLocation(p: Property): string {
-  return [p.location, p.city].filter(Boolean).join(", ") || "—";
+// Read a `${key}_${locale}` alias with fallback to the base field.
+// "en" has no aliases, so it behaves exactly as the base fields.
+function localizedField(p: Property, key: string, locale: string): string | undefined {
+  const record = p as unknown as Record<string, unknown>;
+  const alias = record[`${key}_${locale}`];
+  const base = record[key];
+  return ((typeof alias === "string" ? alias : undefined) ??
+    (typeof base === "string" ? base : undefined)) as string | undefined;
+}
+
+function displayTitle(p: Property, locale: string): string {
+  return localizedField(p, "title", locale) ?? p.title;
+}
+
+function formatLocation(p: Property, locale = "en"): string {
+  const location = localizedField(p, "location", locale) ?? p.location;
+  const city = localizedField(p, "city", locale) ?? p.city;
+  return [location, city].filter(Boolean).join(", ") || "—";
 }
 
 function StatusBadge({ status }: { status?: string }) {
@@ -185,6 +201,7 @@ export function PropertyTable({
   onBulkDelete,
 }: PropertyTableProps) {
   const t = useTranslations("Components.Admin.PropertyTable");
+  const locale = useLocale();
 
   const [selectedIds, setSelectedIds] = useState<Set<number>>(new Set());
   const [sortConfig, setSortConfig] = useState<SortConfig>({ key: "title", direction: "asc" });
@@ -484,13 +501,13 @@ export function PropertyTable({
                       className="max-w-[16rem] truncate px-3 py-3 font-medium text-gray-900
                         dark:text-gray-100"
                     >
-                      {p.title}
+                      {displayTitle(p, locale)}
                     </td>
                     <td className="px-3 py-3 text-gray-700 dark:text-gray-300">{p.type ?? "—"}</td>
                     <td
                       className="max-w-[14rem] truncate px-3 py-3 text-gray-700 dark:text-gray-300"
                     >
-                      {formatLocation(p)}
+                      {formatLocation(p, locale)}
                     </td>
                     <td className="px-3 py-3 whitespace-nowrap text-gray-700 dark:text-gray-300">
                       {formatPrice(p)}
@@ -534,7 +551,7 @@ export function PropertyTable({
                     className="min-w-0 truncate text-base font-semibold text-gray-900
                       dark:text-gray-100"
                   >
-                    {p.title}
+                    {displayTitle(p, locale)}
                   </h3>
                 </div>
                 <StatusBadge status={status}/>
@@ -549,7 +566,7 @@ export function PropertyTable({
                 <div className="flex justify-between gap-4">
                   <dt className="text-gray-500 dark:text-gray-400">{t("Mobile.location")}</dt>
                   <dd className="truncate text-right text-gray-700 dark:text-gray-300">
-                    {formatLocation(p)}
+                    {formatLocation(p, locale)}
                   </dd>
                 </div>
                 <div className="flex justify-between gap-4">

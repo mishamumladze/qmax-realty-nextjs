@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { LayoutGrid, Mail, Users, LogOut, Plus } from "lucide-react";
 import type { Property } from "@/types/property";
+import { mergeTranslationAliases } from "@/lib/admin-translations";
 import { PropertyTable } from "@/components/admin/PropertyTable";
 import { MessagesList } from "@/components/admin/MessagesList";
 import { NewsletterSubscribersList } from "@/components/admin/NewsletterSubscribersList";
@@ -12,6 +13,14 @@ import { PropertyFormModal } from "@/components/admin/PropertyFormModal";
 import { Button } from "@/components/ui/Buttons";
 
 type Tab = "properties" | "messages" | "newsletter";
+
+// Save-response shape: the property plus optional translation extras.
+// Kept local so the shared Property type stays untouched; old mocked
+// responses may omit `translations`/`clearedKeys` entirely.
+type SavedProperty = Property & {
+  translations?: unknown;
+  clearedKeys?: unknown;
+};
 
 interface UndoState {
   property: Property;
@@ -129,7 +138,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
     };
     const isStrArray = (value: unknown): value is string[] =>
       Array.isArray(value) && value.every((item) => typeof item === "string");
-    const payload: Record<string, unknown> = {};
+    const payload: Record<string, unknown> = { sourceLocale: "en" };
     for (const key of [
       "title",
       "type",
@@ -376,11 +385,12 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
           setModalOpen(false);
           setEditing(null);
         }}
-        onSaved={(saved) => {
+        onSaved={(saved: SavedProperty) => {
+          const merged = mergeTranslationAliases(saved, saved.translations, saved.clearedKeys);
           setProperties((prev) =>
-            editing && saved.id === editing.id
-              ? prev.map((p) => (p.id === saved.id ? saved : p))
-              : [saved, ...prev]
+            editing && merged.id === editing.id
+              ? prev.map((p) => (p.id === merged.id ? merged : p))
+              : [merged, ...prev]
           );
           setModalOpen(false);
           setEditing(null);

@@ -324,7 +324,23 @@
           "elevator": "Asansör",
           "ac": "Klima",
           "security": "Güvenlik",
-          "coords": "Harita Koordinatları"
+          "coords": "Harita Koordinatları",
+          "price_type": "Fiyat türü",
+          "cadastral_code": "Kadastro Kodu / ID",
+          "energy_class": "Enerji Sınıfı / Değeri",
+          "renovation_year": "Renovasyon Yılı",
+          "floor_plan_url": "Kat planı (URL)",
+          "swimming_pool": "Yüzme Havuzu",
+          "sauna_jacuzzi": "Sauna / Jakuzi",
+          "gym": "Spor Salonu",
+          "private_yard": "Özel Bahçe / Avlu",
+          "bbq_area": "Barbekü Alanı",
+          "concierge": "Konsiyerj / Güvenlik Görevlisi",
+          "fireplace": "Şömine",
+          "storage": "Depo / Bodrum",
+          "intercom": "Diyafon / Görüntülü Erişim",
+          "pet_friendly": "Evcil Hayvan Dostu",
+          "wheelchair_accessible": "Tekerlekli Sandalye Erişimi"
         },
         "Textareas": {
           "description": "Açıklama",
@@ -390,19 +406,29 @@
           "heating_type": "Isıtma türünü seçin",
           "hot_water_type": "Sıcak su türünü seçin",
           "parking_type": "Otopark türünü seçin",
-          "coords": "Haritada konum seçin"
+          "coords": "Haritada konum seçin",
+          "price_type": "Fiyat türünü seçin",
+          "cadastral_code": "Kadastro kodunu girin",
+          "energy_class": "Enerji sınıfını seçin",
+          "renovation_year": "Renovasyon yılını girin",
+          "floor_plan_url": "Kat planı URL'si girin"
         },
         "SelectOptions": {
           "type": {
             "apartment": "Daire",
             "house": "Ev",
-            "room": "Oda",
             "commercial": "Ticari",
-            "land": "Arsa"
+            "land": "Arsa",
+            "garage": "Garaj / Otopark Alanı",
+            "warehouse": "Depo / Endüstriyel",
+            "commercial_unit": "Ticari Birim"
           },
           "sale_type": {
             "for_sale": "Satılık",
-            "for_rent": "Kiralık"
+            "for_rent": "Kiralık",
+            "daily_rent": "Günlük Kiralık / Kısa Süreli",
+            "lease": "Kiralama / Leasing",
+            "rent_to_own": "Kirala-Satın Al"
           },
           "currency": {
             "EUR": "EUR (€)",
@@ -415,48 +441,67 @@
             "published": "Yayında",
             "under_offer": "Satış Teklifi Altında",
             "sold": "Satıldı",
-            "archived": "Arşivlendi"
+            "archived": "Arşivlendi",
+            "reserved": "Rezerve / Şarta Bağlı",
+            "expired": "Süresi Dolmuş",
+            "pending": "Beklemede"
           },
           "furnishing": {
             "unfurnished": "Eşyasız",
             "semi_furnished": "Yarı Eşyalı",
-            "furnished": "Eşyalı"
+            "furnished": "Eşyalı",
+            "kitchen_only": "Sadece Mutfak / Kısmen Donanımlı"
           },
           "parking_type": {
             "none": "Yok",
             "garage": "Garaj",
             "carport": "Karabük/Çatılı Otopark",
             "street": "Sokak",
-            "underground": "Yeraltı Otoparkı"
+            "underground": "Yeraltı Otoparkı",
+            "driveway": "Özel Garaj Yolu",
+            "ev_charging": "EV Şarj İstasyonu",
+            "covered": "Kapalı Alan"
           },
           "building_status": {
             "new_construction": "Yeni İnşa",
             "under_construction": "İnşaat Aşamasında",
-            "ready": "Hazır"
+            "ready": "Hazır",
+            "shell_core": "Kaba İnşaat / Shell & Core",
+            "white_frame": "Beyaz Karkas / Yarı Bitmiş",
+            "renovation_required": "Renovasyon Gerekli"
           },
           "condition": {
             "excellent": "Mükemmel",
             "good": "İyi",
             "fair": "Orta",
-            "needs_renovation": "Yenileme Gerekli"
+            "needs_renovation": "Yenileme Gerekli",
+            "brand_new": "Sıfır / Yeni Renovasyonlu",
+            "cosmetic_fix": "Kozmetik Tadilat Gerekli"
           },
           "project_type": {
             "residential": "Konut",
             "commercial": "Ticari",
-            "mixed_use": "Karma Kullanım"
+            "mixed_use": "Karma Kullanım",
+            "industrial": "Endüstriyel",
+            "agricultural": "Tarımsal",
+            "hospitality": "Konaklama / Otel"
           },
           "heating_type": {
             "central": "Merkezi",
             "individual": "İndividual",
             "floor": "Yerde Isıtma",
             "wall": "Duvar Isıtması",
-            "electric": "Elektrikli"
+            "electric": "Elektrikli",
+            "heat_pump": "Isı Pompası",
+            "pellet_stove": "Pelet / Odun Sobası"
           },
           "hot_water_type": {
             "central": "Merkezi",
             "electric": "Elektrikli",
             "gas": "Gaz",
-            "solar": "Güneş"
+            "solar": "Güneş",
+            "heat_pump_boiler": "Isı Pompalı Boiler",
+            "tankless": "Ani Su Isıtıcı / Elektrikli"
           },
           "property_subtype": {
             "penthouse": "Çatı Katı",
@@ -465,7 +510,13 @@
             "villa": "Villa",
             "studio": "Stüdyo",
             "office": "Ofis",
-            "land": "Arsa"
+            "cottage": "Kır Evi / Dağ Evi",
+            "bungalow": "Bungalov",
+            "commercial_office": "Ticari Ofis",
+            "retail": "Perakende / Mağaza",
+            "residential_plot": "Konut Arsası",
+            "commercial_plot": "Ticari Arsa",
+            "agri_land": "Tarım Arazisi"
           },
           "view": {
             "city": "Şehir",
@@ -481,6 +532,21 @@
             "microwave": "Mikrodalga",
             "dishwasher": "Bulaşık Makinesi",
             "washing_machine": "Çamaşır Makinesi"
+          },
+          "price_type": {
+            "total": "Toplam Fiyat",
+            "per_sqm": "m² başına fiyat",
+            "negotiable": "Pazarlıklı"
+          },
+          "energy_class": {
+            "a_plus": "A+",
+            "a": "A",
+            "b": "B",
+            "c": "C",
+            "d": "D",
+            "e": "E",
+            "f": "F",
+            "g": "G"
           }
         },
         "Tabs": {
@@ -489,7 +555,8 @@
           "amenities": "Sosyal Alanlar",
           "media": "Medya",
           "bulk_actions": "Toplu İşlemler",
-          "actions": "Eylemler"
+          "actions": "Eylemler",
+          "seo": "SEO ve Meta Veriler"
         },
         "PropertyBulkActionsTab": {
           "Description": "{count} özellikleri seçildi",

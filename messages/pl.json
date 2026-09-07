@@ -273,7 +273,8 @@
           "amenities": "Udogodnienia",
           "media": "Media",
           "bulk_actions": "Operacje zbiorcze",
-          "actions": "Działania"
+          "actions": "Działania",
+          "seo": "SEO i metadane"
         },
         "Titles": {
           "edit": "Edytuj nieruchomość",
@@ -334,7 +335,23 @@
           "elevator": "Winda",
           "ac": "Klimatyzacja",
           "security": "Ochrona",
-          "coords": "Współrzędne na mapie"
+          "coords": "Współrzędne na mapie",
+          "price_type": "Rodzaj ceny",
+          "cadastral_code": "Kod katastralny / ID",
+          "energy_class": "Klasa energetyczna / Ocena",
+          "renovation_year": "Rok remontu",
+          "floor_plan_url": "Plan piętra (URL)",
+          "swimming_pool": "Basen",
+          "sauna_jacuzzi": "Sauna / Hydromasaż",
+          "gym": "Siłownia",
+          "private_yard": "Prywatne podwórko / Ogród",
+          "bbq_area": "Strefa grillowa",
+          "concierge": "Concierge / Ochrona",
+          "fireplace": "Kominek",
+          "storage": "Pomieszczenie gospodarcze / Piwnica",
+          "intercom": "Domofon / Dostęp wideo",
+          "pet_friendly": "Przyjazne zwierzętom",
+          "wheelchair_accessible": "Dostęp dla wózków inwalidzkich"
         },
         "Textareas": {
           "description": "Opis",
@@ -411,19 +428,29 @@
           "heating_type": "Wybierz typ ogrzewania",
           "hot_water_type": "Wybierz typ ciepłej wody",
           "parking_type": "Wybierz typ parkingu",
-          "coords": "Wybierz lokalizację na mapie"
+          "coords": "Wybierz lokalizację na mapie",
+          "price_type": "Wybierz rodzaj ceny",
+          "cadastral_code": "Wpisz kod katastralny",
+          "energy_class": "Wybierz klasę energetyczną",
+          "renovation_year": "Wpisz rok remontu",
+          "floor_plan_url": "Wpisz URL planu piętra"
         },
         "SelectOptions": {
           "type": {
             "apartment": "Mieszkanie",
             "house": "Dom",
-            "room": "Pokój",
             "commercial": "Komercyjne",
-            "land": "Działka"
+            "land": "Działka",
+            "garage": "Garaż / Miejsce parkingowe",
+            "warehouse": "Magazyn / Przemysłowe",
+            "commercial_unit": "Lokal użytkowy"
           },
           "sale_type": {
             "for_sale": "Na sprzedaż",
-            "for_rent": "Na wynajem"
+            "for_rent": "Na wynajem",
+            "daily_rent": "Wynajem dobowy / Krótkoterminowy",
+            "lease": "Dzierżawa / Leasing",
+            "rent_to_own": "Wynajem z wykupem"
           },
           "currency": {
             "EUR": "EUR (€)",
@@ -436,48 +463,67 @@
             "published": "Opublikowano",
             "under_offer": "Pod ofertą",
             "sold": "Sprzedane",
-            "archived": "Zarchiwizowane"
+            "archived": "Zarchiwizowane",
+            "reserved": "Zarezerwowane / Warunkowe",
+            "expired": "Wygasło",
+            "pending": "Oczekujące"
           },
           "furnishing": {
             "unfurnished": "Niewyposażone",
             "semi_furnished": "Częściowo wyposażone",
-            "furnished": "W pełni wyposażone"
+            "furnished": "W pełni wyposażone",
+            "kitchen_only": "Tylko kuchnia / Częściowo wyposażone"
           },
           "parking_type": {
             "none": "Brak",
             "garage": "Garaż",
             "carport": "Wiata",
             "street": "Ulica",
-            "underground": "Parking podziemny"
+            "underground": "Parking podziemny",
+            "driveway": "Prywatny podjazd",
+            "ev_charging": "Stacja ładowania EV",
+            "covered": "Miejsce zadaszone"
           },
           "building_status": {
             "new_construction": "Nowa budowa",
             "under_construction": "W budowie",
-            "ready": "Gotowe"
+            "ready": "Gotowe",
+            "shell_core": "Stan surowy / Shell & Core",
+            "white_frame": "Stan deweloperski / Częściowo wykończone",
+            "renovation_required": "Wymaga remontu"
           },
           "condition": {
             "excellent": "Doskonały",
             "good": "Dobry",
             "fair": "Przeciętny",
-            "needs_renovation": "Wymaga remontu"
+            "needs_renovation": "Wymaga remontu",
+            "brand_new": "Nowe / Po remoncie",
+            "cosmetic_fix": "Wymaga odświeżenia"
           },
           "project_type": {
             "residential": "Mieszkalny",
             "commercial": "Komercyjny",
-            "mixed_use": "Mieszany"
+            "mixed_use": "Mieszany",
+            "industrial": "Przemysłowy",
+            "agricultural": "Rolniczy",
+            "hospitality": "Hotelarstwo / Hotel"
           },
           "heating_type": {
             "central": "Centralne",
             "individual": "Indywidualne",
             "floor": "Podłogowe",
             "wall": "Ścienne",
-            "electric": "Elektryczne"
+            "electric": "Elektryczne",
+            "heat_pump": "Pompa ciepła",
+            "pellet_stove": "Piec na pellet / drewno"
           },
           "hot_water_type": {
             "central": "Centralne",
             "electric": "Elektryczne",
             "gas": "Gazowe",
-            "solar": "Słoneczne"
+            "solar": "Słoneczne",
+            "heat_pump_boiler": "Bojler z pompą ciepła",
+            "tankless": "Przepływowy / Elektryczny"
           },
           "property_subtype": {
             "penthouse": "Penthouse",
@@ -486,7 +532,13 @@
             "villa": "Willa",
             "studio": "Studio",
             "office": "Biurowy",
-            "land": "Działka"
+            "cottage": "Domek / Chalet",
+            "bungalow": "Bungalow",
+            "commercial_office": "Biuro komercyjne",
+            "retail": "Handel / Witryna",
+            "residential_plot": "Działka mieszkaniowa",
+            "commercial_plot": "Działka komercyjna",
+            "agri_land": "Grunty rolne"
           },
           "view": {
             "city": "Miasto",
@@ -502,6 +554,21 @@
             "microwave": "Mikrofala",
             "dishwasher": "Zmywarka",
             "washing_machine": "Pralka"
+          },
+          "price_type": {
+            "total": "Cena całkowita",
+            "per_sqm": "Cena za m²",
+            "negotiable": "Do negocjacji"
+          },
+          "energy_class": {
+            "a_plus": "A+",
+            "a": "A",
+            "b": "B",
+            "c": "C",
+            "d": "D",
+            "e": "E",
+            "f": "F",
+            "g": "G"
           }
         },
         "PropertyBulkActionsTab": {

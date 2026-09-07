@@ -131,19 +131,19 @@ describe("translateToAllLocales", () => {
 
     for (const locale of targetLocales) {
       const localeResult = result[locale];
-      expect(localeResult.title).toBe(translations[locale].title);
-      expect(localeResult.subtitle).toBe(translations[locale].subtitle);
-      expect(localeResult.location).toBe(translations[locale].location);
-      expect(localeResult.neighborhood).toBe(translations[locale].neighborhood);
-      expect(localeResult.city).toBe(translations[locale].city);
-      expect(localeResult.region).toBe(translations[locale].region);
-      expect(localeResult.country).toBe(translations[locale].country);
-      expect(localeResult.meta_description).toBe(translations[locale].meta_description);
-      expect(localeResult.description).toBe(translations[locale].description);
-      expect(localeResult.sale_type).toBe(translations[locale].sale_type);
-      expect(localeResult.inclusions).toEqual(translations[locale].inclusions.split("\n"));
-      expect(localeResult.floor_plan).toBe(baseFields.floor_plan);
-      expect(localeResult.card_image).toBe(baseFields.card_image);
+      expect(localeResult!.title).toBe(translations[locale].title);
+      expect(localeResult!.subtitle).toBe(translations[locale].subtitle);
+      expect(localeResult!.location).toBe(translations[locale].location);
+      expect(localeResult!.neighborhood).toBe(translations[locale].neighborhood);
+      expect(localeResult!.city).toBe(translations[locale].city);
+      expect(localeResult!.region).toBe(translations[locale].region);
+      expect(localeResult!.country).toBe(translations[locale].country);
+      expect(localeResult!.meta_description).toBe(translations[locale].meta_description);
+      expect(localeResult!.description).toBe(translations[locale].description);
+      expect(localeResult!.sale_type).toBe(translations[locale].sale_type);
+      expect(localeResult!.inclusions).toEqual(translations[locale].inclusions.split("\n"));
+      expect(localeResult!.floor_plan).toBe(baseFields.floor_plan);
+      expect(localeResult!.card_image).toBe(baseFields.card_image);
     }
 
     const stringFields = Object.keys(baseFields).filter(
@@ -169,11 +169,11 @@ describe("translateToAllLocales", () => {
 
     for (const locale of targetLocales) {
       if (locale === "de") {
-        expect(result.de.title).toBe("Test Title");
-        expect(result.de.description).toBe("Test Description");
+        expect(result.de!.title).toBe("Test Title");
+        expect(result.de!.description).toBe("Test Description");
       } else {
-        expect(result[locale].title).toBe("translated");
-        expect(result[locale].description).toBe("translated");
+        expect(result[locale]!.title).toBe("translated");
+        expect(result[locale]!.description).toBe("translated");
       }
     }
 
@@ -201,7 +201,7 @@ describe("translateToAllLocales", () => {
     const result = await translateToAllLocales("en", { ...baseFields, inclusions: testInclusions });
 
     for (const locale of targetLocales) {
-      expect(result[locale].inclusions).toEqual(
+      expect(result[locale]!.inclusions).toEqual(
         testInclusions.map((item) => `[${locale.toUpperCase()}] ${item}`)
       );
     }
@@ -239,8 +239,8 @@ describe("translateToAllLocales", () => {
           card_image: customCardImage,
         })
       )[locale];
-      expect(localeResult.floor_plan).toBe(customFloorPlan);
-      expect(localeResult.card_image).toBe(customCardImage);
+      expect(localeResult!.floor_plan).toBe(customFloorPlan);
+      expect(localeResult!.card_image).toBe(customCardImage);
     }
   });
 
@@ -252,7 +252,7 @@ describe("translateToAllLocales", () => {
     expect(Object.keys(result)).toEqual(targetLocales);
 
     for (const locale of targetLocales) {
-      expect(result[locale]).toEqual({ floor_plan: undefined, card_image: undefined });
+      expect(result[locale]).toEqual({});
     }
   });
 
@@ -266,9 +266,9 @@ describe("translateToAllLocales", () => {
     });
 
     for (const locale of targetLocales) {
-      expect(result[locale].title).toBe("translated");
-      expect(result[locale].subtitle).toBeUndefined();
-      expect(result[locale].location).toBeUndefined();
+      expect(result[locale]!.title).toBe("translated");
+      expect(result[locale]!.subtitle).toBeUndefined();
+      expect(result[locale]!.location).toBeUndefined();
     }
   });
 
@@ -281,7 +281,7 @@ describe("translateToAllLocales", () => {
 
     const result = await translateToAllLocales("en", { title: "Test", description: "Desc" });
 
-    expect(result.de.title).toBe("translated");
+    expect(result.de!.title).toBe("translated");
 
     for (const locale of targetLocales) {
       const localeCalls = mockTranslateText.mock.calls.filter((c) => c[2] === locale);
@@ -305,12 +305,91 @@ describe("translateToAllLocales", () => {
     const result = await translateToAllLocales("en", fieldsWithEmptyStrings);
 
     for (const locale of targetLocales) {
-      expect(result[locale].title).toBe("translated");
-      expect(result[locale].subtitle).toBeUndefined();
-      expect(result[locale].description).toBeUndefined();
-      expect(result[locale].location).toBe("translated");
+      expect(result[locale]!.title).toBe("translated");
+      expect(result[locale]!.subtitle).toBeUndefined();
+      expect(result[locale]!.description).toBeUndefined();
+      expect(result[locale]!.location).toBe("translated");
     }
 
+    expect(mockTranslateText).toHaveBeenCalledTimes(2 * 4);
+  });
+
+  it('dynamic targets: source "en" yields {de,tr,ru,pl} with no en key (unchanged behavior)', async () => {
+    mockTranslateText.mockResolvedValue({ text: "translated" });
+
+    const result = await translateToAllLocales("en", { title: "Test" });
+
+    expect(Object.keys(result)).toEqual(["de", "tr", "ru", "pl"]);
+    expect(result).not.toHaveProperty("en");
+    for (const locale of targetLocales) {
+      expect(result[locale]!.title).toBe("translated");
+    }
+  });
+
+  it('dynamic targets: source "ru" yields {en,de,tr,pl} with no ru key', async () => {
+    mockTranslateText.mockImplementation(
+      async (text: string, _source: string, target: string) => ({
+        text: `[${target}] ${text}`,
+      })
+    );
+
+    const result = await translateToAllLocales("ru", {
+      title: "Тест",
+      description: "Описание",
+    });
+
+    expect(Object.keys(result).sort()).toEqual(["de", "en", "pl", "tr"]);
+    expect(result).not.toHaveProperty("ru");
+
+    expect(result.en!.title).toBe("[en-US] Тест");
+    expect(result.en!.description).toBe("[en-US] Описание");
+    expect(result.de!.title).toBe("[de] Тест");
+    expect(result.tr!.title).toBe("[tr] Тест");
+    expect(result.pl!.title).toBe("[pl] Тест");
+
+    // Real source language is passed through (no cast lie).
+    for (const call of mockTranslateText.mock.calls) {
+      expect(call[1]).toBe("ru");
+    }
+    // App-locale "en" maps to the DeepL target code "en-US".
+    const targetCodes = new Set(mockTranslateText.mock.calls.map((call) => call[2]));
+    expect(targetCodes).toEqual(new Set(["en-US", "de", "tr", "pl"]));
+  });
+
+  it("normalizes source locale: en-* variants and unknown codes fall back to en targets", async () => {
+    mockTranslateText.mockResolvedValue({ text: "translated" });
+
+    for (const source of ["en-US", "en-GB", "xx"]) {
+      vi.clearAllMocks();
+      const result = await translateToAllLocales(source, { title: "Test" });
+      expect(Object.keys(result)).toEqual(["de", "tr", "ru", "pl"]);
+      expect(result).not.toHaveProperty("en");
+      for (const call of mockTranslateText.mock.calls) {
+        expect(call[1]).toBe("en");
+      }
+    }
+  });
+
+  it("empty-string values are skipped for non-en sources (no translate call, undefined in result)", async () => {
+    mockTranslateText.mockResolvedValue({ text: "translated" });
+
+    const result = await translateToAllLocales("de", {
+      title: "Test Titel",
+      subtitle: "",
+      description: "   ",
+      location: "Gültiger Ort",
+    });
+
+    expect(Object.keys(result).sort()).toEqual(["en", "pl", "ru", "tr"]);
+    for (const locale of ["en", "de", "tr", "ru", "pl"] as const) {
+      if (locale === "de") continue;
+      expect(result[locale]!.title).toBe("translated");
+      expect(result[locale]!.subtitle).toBeUndefined();
+      expect(result[locale]!.description).toBeUndefined();
+      expect(result[locale]!.location).toBe("translated");
+    }
+
+    // Only the 2 non-empty strings × 4 targets hit the API.
     expect(mockTranslateText).toHaveBeenCalledTimes(2 * 4);
   });
 });

@@ -4,12 +4,13 @@ import type { PropertyFormData } from "@/types/admin";
 import type { Property } from "@/types/property";
 import type { MediaImage } from "./PropertyMediaUploader";
 import { Button } from "@/components/ui/Buttons";
-import { useTranslations } from "next-intl";
+import { useLocale, useTranslations } from "next-intl";
 import { X, ChevronLeft, ChevronRight } from "lucide-react";
 import { PropertyGeneralTab } from "./PropertyGeneralTab";
 import { PropertySpecsTab } from "./PropertySpecsTab";
 import { PropertyAmenitiesTab } from "./PropertyAmenitiesTab";
 import { PropertyMediaTab } from "./PropertyMediaTab";
+import { PropertySeoTab } from "./PropertySeoTab";
 import { PropertyActionsTab } from "./PropertyActionsTab";
 interface PropertyFormModalProps {
   open: boolean;
@@ -21,6 +22,19 @@ interface PropertyFormModalProps {
   onDeactivate?: (ids: number[]) => Promise<void>;
 }
 const DRAFT_KEY = "property-form-draft";
+// Translatable text fields edited in the UI locale. Absent keys in the save
+// payload mean "unchanged", so these are diffed against a snapshot on save.
+const TRANSLATABLE_KEYS = [
+  "title",
+  "neighborhood",
+  "city",
+  "country",
+  "meta_description",
+  "description",
+  "sale_type",
+] as const;
+type TranslatableKey = (typeof TRANSLATABLE_KEYS)[number];
+type SavePayload = Omit<PropertyFormData, "title"> & { title?: string; sourceLocale: string };
 interface FormState {
   fields: Record<string, string>;
   booleans: Record<string, boolean>;
@@ -42,17 +56,20 @@ function defaultFormState(): FormState {
       city: "",
       neighborhood: "",
       street_address: "",
-      region: "",
+      listing_status: "",
       price: "",
+      price_type: "",
+      cadastral_code: "",
       sqmt: "",
       lot_sqmt: "",
       ceiling_height: "",
-      rooms: "",
       bedrooms: "",
       bathrooms: "",
       floor: "",
       total_floors: "",
       year_built: "",
+      renovation_year: "",
+      energy_class: "",
       building_status: "",
       condition: "",
       project_type: "",
@@ -63,13 +80,13 @@ function defaultFormState(): FormState {
       parking_type: "",
       video_url: "",
       virtual_tour_url: "",
+      floor_plan_url: "",
       meta_title: "",
       meta_description: "",
       description: "",
       slug: "",
     },
     booleans: {
-      listing_status: false,
       is_featured: false,
       balcony: false,
       natural_gas: false,
@@ -81,6 +98,17 @@ function defaultFormState(): FormState {
       elevator: false,
       ac: false,
       security: false,
+      swimming_pool: false,
+      sauna_jacuzzi: false,
+      gym: false,
+      private_yard: false,
+      bbq_area: false,
+      concierge: false,
+      fireplace: false,
+      storage: false,
+      intercom: false,
+      pet_friendly: false,
+      wheelchair_accessible: false,
     },
     view: [],
     kitchenAppliances: [],
@@ -154,6 +182,8 @@ export function PropertyFormModal({
   onDeactivate,
 }: PropertyFormModalProps) {
   const t = useTranslations("Components.Admin.PropertyFormModal");
+  const locale = useLocale();
+  const snapshotRef = useRef<Record<TranslatableKey, string> | null>(null);
   const [formState, setFormState] = useState<FormState>(defaultFormState);
   const [errors, setErrors] = useState<Record<string, string>>({});
   const [formError, setFormError] = useState<string | null>(null);
@@ -164,7 +194,6 @@ export function PropertyFormModal({
   const saveDraftTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const fieldId = (name: string) => `${baseId}-${name}`;
   const booleanFields = new Set([
-    "listing_status",
     "is_featured",
     "balcony",
     "natural_gas",
@@ -176,6 +205,17 @@ export function PropertyFormModal({
     "elevator",
     "ac",
     "security",
+    "swimming_pool",
+    "sauna_jacuzzi",
+    "gym",
+    "private_yard",
+    "bbq_area",
+    "concierge",
+    "fireplace",
+    "storage",
+    "intercom",
+    "pet_friendly",
+    "wheelchair_accessible",
   ]);
   const getValue = useCallback(
     (name: string) => {
@@ -248,28 +288,47 @@ export function PropertyFormModal({
   }, []);
   const loadFromProperty = useCallback((prop: Property) => {
     const images = stringsToImages(prop.gallery, prop.card_image, prop.floor_plan);
+    const extra = prop as unknown as Record<string, unknown>;
+    const localizedText = (key: TranslatableKey, base: unknown): string => {
+      if (locale === "en") return (base as string | undefined) ?? "";
+      const variant = extra[`${key}_${locale}`] as string | undefined;
+      return variant ?? (base as string | undefined) ?? "";
+    };
+    const localized: Record<TranslatableKey, string> = {
+      title: localizedText("title", prop.title),
+      neighborhood: localizedText("neighborhood", prop.neighborhood),
+      city: localizedText("city", prop.city),
+      country: localizedText("country", prop.country),
+      meta_description: localizedText("meta_description", prop.meta_description),
+      description: localizedText("description", prop.description),
+      sale_type: localizedText("sale_type", prop.sale_type),
+    };
+    snapshotRef.current = { ...localized };
     const nextState: FormState = {
       fields: {
-        title: prop.title ?? "",
+        title: localized.title,
         type: prop.type ?? "",
         property_subtype: prop.property_subtype ?? "",
-        sale_type: prop.sale_type ?? "",
+        sale_type: localized.sale_type,
         currency: prop.currency ?? "EUR",
-        country: prop.country ?? "",
-        city: prop.city ?? "",
-        neighborhood: prop.neighborhood ?? "",
+        country: localized.country,
+        city: localized.city,
+        neighborhood: localized.neighborhood,
         street_address: prop.street_address ?? "",
-        region: prop.region ?? "",
+        listing_status: prop.listing_status ?? "",
         price: prop.price?.toString() ?? "",
+        price_type: (extra.price_type as string | undefined) ?? "",
+        cadastral_code: (extra.cadastral_code as string | undefined) ?? "",
         sqmt: prop.sqmt?.toString() ?? "",
         lot_sqmt: prop.lot_sqmt?.toString() ?? "",
         ceiling_height: prop.ceiling_height?.toString() ?? "",
-        rooms: prop.rooms?.toString() ?? "",
         bedrooms: prop.bedrooms?.toString() ?? "",
         bathrooms: prop.bathrooms?.toString() ?? "",
         floor: prop.floor?.toString() ?? "",
         total_floors: prop.total_floors?.toString() ?? "",
         year_built: prop.year_built?.toString() ?? "",
+        renovation_year: (extra.renovation_year as number | undefined)?.toString() ?? "",
+        energy_class: (extra.energy_class as string | undefined) ?? "",
         building_status: prop.building_status ?? "",
         condition: prop.condition ?? "",
         project_type: prop.project_type ?? "",
@@ -280,12 +339,13 @@ export function PropertyFormModal({
         parking_type: prop.parking_type ?? "",
         video_url: prop.video_url ?? "",
         virtual_tour_url: prop.virtual_tour_url ?? "",
-        meta_description: prop.meta_description ?? "",
-        description: prop.description ?? "",
+        floor_plan_url: (extra.floor_plan_url as string | undefined) ?? "",
+        meta_title: (extra.meta_title as string | undefined) ?? "",
+        meta_description: localized.meta_description,
+        description: localized.description,
         slug: "",
       },
       booleans: {
-        listing_status: prop.listing_status === "published",
         is_featured: prop.is_featured ?? false,
         balcony: prop.balcony ?? false,
         natural_gas: prop.natural_gas ?? false,
@@ -297,6 +357,17 @@ export function PropertyFormModal({
         elevator: prop.elevator ?? false,
         ac: prop.ac ?? false,
         security: prop.security ?? false,
+        swimming_pool: prop.swimming_pool ?? false,
+        sauna_jacuzzi: prop.sauna_jacuzzi ?? false,
+        gym: prop.gym ?? false,
+        private_yard: prop.private_yard ?? false,
+        bbq_area: prop.bbq_area ?? false,
+        concierge: prop.concierge ?? false,
+        fireplace: prop.fireplace ?? false,
+        storage: prop.storage ?? false,
+        intercom: prop.intercom ?? false,
+        pet_friendly: prop.pet_friendly ?? false,
+        wheelchair_accessible: prop.wheelchair_accessible ?? false,
       },
       view: prop.view ?? [],
       kitchenAppliances: prop.kitchen_appliances ?? [],
@@ -310,7 +381,7 @@ export function PropertyFormModal({
     setFormError(null);
     setSubmitting(false);
     setActiveTab(0);
-  }, []);
+  }, [locale]);
 
   // Separate effect to load data when modal opens
   // This follows React patterns for initialization
@@ -328,9 +399,10 @@ export function PropertyFormModal({
     if (property) {
       loadFromProperty(property);
     } else {
+      snapshotRef.current = null;
       loadDraft();
     }
-  }, [open, property]);
+  }, [open, property, loadFromProperty, loadDraft]);
 
   useEffect(() => {
     if (!open) return;
@@ -395,7 +467,7 @@ export function PropertyFormModal({
         checkNumeric("sqmt");
         checkNumeric("lot_sqmt");
         checkNumeric("ceiling_height");
-        checkNumeric("rooms");
+        checkNumeric("renovation_year");
         checkNumeric("bedrooms");
         checkNumeric("bathrooms");
         checkNumeric("total_floors");
@@ -414,7 +486,7 @@ export function PropertyFormModal({
   );
   const validateAll = useCallback((): Record<string, string> => {
     let allErrors: Record<string, string> = {};
-    const tabCount = property ? 5 : 4;
+    const tabCount = property ? 6 : 5;
     for (let i = 0; i < tabCount; i++) {
       allErrors = { ...allErrors, ...validateTab(i) };
     }
@@ -438,7 +510,7 @@ export function PropertyFormModal({
   const handleKeyDownTab = useCallback(
     (event: React.KeyboardEvent, index: number) => {
       let newIndex = index;
-      const tabCount = property ? 5 : 4;
+      const tabCount = property ? 6 : 5;
       switch (event.key) {
         case "ArrowRight":
           newIndex = (index + 1) % tabCount;
@@ -474,24 +546,21 @@ export function PropertyFormModal({
     }
     const { fields, booleans, view, kitchenAppliances, images, lat, lng } = formState;
     const { gallery, card_image, floor_plan } = imagesToStrings(images);
-    const payload: PropertyFormData = {
-      title: fields.title.trim(),
+    const payload: SavePayload & Record<string, unknown> = {
+      sourceLocale: locale,
       type: fields.type || undefined,
-      neighborhood: fields.neighborhood || undefined,
-      city: fields.city || undefined,
-      region: fields.region || undefined,
-      country: fields.country || undefined,
-      rooms: fields.rooms ? Number(fields.rooms) : undefined,
       bedrooms: fields.bedrooms ? Number(fields.bedrooms) : undefined,
       bathrooms: fields.bathrooms ? Number(fields.bathrooms) : undefined,
       sqmt: fields.sqmt ? Number(fields.sqmt) : undefined,
       price: fields.price ? Number(fields.price) : undefined,
+      price_type: fields.price_type || undefined,
+      cadastral_code: fields.cadastral_code || undefined,
+      energy_class: fields.energy_class || undefined,
+      renovation_year: fields.renovation_year ? Number(fields.renovation_year) : undefined,
+      floor_plan_url: fields.floor_plan_url || undefined,
       currency: fields.currency || undefined,
-      sale_type: fields.sale_type || undefined,
       year_built: fields.year_built ? Number(fields.year_built) : undefined,
       floor: fields.floor || undefined,
-      meta_description: fields.meta_description || undefined,
-      description: fields.description || undefined,
       gallery: gallery.length > 0 ? gallery : undefined,
       floor_plan: floor_plan,
       card_image: card_image,
@@ -524,7 +593,44 @@ export function PropertyFormModal({
       elevator: booleans.elevator,
       ac: booleans.ac,
       security: booleans.security,
+      swimming_pool: booleans.swimming_pool,
+      sauna_jacuzzi: booleans.sauna_jacuzzi,
+      gym: booleans.gym,
+      private_yard: booleans.private_yard,
+      bbq_area: booleans.bbq_area,
+      concierge: booleans.concierge,
+      fireplace: booleans.fireplace,
+      storage: booleans.storage,
+      intercom: booleans.intercom,
+      pet_friendly: booleans.pet_friendly,
+      wheelchair_accessible: booleans.wheelchair_accessible,
     };
+    // Translatable fields: absent keys mean "unchanged". In edit mode include
+    // a key only when it differs from the snapshot taken at load; in
+    // new-property mode (no snapshot) include all non-empty values.
+    const candidates: Record<TranslatableKey, string | undefined> = {
+      title: fields.title.trim(),
+      neighborhood: fields.neighborhood || undefined,
+      city: fields.city || undefined,
+      country: fields.country || undefined,
+      meta_description: fields.meta_description || undefined,
+      description: fields.description || undefined,
+      sale_type: fields.sale_type || undefined,
+    };
+    const out = payload as unknown as Record<string, string | undefined>;
+    const snapshot = snapshotRef.current;
+    if (snapshot) {
+      for (const key of TRANSLATABLE_KEYS) {
+        if (candidates[key] !== snapshot[key]) {
+          out[key] = candidates[key];
+        }
+      }
+    } else {
+      for (const key of TRANSLATABLE_KEYS) {
+        const value = candidates[key];
+        if (value) out[key] = value;
+      }
+    }
     if (lat !== null && lng !== null) {
       payload.coords = [lat, lng];
     }
@@ -550,9 +656,10 @@ export function PropertyFormModal({
         t("Tabs.specs"),
         t("Tabs.amenities"),
         t("Tabs.media"),
+        t("Tabs.seo"),
         t("Tabs.actions"),
       ]
-    : [t("Tabs.general"), t("Tabs.specs"), t("Tabs.amenities"), t("Tabs.media")];
+    : [t("Tabs.general"), t("Tabs.specs"), t("Tabs.amenities"), t("Tabs.media"), t("Tabs.seo")];
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4"
@@ -644,6 +751,8 @@ export function PropertyFormModal({
               setView={setView}
               kitchenAppliances={formState.kitchenAppliances}
               setKitchenAppliances={setKitchenAppliances}
+              propertyType={formState.fields.type}
+              propertySubtype={formState.fields.property_subtype}
             />
           </div>
           <div
@@ -680,12 +789,27 @@ export function PropertyFormModal({
               onImagesChange={setImages}
             />
           </div>
+          <div
+            id="tabpanel-4"
+            role="tabpanel"
+            aria-labelledby="tab-4"
+            style={{ display: activeTab !== 4 ? "none" : "block" }}
+          >
+            <PropertySeoTab
+              fields={formState.fields}
+              setField={setField}
+              setBoolean={setBoolean}
+              getValue={getValue}
+              errors={errors}
+              t={t}
+            />
+          </div>
           {property && (
             <div
-              id="tabpanel-4"
+              id="tabpanel-5"
               role="tabpanel"
-              aria-labelledby="tab-4"
-              style={{ display: activeTab !== 4 ? "none" : "block" }}
+              aria-labelledby="tab-5"
+              style={{ display: activeTab !== 5 ? "none" : "block" }}
             >
               <PropertyActionsTab
                 propertyId={property.id}

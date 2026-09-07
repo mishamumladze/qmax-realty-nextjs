@@ -1,8 +1,6 @@
 "use client";
 
 import { useId } from "react";
-import type { MediaImage } from "./PropertyMediaUploader";
-import { PropertyMediaUploader } from "./PropertyMediaUploader";
 
 interface SharedTabProps {
   fields: Record<string, string>;
@@ -13,10 +11,7 @@ interface SharedTabProps {
   t: (key: string) => string;
 }
 
-interface PropertyMediaTabProps extends SharedTabProps {
-  images: MediaImage[];
-  onImagesChange: (images: MediaImage[]) => void;
-}
+type PropertySeoTabProps = SharedTabProps;
 
 const labelClass = "block text-sm font-medium text-gray-700 dark:text-gray-300";
 const inputClass =
@@ -24,16 +19,14 @@ const inputClass =
 const errorBorderClass = " border-red-500 dark:border-red-500";
 const errorTextClass = "mt-1 text-sm text-red-600 dark:text-red-400";
 
-export function PropertyMediaTab({
+export function PropertySeoTab({
   fields,
   setField,
   setBoolean,
   getValue,
   errors,
   t,
-  images,
-  onImagesChange,
-}: PropertyMediaTabProps) {
+}: PropertySeoTabProps) {
   const baseId = useId();
   const fieldId = (name: string) => `${baseId}-${name}`;
 
@@ -59,23 +52,38 @@ export function PropertyMediaTab({
     );
   };
 
+  const renderTextarea = (name: string, labelKey: string, rows: number, placeholderKey: string) => {
+    const id = fieldId(name);
+    const error = errors[name];
+    return (
+      <div className="col-span-2">
+        <label htmlFor={id} className={labelClass}>
+          {t(labelKey)}
+        </label>
+        <textarea
+          id={id}
+          rows={rows}
+          value={getValue(name)}
+          onChange={(e) => setField(name, e.target.value)}
+          aria-invalid={error ? true : undefined}
+          className={`${inputClass}${error ? errorBorderClass : ""}`}
+          placeholder={t(`Placeholders.${placeholderKey}`)}
+        />
+        {error ? <p className={errorTextClass}>{error}</p> : null}
+      </div>
+    );
+  };
+
+  void fields;
+  void setBoolean;
+
   return (
     <div className="grid grid-cols-1 gap-4 md:grid-cols-2" role="tabpanel">
-      <div className="col-span-2">
-        <label className={labelClass}>{t("Labels.property_media")}</label>
-        <PropertyMediaUploader
-          images={images}
-          onChange={onImagesChange}
-          maxImages={20}
-          maxSizeMb={10}
-        />
-      </div>
+      {renderTextInput("meta_title", "meta_title")}
 
-      {renderTextInput("video_url", "video_url")}
+      {renderTextInput("slug", "slug")}
 
-      {renderTextInput("virtual_tour_url", "virtual_tour_url")}
-
-      {renderTextInput("floor_plan_url", "floor_plan_url")}
+      {renderTextarea("meta_description", "Textareas.meta_description", 3, "meta_description")}
     </div>
   );
 }

@@ -12,6 +12,7 @@ export interface PropertyMapPickerProps {
   lng: number | null;
   onChange: (lat: number, lng: number) => void;
   placeholder?: string;
+  showGeolocate?: boolean;
 }
 const DEFAULT_CENTER: [number, number] = [41.7151, 44.8271];
 const DEFAULT_ZOOM = 12;
@@ -40,6 +41,7 @@ export function PropertyMapPicker({
   lng,
   onChange,
   placeholder,
+  showGeolocate = true,
 }: PropertyMapPickerProps): React.ReactElement {
   const mounted = useMounted();
   const dark = useDarkMode();
@@ -216,9 +218,10 @@ export function PropertyMapPicker({
           Enter valid coordinates (latitude -90 to 90, longitude -180 to 180).
         </p>
       )}
-      <button
-        type="button"
-        onClick={handleGeolocation}
+      {showGeolocate && (
+        <button
+          type="button"
+          onClick={handleGeolocation}
         className="inline-flex items-center justify-center gap-2 rounded-md border border-gray-300
           bg-white px-3 py-2 text-sm font-medium text-gray-700 transition-colors hover:bg-gray-50
           dark:border-gray-600 dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-gray-700"
@@ -244,7 +247,8 @@ export function PropertyMapPicker({
           />
         </svg>
         Use my location
-      </button>
+        </button>
+      )}
     </div>
   );
 }

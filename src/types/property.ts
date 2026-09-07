@@ -57,7 +57,12 @@ export interface Property {
   sale_type_tr?: string;
   sale_type_ru?: string;
   sale_type_pl?: string;
+  price_type?: string;
+  cadastral_code?: string;
+  energy_class?: string;
+  floor_plan_url?: string;
   year_built?: number;
+  renovation_year?: number;
   floor?: number | string;
   meta_description?: string;
   meta_description_de?: string;
@@ -110,4 +115,15 @@ export interface Property {
   elevator?: boolean;
   ac?: boolean;
   security?: boolean;
+  swimming_pool?: boolean;
+  sauna_jacuzzi?: boolean;
+  gym?: boolean;
+  private_yard?: boolean;
+  bbq_area?: boolean;
+  concierge?: boolean;
+  fireplace?: boolean;
+  storage?: boolean;
+  intercom?: boolean;
+  pet_friendly?: boolean;
+  wheelchair_accessible?: boolean;
 }
