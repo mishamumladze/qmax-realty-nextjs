@@ -382,7 +382,8 @@ test.describe("Property Form Modal - 4 Tab Structure", () => {
   test("map picker interaction updates lat/lng inputs", async ({ page }) => {
     await openAddPropertyModal(page);
 
-    const mapContainer = page.locator('.leaflet-container');
+    // Scope to the modal dialog: the page can host other maps (e.g. footer).
+    const mapContainer = page.getByRole("dialog").locator('.leaflet-container');
     await expect(mapContainer).toBeVisible();
 
     await mapContainer.click({ position: { x: 300, y: 200 } });

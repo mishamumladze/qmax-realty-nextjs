@@ -213,7 +213,7 @@ export function NewsletterSubscribersList() {
                   aria-label={t("Aria.remove_subscriber", { email: s.email })}
                   onClick={(e) => requestRemove(s, e)}
                 >
-                  <Trash2 aria-hidden="true" />
+                  <Trash2 aria-hidden="true"/>
                   {t("Buttons.remove")}
                 </Button>
               </div>

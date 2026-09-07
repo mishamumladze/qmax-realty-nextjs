@@ -1,0 +1,39 @@
+# Database & State
+data/
+*.sqlite
+*.sqlite3
+*.db
+
+# Media, Assets & Public files
+public/
+
+# Translation JSONs & Scripts (usually bulky and repetitive)
+messages/
+scripts/
+
+# Testing & End-to-End Specs
+tests/
+playwright.config.ts
+
+# Lockfiles (Extremely heavy in tokens)
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Reports, Audits & Non-code docs
+DESIGN_REVIEW_REPORT.md
+AGENTS.md
+CLAUDE.md
+README.md
+
+# Build & Config noise
+.next/
+dist/
+coverage/
+eslint.config.mjs
+i18next-parser.config.mjs
+postcss.config.mjs
+.prettierrc
+.prettierignore
+.gitattributes
+.gitignore

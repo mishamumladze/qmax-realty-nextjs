@@ -2,6 +2,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { MapPin, Mail } from "lucide-react";
 import ContactLinks from "./ContactLinks";
+import OfficeMap from "./OfficeMap";
 import { getTranslations } from "next-intl/server";
 
 // Optional: Define props if you want dynamic data, or define fallback constants
@@ -44,7 +45,7 @@ export default async function Footer({}: FooterProps) {
           </div>
 
           {/* Contact Info */}
-          <ContactLinks variant="list" only={["email", "phone", "address"]} />
+          <ContactLinks variant="list" only={["email", "phone", "address"]}/>
           {/* Social Links */}
           <ContactLinks
             variant="icons-only"
@@ -55,15 +56,7 @@ export default async function Footer({}: FooterProps) {
 
         {/* Map */}
         <div className="map-container mt-8 mb-8">
-          <iframe
-            title={t("map_title")}
-            src="https://www.google.com/maps?q=Rustaveli+Ave+12,+Tbilisi,+Georgia&output=embed"
-            className="h-80 w-full rounded-lg border-0 dark:opacity-80 dark:contrast-125
-              dark:hue-rotate-180 dark:invert dark:saturate-85 dark:filter"
-            allowFullScreen
-            loading="lazy"
-            referrerPolicy="no-referrer-when-downgrade"
-          />
+          <OfficeMap title={t("map_title")}/>
         </div>
 
         {/* Bottom Bar */}

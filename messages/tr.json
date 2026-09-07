@@ -70,6 +70,9 @@
     },
     "Footer": {
       "map_title": "QMAX Emlak Ofisinin Konumu",
+      "map_address_label": "Ofis adresi",
+      "map_directions": "Yol tarifi al",
+      "map_view_larger": "Haritayı büyüt",
       "home_aria": "QMAX Realty ana sayfası",
       "copyright": "© {currentYear} QMAX Realty. Tüm hakları saklıdır."
     },
@@ -195,11 +198,25 @@
         },
         "Buttons": {
           "edit": "Düzenle",
-          "delete": "Sil"
+          "delete": "Sil",
+          "select_all": "Tümünü seç",
+          "deselect_all": "Seçimi kaldır",
+          "delete_selected": "Seçilileri sil",
+          "deactivate_selected": "Seçilileri devre dışı bırak",
+          "activate_selected": "Seçilileri etkinleştir",
+          "deleting": "Siliniyor..."
+        },
+        "Selected": {
+          "count": "{count} seçildi"
         },
         "Aria": {
           "edit_property": "{title}'ı düzenle",
-          "delete_property": "{title}'ı sil"
+          "delete_property": "{title}'ı sil",
+          "select_row": "{title} seç"
+        },
+        "Sort": {
+          "ascending": "Artan sırala",
+          "descending": "Azalan sırala"
         }
       },
       "MessagesList": {
@@ -470,7 +487,100 @@
           "general": "Genel",
           "specs": "Özellikler",
           "amenities": "Sosyal Alanlar",
-          "media": "Medya"
+          "media": "Medya",
+          "bulk_actions": "Toplu İşlemler",
+          "actions": "Eylemler"
+        },
+        "PropertyBulkActionsTab": {
+          "Description": "{count} özellikleri seçildi",
+          "Sections": {
+            "danger_zone": "Tehlikeli Bölge",
+            "danger_zone_description": "Bu işlemler, özellikleri kalıcı olarak siler. Bu işlem geri alınamaz.",
+            "status_actions": "Durum İşlemleri",
+            "status_actions_description": "Seçilen gayrimenkullerin listeleme durumunu değiştirin."
+          },
+          "Buttons": {
+            "delete_selected": "Seçilenleri sil",
+            "confirm_delete": "Silme işlemini onayla",
+            "cancel": "İptal et",
+            "deleting": "Siliniyor…",
+            "activate_selected": "Seçilenleri etkinleştir",
+            "deactivate_selected": "Seçilenleri devre dışı bırak",
+            "activating": "Etkinleştiriliyor…",
+            "deactivating": "Devre dışı bırakılıyor…"
+          },
+          "Confirm": {
+            "delete_message": "{count} propert{count, plural, one {y} other {ies}} öğesini kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+          },
+          "Feedback": {
+            "deleted": "{count} özelliği silindi {sayısı, çoğul, bir {y}, diğer {ies}}.",
+            "activated": "{count} özelliği etkinleştirildi {sayım, çoğul, bir {y}, diğer {ies}}.",
+            "deactivated": "{count} özelliği devre dışı bırakıldı {sayısı, çoğul, bir {y}, diğer {ies}}.",
+            "delete_failed": "Özellikler silinemedi.",
+            "activate_failed": "Özellikler etkinleştirilemedi.",
+            "deactivate_failed": "Özelliklerin devre dışı bırakılması başarısız oldu."
+          }
+        }
+      },
+      "PropertyBulkActionsTab": {
+        "Description": "{count} özellikleri seçildi",
+        "Sections": {
+          "danger_zone": "Tehlikeli Bölge",
+          "danger_zone_description": "Bu işlemler, özellikleri kalıcı olarak siler. Bu işlem geri alınamaz.",
+          "status_actions": "Durum İşlemleri",
+          "status_actions_description": "Seçilen gayrimenkullerin listeleme durumunu değiştirin."
+        },
+        "Buttons": {
+          "delete_selected": "Seçilenleri sil",
+          "confirm_delete": "Silme işlemini onayla",
+          "cancel": "İptal et",
+          "deleting": "Siliniyor...",
+          "activate_selected": "Seçilenleri etkinleştir",
+          "deactivate_selected": "Seçilenleri devre dışı bırak",
+          "activating": "Etkinleştiriliyor...",
+          "deactivating": "Devre dışı bırakılıyor..."
+        },
+        "Confirm": {
+          "delete_message": "{count} propert{count, plural, one {y} other {ies}} öğesini kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+        },
+        "Feedback": {
+          "deleted": "{count} özelliği silindi {sayım, çoğul, bir {y}, diğer {ies}}.",
+          "activated": "{count} özelliği etkinleştirildi {sayım, çoğul, bir {y}, diğer {ies}}.",
+          "deactivated": "{count} özelliği devre dışı bırakıldı {sayım, çoğul, bir {y}, diğer {ies}}.",
+          "delete_failed": "Özellikler silinemedi.",
+          "activate_failed": "Özellikler etkinleştirilemedi.",
+          "deactivate_failed": "Özelliklerin devre dışı bırakılması başarısız oldu."
+        }
+      },
+      "PropertyActionsTab": {
+        "Description": "Bu mülkü yönetin.",
+        "Description_with_title": "\"{title}\" öğesini yönetin.",
+        "Sections": {
+          "danger_zone": "Tehlikeli Bölge",
+          "danger_zone_description": "Bu işlem, bu özelliği kalıcı olarak siler. Bu işlem geri alınamaz.",
+          "status_actions": "Durum İşlemleri",
+          "status_actions_description": "Bu gayrimenkulün listeleme durumunu değiştirin."
+        },
+        "Buttons": {
+          "delete_property": "Özelliği sil",
+          "confirm_delete": "Silme işlemini onayla",
+          "cancel": "İptal et",
+          "deleting": "Siliniyor...",
+          "activate": "Etkinleştir",
+          "deactivate": "Devre dışı bırak",
+          "activating": "Etkinleştiriliyor...",
+          "deactivating": "Devre dışı bırakılıyor..."
+        },
+        "Confirm": {
+          "delete_message": "Bu özelliği kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz.",
+          "delete_message_with_title": "\"{title}\" öğesini kalıcı olarak silmek istediğinizden emin misiniz? Bu işlem geri alınamaz."
+        },
+        "Feedback": {
+          "activated": "Özellik etkinleştirildi.",
+          "deactivated": "Özellik devre dışı bırakıldı.",
+          "delete_failed": "Özelliğin silinmesi başarısız oldu.",
+          "activate_failed": "Özelliği etkinleştirilemedi.",
+          "deactivate_failed": "Özelliğin devre dışı bırakılması başarısız oldu."
         }
       }
     }

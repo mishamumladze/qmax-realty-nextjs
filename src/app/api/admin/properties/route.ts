@@ -1,4 +1,6 @@
 import { NextResponse } from "next/server";
+import Database from "better-sqlite3";
+import path from "path";
 import {
   deleteProperty,
   getAllProperties,
@@ -9,6 +11,8 @@ import {
 import { verifyToken } from "@/lib/admin-auth";
 import { PropertyFormData } from "@/types/admin";
 import { translateToAllLocales, TranslationFields } from "@/lib/translations";
+
+const dbPath = path.join(process.cwd(), "data", "qmax.sqlite");
 
 const NUMERIC_FIELDS = [
   "rooms",
@@ -325,19 +329,66 @@ export async function DELETE(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  const idParam = new URL(request.url).searchParams.get("id");
-  const id = Number(idParam);
-  if (!idParam || !Number.isInteger(id) || id <= 0) {
-    return NextResponse.json({ error: "Valid id query parameter is required" }, { status: 400 });
-  }
+  try {
+    const body = await request.json();
+    if (typeof body !== "object" || body === null || Array.isArray(body)) {
+      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
 
-  if (!deleteProperty(id)) {
-    return NextResponse.json({ error: "Property not found" }, { status: 404 });
-  }
+    const { ids } = body as { ids?: unknown };
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return NextResponse.json({ error: "ids array is required" }, { status: 400 });
+    }
 
-  return NextResponse.json({ ok: true });
+    const db = new Database(dbPath);
+    const placeholders = ids.map(() => "?").join(",");
+    const stmt = db.prepare(`DELETE FROM properties WHERE id IN (${placeholders})`);
+    const info = stmt.run(...ids);
+
+    return NextResponse.json({ deleted: info.changes });
+  } catch {
+    const idParam = new URL(request.url).searchParams.get("id");
+    const id = Number(idParam);
+    if (!idParam || !Number.isInteger(id) || id <= 0) {
+      return NextResponse.json({ error: "Valid id query parameter is required" }, { status: 400 });
+    }
+
+    if (!deleteProperty(id)) {
+      return NextResponse.json({ error: "Property not found" }, { status: 404 });
+    }
+
+    return NextResponse.json({ deleted: 1 });
+  }
 }
 
-export async function PATCH() {
-  return NextResponse.json({ error: "Method not allowed" }, { status: 405 });
+export async function PATCH(request: Request) {
+  const auth = request.headers.get("authorization") ?? "";
+  const token = auth.replace(/^Bearer\s+/i, "");
+  if (!token || !(await verifyToken(token))) {
+    return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
+  }
+
+  try {
+    const body = await request.json();
+    if (typeof body !== "object" || body === null || Array.isArray(body)) {
+      return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+    }
+
+    const { ids, status } = body as { ids?: unknown; status?: unknown };
+    if (!Array.isArray(ids) || ids.length === 0) {
+      return NextResponse.json({ error: "ids array is required" }, { status: 400 });
+    }
+    if (typeof status !== "string" || !["active", "inactive"].includes(status)) {
+      return NextResponse.json({ error: "status must be 'active' or 'inactive'" }, { status: 400 });
+    }
+
+    const db = new Database(dbPath);
+    const placeholders = ids.map(() => "?").join(",");
+    const stmt = db.prepare(`UPDATE properties SET status = ? WHERE id IN (${placeholders})`);
+    const info = stmt.run(status, ...ids);
+    
+    return NextResponse.json({ updated: info.changes });
+  } catch {
+    return NextResponse.json({ error: "Invalid request" }, { status: 400 });
+  }
 }

@@ -70,6 +70,9 @@
     },
     "Footer": {
       "map_title": "Адрес офиса QMAX Realty",
+      "map_address_label": "Адрес офиса",
+      "map_directions": "Построить маршрут",
+      "map_view_larger": "Открыть карту",
       "home_aria": "Главная страница QMAX Realty",
       "copyright": "© {currentYear} QMAX Realty. Все права защищены."
     },
@@ -195,11 +198,25 @@
         },
         "Buttons": {
           "edit": "Редактировать",
-          "delete": "Удалить"
+          "delete": "Удалить",
+          "select_all": "Выбрать все",
+          "deselect_all": "Сбросить выбор",
+          "delete_selected": "Удалить выбранные",
+          "deactivate_selected": "Деактивировать выбранные",
+          "activate_selected": "Активировать выбранные",
+          "deleting": "Удаление..."
+        },
+        "Selected": {
+          "count": "{count} выбрано"
         },
         "Aria": {
           "edit_property": "Редактировать {title}",
-          "delete_property": "Удалить {title}"
+          "delete_property": "Удалить {title}",
+          "select_row": "Выбрать {title}"
+        },
+        "Sort": {
+          "ascending": "Сортировать по возрастанию",
+          "descending": "Сортировать по убыванию"
         }
       },
       "MessagesList": {
@@ -254,7 +271,9 @@
           "general": "Общее",
           "specs": "Характеристики",
           "amenities": "Удобства",
-          "media": "Медиа"
+          "media": "Медиа",
+          "bulk_actions": "Массовые действия",
+          "actions": "Действия"
         },
         "Titles": {
           "edit": "Изменить свойства",
@@ -481,6 +500,97 @@
             "dishwasher": "Посудомойка",
             "washing_machine": "Стиральная машина"
           }
+        },
+        "PropertyBulkActionsTab": {
+          "Description": "Выбраны свойства {count}",
+          "Sections": {
+            "danger_zone": "Опасная зона",
+            "danger_zone_description": "Эти действия приводят к окончательному удалению свойств. Это действие нельзя отменить.",
+            "status_actions": "Действия со статусом",
+            "status_actions_description": "Изменить статус выбранных объектов недвижимости в списке."
+          },
+          "Buttons": {
+            "delete_selected": "Удалить выделенное",
+            "confirm_delete": "Подтвердить удаление",
+            "cancel": "Отменить",
+            "deleting": "Удаление…",
+            "activate_selected": "Активировать выбранное",
+            "deactivate_selected": "Отменить выделение",
+            "activating": "Активация…",
+            "deactivating": "Отключение…"
+          },
+          "Confirm": {
+            "delete_message": "Вы уверены, что хотите окончательно удалить {count} свойств {count, во множественном числе, одно {y} другое {ies}}? Это действие нельзя отменить."
+          },
+          "Feedback": {
+            "deleted": "Удалено свойство {count} {count, plural, one {y} other {ies}}.",
+            "activated": "Активированы свойства {count} {count, plural, один {y} другой {ies}}.",
+            "deactivated": "Отключено свойство {count} {count, plural, one {y} other {ies}}.",
+            "delete_failed": "Не удалось удалить свойства.",
+            "activate_failed": "Не удалось активировать свойства.",
+            "deactivate_failed": "Не удалось отключить свойства."
+          }
+        }
+      },
+      "PropertyBulkActionsTab": {
+        "Description": "Выбраны свойства {count}",
+        "Sections": {
+          "danger_zone": "Опасная зона",
+          "danger_zone_description": "Эти действия приводят к окончательному удалению свойств. Это действие нельзя отменить.",
+          "status_actions": "Действия по статусу",
+          "status_actions_description": "Изменить статус выбранных объектов недвижимости в списке."
+        },
+        "Buttons": {
+          "delete_selected": "Удалить выделенное",
+          "confirm_delete": "Подтвердить удаление",
+          "cancel": "Отменить",
+          "deleting": "Удаление...",
+          "activate_selected": "Активировать выбранное",
+          "deactivate_selected": "Отменить выделение",
+          "activating": "Активация...",
+          "deactivating": "Отключение..."
+        },
+        "Confirm": {
+          "delete_message": "Вы уверены, что хотите окончательно удалить {count} свойств {count, во множественном числе, одно {y} другое {ies}}? Это действие нельзя отменить."
+        },
+        "Feedback": {
+          "deleted": "Удалено свойство {count} {count, plural, one {y} other {ies}}.",
+          "activated": "Активировано свойство {count} {count, во множественном числе, один {y} другой {ies}}.",
+          "deactivated": "Отключено свойство {count} {count, множественное число, один {y} другой {ies}}.",
+          "delete_failed": "Не удалось удалить свойства.",
+          "activate_failed": "Не удалось активировать свойства.",
+          "deactivate_failed": "Не удалось отключить свойства."
+        }
+      },
+      "PropertyActionsTab": {
+        "Description": "Управлять этим объектом недвижимости.",
+        "Description_with_title": "Управление «{title}».",
+        "Sections": {
+          "danger_zone": "Опасная зона",
+          "danger_zone_description": "Это действие приведёт к окончательному удалению данного свойства. Это действие нельзя отменить.",
+          "status_actions": "Действия со статусом",
+          "status_actions_description": "Изменить статус объявления об этом объекте недвижимости."
+        },
+        "Buttons": {
+          "delete_property": "Удалить свойство",
+          "confirm_delete": "Подтвердить удаление",
+          "cancel": "Отменить",
+          "deleting": "Удаление...",
+          "activate": "Активировать",
+          "deactivate": "Отключить",
+          "activating": "Активация...",
+          "deactivating": "Отключение..."
+        },
+        "Confirm": {
+          "delete_message": "Вы уверены, что хотите окончательно удалить этот объект? Это действие нельзя отменить.",
+          "delete_message_with_title": "Вы уверены, что хотите окончательно удалить «{title}»? Это действие нельзя будет отменить."
+        },
+        "Feedback": {
+          "activated": "Свойство активировано.",
+          "deactivated": "Свойство отключено.",
+          "delete_failed": "Не удалось удалить свойство.",
+          "activate_failed": "Не удалось активировать свойство.",
+          "deactivate_failed": "Не удалось отключить свойство."
         }
       }
     }

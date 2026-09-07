@@ -278,7 +278,7 @@ export default function ListingsContent({
         className="from-brand-600 to-brand-700 dark:from-brand-700 dark:to-brand-800 relative
           bg-gradient-to-r py-16 text-white md:py-24"
       >
-        <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
+        <div className="absolute inset-0 bg-black/20" aria-hidden="true"/>
         <div className="relative container mx-auto px-4 text-center">
           <h1 className="text-display mb-4 font-bold">{t("Hero.title")}</h1>
           <p className="text-body mx-auto mb-8 max-w-2xl md:text-lg">{t("Hero.subtitle")}</p>
@@ -344,7 +344,7 @@ export default function ListingsContent({
                     }`}
                     aria-pressed={isActive}
                   >
-                    <Icon className="h-4 w-4" aria-hidden="true" />
+                    <Icon className="h-4 w-4" aria-hidden="true"/>
                     {label}
                     <span
                       className={`ml-1 rounded-full px-1.5 py-0.5 text-xs font-semibold ${
@@ -372,7 +372,7 @@ export default function ListingsContent({
                   gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition-colors
                   duration-200"
               >
-                <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                <SlidersHorizontal className="h-4 w-4" aria-hidden="true"/>
                 {t("Sort.Filters.title")}
                 {activeModalFiltersCount > 0 && (
                   <span
@@ -433,7 +433,7 @@ export default function ListingsContent({
                         min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_search")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -450,7 +450,7 @@ export default function ListingsContent({
                         min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_offer")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -467,7 +467,7 @@ export default function ListingsContent({
                         min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_item", { item: countryFilter })}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -484,7 +484,7 @@ export default function ListingsContent({
                         min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_item", { item: cityFilter })}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -501,7 +501,7 @@ export default function ListingsContent({
                         min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_bedrooms")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -518,7 +518,7 @@ export default function ListingsContent({
                         min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_bathrooms")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -538,7 +538,7 @@ export default function ListingsContent({
                         min-w-11 items-center justify-center p-1"
                       aria-label={t("Filters.Aria.remove_price")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -564,7 +564,7 @@ export default function ListingsContent({
           aria-modal="true"
           aria-label={t("Filters.Aria.open")}
         >
-          <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={closeModal} />
+          <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={closeModal}/>
           <div className="relative flex min-h-full items-center justify-center p-4">
             <div
               ref={modalRef}
@@ -577,7 +577,7 @@ export default function ListingsContent({
                   dark:border-gray-700"
               >
                 <div className="flex items-center gap-2">
-                  <SlidersHorizontal className="text-brand-600 h-5 w-5" aria-hidden="true" />
+                  <SlidersHorizontal className="text-brand-600 h-5 w-5" aria-hidden="true"/>
                   <h2 className="text-lg font-bold text-gray-800 dark:text-white">
                     {t("Filters.Labels.filter_properties")}
                   </h2>
@@ -589,7 +589,7 @@ export default function ListingsContent({
                     rounded-lg p-2 text-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
                   aria-label={t("Filters.Aria.close")}
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-5 w-5"/>
                 </button>
               </div>
 
@@ -600,7 +600,7 @@ export default function ListingsContent({
                     className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
                       uppercase dark:text-gray-400"
                   >
-                    <Tag className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
+                    <Tag className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"/>
                     {t("Filters.Labels.availability")}
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -623,7 +623,7 @@ export default function ListingsContent({
                               dark:hover:bg-gray-700`
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className="h-4 w-4"/>
                         {label}
                       </button>
                     ))}
@@ -661,7 +661,7 @@ export default function ListingsContent({
                               dark:hover:bg-gray-700`
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className="h-4 w-4"/>
                         {label}
                       </button>
                     ))}
@@ -675,7 +675,7 @@ export default function ListingsContent({
                       className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
                         uppercase dark:text-gray-400"
                     >
-                      <Globe className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
+                      <Globe className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"/>
                       {t("Filters.Labels.country")}
                     </label>
                     <select
@@ -751,7 +751,7 @@ export default function ListingsContent({
                       className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
                         uppercase dark:text-gray-400"
                     >
-                      <Bath className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
+                      <Bath className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"/>
                       {t("Filters.Labels.bathrooms")}
                     </label>
                     <select
@@ -852,7 +852,7 @@ export default function ListingsContent({
                   className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium
                     text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
                 >
-                  <RotateCcw className="h-4 w-4" />
+                  <RotateCcw className="h-4 w-4"/>
                   {t("Filters.Labels.clear_all")}
                 </button>
                 <button
@@ -862,7 +862,7 @@ export default function ListingsContent({
                     items-center justify-center gap-1.5 rounded-lg px-6 py-2.5 text-sm font-semibold
                     text-white transition-colors duration-200"
                 >
-                  <Check className="h-4 w-4" />
+                  <Check className="h-4 w-4"/>
                   {t("Filters.Labels.apply")}
                 </button>
               </div>
@@ -891,7 +891,7 @@ export default function ListingsContent({
               aria-live="polite"
             >
               {Array.from({ length: 6 }).map((_, i) => (
-                <PropertyCardSkeleton key={i} />
+                <PropertyCardSkeleton key={i}/>
               ))}
             </div>
           ) : filteredProperties.length > 0 ? (
@@ -929,9 +929,9 @@ export default function ListingsContent({
                           }`}
                       >
                         {isHouse ? (
-                          <HomeIcon className="h-3 w-3" />
+                          <HomeIcon className="h-3 w-3"/>
                         ) : (
-                          <Building2 className="h-3 w-3" />
+                          <Building2 className="h-3 w-3"/>
                         )}
                         {isHouse ? t("Card.house") : t("Card.apartment")}
                       </span>
@@ -962,7 +962,7 @@ export default function ListingsContent({
                         className="mb-4 flex items-center gap-1 text-sm text-gray-500
                           dark:text-gray-400"
                       >
-                        <MapPin className="h-3.5 w-3.5 shrink-0" />
+                        <MapPin className="h-3.5 w-3.5 shrink-0"/>
                         {property.neighborhood ? `${property.neighborhood}, ` : ""}
                         {city}
                       </p>
@@ -972,21 +972,21 @@ export default function ListingsContent({
                           dark:text-gray-300"
                       >
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <DoorOpen className="text-brand-500 h-4 w-4 shrink-0" />
+                          <DoorOpen className="text-brand-500 h-4 w-4 shrink-0"/>
                           <span>
                             {property.rooms || 0}{" "}
                             {(property.rooms || 0) === 1 ? t("Card.room") : t("Card.rooms")}
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <Bed className="text-brand-500 h-4 w-4 shrink-0" />
+                          <Bed className="text-brand-500 h-4 w-4 shrink-0"/>
                           <span>
                             {property.bedrooms || 0}{" "}
                             {(property.bedrooms || 0) === 1 ? t("Card.bed") : t("Card.beds")}
                           </span>
                         </div>
                         <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <SquareDashed className="text-brand-500 h-4 w-4 shrink-0" />
+                          <SquareDashed className="text-brand-500 h-4 w-4 shrink-0"/>
                           <span>{(property.sqmt || 0).toLocaleString()} m²</span>
                         </div>
                       </div>
@@ -1027,7 +1027,7 @@ export default function ListingsContent({
             </div>
           ) : (
             <div className="py-20 text-center">
-              <SearchX className="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
+              <SearchX className="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-gray-600"/>
               <h3 className="mb-2 text-xl font-semibold text-gray-500 dark:text-gray-400">
                 {t("Results.no_results_title")}
               </h3>
@@ -1095,7 +1095,7 @@ export default function ListingsContent({
                     className="bg-brand-100 dark:bg-brand-900/40 mx-auto mb-3 flex h-14 w-14
                       items-center justify-center rounded-full"
                   >
-                    <Icon className="text-brand-600 dark:text-brand-400 h-7 w-7" />
+                    <Icon className="text-brand-600 dark:text-brand-400 h-7 w-7"/>
                   </div>
                   <h3 className="text-h3 mb-1 font-semibold text-gray-800 dark:text-white">
                     {item.title}

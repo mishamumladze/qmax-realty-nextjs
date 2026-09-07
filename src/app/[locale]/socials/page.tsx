@@ -68,7 +68,7 @@ export default async function SocialsPage() {
                         className="h-6 w-6 text-white"
                         aria-hidden="true"
                       >
-                        <path d={s.icon.path} />
+                        <path d={s.icon.path}/>
                       </svg>
                     </div>
                     <div>
@@ -86,7 +86,7 @@ export default async function SocialsPage() {
 
               <div className="flex items-center justify-between border-t border-white/10 pt-4">
                 <span className="text-sm text-white">{t(`SocialCards.${s.key}.tagline`)}</span>
-                <TertiaryButton href={s.cta_url} label={t(`SocialCards.${s.key}.cta_text`)} />
+                <TertiaryButton href={s.cta_url} label={t(`SocialCards.${s.key}.cta_text`)}/>
               </div>
             </div>
           ))}
@@ -104,7 +104,7 @@ export default async function SocialsPage() {
           {t("GetInTouch.subtitle")}
         </p>
         <div className="flex justify-center">
-          <ContactLinks variant="list" only={["email", "phone", "address"]} />
+          <ContactLinks variant="list" only={["email", "phone", "address"]}/>
         </div>
       </section>
 
@@ -118,7 +118,7 @@ export default async function SocialsPage() {
         <p className="mb-6 text-base text-gray-600 md:text-lg dark:text-gray-300">
           {t("StayUpdated.subtitle")}
         </p>
-        <NewsletterForm />
+        <NewsletterForm/>
       </section>
     </>
   );

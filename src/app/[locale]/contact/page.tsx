@@ -50,7 +50,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     className="bg-brand-100 dark:bg-brand-900/40 flex h-12 w-12 items-center
                       justify-center rounded-lg"
                   >
-                    <Mail className="text-brand-600 dark:text-brand-400 h-6 w-6" />
+                    <Mail className="text-brand-600 dark:text-brand-400 h-6 w-6"/>
                   </div>
                 </div>
                 <div>
@@ -75,7 +75,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     className="bg-brand-100 dark:bg-brand-900/40 flex h-12 w-12 items-center
                       justify-center rounded-lg"
                   >
-                    <Phone className="text-brand-600 dark:text-brand-400 h-6 w-6" />
+                    <Phone className="text-brand-600 dark:text-brand-400 h-6 w-6"/>
                   </div>
                 </div>
                 <div>
@@ -97,7 +97,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     className="bg-brand-100 dark:bg-brand-900/40 flex h-12 w-12 items-center
                       justify-center rounded-lg"
                   >
-                    <MessageCircle className="text-brand-600 dark:text-brand-400 h-6 w-6" />
+                    <MessageCircle className="text-brand-600 dark:text-brand-400 h-6 w-6"/>
                   </div>
                 </div>
                 <div>
@@ -127,7 +127,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                     className="bg-brand-100 dark:bg-brand-900/40 flex h-12 w-12 items-center
                       justify-center rounded-lg"
                   >
-                    <MapPin className="text-brand-600 dark:text-brand-400 h-6 w-6" />
+                    <MapPin className="text-brand-600 dark:text-brand-400 h-6 w-6"/>
                   </div>
                 </div>
                 <div>
@@ -160,7 +160,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   className="bg-brand-600 hover:bg-brand-700 inline-flex items-center gap-2
                     rounded-lg px-4 py-2 font-semibold text-white transition-colors"
                 >
-                  <MessageCircle className="h-4 w-4" />
+                  <MessageCircle className="h-4 w-4"/>
                   {t("WhatsappCard.btn")}
                 </a>
               </div>
@@ -169,7 +169,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
 
           {/* Contact Form */}
           <div className="lg:col-span-2">
-            <ContactForm initialSubject={subject} />
+            <ContactForm initialSubject={subject}/>
           </div>
         </div>
       </div>
@@ -189,8 +189,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
             {t("ReadyCta.subtitle")}
           </p>
           <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <PrimaryButton label={t("Buttons.browse")} href="/listings" />
-            <SecondaryButton label={t("Buttons.whatsapp")} href={CONTACT_INFO.whatsapp.href} />
+            <PrimaryButton label={t("Buttons.browse")} href="/listings"/>
+            <SecondaryButton label={t("Buttons.whatsapp")} href={CONTACT_INFO.whatsapp.href}/>
           </div>
         </div>
       </section>

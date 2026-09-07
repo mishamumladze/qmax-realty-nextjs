@@ -219,7 +219,7 @@ export default function Navbar() {
                       <span className="relative z-10">{link.label}</span>
                       {isActive &&
                         (shouldReduceMotion ? (
-                          <div className="bg-brand-600 absolute inset-x-0 bottom-0 h-0.5" />
+                          <div className="bg-brand-600 absolute inset-x-0 bottom-0 h-0.5"/>
                         ) : (
                           <motion.div
                             layoutId="desktop-active-pill"
@@ -234,14 +234,14 @@ export default function Navbar() {
 
               {/* Desktop Language Selector */}
               <div className="border-l border-gray-200 pl-6 dark:border-gray-700">
-                <LanguageSelector />
+                <LanguageSelector/>
               </div>
             </div>
 
             {/* Right Side: Mobile Menu Toggle & Language Selector */}
             <div className="flex min-w-0 items-center justify-end gap-3 md:hidden">
               {/* Mobile Language Selector */}
-              <LanguageSelector />
+              <LanguageSelector/>
 
               <button
                 ref={(el) => {
@@ -262,9 +262,9 @@ export default function Navbar() {
                 aria-controls="mobile-menu"
               >
                 {isOpen ? (
-                  <X className="h-6 w-6 transition-all duration-300" />
+                  <X className="h-6 w-6 transition-all duration-300"/>
                 ) : (
-                  <Menu className="h-6 w-6 transition-all duration-300" />
+                  <Menu className="h-6 w-6 transition-all duration-300"/>
                 )}
               </button>
             </div>
@@ -291,7 +291,7 @@ export default function Navbar() {
               transition-colors duration-200"
             onClick={closeMenu}
           >
-            <div className="h-1.5 w-12 rounded-full bg-gray-300" />
+            <div className="h-1.5 w-12 rounded-full bg-gray-300"/>
           </div>
           <div className="space-y-1 px-4 pt-2 pb-12">
             {navLinks.map((link) => {
@@ -319,11 +319,11 @@ export default function Navbar() {
                   )}
 
                   <span className="relative z-10">{link.label}</span>
-                  <Icon className="text-brand-600 relative z-10 h-5 w-5" />
+                  <Icon className="text-brand-600 relative z-10 h-5 w-5"/>
                 </Link>
               );
             })}
-            <div className="my-3 border-t border-gray-200 dark:border-gray-700" />
+            <div className="my-3 border-t border-gray-200 dark:border-gray-700"/>
           </div>
         </div>
       </div>

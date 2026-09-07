@@ -23,7 +23,16 @@ export default function PropertiesCarousel({
   const homepageProperties = properties.slice(0, 6);
 
   const [currentIndex, setCurrentIndex] = useState(0);
-  const [visibleCount, setVisibleCount] = useState(1);
+
+  // Determine initial count lazily during initialization
+  const [visibleCount, setVisibleCount] = useState(() => {
+    if (typeof window === "undefined") return 1;
+    const width = window.innerWidth;
+    if (width >= 1024) return 3;
+    if (width >= 640) return 2;
+    return 1;
+  });
+
   const [touchStart, setTouchStart] = useState<number | null>(null);
   const [isPaused, setIsPaused] = useState(false);
   const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
@@ -43,20 +52,19 @@ export default function PropertiesCarousel({
   }, []);
 
   useEffect(() => {
-    updateVisibleCount();
     window.addEventListener("resize", updateVisibleCount);
     return () => window.removeEventListener("resize", updateVisibleCount);
   }, [updateVisibleCount]);
 
   const maxIndex = Math.max(0, total - visibleCount);
 
-  const handlePrev = () => {
+  const handlePrev = useCallback(() => {
     setCurrentIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
-  };
+  }, []);
 
-  const handleNext = () => {
+  const handleNext = useCallback(() => {
     setCurrentIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
-  };
+  }, []);
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
@@ -93,17 +101,12 @@ export default function PropertiesCarousel({
       }
     };
 
-    const handleMouseEnter = () => setIsPaused(true);
-    const handleMouseLeave = () => setIsPaused(false);
-    const handleFocus = () => setIsPaused(true);
-    const handleBlur = () => setIsPaused(false);
-
     startInterval();
 
     return () => {
       stopInterval();
     };
-  }, [total, visibleCount, isPaused, maxIndex]);
+  }, [total, visibleCount, isPaused, handleNext]);
 
   if (!homepageProperties || homepageProperties.length === 0) {
     if (isLoading) {
@@ -124,7 +127,7 @@ export default function PropertiesCarousel({
           <div className="relative mx-auto max-w-5xl" aria-busy="true" aria-live="polite">
             <div className="flex gap-4 md:gap-6">
               {Array.from({ length: 6 }).map((_, i) => (
-                <CarouselCardSkeleton key={i} />
+                <CarouselCardSkeleton key={i}/>
               ))}
             </div>
           </div>
@@ -160,7 +163,7 @@ export default function PropertiesCarousel({
             justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
             transition-all duration-200 md:-translate-x-6"
         >
-          <ChevronLeft className="h-6 w-6" aria-hidden="true" />
+          <ChevronLeft className="h-6 w-6" aria-hidden="true"/>
         </button>
 
         <div
@@ -179,7 +182,7 @@ export default function PropertiesCarousel({
               transform: `translateX(-${translateX}%)`,
             }}
           >
-            {homepageProperties.map((p, index) => {
+            {homepageProperties.map((p) => {
               const bedrooms = p.bedrooms ?? 0;
               const bathrooms = p.bathrooms ?? 0;
               const sqmt = p.sqmt ?? 0;
@@ -232,13 +235,13 @@ export default function PropertiesCarousel({
                         dark:text-gray-400"
                     >
                       <span className="flex items-center gap-1">
-                        <Bed className="h-4 w-4" /> {bedrooms}
+                        <Bed className="h-4 w-4"/> {bedrooms}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Bath className="h-4 w-4" /> {bathrooms}
+                        <Bath className="h-4 w-4"/> {bathrooms}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Square className="h-4 w-4" /> {sqmt} m²
+                        <Square className="h-4 w-4"/> {sqmt} m²
                       </span>
                     </div>
 
@@ -271,7 +274,7 @@ export default function PropertiesCarousel({
             justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
             transition-all duration-200 md:translate-x-6"
         >
-          <ChevronRight className="h-6 w-6" aria-hidden="true" />
+          <ChevronRight className="h-6 w-6" aria-hidden="true"/>
         </button>
 
         <div className="mt-6 flex justify-center gap-2">

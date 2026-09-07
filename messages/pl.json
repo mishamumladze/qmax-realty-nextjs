@@ -70,6 +70,9 @@
     },
     "Footer": {
       "map_title": "Lokalizacja biura QMAX Realty",
+      "map_address_label": "Adres biura",
+      "map_directions": "Wyznacz trasę",
+      "map_view_larger": "Zobacz większą mapę",
       "home_aria": "Strona główna QMAX Realty",
       "copyright": "© {currentYear} QMAX Realty. Wszelkie prawa zastrzeżone."
     },
@@ -195,11 +198,25 @@
         },
         "Buttons": {
           "edit": "Edytuj",
-          "delete": "Usuń"
+          "delete": "Usuń",
+          "select_all": "Zaznacz wszystko",
+          "deselect_all": "Odznacz wszystko",
+          "delete_selected": "Usuń wybrane",
+          "deactivate_selected": "Dezaktywuj wybrane",
+          "activate_selected": "Aktywuj wybrane",
+          "deleting": "Usuwanie..."
+        },
+        "Selected": {
+          "count": "{count} zaznaczonych"
         },
         "Aria": {
           "edit_property": "Edytuj {title}",
-          "delete_property": "Usuń {title}"
+          "delete_property": "Usuń {title}",
+          "select_row": "Zaznacz {title}"
+        },
+        "Sort": {
+          "ascending": "Sortuj rosnąco",
+          "descending": "Sortuj malejąco"
         }
       },
       "MessagesList": {
@@ -254,7 +271,9 @@
           "general": "Ogólne",
           "specs": "Specyfikacja",
           "amenities": "Udogodnienia",
-          "media": "Media"
+          "media": "Media",
+          "bulk_actions": "Operacje zbiorcze",
+          "actions": "Działania"
         },
         "Titles": {
           "edit": "Edytuj nieruchomość",
@@ -484,6 +503,97 @@
             "dishwasher": "Zmywarka",
             "washing_machine": "Pralka"
           }
+        },
+        "PropertyBulkActionsTab": {
+          "Description": "Wybrano właściwości {count}",
+          "Sections": {
+            "danger_zone": "Strefa zagrożenia",
+            "danger_zone_description": "Te czynności powodują trwałe usunięcie właściwości. Nie można tego cofnąć.",
+            "status_actions": "Działania związane ze statusem",
+            "status_actions_description": "Zmień status ogłoszenia wybranych nieruchomości."
+          },
+          "Buttons": {
+            "delete_selected": "Usuń zaznaczone",
+            "confirm_delete": "Potwierdź usunięcie",
+            "cancel": "Anuluj",
+            "deleting": "Usuwanie…",
+            "activate_selected": "Zaznaczone opcje aktywuj",
+            "deactivate_selected": "Wyłącz zaznaczone",
+            "activating": "Aktywowanie…",
+            "deactivating": "Wyłączanie…"
+          },
+          "Confirm": {
+            "delete_message": "Czy na pewno chcesz trwale usunąć właściwość {count} {count, plural, one {y} other {ies}}? Nie da się tego cofnąć."
+          },
+          "Feedback": {
+            "deleted": "Usunięto właściwość {count} {liczba, liczba mnoga, jeden {y}, inny {ies}}.",
+            "activated": "Włączono właściwość {count} {liczba, liczba mnoga, jeden {y}, inny {ies}}.",
+            "deactivated": "Wyłączono właściwość {count} {liczba, liczba mnoga, jeden {y}, inny {ies}}.",
+            "delete_failed": "Nie udało się usunąć właściwości.",
+            "activate_failed": "Nie udało się aktywować właściwości.",
+            "deactivate_failed": "Nie udało się wyłączyć właściwości."
+          }
+        }
+      },
+      "PropertyBulkActionsTab": {
+        "Description": "Wybrano właściwości {count}",
+        "Sections": {
+          "danger_zone": "Strefa zagrożenia",
+          "danger_zone_description": "Te czynności powodują trwałe usunięcie właściwości. Nie można tego cofnąć.",
+          "status_actions": "Działania związane ze statusem",
+          "status_actions_description": "Zmień status oferty wybranych nieruchomości."
+        },
+        "Buttons": {
+          "delete_selected": "Usuń zaznaczone",
+          "confirm_delete": "Potwierdź usunięcie",
+          "cancel": "Anuluj",
+          "deleting": "Usuwanie...",
+          "activate_selected": "Zaznaczone opcje aktywować",
+          "deactivate_selected": "Wyłącz zaznaczone",
+          "activating": "Aktywowanie...",
+          "deactivating": "Wyłączanie..."
+        },
+        "Confirm": {
+          "delete_message": "Czy na pewno chcesz trwale usunąć właściwość {count} {count, plural, one {y} other {ies}}? Nie można cofnąć tej czynności."
+        },
+        "Feedback": {
+          "deleted": "Usunięto właściwość {count} {liczba, liczba mnoga, jeden {y}, inny {ies}}.",
+          "activated": "Włączono właściwość {count} {liczba, liczba mnoga, jeden {y}, drugi {ies}}.",
+          "deactivated": "Wyłączono właściwość {count} {liczba, liczba mnoga, jeden {y}, inny {ies}}.",
+          "delete_failed": "Nie udało się usunąć właściwości.",
+          "activate_failed": "Nie udało się aktywować właściwości.",
+          "deactivate_failed": "Nie udało się dezaktywować właściwości."
+        }
+      },
+      "PropertyActionsTab": {
+        "Description": "Zarządzaj tą nieruchomością.",
+        "Description_with_title": "Zarządzaj „{title}”.",
+        "Sections": {
+          "danger_zone": "Strefa zagrożenia",
+          "danger_zone_description": "Ta czynność spowoduje trwałe usunięcie tej nieruchomości. Nie można jej cofnąć.",
+          "status_actions": "Działania związane ze statusem",
+          "status_actions_description": "Zmień status oferty tej nieruchomości."
+        },
+        "Buttons": {
+          "delete_property": "Usuń właściwość",
+          "confirm_delete": "Potwierdź usunięcie",
+          "cancel": "Anuluj",
+          "deleting": "Usuwanie...",
+          "activate": "Aktywuj",
+          "deactivate": "Wyłącz",
+          "activating": "Aktywowanie...",
+          "deactivating": "Wyłączanie..."
+        },
+        "Confirm": {
+          "delete_message": "Czy na pewno chcesz trwale usunąć tę właściwość? Tego działania nie da się cofnąć.",
+          "delete_message_with_title": "Czy na pewno chcesz trwale usunąć „{title}”? Nie da się tego cofnąć."
+        },
+        "Feedback": {
+          "activated": "Właściwość została aktywowana.",
+          "deactivated": "Właściwość została wyłączona.",
+          "delete_failed": "Nie udało się usunąć właściwości.",
+          "activate_failed": "Nie udało się aktywować właściwości.",
+          "deactivate_failed": "Nie udało się wyłączyć właściwości."
         }
       }
     }

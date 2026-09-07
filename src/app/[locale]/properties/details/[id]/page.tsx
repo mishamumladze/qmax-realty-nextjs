@@ -105,7 +105,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
             className="inline-flex items-center gap-2 text-sm font-medium text-gray-600
               transition-colors hover:text-gray-900 dark:text-gray-400 dark:hover:text-white"
           >
-            <ArrowLeft className="h-4 w-4" />
+            <ArrowLeft className="h-4 w-4"/>
             {t("Details.back_to_listings")}
           </Link>
         </div>
@@ -113,7 +113,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
 
       {/* Hero Section */}
       <section className="relative h-screen max-h-[600px] w-full overflow-hidden bg-gray-900">
-        <Image src={imageSrc} alt={property.title} fill className="object-cover" priority />
+        <Image src={imageSrc} alt={property.title} fill className="object-cover" priority/>
         {/* Gradient Overlay */}
         <div
           className="absolute inset-0 bg-gradient-to-t from-gray-900 via-transparent to-transparent"
@@ -126,13 +126,13 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
               <span>{property.type || t("Fallback.property")}</span>
               {property.region && (
                 <>
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-4 w-4"/>
                   <span>{property.region}</span>
                 </>
               )}
               {property.city && (
                 <>
-                  <ChevronRight className="h-4 w-4" />
+                  <ChevronRight className="h-4 w-4"/>
                   <span>{property.city}</span>
                 </>
               )}
@@ -170,13 +170,13 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
 
               {/* Gallery */}
               {gallery.length > 0 && (
-                <PropertyGallery images={gallery} propertyTitle={property.title} />
+                <PropertyGallery images={gallery} propertyTitle={property.title}/>
               )}
 
               {/* Location */}
               {(property.neighborhood || property.city) && (
                 <div className="flex items-start gap-3">
-                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-600" />
+                  <MapPin className="mt-1 h-5 w-5 shrink-0 text-gray-400 dark:text-gray-600"/>
                   <div>
                     <h2
                       className="mb-2 text-xl font-semibold text-gray-600 md:text-2xl
@@ -203,7 +203,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 <h3 className="sr-only">{t("Details.key_features")}</h3>
                 {property.rooms != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                    <Home className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                    <Home className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400"/>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.rooms}
                     </p>
@@ -212,7 +212,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 )}
                 {property.bedrooms != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                    <Bed className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                    <Bed className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400"/>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.bedrooms}
                     </p>
@@ -223,7 +223,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 )}
                 {property.bathrooms != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                    <Bath className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                    <Bath className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400"/>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.bathrooms}
                     </p>
@@ -234,7 +234,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 )}
                 {property.sqmt != null && (
                   <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                    <Maximize className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                    <Maximize className="mb-3 h-5 w-5 text-gray-600 dark:text-gray-400"/>
                     <p className="text-2xl font-bold text-gray-900 dark:text-white">
                       {property.sqmt.toLocaleString()}
                     </p>
@@ -268,7 +268,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                 <div className="grid grid-cols-2 gap-3 sm:grid-cols-3">
                   {property.year_built && (
                     <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                      <Calendar className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <Calendar className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400"/>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
                         {t("Facts.year_built")}
                       </p>
@@ -279,7 +279,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                   )}
                   {property.floor != null && (
                     <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                      <Building className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <Building className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400"/>
                       <p className="text-xs text-gray-600 dark:text-gray-400">{t("Facts.floor")}</p>
                       <p className="font-semibold text-gray-900 dark:text-white">
                         {property.floor}
@@ -288,7 +288,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                   )}
                   {property.parking != null && (
                     <div className="rounded-xl border border-gray-200 p-4 dark:border-gray-700">
-                      <Car className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400" />
+                      <Car className="mb-2 h-5 w-5 text-gray-600 dark:text-gray-400"/>
                       <p className="text-xs text-gray-600 dark:text-gray-400">
                         {t("Facts.parking")}
                       </p>
@@ -329,7 +329,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                   <ul className="grid grid-cols-1 gap-3 sm:grid-cols-2">
                     {inclusions.map((item, idx) => (
                       <li key={idx} className="flex items-start gap-3">
-                        <div className="bg-brand-500 mt-1 h-2 w-2 shrink-0 rounded-full" />
+                        <div className="bg-brand-500 mt-1 h-2 w-2 shrink-0 rounded-full"/>
                         <span className="text-gray-700 dark:text-gray-300">{item}</span>
                       </li>
                     ))}
@@ -358,7 +358,7 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     px-4 py-3 font-semibold text-white transition-all hover:bg-green-700
                     hover:shadow-lg active:scale-95"
                 >
-                  <MessageCircle className="h-5 w-5" />
+                  <MessageCircle className="h-5 w-5"/>
                   {t("Sidebar.whatsapp")}
                 </a>
                 <button

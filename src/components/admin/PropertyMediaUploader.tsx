@@ -1,27 +1,22 @@
 "use client";
-
 import { useState, useCallback, useRef } from "react";
 import type { ReactElement } from "react";
 import { Star, Ruler, Trash2, Plus, GripVertical } from "lucide-react";
-
 export interface MediaImage {
   id: string;
   url: string;
   isCover: boolean;
   isFloorPlan: boolean;
 }
-
 export interface PropertyMediaUploaderProps {
   images: MediaImage[];
   onChange: (images: MediaImage[]) => void;
   maxImages?: number;
   maxSizeMb?: number;
 }
-
 function generateId(): string {
   return crypto.randomUUID?.() ?? String(Date.now() + Math.random());
 }
-
 function readFileAsDataUrl(file: File): Promise<string> {
   return new Promise<string>((resolve, reject) => {
     const reader = new FileReader();
@@ -33,7 +28,6 @@ function readFileAsDataUrl(file: File): Promise<string> {
     reader.readAsDataURL(file);
   });
 }
-
 const dropZoneClass =
   "relative border-2 border-dashed border-gray-300 dark:border-gray-600 rounded-lg p-8 text-center transition-colors hover:border-brand-500";
 const dropZoneActiveClass = "border-brand-500 bg-brand-50 dark:bg-brand-900/20";
@@ -47,7 +41,6 @@ const dragHandleClass =
   "absolute bottom-1.5 left-1.5 z-10 rounded-full bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm shadow-sm p-1.5 text-gray-400 opacity-0 group-hover:opacity-100 transition-opacity cursor-grab active:cursor-grabbing";
 const emptyStateClass = "col-span-full flex flex-col items-center justify-center py-12 text-gray-500 dark:text-gray-400";
 const errorTextClass = "mt-2 text-sm text-red-600 dark:text-red-400";
-
 export function PropertyMediaUploader({
   images,
   onChange,
@@ -58,8 +51,44 @@ export function PropertyMediaUploader({
   const [error, setError] = useState<string | null>(null);
   const [draggedIndex, setDraggedIndex] = useState<number | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
-
   const clearError = useCallback(() => setError(null), []);
+  
+  // Define processFiles first so it can be used in callbacks
+  const processFiles = async (files: File[]) => {
+    setError(null);
+    const validFiles = files.filter((file) => {
+      if (!file.type.startsWith("image/")) {
+        setError("Only image files are allowed.");
+        return false;
+      }
+      if (file.size > maxSizeMb * 1024 * 1024) {
+        setError(`File ${file.name} exceeds ${maxSizeMb}MB limit.`);
+        return false;
+      }
+      return true;
+    });
+    if (validFiles.length === 0) return;
+    if (images.length + validFiles.length > maxImages) {
+      setError(`Maximum ${maxImages} images allowed.`);
+      return;
+    }
+    const newImages: MediaImage[] = [];
+    for (const file of validFiles) {
+      try {
+        const dataUrl = await readFileAsDataUrl(file);
+        newImages.push({
+          id: generateId(),
+          url: dataUrl,
+          isCover: images.length === 0 && newImages.length === 0,
+          isFloorPlan: false,
+        });
+      } catch {
+        setError("Failed to read one or more files.");
+        return;
+      }
+    }
+    onChange([...images, ...newImages]);
+  };
 
   const handleDragOver = useCallback((e: React.DragEvent<HTMLDivElement>) => {
     e.preventDefault();
@@ -82,10 +111,8 @@ export function PropertyMediaUploader({
       e.preventDefault();
       e.stopPropagation();
       setDragActive(false);
-
       const files = Array.from(e.dataTransfer.files);
       if (files.length === 0) return;
-
       await processFiles(files);
     },
     [images, onChange, maxImages, maxSizeMb]
@@ -95,52 +122,11 @@ export function PropertyMediaUploader({
     async (e: React.ChangeEvent<HTMLInputElement>) => {
       const files = Array.from(e.target.files ?? []);
       if (files.length === 0) return;
-
       await processFiles(files);
       e.target.value = "";
     },
     [images, onChange, maxImages, maxSizeMb]
   );
-
-  const processFiles = async (files: File[]) => {
-    setError(null);
-    const validFiles = files.filter((file) => {
-      if (!file.type.startsWith("image/")) {
-        setError("Only image files are allowed.");
-        return false;
-      }
-      if (file.size > maxSizeMb * 1024 * 1024) {
-        setError(`File ${file.name} exceeds ${maxSizeMb}MB limit.`);
-        return false;
-      }
-      return true;
-    });
-
-    if (validFiles.length === 0) return;
-
-    if (images.length + validFiles.length > maxImages) {
-      setError(`Maximum ${maxImages} images allowed.`);
-      return;
-    }
-
-    const newImages: MediaImage[] = [];
-    for (const file of validFiles) {
-      try {
-        const dataUrl = await readFileAsDataUrl(file);
-        newImages.push({
-          id: generateId(),
-          url: dataUrl,
-          isCover: images.length === 0 && newImages.length === 0,
-          isFloorPlan: false,
-        });
-      } catch {
-        setError("Failed to read one or more files.");
-        return;
-      }
-    }
-
-    onChange([...images, ...newImages]);
-  };
 
   const handleRemove = useCallback(
     (id: string) => {
@@ -153,7 +139,6 @@ export function PropertyMediaUploader({
     },
     [images, onChange]
   );
-
   const handleSetCover = useCallback(
     (id: string) => {
       const next = images.map((img) => ({ ...img, isCover: img.id === id }));
@@ -161,7 +146,6 @@ export function PropertyMediaUploader({
     },
     [images, onChange]
   );
-
   const handleToggleFloorPlan = useCallback(
     (id: string) => {
       const next = images.map((img) =>
@@ -171,7 +155,6 @@ export function PropertyMediaUploader({
     },
     [images, onChange]
   );
-
   const handleDragStart = useCallback(
     (e: React.DragEvent<HTMLDivElement>, index: number) => {
       setDraggedIndex(index);
@@ -179,7 +162,6 @@ export function PropertyMediaUploader({
     },
     []
   );
-
   const handleDragOverCard = useCallback(
     (e: React.DragEvent<HTMLDivElement>) => {
       e.preventDefault();
@@ -187,7 +169,6 @@ export function PropertyMediaUploader({
     },
     []
   );
-
   const handleDropCard = useCallback(
     (e: React.DragEvent<HTMLDivElement>, targetIndex: number) => {
       e.preventDefault();
@@ -195,7 +176,6 @@ export function PropertyMediaUploader({
         setDraggedIndex(null);
         return;
       }
-
       const next = [...images];
       const [removed] = next.splice(draggedIndex, 1);
       next.splice(targetIndex, 0, removed);
@@ -204,18 +184,14 @@ export function PropertyMediaUploader({
     },
     [images, onChange, draggedIndex]
   );
-
   const handleDragEnd = useCallback(() => {
     setDraggedIndex(null);
   }, []);
-
   const openFileDialog = useCallback(() => {
     fileInputRef.current?.click();
   }, []);
-
   const totalSize = images.reduce((sum, img) => sum + (img.url.startsWith("data:") ? img.url.length : 0), 0);
   const isAtMax = images.length >= maxImages;
-
   return (
     <div className="space-y-4">
       <div
@@ -243,7 +219,7 @@ export function PropertyMediaUploader({
           onChange={handleFileSelect}
           disabled={isAtMax}
         />
-        <Plus className="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" aria-hidden="true" />
+        <Plus className="mx-auto h-10 w-10 text-gray-400 dark:text-gray-500" aria-hidden="true"/>
         <p className="mt-2 text-sm font-medium text-gray-700 dark:text-gray-300">
           {isAtMax ? `Maximum ${maxImages} images reached` : "Drag and drop images here, or click to browse"}
         </p>
@@ -251,13 +227,11 @@ export function PropertyMediaUploader({
           {isAtMax ? "" : `PNG, JPG, WebP up to ${maxSizeMb}MB each`}
         </p>
       </div>
-
       {error && <p className={errorTextClass} role="alert">{error}</p>}
-
       <div className={previewGridClass} role="list" aria-label="Image previews">
         {images.length === 0 ? (
           <div className={emptyStateClass}>
-            <Plus className="h-8 w-8 mb-2 text-gray-300 dark:text-gray-600" aria-hidden="true" />
+            <Plus className="h-8 w-8 mb-2 text-gray-300 dark:text-gray-600" aria-hidden="true"/>
             <p className="text-sm">No images uploaded yet</p>
             <p className="text-xs">Upload or drop images to get started</p>
           </div>
@@ -279,7 +253,7 @@ export function PropertyMediaUploader({
                 className="w-full h-full object-cover"
                 loading="lazy"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" aria-hidden="true"/>
               <div className="absolute inset-0 flex flex-col items-start justify-between p-1.5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none">
                 <div className="flex items-start justify-between w-full pointer-events-auto">
                   {image.isCover ? (
@@ -297,7 +271,7 @@ export function PropertyMediaUploader({
                       aria-label="Set as cover image"
                       aria-pressed="false"
                     >
-                      <Star size={14} aria-hidden="true" />
+                      <Star size={14} aria-hidden="true"/>
                     </button>
                   )}
                   <button
@@ -307,18 +281,18 @@ export function PropertyMediaUploader({
                     aria-label={image.isFloorPlan ? "Remove floor plan designation" : "Set as floor plan"}
                     aria-pressed={image.isFloorPlan}
                   >
-                    <Ruler size={14} aria-hidden="true" />
+                    <Ruler size={14} aria-hidden="true"/>
                   </button>
                 </div>
                 <div className="flex items-end justify-between w-full pointer-events-auto">
-                  <GripVertical className={dragHandleClass} size={14} aria-label="Drag to reorder" aria-hidden="true" />
+                  <GripVertical className={dragHandleClass} size={14} aria-label="Drag to reorder" aria-hidden="true"/>
                   <button
                     type="button"
                     className={deleteButtonClass}
                     onClick={() => handleRemove(image.id)}
                     aria-label="Delete image"
                   >
-                    <Trash2 size={14} aria-hidden="true" />
+                    <Trash2 size={14} aria-hidden="true"/>
                   </button>
                 </div>
               </div>
@@ -326,13 +300,13 @@ export function PropertyMediaUploader({
                 <div className="absolute bottom-1.5 left-1.5 right-1.5 flex items-center justify-center gap-1.5 pointer-events-none">
                   {image.isCover && (
                     <span className="inline-flex items-center gap-1 rounded bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-2 py-0.5 text-xs font-medium text-gray-900 dark:text-gray-100">
-                      <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" aria-hidden="true" />
+                      <Star className="h-3 w-3 fill-yellow-500 text-yellow-500" aria-hidden="true"/>
                       Cover
                     </span>
                   )}
                   {image.isFloorPlan && (
                     <span className="inline-flex items-center gap-1 rounded bg-white/90 dark:bg-gray-900/90 backdrop-blur-sm px-2 py-0.5 text-xs font-medium text-gray-900 dark:text-gray-100">
-                      <Ruler className="h-3 w-3 text-brand-600 dark:text-brand-400" aria-hidden="true" />
+                      <Ruler className="h-3 w-3 text-brand-600 dark:text-brand-400" aria-hidden="true"/>
                       Floor Plan
                     </span>
                   )}

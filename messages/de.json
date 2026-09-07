@@ -70,6 +70,9 @@
     },
     "Footer": {
       "map_title": "Standort der QMAX Realty-Niederlassung",
+      "map_address_label": "Büroadresse",
+      "map_directions": "Route planen",
+      "map_view_larger": "Größere Karte ansehen",
       "home_aria": "QMAX Realty homepage",
       "copyright": "© {currentYear} QMAX Realty. Alle Rechte vorbehalten."
     },
@@ -195,11 +198,25 @@
         },
         "Buttons": {
           "edit": "Bearbeiten",
-          "delete": "Löschen"
+          "delete": "Löschen",
+          "select_all": "Alle auswählen",
+          "deselect_all": "Auswahl aufheben",
+          "delete_selected": "Ausgewählte löschen",
+          "deactivate_selected": "Ausgewählte deaktivieren",
+          "activate_selected": "Ausgewählte aktivieren",
+          "deleting": "Wird gelöscht..."
+        },
+        "Selected": {
+          "count": "{count} ausgewählt"
         },
         "Aria": {
           "edit_property": "Bearbeiten {title}",
-          "delete_property": "{title} löschen"
+          "delete_property": "{title} löschen",
+          "select_row": "{title} auswählen"
+        },
+        "Sort": {
+          "ascending": "Aufsteigend sortieren",
+          "descending": "Absteigend sortieren"
         }
       },
       "MessagesList": {
@@ -483,7 +500,100 @@
           "general": "Allgemein",
           "specs": "Spezifikationen",
           "amenities": "Ausstattung",
-          "media": "Medien"
+          "media": "Medien",
+          "bulk_actions": "Massenaktionen",
+          "actions": "Maßnahmen"
+        },
+        "PropertyBulkActionsTab": {
+          "Description": "{count} Eigenschaften ausgewählt",
+          "Sections": {
+            "danger_zone": "Gefahrenzone",
+            "danger_zone_description": "Durch diese Aktionen werden Eigenschaften endgültig gelöscht. Dies kann nicht rückgängig gemacht werden.",
+            "status_actions": "Status-Aktionen",
+            "status_actions_description": "Den Angebotsstatus der ausgewählten Objekte ändern."
+          },
+          "Buttons": {
+            "delete_selected": "Ausgewählte löschen",
+            "confirm_delete": "Löschen bestätigen",
+            "cancel": "Abbrechen",
+            "deleting": "Wird gelöscht…",
+            "activate_selected": "Ausgewählte aktivieren",
+            "deactivate_selected": "Ausgewählte deaktivieren",
+            "activating": "Wird aktiviert…",
+            "deactivating": "Deaktivieren…"
+          },
+          "Confirm": {
+            "delete_message": "Möchten Sie {count} propert{count, plural, one {y} other {ies}} wirklich endgültig löschen? Dieser Vorgang kann nicht rückgängig gemacht werden."
+          },
+          "Feedback": {
+            "deleted": "Gelöscht: {count} Eigenschaft {Anzahl, Plural, eine {y} andere {ies}}.",
+            "activated": "Die Eigenschaft {count} wurde aktiviert {Anzahl, Plural, eine {y} weitere {ies}}.",
+            "deactivated": "Deaktiviert {count} Eigenschaft {Anzahl, Plural, eine {y} andere {ies}}.",
+            "delete_failed": "Das Löschen der Eigenschaften ist fehlgeschlagen.",
+            "activate_failed": "Die Eigenschaften konnten nicht aktiviert werden.",
+            "deactivate_failed": "Die Deaktivierung der Eigenschaften ist fehlgeschlagen."
+          }
+        }
+      },
+      "PropertyBulkActionsTab": {
+        "Description": "{count} Eigenschaften ausgewählt",
+        "Sections": {
+          "danger_zone": "Gefahrenzone",
+          "danger_zone_description": "Durch diese Aktionen werden Eigenschaften endgültig gelöscht. Dies kann nicht rückgängig gemacht werden.",
+          "status_actions": "Status-Aktionen",
+          "status_actions_description": "Den Angebotsstatus der ausgewählten Immobilien ändern."
+        },
+        "Buttons": {
+          "delete_selected": "Ausgewählte löschen",
+          "confirm_delete": "Löschen bestätigen",
+          "cancel": "Abbrechen",
+          "deleting": "Wird gelöscht...",
+          "activate_selected": "Ausgewählte aktivieren",
+          "deactivate_selected": "Auswahl deaktivieren",
+          "activating": "Wird aktiviert...",
+          "deactivating": "Deaktivieren..."
+        },
+        "Confirm": {
+          "delete_message": "Möchten Sie {count} property{count, plural, one {y} other {ies}} wirklich endgültig löschen? Dieser Vorgang kann nicht rückgängig gemacht werden."
+        },
+        "Feedback": {
+          "deleted": "Gelöscht: {count} Eigenschaft {Anzahl, Plural, eine {y} andere {ies}}.",
+          "activated": "Die Eigenschaft {count} wurde aktiviert {Anzahl, Plural, eine {y} andere {ies}}.",
+          "deactivated": "Deaktiviert: {count} Eigenschaft {Anzahl, Plural, ein {y}, ein anderes {ies}}.",
+          "delete_failed": "Das Löschen der Eigenschaften ist fehlgeschlagen.",
+          "activate_failed": "Die Eigenschaften konnten nicht aktiviert werden.",
+          "deactivate_failed": "Die Eigenschaften konnten nicht deaktiviert werden."
+        }
+      },
+      "PropertyActionsTab": {
+        "Description": "Diese Immobilie verwalten.",
+        "Description_with_title": "„{title}“ verwalten.",
+        "Sections": {
+          "danger_zone": "Gefahrenzone",
+          "danger_zone_description": "Durch diese Aktion wird diese Eigenschaft endgültig gelöscht. Dieser Vorgang kann nicht rückgängig gemacht werden.",
+          "status_actions": "Status-Aktionen",
+          "status_actions_description": "Ändern Sie den Angebotsstatus dieser Immobilie."
+        },
+        "Buttons": {
+          "delete_property": "Eigenschaft löschen",
+          "confirm_delete": "Löschen bestätigen",
+          "cancel": "Abbrechen",
+          "deleting": "Wird gelöscht...",
+          "activate": "Aktivieren",
+          "deactivate": "Deaktivieren",
+          "activating": "Wird aktiviert...",
+          "deactivating": "Deaktivieren..."
+        },
+        "Confirm": {
+          "delete_message": "Möchten Sie diese Eigenschaft wirklich endgültig löschen? Dieser Vorgang kann nicht rückgängig gemacht werden.",
+          "delete_message_with_title": "Möchten Sie „{title}“ wirklich endgültig löschen? Dieser Vorgang kann nicht rückgängig gemacht werden."
+        },
+        "Feedback": {
+          "activated": "Eigenschaft aktiviert.",
+          "deactivated": "Eigenschaft deaktiviert.",
+          "delete_failed": "Das Löschen der Eigenschaft ist fehlgeschlagen.",
+          "activate_failed": "Die Eigenschaft konnte nicht aktiviert werden.",
+          "deactivate_failed": "Die Eigenschaft konnte nicht deaktiviert werden."
         }
       }
     }

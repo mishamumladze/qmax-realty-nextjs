@@ -147,7 +147,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
               focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.close")}
           >
-            <X className="h-6 w-6" />
+            <X className="h-6 w-6"/>
           </button>
 
           {/* Main Image */}
@@ -168,7 +168,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
               focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.previous")}
           >
-            <ChevronLeft className="h-6 w-6" />
+            <ChevronLeft className="h-6 w-6"/>
           </button>
 
           <button
@@ -178,7 +178,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
               focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.next")}
           >
-            <ChevronRight className="h-6 w-6" />
+            <ChevronRight className="h-6 w-6"/>
           </button>
 
           {/* Counter */}

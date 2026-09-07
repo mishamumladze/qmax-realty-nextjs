@@ -1,5 +1,11 @@
 import { siInstagram, siFacebook, siTiktok, siTelegram, siWhatsapp } from "simple-icons";
 
+export const OFFICE_LOCATION = {
+  lat: 41.6969,
+  lng: 44.8009,
+  zoom: 17,
+} as const;
+
 export const CONTACT_INFO = {
   phone: {
     display: "+995 555 00 00 00",
@@ -11,7 +17,7 @@ export const CONTACT_INFO = {
   },
   address: {
     display: "Rustaveli Ave 12, Tbilisi, Georgia",
-    href: "https://maps.google.com/?q=Rustaveli+Ave+12+Tbilisi+Georgia",
+    href: "https://www.openstreetmap.org/?mlat=41.6969&mlon=44.8009#map=17/41.6969/44.8009",
   },
   whatsapp: {
     display: "WhatsApp",

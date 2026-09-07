@@ -97,17 +97,17 @@ export default async function HomePage() {
             <div className="flex flex-wrap items-center justify-center gap-4">
               <PrimaryButtonRounded
                 label={t("Hero.buy_btn")}
-                icon={<Home className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
+                icon={<Home className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true"/>}
                 href="/listings?offer=sale"
               />
               <PrimaryButtonRounded
                 label={t("Hero.rent_btn")}
-                icon={<Key className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
+                icon={<Key className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true"/>}
                 href="/listings?offer=rent"
               />
               <PrimaryButtonRounded
                 label={t("Hero.sell_btn")}
-                icon={<BadgeDollarSign className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
+                icon={<BadgeDollarSign className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true"/>}
                 href="/contact?subject=selling"
               />
             </div>
@@ -116,7 +116,7 @@ export default async function HomePage() {
       </section>
 
       {/* Properties Carousel Section */}
-      <PropertiesCarousel properties={properties} />
+      <PropertiesCarousel properties={properties}/>
 
       {/* Why Choose Us Section */}
       <section
@@ -170,7 +170,7 @@ export default async function HomePage() {
                   className="bg-brand-100 dark:bg-brand-900/50 mx-auto mb-4 flex h-16 w-16
                     items-center justify-center rounded-full"
                 >
-                  <Icon className="text-brand-600 h-8 w-8" aria-hidden="true" />
+                  <Icon className="text-brand-600 h-8 w-8" aria-hidden="true"/>
                 </div>
                 <h3 className="mb-2 text-xl font-semibold text-gray-800 md:text-2xl dark:text-white">
                   {item.title}
@@ -199,9 +199,9 @@ export default async function HomePage() {
             <SecondaryButton
               label={t("ContactBanner.whatsapp_btn")}
               href={CONTACT_INFO.whatsapp.href}
-              icon={<Image src="/img/Logos/si-whatsapp.svg" alt="" width={20} height={20} />}
+              icon={<Image src="/img/Logos/si-whatsapp.svg" alt="" width={20} height={20}/>}
             />
-            <PrimaryButton label={t("ContactBanner.view_all_btn")} href="/listings" />
+            <PrimaryButton label={t("ContactBanner.view_all_btn")} href="/listings"/>
           </div>
         </div>
       </section>

@@ -26,6 +26,11 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    ".omo/**",
+    ".omu/**",
+    ".vscode/**",
+    "playwright-mcp/**",
+    "node_modules/**",
   ]),
 ]);
 

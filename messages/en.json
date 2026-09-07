@@ -70,6 +70,9 @@
     },
     "Footer": {
       "map_title": "QMAX Realty Office Location",
+      "map_address_label": "Office address",
+      "map_directions": "Get directions",
+      "map_view_larger": "View larger map",
       "home_aria": "QMAX Realty homepage",
       "copyright": "© {currentYear} QMAX Realty. All rights reserved."
     },
@@ -144,7 +147,6 @@
             "undo": "Undo"
           }
         },
-
         "Toast": {
           "deleted": "Property deleted."
         },
@@ -191,11 +193,25 @@
         },
         "Buttons": {
           "edit": "Edit",
-          "delete": "Delete"
+          "delete": "Delete",
+          "select_all": "Select all",
+          "deselect_all": "Deselect all",
+          "delete_selected": "Delete selected",
+          "deactivate_selected": "Deactivate selected",
+          "activate_selected": "Activate selected",
+          "deleting": "Deleting..."
+        },
+        "Selected": {
+          "count": "{count} selected"
+        },
+        "Sort": {
+          "ascending": "Sort ascending",
+          "descending": "Sort descending"
         },
         "Aria": {
           "edit_property": "Edit {title}",
-          "delete_property": "Delete {title}"
+          "delete_property": "Delete {title}",
+          "select_row": "Select {title}"
         }
       },
       "MessagesList": {
@@ -250,7 +266,8 @@
           "general": "General",
           "specs": "Specs",
           "amenities": "Amenities",
-          "media": "Media"
+          "media": "Media",
+          "actions": "Actions"
         },
         "Titles": {
           "edit": "Edit property",
@@ -468,6 +485,37 @@
             "washing_machine": "Washing Machine"
           }
         }
+      },
+      "PropertyActionsTab": {
+        "Description": "Manage this property.",
+        "Description_with_title": "Manage \"{title}\".",
+        "Sections": {
+          "danger_zone": "Danger Zone",
+          "danger_zone_description": "This action permanently deletes this property. This cannot be undone.",
+          "status_actions": "Status Actions",
+          "status_actions_description": "Change the listing status of this property."
+        },
+        "Buttons": {
+          "delete_property": "Delete property",
+          "confirm_delete": "Confirm delete",
+          "cancel": "Cancel",
+          "deleting": "Deleting...",
+          "activate": "Activate",
+          "deactivate": "Deactivate",
+          "activating": "Activating...",
+          "deactivating": "Deactivating..."
+        },
+        "Confirm": {
+          "delete_message": "Are you sure you want to permanently delete this property? This cannot be undone.",
+          "delete_message_with_title": "Are you sure you want to permanently delete \"{title}\"? This cannot be undone."
+        },
+        "Feedback": {
+          "activated": "Property activated.",
+          "deactivated": "Property deactivated.",
+          "delete_failed": "Failed to delete property.",
+          "activate_failed": "Failed to activate property.",
+          "deactivate_failed": "Failed to deactivate property."
+        }
       }
     }
   },
@@ -593,16 +641,12 @@
       "WhyUs": {
         "title": "Why QMAX Realty?",
         "subtitle": "Expert guidance for buying, selling, or renting properties.",
-
         "rated_title": "5 Star Rated",
         "rated_desc": "Hundreds of 5-star reviews from satisfied clients.",
-
         "trust_title": "Trusted & Transparent",
         "trust_desc": "Clear communication and ethical practices throughout.",
-
         "expertise_title": "Local Expertise",
         "expertise_desc": "Deep knowledge of Tbilisi neighborhoods and emerging markets.",
-
         "support_title": "24/7 Support",
         "support_desc": "We're available 7 days a week via WhatsApp."
       },

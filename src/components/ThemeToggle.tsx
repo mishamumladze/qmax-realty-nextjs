@@ -34,9 +34,9 @@ export default function ThemeToggle() {
         md:right-10 md:bottom-10 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
     >
       {dark ? (
-        <Sun className="h-6 w-6 md:h-10 md:w-10" />
+        <Sun className="h-6 w-6 md:h-10 md:w-10"/>
       ) : (
-        <Moon className="h-6 w-6 md:h-10 md:w-10" />
+        <Moon className="h-6 w-6 md:h-10 md:w-10"/>
       )}
     </button>
   );

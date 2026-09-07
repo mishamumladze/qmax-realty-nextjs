@@ -24,10 +24,9 @@ export default async function RootLayout({
   const { locale } = await params;
 
   // Validate that the incoming `locale` parameter is supported
-  if (!routing.locales.includes(locale as any)) {
+  if (!routing.locales.includes(locale as (typeof routing.locales)[number])) {
     notFound();
   }
-
   // Obtain all localization messages for client components
   const messages = await getMessages();
   const tLayout = await getTranslations("Components.Layout");
@@ -41,7 +40,7 @@ export default async function RootLayout({
           }}
         />
       </head>
-      <SpeedInsights />
+      <SpeedInsights/>
       <body className="flex min-h-screen flex-col dark:bg-gray-900 dark:text-gray-100">
         <NextIntlClientProvider messages={messages}>
           <a
@@ -51,16 +50,16 @@ export default async function RootLayout({
           >
             {tLayout("skip_to_content")}
           </a>
-          <Navbar />
-          <ThemeToggle />
-          <OfflineIndicator />
+          <Navbar/>
+          <ThemeToggle/>
+          <OfflineIndicator/>
           <main
             id="main-content"
             className="transition-fade min-h-screen flex-grow pb-20 md:pt-16 md:pb-0"
           >
             {children}
           </main>
-          <Footer />
+          <Footer/>
         </NextIntlClientProvider>
       </body>
     </html>

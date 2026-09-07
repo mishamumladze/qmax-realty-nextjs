@@ -49,6 +49,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
   const [properties, setProperties] = useState<Property[]>(initialProperties);
   const [modalOpen, setModalOpen] = useState(false);
   const [editing, setEditing] = useState<Property | null>(null);
+  const [, setSelectedIds] = useState<Set<number>>(new Set());
   const [deleteTarget, setDeleteTarget] = useState<Property | null>(null);
   const [undoProperty, setUndoProperty] = useState<UndoState | null>(null);
   const [globalError, setGlobalError] = useState<string | null>(null);
@@ -220,19 +221,19 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
                 aria-current={active ? "true" : undefined}
                 onClick={() => setActiveTab(id)}
               >
-                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <Icon className="h-4 w-4 shrink-0" aria-hidden="true"/>
                 <span>{label}</span>
               </Button>
             );
           })}
-          <div className="hidden flex-1 md:block" />
+          <div className="hidden flex-1 md:block"/>
           <Button
             variant="destructive"
             size="sm"
             className="min-h-11 w-full"
             onClick={handleLogout}
           >
-            <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
+            <LogOut className="h-4 w-4 shrink-0" aria-hidden="true"/>
             <span>{t("logout")}</span>
           </Button>
         </div>
@@ -253,7 +254,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
                   setModalOpen(true);
                 }}
               >
-                <Plus className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <Plus className="h-4 w-4 shrink-0" aria-hidden="true"/>
                 <span>{t("add_property")}</span>
               </Button>
             </div>
@@ -267,6 +268,20 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
                   setModalOpen(true);
                 }}
                 onDelete={(p) => setDeleteTarget(p)}
+                onSelectionChange={setSelectedIds}
+                onBulkDelete={async (ids) => {
+                  const res = await fetch("/api/admin/properties", {
+                    method: "DELETE",
+                    headers: {
+                      "Content-Type": "application/json",
+                      ...bearerHeaders(),
+                    },
+                    body: JSON.stringify({ ids }),
+                  });
+                  if (!res.ok) throw new Error(await readErrorMessage(res));
+                  setProperties((prev) => prev.filter((p) => !ids.includes(p.id)));
+                  setSelectedIds(new Set());
+                }}
               />
             )}
           </>
@@ -277,7 +292,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
               {t("Headings.messages")}
             </h1>
-            <MessagesList />
+            <MessagesList/>
           </>
         )}
 
@@ -286,7 +301,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
               {t("Headings.newsletter")}
             </h1>
-            <NewsletterSubscribersList />
+            <NewsletterSubscribersList/>
           </>
         )}
       </main>
@@ -369,6 +384,59 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
           );
           setModalOpen(false);
           setEditing(null);
+        }}
+        onDelete={async (ids) => {
+          const res = await fetch("/api/admin/properties", {
+            method: "DELETE",
+            headers: {
+              "Content-Type": "application/json",
+              ...bearerHeaders(),
+            },
+            body: JSON.stringify({ ids }),
+          });
+          if (!res.ok) throw new Error(await readErrorMessage(res));
+          setProperties((prev) => prev.filter((p) => !ids.includes(p.id)));
+          setSelectedIds((prev) => {
+            const next = new Set(prev);
+            for (const id of ids) next.delete(id);
+            return next;
+          });
+          setModalOpen(false);
+          setEditing(null);
+        }}
+        onActivate={async (ids) => {
+          const res = await fetch("/api/admin/properties", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              ...bearerHeaders(),
+            },
+            body: JSON.stringify({ ids, status: "active" }),
+          });
+          if (!res.ok) throw new Error(await readErrorMessage(res));
+          setProperties((prev) =>
+            prev.map((p) => (ids.includes(p.id) ? { ...p, status: "active" } : p))
+          );
+          setEditing((prev) =>
+            prev && ids.includes(prev.id) ? { ...prev, status: "active" } : prev
+          );
+        }}
+        onDeactivate={async (ids) => {
+          const res = await fetch("/api/admin/properties", {
+            method: "PATCH",
+            headers: {
+              "Content-Type": "application/json",
+              ...bearerHeaders(),
+            },
+            body: JSON.stringify({ ids, status: "inactive" }),
+          });
+          if (!res.ok) throw new Error(await readErrorMessage(res));
+          setProperties((prev) =>
+            prev.map((p) => (ids.includes(p.id) ? { ...p, status: "inactive" } : p))
+          );
+          setEditing((prev) =>
+            prev && ids.includes(prev.id) ? { ...prev, status: "inactive" } : prev
+          );
         }}
       />
 

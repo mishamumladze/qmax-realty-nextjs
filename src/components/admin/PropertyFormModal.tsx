@@ -1,5 +1,4 @@
 "use client";
-
 import { Fragment, useEffect, useId, useRef, useState, useCallback } from "react";
 import type { PropertyFormData } from "@/types/admin";
 import type { Property } from "@/types/property";
@@ -11,16 +10,17 @@ import { PropertyGeneralTab } from "./PropertyGeneralTab";
 import { PropertySpecsTab } from "./PropertySpecsTab";
 import { PropertyAmenitiesTab } from "./PropertyAmenitiesTab";
 import { PropertyMediaTab } from "./PropertyMediaTab";
-
+import { PropertyActionsTab } from "./PropertyActionsTab";
 interface PropertyFormModalProps {
   open: boolean;
   property: Property | null;
   onClose: () => void;
   onSaved: (property: Property) => void;
+  onDelete?: (ids: number[]) => Promise<void>;
+  onActivate?: (ids: number[]) => Promise<void>;
+  onDeactivate?: (ids: number[]) => Promise<void>;
 }
-
 const DRAFT_KEY = "property-form-draft";
-
 interface FormState {
   fields: Record<string, string>;
   booleans: Record<string, boolean>;
@@ -30,7 +30,6 @@ interface FormState {
   lat: number | null;
   lng: number | null;
 }
-
 function defaultFormState(): FormState {
   return {
     fields: {
@@ -90,11 +89,9 @@ function defaultFormState(): FormState {
     lng: null,
   };
 }
-
 function formStateToDraft(state: FormState): string {
   return JSON.stringify(state);
 }
-
 function parseDraft(draft: string): FormState | null {
   try {
     const parsed = JSON.parse(draft);
@@ -111,7 +108,6 @@ function parseDraft(draft: string): FormState | null {
     return null;
   }
 }
-
 function imagesToStrings(images: MediaImage[]): {
   gallery: string[];
   card_image: string | undefined;
@@ -126,7 +122,6 @@ function imagesToStrings(images: MediaImage[]): {
     floor_plan: floorPlanImage?.url,
   };
 }
-
 function stringsToImages(
   gallery: string[] | undefined,
   card_image: string | undefined,
@@ -136,24 +131,28 @@ function stringsToImages(
   const galleryUrls = gallery || [];
   const coverUrl = card_image;
   const floorPlanUrl = floor_plan;
-
   for (const url of galleryUrls) {
     const isCover = url === coverUrl;
     const isFloorPlan = url === floorPlanUrl;
     images.push({ id: crypto.randomUUID(), url, isCover, isFloorPlan });
   }
-
   if (coverUrl && !galleryUrls.includes(coverUrl)) {
     images.unshift({ id: crypto.randomUUID(), url: coverUrl, isCover: true, isFloorPlan: false });
   }
   if (floorPlanUrl && !galleryUrls.includes(floorPlanUrl) && floorPlanUrl !== coverUrl) {
     images.push({ id: crypto.randomUUID(), url: floorPlanUrl, isCover: false, isFloorPlan: true });
   }
-
   return images;
 }
-
-export function PropertyFormModal({ open, property, onClose, onSaved }: PropertyFormModalProps) {
+export function PropertyFormModal({
+  open,
+  property,
+  onClose,
+  onSaved,
+  onDelete,
+  onActivate,
+  onDeactivate,
+}: PropertyFormModalProps) {
   const t = useTranslations("Components.Admin.PropertyFormModal");
   const [formState, setFormState] = useState<FormState>(defaultFormState);
   const [errors, setErrors] = useState<Record<string, string>>({});
@@ -163,11 +162,30 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
   const baseId = useId();
   const titleId = useId();
   const saveDraftTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
-
   const fieldId = (name: string) => `${baseId}-${name}`;
-
-  const getValue = useCallback((name: string) => formState.fields[name] ?? "", [formState.fields]);
-
+  const booleanFields = new Set([
+    "listing_status",
+    "is_featured",
+    "balcony",
+    "natural_gas",
+    "internet",
+    "water_supply",
+    "electricity",
+    "tv",
+    "sewerage",
+    "elevator",
+    "ac",
+    "security",
+  ]);
+  const getValue = useCallback(
+    (name: string) => {
+      if (booleanFields.has(name)) {
+        return formState.booleans[name] ? "true" : "false";
+      }
+      return formState.fields[name] ?? "";
+    },
+    [formState.fields, formState.booleans]
+  );
   const setField = useCallback((name: string, value: string) => {
     setFormState((prev) => {
       const next = { ...prev, fields: { ...prev.fields, [name]: value } };
@@ -178,7 +196,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       return next;
     });
   }, []);
-
   const setBoolean = useCallback((name: string, value: boolean) => {
     setFormState((prev) => {
       const next = { ...prev, booleans: { ...prev.booleans, [name]: value } };
@@ -189,7 +206,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       return next;
     });
   }, []);
-
   const setView = useCallback((view: string[]) => {
     setFormState((prev) => {
       const next = { ...prev, view };
@@ -200,7 +216,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       return next;
     });
   }, []);
-
   const setKitchenAppliances = useCallback((appliances: string[]) => {
     setFormState((prev) => {
       const next = { ...prev, kitchenAppliances: appliances };
@@ -211,7 +226,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       return next;
     });
   }, []);
-
   const setImages = useCallback((images: MediaImage[]) => {
     setFormState((prev) => {
       const next = { ...prev, images };
@@ -222,7 +236,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       return next;
     });
   }, []);
-
   const setCoords = useCallback((lat: number, lng: number) => {
     setFormState((prev) => {
       const next = { ...prev, lat, lng };
@@ -233,7 +246,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       return next;
     });
   }, []);
-
   const loadFromProperty = useCallback((prop: Property) => {
     const images = stringsToImages(prop.gallery, prop.card_image, prop.floor_plan);
     const nextState: FormState = {
@@ -292,6 +304,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       lat: prop.coords ? prop.coords[0] : null,
       lng: prop.coords ? prop.coords[1] : null,
     };
+    // Batch state updates
     setFormState(nextState);
     setErrors({});
     setFormError(null);
@@ -299,6 +312,8 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
     setActiveTab(0);
   }, []);
 
+  // Separate effect to load data when modal opens
+  // This follows React patterns for initialization
   const loadDraft = useCallback(() => {
     const draft = localStorage.getItem(DRAFT_KEY);
     if (draft) {
@@ -308,7 +323,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       }
     }
   }, []);
-
   useEffect(() => {
     if (!open) return;
     if (property) {
@@ -316,7 +330,7 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
     } else {
       loadDraft();
     }
-  }, [open, property, loadFromProperty, loadDraft]);
+  }, [open, property]);
 
   useEffect(() => {
     if (!open) return;
@@ -326,7 +340,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
     window.addEventListener("keydown", handleKeyDown);
     return () => window.removeEventListener("keydown", handleKeyDown);
   }, [open, onClose]);
-
   const adminFetch = useCallback(async <T,>(url: string, init?: RequestInit): Promise<T> => {
     const token = typeof window !== "undefined" ? window.localStorage.getItem("admin_token") : null;
     let res: Response;
@@ -354,12 +367,10 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
     }
     return parsed as T;
   }, []);
-
   const validateTab = useCallback(
     (tabIndex: number): Record<string, string> => {
       const nextErrors: Record<string, string> = {};
       const { fields, booleans } = formState;
-
       const checkRequired = (name: string, labelKey: string) => {
         const value = fields[name]?.trim();
         if (!value) {
@@ -369,7 +380,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           );
         }
       };
-
       const checkNumeric = (name: string) => {
         const raw = fields[name]?.trim();
         if (!raw || raw.trim() === "") return;
@@ -377,12 +387,10 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
           nextErrors[name] = t("Validation.must_be_number");
         }
       };
-
       if (tabIndex === 0) {
         checkRequired("title", "title");
         checkNumeric("price");
       }
-
       if (tabIndex === 1) {
         checkNumeric("sqmt");
         checkNumeric("lot_sqmt");
@@ -394,28 +402,24 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
         checkNumeric("year_built");
         checkNumeric("balcony_sqmt");
       }
-
       if (tabIndex === 2) {
         // No required fields in Amenities
       }
-
       if (tabIndex === 3) {
         // No required fields in Media
       }
-
       return nextErrors;
     },
     [formState, t]
   );
-
   const validateAll = useCallback((): Record<string, string> => {
     let allErrors: Record<string, string> = {};
-    for (let i = 0; i < 4; i++) {
+    const tabCount = property ? 5 : 4;
+    for (let i = 0; i < tabCount; i++) {
       allErrors = { ...allErrors, ...validateTab(i) };
     }
     return allErrors;
-  }, [validateTab]);
-
+  }, [validateTab, property]);
   const handleTabChange = useCallback(
     (newTab: number) => {
       if (newTab === activeTab) return;
@@ -431,22 +435,22 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
     },
     [activeTab, validateTab]
   );
-
   const handleKeyDownTab = useCallback(
     (event: React.KeyboardEvent, index: number) => {
       let newIndex = index;
+      const tabCount = property ? 5 : 4;
       switch (event.key) {
         case "ArrowRight":
-          newIndex = (index + 1) % 4;
+          newIndex = (index + 1) % tabCount;
           break;
         case "ArrowLeft":
-          newIndex = (index - 1 + 4) % 4;
+          newIndex = (index - 1 + tabCount) % tabCount;
           break;
         case "Home":
           newIndex = 0;
           break;
         case "End":
-          newIndex = 3;
+          newIndex = tabCount - 1;
           break;
         default:
           return;
@@ -456,13 +460,11 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       const tabButton = document.getElementById(`tab-${newIndex}`);
       tabButton?.focus();
     },
-    [handleTabChange]
+    [handleTabChange, property]
   );
-
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     if (submitting) return;
-
     const allErrors = validateAll();
     setErrors(allErrors);
     const firstInvalid = Object.keys(allErrors)[0];
@@ -470,11 +472,8 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       document.getElementById(fieldId(firstInvalid))?.focus();
       return;
     }
-
     const { fields, booleans, view, kitchenAppliances, images, lat, lng } = formState;
-
     const { gallery, card_image, floor_plan } = imagesToStrings(images);
-
     const payload: PropertyFormData = {
       title: fields.title.trim(),
       type: fields.type || undefined,
@@ -526,11 +525,9 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       ac: booleans.ac,
       security: booleans.security,
     };
-
     if (lat !== null && lng !== null) {
       payload.coords = [lat, lng];
     }
-
     setSubmitting(true);
     setFormError(null);
     try {
@@ -546,11 +543,16 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
       setSubmitting(false);
     }
   };
-
   if (!open) return null;
-
-  const tabLabels = [t("Tabs.general"), t("Tabs.specs"), t("Tabs.amenities"), t("Tabs.media")];
-
+  const tabLabels = property
+    ? [
+        t("Tabs.general"),
+        t("Tabs.specs"),
+        t("Tabs.amenities"),
+        t("Tabs.media"),
+        t("Tabs.actions"),
+      ]
+    : [t("Tabs.general"), t("Tabs.specs"), t("Tabs.amenities"), t("Tabs.media")];
   return (
     <div
       className="fixed inset-0 z-50 flex items-start justify-center overflow-y-auto bg-black/50 p-4"
@@ -576,10 +578,9 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
             aria-label={t("Aria.close_dialog")}
             className="min-h-11 min-w-11"
           >
-            <X className="h-5 w-5" aria-hidden="true" />
+            <X className="h-5 w-5" aria-hidden="true"/>
           </Button>
         </div>
-
         <div
           role="tablist"
           className="mb-4 flex border-b border-gray-200 dark:border-gray-700"
@@ -606,7 +607,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
             </button>
           ))}
         </div>
-
         <form onSubmit={handleSubmit} noValidate className="flex-1 overflow-y-auto">
           <div
             id="tabpanel-0"
@@ -627,7 +627,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
               onCoordsChange={setCoords}
             />
           </div>
-
           <div
             id="tabpanel-1"
             role="tabpanel"
@@ -647,7 +646,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
               setKitchenAppliances={setKitchenAppliances}
             />
           </div>
-
           <div
             id="tabpanel-2"
             role="tabpanel"
@@ -665,7 +663,6 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
               setKitchenAppliances={setKitchenAppliances}
             />
           </div>
-
           <div
             id="tabpanel-3"
             role="tabpanel"
@@ -683,13 +680,28 @@ export function PropertyFormModal({ open, property, onClose, onSaved }: Property
               onImagesChange={setImages}
             />
           </div>
-
+          {property && (
+            <div
+              id="tabpanel-4"
+              role="tabpanel"
+              aria-labelledby="tab-4"
+              style={{ display: activeTab !== 4 ? "none" : "block" }}
+            >
+              <PropertyActionsTab
+                propertyId={property.id}
+                propertyTitle={property.title}
+                onDelete={onDelete ?? (async () => {})}
+                onActivate={onActivate ?? (async () => {})}
+                onDeactivate={onDeactivate ?? (async () => {})}
+                onDeleted={onClose}
+              />
+            </div>
+          )}
           <div aria-live="polite" className="mt-4">
             {formError ? (
               <p className="text-sm text-red-600 dark:text-red-400">{formError}</p>
             ) : null}
           </div>
-
           <div
             className="mt-4 flex justify-end gap-3 border-t border-gray-200 pt-4
               dark:border-gray-700"

@@ -5,19 +5,24 @@ import { Wifi, WifiOff } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function OfflineIndicator() {
-  const [isOnline, setIsOnline] = useState(true);
+  // Initialize directly from navigator.onLine during component creation
+  const [isOnline, setIsOnline] = useState(() => {
+    if (typeof window !== "undefined") {
+      return navigator.onLine;
+    }
+    return true;
+  });
+
   const [showIndicator, setShowIndicator] = useState(false);
   const t = useTranslations("Components.OfflineIndicator");
 
   useEffect(() => {
-    // Initial check
-    setIsOnline(navigator.onLine);
-
     const handleOnline = () => {
       setIsOnline(true);
       setShowIndicator(true);
       // Hide the "back online" indicator after 3 seconds
-      setTimeout(() => setShowIndicator(false), 3000);
+      const timer = setTimeout(() => setShowIndicator(false), 3000);
+      return () => clearTimeout(timer);
     };
 
     const handleOffline = () => {
@@ -48,12 +53,12 @@ export default function OfflineIndicator() {
     >
       {isOnline ? (
         <>
-          <Wifi className="h-4 w-4" aria-hidden="true" />
+          <Wifi className="h-4 w-4" aria-hidden="true"/>
           <span>{t("back_online")}</span>
         </>
       ) : (
         <>
-          <WifiOff className="h-4 w-4" aria-hidden="true" />
+          <WifiOff className="h-4 w-4" aria-hidden="true"/>
           <span>{t("offline")}</span>
         </>
       )}

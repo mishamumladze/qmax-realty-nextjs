@@ -1,3 +1,15 @@
+// Usefull script to automatically translate missing keys in messages/*.json using DeepL API
+// 1. Create a .env.local file with your DEEPL_API_KEY
+// 2. change the TARGET_LOCALES object to your desired locales and their corresponding DeepL codes (https://www.deepl.com/docs-api/translating-text/request/)
+// 3. run `node scripts/translate.mjs` to translate missing keys in messages/*.json
+//        for better usage use "translate": "node scripts/translate.mjs", inside of your package.json scripts section and run `npm run translate`
+
+// Note:  This script is free-tier friendly, but it may take a while to translate all missing keys if you have a lot of them.
+//        You can adjust the BATCH_SIZE and MAX_CONCURRENT constants to speed up the process, but be aware that you may hit the rate limit of the DeepL API.
+
+// WARNING:   usage of this script without crediting the author is prohibited. If you use this script, please credit the author in your project README. Thank you!
+//            https://github.com/mishamumladze/
+
 import fs from "fs";
 import path from "path";
 import * as deepl from "deepl-node";
