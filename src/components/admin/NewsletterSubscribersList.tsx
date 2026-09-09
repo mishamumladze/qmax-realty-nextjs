@@ -173,11 +173,11 @@ export function NewsletterSubscribersList() {
       </p>
 
       {subscribers === null && !loadError ? (
-        <p className="text-gray-600 dark:text-gray-300">{t("loading")}</p>
+        <p className="py-12 text-center text-gray-600 dark:text-gray-300">{t("loading")}</p>
       ) : loadError ? (
         <div
-          className="rounded-lg border border-red-200 bg-red-50 p-4 text-red-700 dark:border-red-900
-            dark:bg-red-950 dark:text-red-300"
+          className="rounded-2xl border border-red-200 bg-red-50 p-4 text-red-700 dark:border-red-900
+            dark:bg-red-900/30 dark:text-red-300"
         >
           <p className="mb-3 text-sm">{loadError}</p>
           <Button
@@ -192,11 +192,15 @@ export function NewsletterSubscribersList() {
           </Button>
         </div>
       ) : !subscribers || subscribers.length === 0 ? (
-        <p className="text-gray-600 dark:text-gray-300">{t("empty")}</p>
+        <p className="py-12 text-center text-gray-600 dark:text-gray-300">{t("empty")}</p>
       ) : (
-        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        <ul className="grid gap-3">
           {subscribers.map((s) => (
-            <li key={s.id} className="py-4">
+            <li
+              key={s.id}
+              className="rounded-2xl border border-gray-100 bg-white p-4 dark:border-gray-700
+                dark:bg-gray-800"
+            >
               <div className="flex items-center justify-between gap-4">
                 <div className="min-w-0">
                   <span className="block truncate font-medium text-gray-900 dark:text-gray-100">
@@ -213,7 +217,7 @@ export function NewsletterSubscribersList() {
                   aria-label={t("Aria.remove_subscriber", { email: s.email })}
                   onClick={(e) => requestRemove(s, e)}
                 >
-                  <Trash2 aria-hidden="true" />
+                  <Trash2 aria-hidden="true"/>
                   {t("Buttons.remove")}
                 </Button>
               </div>
@@ -238,7 +242,7 @@ export function NewsletterSubscribersList() {
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={descId}
-            className="w-full max-w-sm rounded-lg bg-white p-6 dark:bg-gray-800"
+            className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-800"
             onKeyDown={(e) => {
               if (e.key === "Escape") closeDialog();
             }}
@@ -253,11 +257,20 @@ export function NewsletterSubscribersList() {
             <p id={descId} className="mb-6 text-sm text-gray-600 dark:text-gray-300">
               {t("Dialog.description", { email: confirmTarget.email })}
             </p>
-            <div className="flex justify-end gap-3">
-              <Button variant="secondary" autoFocus className="min-h-11" onClick={closeDialog}>
+            <div className="flex flex-col-reverse justify-end gap-3 sm:flex-row">
+              <Button
+                variant="secondary"
+                autoFocus
+                className="min-h-11 w-full sm:w-auto"
+                onClick={closeDialog}
+              >
                 {t("Buttons.cancel")}
               </Button>
-              <Button variant="destructive" className="min-h-11" onClick={confirmRemove}>
+              <Button
+                variant="destructive"
+                className="min-h-11 w-full sm:w-auto"
+                onClick={confirmRemove}
+              >
                 {t("Buttons.remove")}
               </Button>
             </div>
@@ -269,8 +282,8 @@ export function NewsletterSubscribersList() {
         <div
           role="status"
           className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3
-            rounded-lg bg-gray-200 px-4 py-3 text-gray-700 shadow-lg dark:bg-gray-800
-            dark:text-gray-300"
+            rounded-xl bg-gray-900 px-4 py-3 text-white shadow-xl dark:bg-gray-700
+            dark:text-white"
         >
           <span className="text-sm">{t("Toast.removed")}</span>
           <Button variant="secondary" size="sm" className="min-h-11" onClick={performUndo}>

@@ -69,11 +69,8 @@ export default async function HomePage() {
 
   return (
     <>
-      {/* Hero Section */}
-      <section
-        className="relative h-[68vh] w-full md:h-[72vh]"
-        aria-label={t("Hero.slideshow_aria")}
-      >
+      {/* Hero Section — image-based */}
+      <section aria-labelledby="home-hero-heading" className="relative h-[62svh] w-full md:h-[72vh]">
         <div className="relative h-full w-full">
           <Image
             src="/img/hero.webp"
@@ -84,124 +81,188 @@ export default async function HomePage() {
             className="object-cover object-[50%_35%]"
           />
           <div
-            className="absolute inset-0 flex flex-col bg-gradient-to-t from-black/80 via-black/40
-              to-transparent py-16 text-center md:py-24"
+            className="absolute inset-0 flex flex-col justify-end bg-gradient-to-t from-black/80
+              via-black/40 to-transparent text-center"
           >
-            <div
-              className="mx-auto mb-6 flex h-full w-4/5 flex-col items-center justify-end
-                text-white"
-            >
-              <h1 className="mb-2 text-4xl font-bold md:text-5xl lg:text-6xl">{t("Hero.title")}</h1>
-              <p className="mx-auto mb-6 max-w-2xl text-base md:text-lg">{t("Hero.subtitle")}</p>
-            </div>
-            <div className="flex flex-wrap items-center justify-center gap-4">
-              <PrimaryButtonRounded
-                label={t("Hero.buy_btn")}
-                icon={<Home className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
-                href="/listings?offer=sale"
-              />
-              <PrimaryButtonRounded
-                label={t("Hero.rent_btn")}
-                icon={<Key className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
-                href="/listings?offer=rent"
-              />
-              <PrimaryButtonRounded
-                label={t("Hero.sell_btn")}
-                icon={<BadgeDollarSign className="h-3 w-3 md:h-5 md:w-5" aria-hidden="true" />}
-                href="/contact?subject=selling"
-              />
+            <div className="relative mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6 md:pb-16">
+              <span
+                className="inline-flex items-center gap-2 rounded-full border border-white/25
+                  bg-white/10 px-4 py-1.5 text-xs font-bold tracking-[0.18em] text-brand-50 uppercase"
+              >
+                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-200"/>
+                QMAX Realty
+              </span>
+              <h1
+                id="home-hero-heading"
+                className="mx-auto mt-5 max-w-2xl text-h1 font-bold text-balance text-white"
+              >
+                {t("Hero.title")}
+              </h1>
+              <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/90 md:text-lg">
+                {t("Hero.subtitle")}
+              </p>
+              <div className="mt-8 flex flex-col flex-wrap items-center justify-center gap-3 sm:flex-row">
+                <PrimaryButtonRounded
+                  label={t("Hero.buy_btn")}
+                  icon={<Home className="h-5 w-5" aria-hidden="true"/>}
+                  href="/listings?offer=sale"
+                  size="lg"
+                  className="w-full min-h-[44px] sm:w-auto"
+                />
+                <PrimaryButtonRounded
+                  label={t("Hero.rent_btn")}
+                  icon={<Key className="h-5 w-5" aria-hidden="true"/>}
+                  href="/listings?offer=rent"
+                  size="lg"
+                  className="w-full min-h-[44px] sm:w-auto"
+                />
+                <PrimaryButtonRounded
+                  label={t("Hero.sell_btn")}
+                  icon={<BadgeDollarSign className="h-5 w-5" aria-hidden="true"/>}
+                  href="/contact?subject=selling"
+                  size="lg"
+                  className="w-full min-h-[44px] sm:w-auto"
+                />
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       {/* Properties Carousel Section */}
-      <PropertiesCarousel properties={properties} />
+      <PropertiesCarousel properties={properties}/>
 
-      {/* Why Choose Us Section */}
+      {/* Why Choose Us Section — gray band */}
       <section
-        className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 dark:bg-gray-900"
         aria-labelledby="why-us-heading"
+        className="border-y border-gray-100 bg-gray-50 py-12 md:py-20 dark:border-gray-700
+          dark:bg-gray-800"
       >
-        <div className="mb-12 text-center">
-          <h2
-            id="why-us-heading"
-            className="mb-12 text-3xl font-bold text-gray-800 md:text-4xl dark:text-white"
-          >
-            {t("WhyUs.title")}
-          </h2>
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
+            <h2
+              id="why-us-heading"
+              className="text-h2 font-bold text-balance text-gray-900 dark:text-white"
+            >
+              {t("WhyUs.title")}
+            </h2>
 
-          {/* Stats Grid */}
-          <div className="mx-auto grid max-w-3xl grid-cols-2 gap-6 md:grid-cols-3">
-            <div className="text-center">
-              <p className="text-brand-600 dark:text-brand-400 text-2xl font-black md:text-3xl">
-                15+
-              </p>
-              <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
-                {t("WhyUs.years_excellence")}
-              </p>
-            </div>
-            <div className="text-center">
-              <p className="text-brand-600 dark:text-brand-400 text-2xl font-black md:text-3xl">
-                1,200+
-              </p>
-              <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
-                {t("WhyUs.properties_sold")}
-              </p>
-            </div>
-            <div className="text-center max-md:col-span-2">
-              <p className="text-brand-600 dark:text-brand-400 text-2xl font-black md:text-3xl">
-                99%
-              </p>
-              <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
-                {t("WhyUs.client_satisfaction")}
-              </p>
+            {/* Stats Grid */}
+            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-4 sm:grid-cols-3 sm:gap-6">
+              <div className="text-center">
+                <p className="text-3xl font-extrabold text-brand-700 md:text-4xl dark:text-brand-300">
+                  15+
+                </p>
+                <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
+                  {t("WhyUs.years_excellence")}
+                </p>
+              </div>
+              <div className="text-center">
+                <p className="text-3xl font-extrabold text-brand-700 md:text-4xl dark:text-brand-300">
+                  1,200+
+                </p>
+                <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
+                  {t("WhyUs.properties_sold")}
+                </p>
+              </div>
+              <div className="text-center">
+                <p className="text-3xl font-extrabold text-brand-700 md:text-4xl dark:text-brand-300">
+                  99%
+                </p>
+                <p className="mt-1 text-sm font-medium text-gray-600 md:text-base dark:text-gray-300">
+                  {t("WhyUs.client_satisfaction")}
+                </p>
+              </div>
             </div>
           </div>
-        </div>
 
-        {/* Feature Cards Grid */}
-        <div className="mx-auto grid max-w-6xl grid-cols-2 gap-8 md:grid-cols-4">
-          {whyUsItems.map((item, index) => {
-            const Icon = item.icon;
-            return (
-              <div key={index} className="text-center">
+          {/* Feature Cards Grid */}
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
+            {whyUsItems.map((item, index) => {
+              const Icon = item.icon;
+              return (
                 <div
-                  className="bg-brand-100 dark:bg-brand-900/50 mx-auto mb-4 flex h-16 w-16
-                    items-center justify-center rounded-full"
+                  key={index}
+                  className="rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-sm
+                    transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-lg
+                    dark:border-gray-600 dark:bg-gray-700/40"
                 >
-                  <Icon className="text-brand-600 h-8 w-8" aria-hidden="true" />
-                </div>
-                <h3 className="mb-2 text-xl font-semibold text-gray-800 md:text-2xl dark:text-white">
-                  {item.title}
-                  {item.hasStar && (
-                    <Star
-                      className="text-brand-600 ml-1 inline-block h-4 w-4 align-text-bottom"
+                  <div
+                    className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl
+                      bg-brand-50 dark:bg-brand-900/40"
+                  >
+                    <Icon
+                      className="h-6 w-6 text-brand-700 dark:text-brand-300"
                       aria-hidden="true"
                     />
-                  )}
-                </h3>
-                <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
-              </div>
-            );
-          })}
+                  </div>
+                  <h3 className="text-base font-semibold text-gray-900 sm:text-lg dark:text-white">
+                    {item.title}
+                    {item.hasStar && (
+                      <Star
+                        className="ml-1 inline-block h-4 w-4 align-text-bottom text-brand-700
+                          dark:text-brand-300"
+                        aria-hidden="true"
+                      />
+                    )}
+                  </h3>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                    {item.desc}
+                  </p>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </section>
 
       {/* Quick Contact CTA Banner */}
-      <section className="mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12 dark:bg-gray-900">
-        <div className="bg-brand-600 rounded-2xl p-8 text-center text-white md:p-12">
-          <h2 className="mb-4 text-2xl font-bold md:text-3xl">{t("ContactBanner.title")}</h2>
-          <p className="mx-auto mb-6 max-w-xl text-base text-white md:text-lg">
-            {t("ContactBanner.description")}
-          </p>
-          <div className="flex flex-col justify-center gap-4 sm:flex-row">
-            <SecondaryButton
-              label={t("ContactBanner.whatsapp_btn")}
-              href={CONTACT_INFO.whatsapp.href}
-              icon={<Image src="/img/Logos/si-whatsapp.svg" alt="" width={20} height={20} />}
-            />
-            <PrimaryButton label={t("ContactBanner.view_all_btn")} href="/listings" />
+      <section
+        aria-labelledby="home-cta-heading"
+        className="bg-white py-12 md:py-20 dark:bg-gray-900"
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div
+            className="relative overflow-hidden rounded-3xl border border-brand-700 bg-brand-800
+              px-6 py-10 shadow-xl sm:px-10 md:p-14"
+          >
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+              <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-white/10 blur-3xl"/>
+            </div>
+            <div className="relative grid items-center gap-8 lg:grid-cols-[1.2fr_auto]">
+              <div>
+                <span
+                  className="inline-flex items-center gap-2 rounded-full border border-white/25
+                    bg-white/10 px-3 py-1 text-xs font-bold tracking-[0.18em] text-brand-50 uppercase"
+                >
+                  QMAX Realty
+                </span>
+                <h2
+                  id="home-cta-heading"
+                  className="mt-4 text-h2 font-bold text-balance text-white"
+                >
+                  {t("ContactBanner.title")}
+                </h2>
+                <p className="mt-3 max-w-xl text-base leading-relaxed text-brand-50/85 md:text-lg">
+                  {t("ContactBanner.description")}
+                </p>
+              </div>
+              <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto lg:flex-col">
+                <SecondaryButton
+                  label={t("ContactBanner.whatsapp_btn")}
+                  href={CONTACT_INFO.whatsapp.href}
+                  size="lg"
+                  className="w-full min-h-[44px] border-white sm:w-auto lg:w-full"
+                  icon={<Image src="/img/Logos/si-whatsapp.svg" alt="" width={20} height={20}/>}
+                />
+                <PrimaryButton
+                  label={t("ContactBanner.view_all_btn")}
+                  href="/listings"
+                  size="lg"
+                  className="w-full min-h-[44px] sm:w-auto lg:w-full"
+                />
+              </div>
+            </div>
           </div>
         </div>
       </section>

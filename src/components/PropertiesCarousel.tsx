@@ -19,6 +19,7 @@ export default function PropertiesCarousel({
   isLoading = false,
 }: PropertiesCarouselProps) {
   const t = useTranslations("Components.PCarousel");
+  const tHome = useTranslations("Pages.HomePage");
   // Ensure exactly 6 properties are selected for the homepage carousel
   const homepageProperties = properties.slice(0, 6);
 
@@ -112,59 +113,108 @@ export default function PropertiesCarousel({
     if (isLoading) {
       return (
         <section
-          className="container mx-auto px-4 py-8 md:py-12"
           aria-labelledby="most-viewed-heading"
+          className="bg-white py-12 md:py-20 dark:bg-gray-900"
         >
-          <div className="mb-8 text-center md:mb-12">
-            <h2
-              id="most-viewed-heading"
-              className="text-brand-600 mb-4 text-2xl font-bold md:text-3xl lg:text-4xl"
-            >
-              {t("title")}
-            </h2>
-            <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">{t("subtitle")}</p>
-          </div>
-          <div className="relative mx-auto max-w-5xl" aria-busy="true" aria-live="polite">
-            <div className="flex gap-4 md:gap-6">
-              {Array.from({ length: 6 }).map((_, i) => (
-                <CarouselCardSkeleton key={i} />
-              ))}
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
+              <h2
+                id="most-viewed-heading"
+                className="text-h2 font-bold text-balance text-gray-900 dark:text-white"
+              >
+                {t("title")}
+              </h2>
+              <p className="mt-3 text-base leading-relaxed text-gray-600 md:text-lg dark:text-gray-300">
+                {t("subtitle")}
+              </p>
+            </div>
+            <div className="relative mx-auto max-w-5xl" aria-busy="true" aria-live="polite">
+              <div className="flex gap-4 md:gap-6">
+                {Array.from({ length: 6 }).map((_, i) => (
+                  <CarouselCardSkeleton key={i}/>
+                ))}
+              </div>
             </div>
           </div>
         </section>
       );
     }
-    return null;
+    return (
+      <section
+        aria-labelledby="most-viewed-heading"
+        className="bg-white py-12 md:py-20 dark:bg-gray-900"
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
+            <h2
+              id="most-viewed-heading"
+              className="text-h2 font-bold text-balance text-gray-900 dark:text-white"
+            >
+              {t("title")}
+            </h2>
+            <p className="mt-3 text-base leading-relaxed text-gray-600 md:text-lg dark:text-gray-300">
+              {t("subtitle")}
+            </p>
+          </div>
+          <div
+            className="mx-auto max-w-xl rounded-2xl border border-gray-100 bg-white p-8 text-center
+              shadow-sm dark:border-gray-700 dark:bg-gray-800"
+          >
+            <p className="text-base leading-relaxed text-gray-600 md:text-lg dark:text-gray-300">
+              {t("subtitle")}
+            </p>
+            <Link
+              href="/listings"
+              className="text-brand-700 dark:text-brand-300 mt-4 inline-flex min-h-[44px]
+                items-center font-semibold hover:underline"
+            >
+              <span>{tHome("ContactBanner.view_all_btn")}</span>
+              <ArrowRight
+                className="ml-1 h-4 w-4 transition-transform duration-300 group-hover:translate-x-1"
+                aria-hidden="true"
+              />
+            </Link>
+          </div>
+        </div>
+      </section>
+    );
   }
 
   const translateX = currentIndex * (100 / visibleCount);
 
   return (
-    <section className="container mx-auto px-4 py-8 md:py-12" aria-labelledby="most-viewed-heading">
-      <div className="mb-8 text-center md:mb-12">
-        <h2
-          id="most-viewed-heading"
-          className="text-brand-600 mb-4 text-2xl font-bold md:text-3xl lg:text-4xl"
-        >
-          {t("title")}
-        </h2>
-        <p className="mx-auto max-w-2xl text-base text-gray-600 md:text-lg">{t("subtitle")}</p>
-      </div>
+    <section
+      aria-labelledby="most-viewed-heading"
+      className="bg-white py-12 md:py-20 dark:bg-gray-900"
+    >
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
+          <h2
+            id="most-viewed-heading"
+            className="text-h2 font-bold text-balance text-gray-900 dark:text-white"
+          >
+            {t("title")}
+          </h2>
+          <p className="mt-3 text-base leading-relaxed text-gray-600 md:text-lg dark:text-gray-300">
+            {t("subtitle")}
+          </p>
+        </div>
 
-      <div className="relative mx-auto max-w-5xl">
-        <button
-          onClick={() => {
-            triggerHaptic();
-            handlePrev();
-          }}
-          aria-label={t("Aria.previous")}
-          className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 left-0 z-10 flex
-            h-12 min-h-11 w-12 min-w-11 -translate-x-4 -translate-y-1/2 cursor-pointer items-center
-            justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
-            transition-all duration-200 md:-translate-x-6"
-        >
-          <ChevronLeft className="h-6 w-6" aria-hidden="true" />
-        </button>
+        <div className="relative mx-auto max-w-5xl">
+          <button
+            onClick={() => {
+              triggerHaptic();
+              handlePrev();
+            }}
+            aria-label={t("Aria.previous")}
+            className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 left-0 z-10 hidden
+              h-12 min-h-11 w-12 min-w-11 -translate-x-4 -translate-y-1/2 cursor-pointer items-center
+              justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
+              transition-all duration-200 motion-safe:transition-transform md:flex md:-translate-x-6
+              dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
+          >
+            <ChevronLeft className="h-6 w-6" aria-hidden="true"/>
+          </button>
 
         <div
           className="overflow-hidden max-sm:px-[calc(10vw-1rem)]"
@@ -176,8 +226,8 @@ export default function PropertiesCarousel({
           onBlur={() => setIsPaused(false)}
         >
           <div
-            className="flex gap-4 transition-transform duration-500 ease-in-out
-              will-change-transform md:gap-6"
+            className="flex gap-4 motion-safe:transition-transform motion-safe:duration-500
+              motion-safe:ease-in-out will-change-transform md:gap-6"
             style={{
               transform: `translateX(-${translateX}%)`,
             }}
@@ -193,11 +243,12 @@ export default function PropertiesCarousel({
                 <article
                   key={p.id}
                   className="properties-carousel-card flex w-[80vw] flex-none flex-col
-                    overflow-hidden rounded-xl bg-white shadow-lg transition-shadow duration-300
-                    hover:shadow-xl sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] dark:bg-gray-800
-                    dark:text-white"
+                    overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm
+                    transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-xl
+                    sm:w-[calc(50%-12px)] lg:w-[calc(33.333%-16px)] dark:border-gray-700
+                    dark:bg-gray-800 dark:text-white"
                 >
-                  <div className="relative h-40 w-full md:h-48">
+                  <div className="relative h-52 w-full md:h-56">
                     <Image
                       src={p.card_image || "/img/placeholder.webp"}
                       alt={title}
@@ -216,8 +267,8 @@ export default function PropertiesCarousel({
                         {title}
                       </h3>
                       <span
-                        className="text-brand-700 ml-2 text-sm font-bold whitespace-nowrap
-                          md:text-base"
+                        className="text-brand-700 dark:text-brand-300 ml-2 text-sm font-bold
+                          whitespace-nowrap md:text-base"
                       >
                         ${price.toLocaleString()}
                       </span>
@@ -235,20 +286,21 @@ export default function PropertiesCarousel({
                         dark:text-gray-400"
                     >
                       <span className="flex items-center gap-1">
-                        <Bed className="h-4 w-4" /> {bedrooms}
+                        <Bed className="h-4 w-4" aria-hidden="true"/> {bedrooms}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Bath className="h-4 w-4" /> {bathrooms}
+                        <Bath className="h-4 w-4" aria-hidden="true"/> {bathrooms}
                       </span>
                       <span className="flex items-center gap-1">
-                        <Square className="h-4 w-4" /> {sqmt} m²
+                        <Square className="h-4 w-4" aria-hidden="true"/> {sqmt} m²
                       </span>
                     </div>
 
                     <Link
                       href={`/properties/details/${p.id}`}
-                      className="group text-brand-700 hover:text-brand-800 mt-auto inline-flex
-                        items-center font-semibold transition-all duration-300"
+                      className="group text-brand-700 hover:text-brand-800 dark:text-brand-300 mt-auto
+                        inline-flex min-h-[44px] items-center font-semibold transition-all
+                        duration-300"
                     >
                       <span>{t("details")}</span>
                       <ArrowRight
@@ -269,35 +321,37 @@ export default function PropertiesCarousel({
             handleNext();
           }}
           aria-label={t("Aria.next")}
-          className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 right-0 z-10 flex
+          className="hover:text-brand-600 hover:border-brand-400 absolute top-1/2 right-0 z-10 hidden
             h-12 min-h-11 w-12 min-w-11 translate-x-4 -translate-y-1/2 cursor-pointer items-center
             justify-center rounded-full border border-gray-200 bg-white text-gray-600 shadow-md
-            transition-all duration-200 md:translate-x-6"
+            transition-all duration-200 motion-safe:transition-transform md:flex md:translate-x-6
+            dark:border-gray-700 dark:bg-gray-800 dark:text-gray-300"
         >
-          <ChevronRight className="h-6 w-6" aria-hidden="true" />
+          <ChevronRight className="h-6 w-6" aria-hidden="true"/>
         </button>
 
-        <div className="mt-6 flex justify-center gap-2">
-          {Array.from({ length: maxIndex + 1 }).map((_, i) => (
-            <button
-              key={i}
-              onClick={() => setCurrentIndex(i)}
-              aria-label={t("Aria.go_to_slide", { n: i + 1 })}
-              className={`relative flex min-h-11 min-w-11 items-center justify-center rounded-full
-              transition-colors duration-200 ${
-                i === currentIndex
-                  ? "bg-brand-500"
-                  : "bg-transparent hover:bg-gray-200 dark:hover:bg-gray-700"
-              }`}
-            >
-              <span
-                className={`h-2.5 w-2.5 rounded-full transition-colors duration-200 ${
-                  i === currentIndex ? "bg-brand-500" : "bg-gray-400 dark:bg-gray-600"
+          <div className="mt-6 flex justify-center gap-2">
+            {Array.from({ length: maxIndex + 1 }).map((_, i) => (
+              <button
+                key={i}
+                onClick={() => setCurrentIndex(i)}
+                aria-label={t("Aria.go_to_slide", { n: i + 1 })}
+                className={`relative flex min-h-11 min-w-11 items-center justify-center rounded-full
+                transition-colors duration-200 ${
+                  i === currentIndex
+                    ? "bg-brand-500/15 dark:bg-brand-500/20"
+                    : "bg-transparent hover:bg-gray-200 dark:hover:bg-gray-700"
                 }`}
-                aria-hidden="true"
-              />
-            </button>
-          ))}
+              >
+                <span
+                  className={`h-2.5 w-2.5 rounded-full transition-colors duration-200 ${
+                    i === currentIndex ? "bg-brand-500" : "bg-gray-400 dark:bg-gray-600"
+                  }`}
+                  aria-hidden="true"
+                />
+              </button>
+            ))}
+          </div>
         </div>
       </div>
     </section>

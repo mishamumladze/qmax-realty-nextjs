@@ -43,7 +43,9 @@ function getSortValue(property: PropertyWithStatus, key: SortKey): string | numb
 }
 
 function formatPrice(p: Property): string {
-  return `${p.price ?? "—"} ${p.currency ?? ""}`.trim();
+  const currency = p.currency ?? "";
+  if (p.price == null) return `— ${currency}`.trim();
+  return `${p.price.toLocaleString()} ${currency}`.trim();
 }
 
 // Read a `${key}_${locale}` alias with fallback to the base field.
@@ -101,19 +103,23 @@ function Checkbox({
       aria-checked={indeterminate ? "mixed" : checked}
       aria-label={ariaLabel}
       onClick={onChange}
-      className={`inline-flex h-5 w-5 items-center justify-center rounded border-2 transition-colors
+      className="inline-flex min-h-[44px] min-w-[44px] items-center justify-center rounded"
+    >
+      <span
+        className={`inline-flex h-5 w-5 items-center justify-center rounded border-2 transition-colors
         ${
           isSelected
             ? "border-brand-500 bg-brand-500 text-white"
             : `border-gray-300 bg-transparent text-transparent hover:border-gray-400
               dark:border-gray-600`
         }`}
-    >
-      {indeterminate ? (
-        <Minus className="h-3 w-3" strokeWidth={3} />
-      ) : checked ? (
-        <Check className="h-3 w-3" strokeWidth={3} />
-      ) : null}
+      >
+        {indeterminate ? (
+          <Minus className="h-3 w-3" strokeWidth={3}/>
+        ) : checked ? (
+          <Check className="h-3 w-3" strokeWidth={3}/>
+        ) : null}
+      </span>
     </button>
   );
 }
@@ -143,7 +149,7 @@ function SortableHeader({
     <button
       type="button"
       onClick={() => onSort(sortKey)}
-      className="flex items-center gap-1 px-3 py-3 font-semibold text-gray-500 transition-colors
+      className="flex min-h-[44px] items-center gap-1 px-3 py-3 font-semibold text-gray-500 transition-colors
         hover:text-gray-900 dark:text-gray-400 dark:hover:text-gray-100"
       aria-label={ariaLabel}
     >
@@ -151,9 +157,9 @@ function SortableHeader({
       {isActive && (
         <span className="flex flex-col leading-none">
           {direction === "asc" ? (
-            <ChevronUp className="text-brand-500 h-3 w-3" />
+            <ChevronUp className="text-brand-500 h-3 w-3"/>
           ) : (
-            <ChevronDown className="text-brand-500 h-3 w-3" />
+            <ChevronDown className="text-brand-500 h-3 w-3"/>
           )}
         </span>
       )}
@@ -328,24 +334,40 @@ export function PropertyTable({
     <>
       {selectedIds.size > 0 && (
         <div
-          className="bg-brand-50 dark:bg-brand-900/20 mb-4 flex items-center justify-between gap-4
-            rounded-lg p-3"
+          className="bg-brand-50 dark:bg-brand-900/20 sticky bottom-4 z-30 mb-4 flex flex-wrap
+            items-center justify-between gap-4 rounded-2xl border border-gray-100 p-3 shadow-xl
+            dark:border-gray-700"
           role="status"
           aria-live="polite"
         >
           <span className="text-brand-800 dark:text-brand-200 text-sm font-medium">
             {t("Selected.count", { count: selectedIds.size })}
           </span>
-          <div className="flex items-center gap-2">
-            <Button variant="secondary" size="sm" onClick={() => setSelectedIds(new Set())}>
+          <div className="flex w-full flex-wrap items-center gap-2 sm:w-auto">
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => setSelectedIds(new Set())}
+              className="w-full sm:w-auto"
+            >
               {t("Buttons.deselect_all")}
             </Button>
-            <Button variant="secondary" size="sm" onClick={() => handleDeactivate("inactive")}>
-              <Power className="mr-1.5 h-3.5 w-3.5" />
+            <Button
+              variant="secondary"
+              size="sm"
+              onClick={() => handleDeactivate("inactive")}
+              className="w-full sm:w-auto"
+            >
+              <Power className="mr-1.5 h-3.5 w-3.5"/>
               {t("Buttons.deactivate_selected")}
             </Button>
-            <Button variant="primary" size="sm" onClick={() => handleDeactivate("active")}>
-              <Power className="mr-1.5 h-3.5 w-3.5" />
+            <Button
+              variant="primary"
+              size="sm"
+              onClick={() => handleDeactivate("active")}
+              className="w-full sm:w-auto"
+            >
+              <Power className="mr-1.5 h-3.5 w-3.5"/>
               {t("Buttons.activate_selected")}
             </Button>
             <Button
@@ -353,8 +375,9 @@ export function PropertyTable({
               size="sm"
               onClick={handleBulkDelete}
               disabled={bulkDeleting}
+              className="w-full sm:w-auto"
             >
-              <Trash2 className="mr-1.5 h-3.5 w-3.5" />
+              <Trash2 className="mr-1.5 h-3.5 w-3.5"/>
               {bulkDeleting ? t("Buttons.deleting") : t("Buttons.delete_selected")}
             </Button>
           </div>
@@ -362,11 +385,14 @@ export function PropertyTable({
       )}
 
       {/* Desktop: data table */}
-      <div className="hidden md:block">
+      <div
+        className="hidden overflow-hidden rounded-2xl border border-gray-100 bg-white
+          md:block dark:border-gray-700 dark:bg-gray-800"
+      >
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <caption className="sr-only">{t("caption")}</caption>
-            <thead>
+            <thead className="sticky top-0 bg-white dark:bg-gray-800">
               <tr className="border-b border-gray-200 dark:border-gray-700">
                 <th scope="col" className="px-3 py-3">
                   <Checkbox
@@ -510,10 +536,10 @@ export function PropertyTable({
                       {formatPrice(p)}
                     </td>
                     <td className="px-3 py-3">
-                      <StatusBadge status={status} />
+                      <StatusBadge status={status}/>
                     </td>
                     <td className="px-3 py-3">
-                      <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete} />
+                      <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete}/>
                     </td>
                   </tr>
                 );
@@ -531,10 +557,10 @@ export function PropertyTable({
           return (
             <div
               key={p.id}
-              className={`rounded-lg border p-4 transition-colors ${
+              className={`rounded-2xl border p-4 transition-colors ${
                 isSelected
                   ? "border-brand-300 bg-brand-50 dark:border-brand-700 dark:bg-brand-900/20"
-                  : "border-gray-200 dark:border-gray-700"
+                  : "border-gray-200 bg-white dark:border-gray-700 dark:bg-gray-800"
               }`}
             >
               <div className="flex items-start justify-between gap-3">
@@ -544,6 +570,15 @@ export function PropertyTable({
                     onChange={() => handleSelectOne(p.id)}
                     ariaLabel={t("Aria.select_row", { title: p.title })}
                   />
+                  {p.card_image ? (
+                    // eslint-disable-next-line @next/next/no-img-element -- admin thumbnail only
+                    <img
+                      src={p.card_image}
+                      alt=""
+                      loading="lazy"
+                      className="h-11 w-11 shrink-0 rounded-lg object-cover"
+                    />
+                  ) : null}
                   <h3
                     className="min-w-0 truncate text-base font-semibold text-gray-900
                       dark:text-gray-100"
@@ -551,7 +586,7 @@ export function PropertyTable({
                     {displayTitle(p, locale)}
                   </h3>
                 </div>
-                <StatusBadge status={status} />
+                <StatusBadge status={status}/>
               </div>
               <dl className="mt-3 space-y-1.5 text-sm">
                 <div className="flex justify-between gap-4">
@@ -572,7 +607,7 @@ export function PropertyTable({
                 </div>
               </dl>
               <div className="mt-4 border-t border-gray-200 pt-3 dark:border-gray-700">
-                <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete} />
+                <ActionButtons property={p} onEdit={onEdit} onDelete={onDelete}/>
               </div>
             </div>
           );

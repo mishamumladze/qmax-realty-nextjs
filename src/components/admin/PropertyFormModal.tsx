@@ -674,11 +674,14 @@ export function PropertyFormModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby={titleId}
-        className="my-8 flex max-h-[90vh] w-full max-w-4xl flex-col rounded-lg bg-white p-6
-          shadow-xl dark:bg-gray-800"
+        className="my-8 flex max-h-[92dvh] w-full max-w-4xl flex-col rounded-2xl bg-white p-6
+          shadow-2xl md:p-8 dark:bg-gray-800"
       >
-        <div className="mb-4 flex items-center justify-between gap-4">
-          <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+        <div
+          className="sticky top-0 z-10 mb-4 flex items-center justify-between gap-4 bg-white pb-4
+            dark:bg-gray-800"
+        >
+          <h2 id={titleId} className="text-h2 font-bold text-gray-900 dark:text-gray-100">
             {property ? t("Titles.edit") : t("Titles.add")}
           </h2>
           <Button
@@ -688,12 +691,13 @@ export function PropertyFormModal({
             aria-label={t("Aria.close_dialog")}
             className="min-h-11 min-w-11"
           >
-            <X className="h-5 w-5" aria-hidden="true" />
+            <X className="h-5 w-5" aria-hidden="true"/>
           </Button>
         </div>
         <div
           role="tablist"
-          className="mb-4 flex border-b border-gray-200 dark:border-gray-700"
+          className="-mx-1 mb-4 flex snap-x overflow-x-auto border-b border-gray-200 px-1
+            dark:border-gray-700"
           aria-label={t("Aria.tabs")}
         >
           {tabLabels.map((label, index) => (
@@ -706,7 +710,8 @@ export function PropertyFormModal({
               tabIndex={activeTab === index ? 0 : -1}
               onClick={() => handleTabChange(index)}
               onKeyDown={(e) => handleKeyDownTab(e, index)}
-              className={`border-b-2 px-4 py-2 text-sm font-medium transition-colors ${
+              className={`min-h-[44px] border-b-2 px-4 py-2 text-sm font-medium whitespace-nowrap
+                transition-colors ${
                 activeTab === index
                   ? "border-brand-600 text-brand-600 dark:text-brand-400"
                   : `border-transparent text-gray-500 hover:text-gray-700 dark:text-gray-400
@@ -830,13 +835,23 @@ export function PropertyFormModal({
             ) : null}
           </div>
           <div
-            className="mt-4 flex justify-end gap-3 border-t border-gray-200 pt-4
-              dark:border-gray-700"
+            className="sticky bottom-0 mt-4 flex flex-col-reverse justify-end gap-3 border-t
+              border-gray-200 bg-white pt-4 sm:flex-row dark:border-gray-700 dark:bg-gray-800"
           >
-            <Button variant="secondary" type="button" onClick={onClose} className="min-h-11">
+            <Button
+              variant="secondary"
+              type="button"
+              onClick={onClose}
+              className="min-h-11 w-full sm:w-auto"
+            >
               {t("Buttons.cancel")}
             </Button>
-            <Button variant="primary" type="submit" disabled={submitting} className="min-h-11">
+            <Button
+              variant="primary"
+              type="submit"
+              disabled={submitting}
+              className="min-h-11 w-full sm:w-auto"
+            >
               {submitting ? t("Buttons.saving") : t("Buttons.save")}
             </Button>
           </div>

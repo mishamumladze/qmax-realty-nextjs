@@ -214,54 +214,68 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
     <div className="flex min-h-screen flex-col bg-gray-50 md:flex-row dark:bg-gray-900">
       <nav
         aria-label={t("nav_aria")}
-        className="w-full shrink-0 border-b border-gray-200 bg-white p-4 md:w-60 md:border-r
-          md:border-b-0 dark:border-gray-700 dark:bg-gray-800"
+        className="sticky bottom-0 z-40 order-2 w-full shrink-0 border-t border-gray-200
+          bg-white/95 p-3 backdrop-blur md:order-1 md:static md:top-0 md:h-screen md:w-60
+          md:border-t-0 md:border-r md:border-b-0 md:bg-white md:p-4 dark:border-gray-700
+          dark:bg-gray-800/95 dark:md:bg-gray-800"
       >
-        <div className="flex gap-2 md:flex-col">
+        <div className="grid grid-cols-4 gap-2 md:flex md:flex-col">
           {tabs.map(({ id, label, icon: Icon }) => {
             const active = activeTab === id;
             return (
               <Button
                 key={id}
                 variant={active ? "primary" : "secondary"}
-                className="min-h-11 w-full justify-start"
+                className="min-h-[44px] w-full flex-col gap-1 px-1 text-xs sm:text-sm md:flex-row
+                  md:justify-start md:text-sm"
                 aria-current={active ? "true" : undefined}
                 onClick={() => setActiveTab(id)}
               >
-                <Icon className="h-4 w-4 shrink-0" aria-hidden="true" />
-                <span>{label}</span>
+                <Icon className="h-4 w-4 shrink-0" aria-hidden="true"/>
+                <span className="truncate">{label}</span>
               </Button>
             );
           })}
-          <div className="hidden flex-1 md:block" />
+          <div className="hidden flex-1 md:block"/>
           <Button
             variant="destructive"
             size="sm"
-            className="min-h-11 w-full"
+            className="min-h-[44px] w-full flex-col gap-1 px-1 text-xs sm:text-sm md:flex-row
+              md:text-sm"
             onClick={handleLogout}
           >
-            <LogOut className="h-4 w-4 shrink-0" aria-hidden="true" />
-            <span>{t("logout")}</span>
+            <LogOut className="h-4 w-4 shrink-0" aria-hidden="true"/>
+            <span className="truncate">{t("logout")}</span>
           </Button>
         </div>
       </nav>
 
-      <main className="flex-1 overflow-x-hidden p-4 md:p-8">
+      <main className="order-1 mx-auto w-full max-w-6xl flex-1 px-4 py-8 md:order-2 md:px-8 md:py-12">
         {activeTab === "properties" && (
           <>
-            <div className="mb-6 flex items-center justify-between gap-4">
-              <h1 className="text-2xl font-semibold text-gray-900 dark:text-gray-100">
-                {t("Headings.properties")}
-              </h1>
+            <div className="mb-6 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <div className="flex flex-wrap items-center gap-3">
+                <h1
+                  className="text-h2 font-bold text-balance text-gray-900 dark:text-gray-100"
+                >
+                  {t("Headings.properties")}
+                </h1>
+                <span
+                  className="inline-flex items-center rounded-full bg-brand-100 px-3 py-1 text-sm
+                    font-medium text-brand-800 dark:bg-brand-900/40 dark:text-brand-200"
+                >
+                  {properties.length}
+                </span>
+              </div>
               <Button
                 variant="primary"
-                className="min-h-11"
+                className="min-h-11 w-full sm:w-auto"
                 onClick={() => {
                   setEditing(null);
                   setModalOpen(true);
                 }}
               >
-                <Plus className="h-4 w-4 shrink-0" aria-hidden="true" />
+                <Plus className="h-4 w-4 shrink-0" aria-hidden="true"/>
                 <span>{t("add_property")}</span>
               </Button>
             </div>
@@ -296,19 +310,19 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
 
         {activeTab === "messages" && (
           <>
-            <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
+            <h1 className="text-h2 mb-6 font-bold text-balance text-gray-900 dark:text-gray-100">
               {t("Headings.messages")}
             </h1>
-            <MessagesList />
+            <MessagesList/>
           </>
         )}
 
         {activeTab === "newsletter" && (
           <>
-            <h1 className="mb-6 text-2xl font-semibold text-gray-900 dark:text-gray-100">
+            <h1 className="text-h2 mb-6 font-bold text-balance text-gray-900 dark:text-gray-100">
               {t("Headings.newsletter")}
             </h1>
-            <NewsletterSubscribersList />
+            <NewsletterSubscribersList/>
           </>
         )}
       </main>
@@ -329,21 +343,21 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             onKeyDown={(e) => {
               if (e.key === "Escape") cancelDialog();
             }}
-            className="w-full max-w-sm rounded-lg bg-white p-6 shadow-xl dark:bg-gray-800"
+            className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-xl dark:bg-gray-800"
           >
-            <h2 id={titleId} className="text-lg font-semibold text-gray-900 dark:text-gray-100">
+            <h2 id={titleId} className="text-h3 font-semibold text-gray-900 dark:text-gray-100">
               {t("DeleteDialog.title")}
             </h2>
             <p id={descId} className="mt-2 text-sm text-gray-600 dark:text-gray-300">
               {t("DeleteDialog.description", { title: deleteTarget.title })}
             </p>
-            <div className="mt-6 flex justify-end gap-3">
-              <Button variant="secondary" className="min-h-11" autoFocus onClick={cancelDialog}>
+            <div className="mt-6 flex flex-col-reverse gap-2 sm:flex-row sm:justify-end sm:gap-3">
+              <Button variant="secondary" className="min-h-11 w-full sm:w-auto" autoFocus onClick={cancelDialog}>
                 {t("DeleteDialog.Buttons.cancel")}
               </Button>
               <Button
                 variant="destructive"
-                className="min-h-11"
+                className="min-h-11 w-full sm:w-auto"
                 onClick={() => {
                   void confirmDelete();
                 }}

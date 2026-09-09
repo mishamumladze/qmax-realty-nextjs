@@ -82,8 +82,8 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
 
   return (
     <>
-      <div>
-        <h2 className="mb-6 text-xl font-bold text-gray-900 dark:text-white">{t("title")}</h2>
+      <section aria-labelledby="property-gallery-heading">
+        <h2 id="property-gallery-heading" className="text-h2 mb-4 font-bold text-gray-900 dark:text-white">{t("title")}</h2>
 
         {images.length === 0 ? (
           <div
@@ -97,7 +97,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
         ) : (
           <>
             {/* Gallery Grid */}
-            <div className="grid grid-cols-2 gap-3 md:grid-cols-3">
+            <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 md:grid-cols-4">
               {images.map((img, idx) => (
                 <button
                   key={idx}
@@ -117,6 +117,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
                     src={img}
                     alt={t("photo_alt", { title: propertyTitle, n: idx + 1 })}
                     fill
+                    sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
                     className="object-cover transition-transform group-hover:scale-105"
                   />
                   <div
@@ -128,7 +129,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
             </div>
           </>
         )}
-      </div>
+      </section>
 
       {/* Modal Lightbox */}
       {selectedIndex !== null && (
@@ -137,17 +138,16 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
           role="dialog"
           aria-modal="true"
           aria-label={t("title")}
-          className="fixed inset-0 z-50 flex items-center justify-center bg-gray-900/90 p-4
-            dark:bg-gray-950/90"
+          className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4"
         >
           <button
             onClick={closeLightbox}
-            className="absolute top-4 right-4 rounded-full bg-white/20 p-2 text-white
+            className="absolute top-4 right-4 flex min-h-[44px] min-w-[44px] items-center justify-center rounded-full bg-white/20 p-2 text-white
               transition-colors hover:bg-white/30 focus-visible:outline-2
               focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.close")}
           >
-            <X className="h-6 w-6" />
+            <X className="h-6 w-6" aria-hidden="true"/>
           </button>
 
           {/* Main Image */}
@@ -163,22 +163,22 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
           {/* Navigation */}
           <button
             onClick={() => setSelectedIndex((selectedIndex - 1 + images.length) % images.length)}
-            className="absolute top-1/2 left-4 -translate-y-1/2 rounded-full bg-white/20 p-3
+            className="absolute top-1/2 left-4 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-white/20 p-3
               text-white transition-colors hover:bg-white/30 focus-visible:outline-2
               focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.previous")}
           >
-            <ChevronLeft className="h-6 w-6" />
+            <ChevronLeft className="h-6 w-6" aria-hidden="true"/>
           </button>
 
           <button
             onClick={() => setSelectedIndex((selectedIndex + 1) % images.length)}
-            className="absolute top-1/2 right-4 -translate-y-1/2 rounded-full bg-white/20 p-3
+            className="absolute top-1/2 right-4 flex min-h-[44px] min-w-[44px] -translate-y-1/2 items-center justify-center rounded-full bg-white/20 p-3
               text-white transition-colors hover:bg-white/30 focus-visible:outline-2
               focus-visible:outline-offset-2 focus-visible:outline-white"
             aria-label={t("Aria.next")}
           >
-            <ChevronRight className="h-6 w-6" />
+            <ChevronRight className="h-6 w-6" aria-hidden="true"/>
           </button>
 
           {/* Counter */}

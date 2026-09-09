@@ -275,14 +275,28 @@ export default function ListingsContent({
     <>
       {/* Hero Banner */}
       <header
-        className="from-brand-600 to-brand-700 dark:from-brand-700 dark:to-brand-800 relative
-          bg-gradient-to-r py-16 text-white md:py-24"
+        aria-labelledby="listings-hero-heading"
+        className="relative overflow-hidden bg-gradient-to-br from-brand-700 via-brand-800
+          to-brand-800 text-white"
       >
-        <div className="absolute inset-0 bg-black/20" aria-hidden="true" />
-        <div className="relative container mx-auto px-4 text-center">
-          <h1 className="text-display mb-4 font-bold">{t("Hero.title")}</h1>
-          <p className="text-body mx-auto mb-8 max-w-2xl md:text-lg">{t("Hero.subtitle")}</p>
-          <div className="relative mx-auto max-w-xl">
+        <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+          <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl"/>
+        </div>
+        <div className="relative mx-auto max-w-6xl px-4 py-14 text-center sm:px-6 md:py-20">
+          <span
+            className="inline-flex items-center gap-2 rounded-full border border-white/25
+              bg-white/10 px-4 py-1.5 text-xs font-bold tracking-[0.18em] text-brand-50 uppercase"
+          >
+            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-200"/>
+            QMAX Realty
+          </span>
+          <h1 id="listings-hero-heading" className="mt-5 text-h1 font-bold text-balance">
+            {t("Hero.title")}
+          </h1>
+          <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-brand-50/90 md:text-lg">
+            {t("Hero.subtitle")}
+          </p>
+          <div className="relative mx-auto mt-8 max-w-xl">
             <label htmlFor="property-search" className="sr-only">
               {t("Hero.search")}
             </label>
@@ -299,11 +313,24 @@ export default function ListingsContent({
                 onChange={(e) => setSearchTerm(e.target.value)}
                 placeholder={t("Hero.search_text")}
                 autoComplete="off"
-                className="focus:ring-brand-300 w-full rounded-xl bg-white/95 py-3.5 pr-4 pl-12
-                  text-base text-gray-800 shadow-lg focus:ring-2 focus:outline-none dark:bg-gray-800
-                  dark:text-white dark:placeholder-gray-400"
+                className="focus:ring-brand-300 min-h-[44px] w-full rounded-xl bg-white/95 py-3.5
+                  pr-12 pl-12 text-base text-gray-800 shadow-lg focus:ring-2 focus:outline-none
+                  dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
                 aria-label={t("Hero.search")}
               />
+              {searchTerm && (
+                <button
+                  type="button"
+                  onClick={() => setSearchTerm("")}
+                  aria-label={t("Filters.Aria.remove_search")}
+                  className="absolute top-1/2 right-2 flex min-h-11 min-w-11 -translate-y-1/2
+                    items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100
+                    hover:text-gray-800 dark:text-gray-400 dark:hover:bg-gray-700
+                    dark:hover:text-white"
+                >
+                  <X className="h-5 w-5" aria-hidden="true"/>
+                </button>
+              )}
             </div>
           </div>
         </div>
@@ -311,14 +338,15 @@ export default function ListingsContent({
 
       {/* Filter & Sort Bar */}
       <div
-        className="border-b border-gray-200 bg-white shadow-sm dark:border-gray-700
-          dark:bg-gray-900"
+        className="sticky top-0 z-30 border-b border-gray-200 bg-white/95 shadow-sm backdrop-blur
+          md:top-16 dark:border-gray-700 dark:bg-gray-900/95"
       >
-        <div className="container mx-auto px-4">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
           <div className="flex flex-col gap-3 py-3 md:flex-row md:items-center md:justify-between">
             {/* Type Filter Tabs */}
             <div
-              className="scrollbar-hide flex gap-2 overflow-x-auto pb-1 sm:pb-0"
+              className="scrollbar-hide -mx-4 flex snap-x gap-2 overflow-x-auto px-4 pb-1 sm:mx-0
+                sm:pb-0 sm:px-0"
               aria-label={t("Filters.Aria.type_filter")}
             >
               <h3 className="sr-only">{t("Filters.Aria.type_filter")}</h3>
@@ -333,8 +361,9 @@ export default function ListingsContent({
                     key={key}
                     type="button"
                     onClick={() => setTypeFilter(key)}
-                    className={`flex cursor-pointer items-center gap-1.5 rounded-full border px-4
-                    py-2 text-sm font-medium whitespace-nowrap transition-all duration-200 ${
+                    className={`flex min-h-[44px] cursor-pointer snap-start items-center gap-1.5
+                    rounded-full border px-4 py-2 text-sm font-medium whitespace-nowrap
+                    transition-all duration-200 ${
                       isActive
                         ? `bg-brand-600 border-brand-600 dark:bg-brand-500 dark:border-brand-500
                           text-white`
@@ -344,7 +373,7 @@ export default function ListingsContent({
                     }`}
                     aria-pressed={isActive}
                   >
-                    <Icon className="h-4 w-4" aria-hidden="true" />
+                    <Icon className="h-4 w-4" aria-hidden="true"/>
                     {label}
                     <span
                       className={`ml-1 rounded-full px-1.5 py-0.5 text-xs font-semibold ${
@@ -361,65 +390,68 @@ export default function ListingsContent({
             </div>
 
             {/* Modal Trigger & Sort */}
-            <div className="flex flex-shrink-0 items-center gap-2">
+            <div className="flex flex-col gap-2 sm:flex-row sm:flex-shrink-0 sm:items-center">
               <button
                 ref={filtersButtonRef}
                 type="button"
                 onClick={openModal}
                 className="border-brand-600 text-brand-700 bg-brand-50 hover:bg-brand-100
-                  dark:border-brand-500 dark:text-brand-400 dark:bg-brand-900/30
-                  dark:hover:bg-brand-900/50 relative inline-flex cursor-pointer items-center
-                  gap-1.5 rounded-full border px-4 py-2 text-sm font-semibold transition-colors
-                  duration-200"
+                  dark:border-brand-500 dark:text-brand-300 dark:bg-brand-900/30
+                  dark:hover:bg-brand-900/50 relative inline-flex min-h-[44px] w-full cursor-pointer
+                  items-center justify-center gap-1.5 rounded-full border px-4 py-2 text-sm
+                  font-semibold transition-colors duration-200 sm:w-auto"
               >
-                <SlidersHorizontal className="h-4 w-4" aria-hidden="true" />
+                <SlidersHorizontal className="h-4 w-4" aria-hidden="true"/>
                 {t("Sort.Filters.title")}
                 {activeModalFiltersCount > 0 && (
                   <span
                     className="bg-brand-600 absolute -top-1.5 -right-1.5 flex h-5 min-w-[1.25rem]
                       items-center justify-center rounded-full px-1 text-[11px] font-bold
                       text-white"
+                    aria-hidden="true"
                   >
                     {activeModalFiltersCount}
                   </span>
                 )}
               </button>
-              <label
-                htmlFor="sort-select"
-                className="text-sm font-medium text-gray-500 dark:text-gray-400"
-              >
-                Sort:
-              </label>
-              <select
-                id="sort-select"
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="focus:ring-brand-400 rounded-lg border border-gray-200 bg-white px-3 py-2
-                  text-sm text-gray-700 focus:ring-2 focus:outline-none dark:border-gray-700
-                  dark:bg-gray-800 dark:text-white"
-              >
+              <div className="flex w-full items-center gap-2 sm:w-auto">
+                <label
+                  htmlFor="sort-select"
+                  className="shrink-0 text-sm font-medium text-gray-500 dark:text-gray-400"
+                >
+                  {t("Filters.Labels.sort")}
+                </label>
+                <select
+                  id="sort-select"
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="focus:ring-brand-400 min-h-[44px] w-full rounded-lg border
+                    border-gray-200 bg-white px-3 py-2 text-sm text-gray-700 focus:ring-2
+                    focus:outline-none sm:w-auto dark:border-gray-700 dark:bg-gray-800
+                    dark:text-white"
+                >
                 <option value="default">{t("Sort.Filters.revelance")}</option>
                 <option value="price-asc">{t("Sort.Filters.price_asc")}</option>
                 <option value="price-desc">{t("Sort.Filters.price_desc")}</option>
                 <option value="sqmt-asc">{t("Sort.Filters.sqmt_asc")}</option>
                 <option value="sqmt-desc">{t("Sort.Filters.sqmt_desc")}</option>
               </select>
+              </div>
             </div>
           </div>
 
           {/* Active Filters Chips */}
           {(activeModalFiltersCount > 0 || searchTerm) && (
             <div
-              className="flex flex-wrap items-center gap-2 border-t border-gray-200 py-2.5
-                dark:border-gray-700"
+              className="flex items-center gap-2 border-t border-gray-200 py-2 dark:border-gray-700"
             >
               <h3
-                className="text-xs font-semibold tracking-wide text-gray-600 uppercase
+                className="shrink-0 text-xs font-semibold tracking-wide text-gray-600 uppercase
                   dark:text-gray-400"
               >
                 {t("Filters.Labels.active")}
               </h3>
-              <div className="flex flex-wrap items-center gap-2">
+              <div className="scrollbar-hide flex min-w-0 flex-1 items-center gap-2 overflow-x-auto py-1">
                 {searchTerm && (
                   <span
                     className="bg-brand-50 dark:bg-brand-900/40 text-brand-700 dark:text-brand-300
@@ -430,10 +462,10 @@ export default function ListingsContent({
                     <button
                       onClick={() => setSearchTerm("")}
                       className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
-                        min-w-11 items-center justify-center p-1"
+                        min-w-11 shrink-0 items-center justify-center rounded-full p-1"
                       aria-label={t("Filters.Aria.remove_search")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -446,11 +478,10 @@ export default function ListingsContent({
                     {t("Filters.Labels.offer_chip", { offer: offerFilter })}
                     <button
                       onClick={() => setOfferFilter("all")}
-                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
-                        min-w-11 items-center justify-center p-1"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full p-1"
                       aria-label={t("Filters.Aria.remove_offer")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -463,11 +494,10 @@ export default function ListingsContent({
                     {countryFilter}
                     <button
                       onClick={() => setCountryFilter("")}
-                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
-                        min-w-11 items-center justify-center p-1"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full p-1"
                       aria-label={t("Filters.Aria.remove_item", { item: countryFilter })}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -480,11 +510,10 @@ export default function ListingsContent({
                     {cityFilter}
                     <button
                       onClick={() => setCityFilter("")}
-                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
-                        min-w-11 items-center justify-center p-1"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full p-1"
                       aria-label={t("Filters.Aria.remove_item", { item: cityFilter })}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -497,11 +526,10 @@ export default function ListingsContent({
                     {t("Filters.Labels.beds_chip", { n: bedroomsFilter })}
                     <button
                       onClick={() => setBedroomsFilter(0)}
-                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
-                        min-w-11 items-center justify-center p-1"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full p-1"
                       aria-label={t("Filters.Aria.remove_bedrooms")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -514,11 +542,10 @@ export default function ListingsContent({
                     {t("Filters.Labels.baths_chip", { n: bathroomsFilter })}
                     <button
                       onClick={() => setBathroomsFilter(0)}
-                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
-                        min-w-11 items-center justify-center p-1"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full p-1"
                       aria-label={t("Filters.Aria.remove_bathrooms")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -534,11 +561,10 @@ export default function ListingsContent({
                         setMinPrice("");
                         setMaxPrice("");
                       }}
-                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11
-                        min-w-11 items-center justify-center p-1"
+                      className="hover:text-brand-900 dark:hover:text-brand-100 -m-1 flex min-h-11 min-w-11 shrink-0 items-center justify-center rounded-full p-1"
                       aria-label={t("Filters.Aria.remove_price")}
                     >
-                      <X className="h-4 w-4" aria-hidden="true" />
+                      <X className="h-4 w-4" aria-hidden="true"/>
                     </button>
                   </span>
                 )}
@@ -546,8 +572,8 @@ export default function ListingsContent({
               <button
                 type="button"
                 onClick={clearAllFilters}
-                className="text-brand-700 dark:text-brand-400 cursor-pointer text-xs font-medium
-                  hover:underline"
+                className="text-brand-700 dark:text-brand-300 inline-flex min-h-[44px] shrink-0
+                  cursor-pointer items-center text-xs font-semibold hover:underline"
               >
                 {t("Filters.Labels.clear_all")}
               </button>
@@ -564,20 +590,20 @@ export default function ListingsContent({
           aria-modal="true"
           aria-label={t("Filters.Aria.open")}
         >
-          <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={closeModal} />
-          <div className="relative flex min-h-full items-center justify-center p-4">
+          <div className="fixed inset-0 bg-black/50 transition-opacity" onClick={closeModal}/>
+          <div className="relative flex min-h-full items-center justify-center p-4 pb-20 md:pb-4">
             <div
               ref={modalRef}
               tabIndex={-1}
-              className="relative w-full max-w-lg overflow-hidden rounded-2xl bg-white shadow-2xl
-                outline-none dark:bg-gray-900"
+              className="relative flex max-h-[90dvh] w-full max-w-lg flex-col overflow-hidden
+                rounded-2xl bg-white shadow-2xl outline-none dark:bg-gray-900"
             >
               <div
                 className="flex items-center justify-between border-b border-gray-200 px-6 py-4
                   dark:border-gray-700"
               >
                 <div className="flex items-center gap-2">
-                  <SlidersHorizontal className="text-brand-600 h-5 w-5" aria-hidden="true" />
+                  <SlidersHorizontal className="text-brand-600 h-5 w-5" aria-hidden="true"/>
                   <h2 className="text-lg font-bold text-gray-800 dark:text-white">
                     {t("Filters.Labels.filter_properties")}
                   </h2>
@@ -589,18 +615,18 @@ export default function ListingsContent({
                     rounded-lg p-2 text-gray-600 hover:text-gray-800 dark:hover:text-gray-200"
                   aria-label={t("Filters.Aria.close")}
                 >
-                  <X className="h-5 w-5" />
+                  <X className="h-5 w-5" aria-hidden="true"/>
                 </button>
               </div>
 
-              <div className="max-h-[60vh] space-y-5 overflow-y-auto px-6 py-5">
+              <div className="max-h-[60vh] flex-1 space-y-5 overflow-y-auto px-6 py-5">
                 {/* Offer Pill Selection */}
                 <div>
                   <span
                     className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
                       uppercase dark:text-gray-400"
                   >
-                    <Tag className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
+                    <Tag className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"/>
                     {t("Filters.Labels.availability")}
                   </span>
                   <div className="flex flex-wrap gap-2">
@@ -613,8 +639,9 @@ export default function ListingsContent({
                         key={key}
                         type="button"
                         onClick={() => setDraftOffer(key)}
-                        className={`inline-flex cursor-pointer items-center gap-2 rounded-full
-                        border px-4 py-2 text-sm font-medium transition-all ${
+                        aria-pressed={draftOffer === key}
+                        className={`inline-flex min-h-[44px] cursor-pointer items-center gap-2
+                        rounded-full border px-4 py-2 text-sm font-medium transition-all ${
                           draftOffer === key
                             ? `bg-brand-600 border-brand-600 dark:bg-brand-500 dark:border-brand-500
                               text-white`
@@ -623,7 +650,7 @@ export default function ListingsContent({
                               dark:hover:bg-gray-700`
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className="h-4 w-4" aria-hidden="true"/>
                         {label}
                       </button>
                     ))}
@@ -651,8 +678,9 @@ export default function ListingsContent({
                         key={key}
                         type="button"
                         onClick={() => setDraftType(key)}
-                        className={`inline-flex cursor-pointer items-center gap-2 rounded-full
-                        border px-4 py-2 text-sm font-medium transition-all ${
+                        aria-pressed={draftType === key}
+                        className={`inline-flex min-h-[44px] cursor-pointer items-center gap-2
+                        rounded-full border px-4 py-2 text-sm font-medium transition-all ${
                           draftType === key
                             ? `bg-brand-600 border-brand-600 dark:bg-brand-500 dark:border-brand-500
                               text-white`
@@ -661,7 +689,7 @@ export default function ListingsContent({
                               dark:hover:bg-gray-700`
                         }`}
                       >
-                        <Icon className="h-4 w-4" />
+                        <Icon className="h-4 w-4" aria-hidden="true"/>
                         {label}
                       </button>
                     ))}
@@ -672,18 +700,23 @@ export default function ListingsContent({
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
+                      htmlFor="filter-country"
                       className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
                         uppercase dark:text-gray-400"
                     >
-                      <Globe className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
+                      <Globe
+                        className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
+                        aria-hidden="true"
+                      />
                       {t("Filters.Labels.country")}
                     </label>
                     <select
+                      id="filter-country"
                       value={draftCountry}
                       onChange={(e) => setDraftCountry(e.target.value)}
-                      className="focus:ring-brand-400 w-full rounded-lg border border-gray-200
-                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
-                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      className="focus:ring-brand-400 min-h-[44px] w-full rounded-lg border
+                        border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2
+                        focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <option value="">{t("Filters.Options.all_countries")}</option>
                       {geoCountries.map((gc) => (
@@ -695,20 +728,23 @@ export default function ListingsContent({
                   </div>
                   <div>
                     <label
+                      htmlFor="filter-city"
                       className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
                         uppercase dark:text-gray-400"
                     >
                       <MapPin
                         className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
+                        aria-hidden="true"
                       />
                       {t("Filters.Labels.city")}
                     </label>
                     <select
+                      id="filter-city"
                       value={draftCity}
                       onChange={(e) => setDraftCity(e.target.value)}
-                      className="focus:ring-brand-400 w-full rounded-lg border border-gray-200
-                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
-                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      className="focus:ring-brand-400 min-h-[44px] w-full rounded-lg border
+                        border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2
+                        focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <option value="">{t("Filters.Options.all_cities")}</option>
                       {geoCities.map((gc) => (
@@ -724,20 +760,23 @@ export default function ListingsContent({
                 <div className="grid grid-cols-2 gap-4">
                   <div>
                     <label
+                      htmlFor="filter-bedrooms"
                       className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
                         uppercase dark:text-gray-400"
                     >
                       <BedDouble
                         className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
+                        aria-hidden="true"
                       />
                       {t("Filters.Labels.bedrooms")}
                     </label>
                     <select
+                      id="filter-bedrooms"
                       value={draftBedrooms}
                       onChange={(e) => setDraftBedrooms(Number(e.target.value))}
-                      className="focus:ring-brand-400 w-full rounded-lg border border-gray-200
-                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
-                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      className="focus:ring-brand-400 min-h-[44px] w-full rounded-lg border
+                        border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2
+                        focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <option value={0}>{t("Filters.Options.any")}</option>
                       <option value={1}>1+</option>
@@ -748,18 +787,23 @@ export default function ListingsContent({
                   </div>
                   <div>
                     <label
+                      htmlFor="filter-bathrooms"
                       className="mb-2 block text-xs font-semibold tracking-wide text-gray-600
                         uppercase dark:text-gray-400"
                     >
-                      <Bath className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top" />
+                      <Bath
+                        className="text-brand-500 mr-1 inline-block h-3.5 w-3.5 align-text-top"
+                        aria-hidden="true"
+                      />
                       {t("Filters.Labels.bathrooms")}
                     </label>
                     <select
+                      id="filter-bathrooms"
                       value={draftBathrooms}
                       onChange={(e) => setDraftBathrooms(Number(e.target.value))}
-                      className="focus:ring-brand-400 w-full rounded-lg border border-gray-200
-                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
-                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      className="focus:ring-brand-400 min-h-[44px] w-full rounded-lg border
+                        border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2
+                        focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     >
                       <option value={0}>{t("Filters.Options.any")}</option>
                       <option value={1}>1+</option>
@@ -784,36 +828,48 @@ export default function ListingsContent({
                     <button
                       type="button"
                       onClick={() => applyPresetPrice("u200")}
-                      className="hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300
-                        text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
-                        py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
+                      aria-pressed={draftMinPrice === "" && draftMaxPrice === "200000"}
+                      className={`min-h-[44px] rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                        draftMinPrice === "" && draftMaxPrice === "200000"
+                          ? `border-brand-600 bg-brand-600 text-white dark:border-brand-500 dark:bg-brand-500`
+                          : `hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300 text-brand-700 dark:text-brand-300 border-gray-200 dark:border-gray-700`
+                      }`}
                     >
                       {t("Filters.Presets.under_200k")}
                     </button>
                     <button
                       type="button"
                       onClick={() => applyPresetPrice("200-400")}
-                      className="hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300
-                        text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
-                        py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
+                      aria-pressed={draftMinPrice === "200000" && draftMaxPrice === "400000"}
+                      className={`min-h-[44px] rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                        draftMinPrice === "200000" && draftMaxPrice === "400000"
+                          ? `border-brand-600 bg-brand-600 text-white dark:border-brand-500 dark:bg-brand-500`
+                          : `hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300 text-brand-700 dark:text-brand-300 border-gray-200 dark:border-gray-700`
+                      }`}
                     >
                       {t("Filters.Presets.r_200_400")}
                     </button>
                     <button
                       type="button"
                       onClick={() => applyPresetPrice("400-600")}
-                      className="hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300
-                        text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
-                        py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
+                      aria-pressed={draftMinPrice === "400000" && draftMaxPrice === "600000"}
+                      className={`min-h-[44px] rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                        draftMinPrice === "400000" && draftMaxPrice === "600000"
+                          ? `border-brand-600 bg-brand-600 text-white dark:border-brand-500 dark:bg-brand-500`
+                          : `hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300 text-brand-700 dark:text-brand-300 border-gray-200 dark:border-gray-700`
+                      }`}
                     >
                       {t("Filters.Presets.r_400_600")}
                     </button>
                     <button
                       type="button"
                       onClick={() => applyPresetPrice("600p")}
-                      className="hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300
-                        text-brand-700 dark:text-brand-400 rounded-full border border-gray-200 px-3
-                        py-1.5 text-xs font-semibold transition-colors dark:border-gray-700"
+                      aria-pressed={draftMinPrice === "600000" && draftMaxPrice === ""}
+                      className={`min-h-[44px] rounded-full border px-3 py-1.5 text-xs font-semibold transition-colors ${
+                        draftMinPrice === "600000" && draftMaxPrice === ""
+                          ? `border-brand-600 bg-brand-600 text-white dark:border-brand-500 dark:bg-brand-500`
+                          : `hover:bg-brand-50 dark:hover:bg-brand-900/30 hover:border-brand-300 text-brand-700 dark:text-brand-300 border-gray-200 dark:border-gray-700`
+                      }`}
                     >
                       {t("Filters.Presets.over_600k")}
                     </button>
@@ -824,45 +880,48 @@ export default function ListingsContent({
                       value={draftMinPrice}
                       onChange={(e) => setDraftMinPrice(e.target.value)}
                       placeholder="Min $"
-                      className="focus:ring-brand-400 w-1/2 rounded-lg border border-gray-200
-                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
-                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      aria-label="Min $"
+                      className="focus:ring-brand-400 min-h-[44px] w-1/2 rounded-lg border
+                        border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2
+                        focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     />
-                    <span className="text-gray-600">–</span>
+                    <span className="text-gray-600 dark:text-gray-400" aria-hidden="true">–</span>
                     <input
                       type="number"
                       value={draftMaxPrice}
                       onChange={(e) => setDraftMaxPrice(e.target.value)}
                       placeholder="Max $"
-                      className="focus:ring-brand-400 w-1/2 rounded-lg border border-gray-200
-                        bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2 focus:outline-none
-                        dark:border-gray-700 dark:bg-gray-800 dark:text-white"
+                      aria-label="Max $"
+                      className="focus:ring-brand-400 min-h-[44px] w-1/2 rounded-lg border
+                        border-gray-200 bg-white px-3 py-2.5 text-sm text-gray-700 focus:ring-2
+                        focus:outline-none dark:border-gray-700 dark:bg-gray-800 dark:text-white"
                     />
                   </div>
                 </div>
               </div>
 
               <div
-                className="flex items-center justify-between gap-3 border-t border-gray-200
-                  bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-800"
+                className="sticky bottom-0 flex items-center justify-between gap-3 border-t
+                  border-gray-200 bg-gray-50 px-6 py-4 dark:border-gray-700 dark:bg-gray-800"
               >
                 <button
                   type="button"
                   onClick={clearAllFilters}
-                  className="inline-flex cursor-pointer items-center gap-1.5 text-sm font-medium
-                    text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200"
+                  className="inline-flex min-h-[44px] cursor-pointer items-center gap-1.5 text-sm
+                    font-medium text-gray-500 hover:text-gray-700 dark:text-gray-400
+                    dark:hover:text-gray-200"
                 >
-                  <RotateCcw className="h-4 w-4" />
+                  <RotateCcw className="h-4 w-4" aria-hidden="true"/>
                   {t("Filters.Labels.clear_all")}
                 </button>
                 <button
                   type="button"
                   onClick={applyModalFilters}
-                  className="bg-brand-600 hover:bg-brand-700 inline-flex flex-1 cursor-pointer
-                    items-center justify-center gap-1.5 rounded-lg px-6 py-2.5 text-sm font-semibold
-                    text-white transition-colors duration-200"
+                  className="bg-brand-600 hover:bg-brand-700 inline-flex min-h-[44px] w-full flex-1
+                    cursor-pointer items-center justify-center gap-1.5 rounded-lg px-6 py-2.5 text-sm
+                    font-semibold text-white transition-colors duration-200"
                 >
-                  <Check className="h-4 w-4" />
+                  <Check className="h-4 w-4" aria-hidden="true"/>
                   {t("Filters.Labels.apply")}
                 </button>
               </div>
@@ -872,8 +931,15 @@ export default function ListingsContent({
       )}
 
       {/* Results Area */}
-      <div className="bg-gray-50 py-10 md:py-14 dark:bg-gray-900">
-        <div className="container mx-auto px-4">
+      <section
+        aria-labelledby="listings-results-heading"
+        className="border-y border-gray-100 bg-gray-50 py-12 md:py-20 dark:border-gray-700
+          dark:bg-gray-800"
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <h2 id="listings-results-heading" className="sr-only">
+            {t("Hero.title")}
+          </h2>
           {!isLoading && (
             <p className="mb-6 text-sm text-gray-500 dark:text-gray-400" aria-live="polite">
               {t.rich("Results.showing", {
@@ -886,16 +952,16 @@ export default function ListingsContent({
 
           {isLoading ? (
             <div
-              className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3"
+              className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3"
               aria-busy="true"
               aria-live="polite"
             >
               {Array.from({ length: 6 }).map((_, i) => (
-                <PropertyCardSkeleton key={i} />
+                <PropertyCardSkeleton key={i}/>
               ))}
             </div>
           ) : filteredProperties.length > 0 ? (
-            <div className="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3">
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
               {filteredProperties.map((property) => {
                 const type = property.type || "apartment";
                 const isHouse = type === "house";
@@ -907,10 +973,12 @@ export default function ListingsContent({
                 return (
                   <article
                     key={property.id}
-                    className="flex flex-col overflow-hidden rounded-2xl bg-white shadow-md
-                      transition-shadow duration-300 hover:shadow-xl dark:bg-gray-800"
+                    className="flex flex-col overflow-hidden rounded-2xl border border-gray-100
+                      bg-white shadow-sm transition-all duration-200
+                      motion-safe:hover:-translate-y-0.5 hover:shadow-xl dark:border-gray-600
+                      dark:bg-gray-700/40"
                   >
-                    <div className="relative h-48 w-full flex-shrink-0">
+                    <div className="relative h-52 w-full flex-shrink-0 md:h-56">
                       <Image
                         src={property.card_image || "/img/placeholder_2.webp"}
                         alt={title}
@@ -919,74 +987,70 @@ export default function ListingsContent({
                         className="object-cover"
                       />
                       <span
-                        className={`absolute top-3 left-3 flex items-center gap-1 rounded-full
-                          px-2.5 py-1 text-xs font-semibold shadow-sm ${
-                            isHouse
-                              ? `bg-brand-100 text-brand-800 dark:bg-brand-900/40
-                                dark:text-brand-300`
-                              : `bg-brand-100 text-brand-800 dark:bg-brand-900/40
-                                dark:text-brand-300`
-                          }`}
+                        className="bg-brand-100 text-brand-800 dark:bg-brand-900/40
+                          dark:text-brand-300 absolute top-3 left-3 flex max-w-[45%] items-center
+                          gap-1 truncate rounded-full px-2.5 py-1 text-xs font-semibold shadow-sm"
                       >
                         {isHouse ? (
-                          <HomeIcon className="h-3 w-3" />
+                          <HomeIcon className="h-3 w-3 shrink-0" aria-hidden="true"/>
                         ) : (
-                          <Building2 className="h-3 w-3" />
+                          <Building2 className="h-3 w-3 shrink-0" aria-hidden="true"/>
                         )}
-                        {isHouse ? t("Card.house") : t("Card.apartment")}
+                        <span className="truncate">
+                          {isHouse ? t("Card.house") : t("Card.apartment")}
+                        </span>
                       </span>
 
                       <span
-                        className="bg-brand-600 absolute top-3 right-3 rounded-full px-3 py-1
-                          text-sm font-bold text-white shadow"
+                        className="bg-brand-600 absolute top-3 right-3 max-w-[50%] truncate
+                          rounded-full px-3 py-1 text-sm font-bold text-white shadow"
                       >
                         ${price.toLocaleString()}
                       </span>
 
                       <span
-                        className="absolute right-3 bottom-3 rounded-full bg-black/60 px-2.5 py-1
-                          text-xs text-white backdrop-blur-sm"
+                        className="absolute right-3 bottom-3 max-w-[60%] truncate rounded-full
+                          bg-black/60 px-2.5 py-1 text-xs text-white backdrop-blur-sm"
                       >
                         {saleType}
                       </span>
                     </div>
 
                     <div className="flex flex-1 flex-col p-5">
-                      <h3
-                        className="mb-1 text-lg leading-snug font-bold text-gray-800
-                          dark:text-white"
-                      >
+                      <h3 className="mb-1 line-clamp-2 text-lg leading-snug font-bold text-gray-900 dark:text-white">
                         {title}
                       </h3>
-                      <p
-                        className="mb-4 flex items-center gap-1 text-sm text-gray-500
-                          dark:text-gray-400"
-                      >
-                        <MapPin className="h-3.5 w-3.5 shrink-0" />
-                        {property.neighborhood ? `${property.neighborhood}, ` : ""}
-                        {city}
+                      <p className="mb-4 flex items-center gap-1 text-sm text-gray-500 dark:text-gray-400">
+                        <MapPin className="h-3.5 w-3.5 shrink-0" aria-hidden="true"/>
+                        <span className="truncate">
+                          {property.neighborhood ? `${property.neighborhood}, ` : ""}
+                          {city}
+                        </span>
                       </p>
 
-                      <div
-                        className="mt-auto mb-5 grid grid-cols-3 gap-2 text-sm text-gray-600
-                          dark:text-gray-300"
-                      >
-                        <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <DoorOpen className="text-brand-500 h-4 w-4 shrink-0" />
+                      <div className="mt-auto mb-5 grid grid-cols-3 gap-2 text-sm text-gray-600 dark:text-gray-300">
+                        <div className="flex items-center gap-1.5 text-sm whitespace-nowrap">
+                          <DoorOpen
+                            className="text-brand-500 h-4 w-4 shrink-0"
+                            aria-hidden="true"
+                          />
                           <span>
                             {property.rooms || 0}{" "}
                             {(property.rooms || 0) === 1 ? t("Card.room") : t("Card.rooms")}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <Bed className="text-brand-500 h-4 w-4 shrink-0" />
+                        <div className="flex items-center gap-1.5 text-sm whitespace-nowrap">
+                          <Bed className="text-brand-500 h-4 w-4 shrink-0" aria-hidden="true"/>
                           <span>
                             {property.bedrooms || 0}{" "}
                             {(property.bedrooms || 0) === 1 ? t("Card.bed") : t("Card.beds")}
                           </span>
                         </div>
-                        <div className="flex items-center gap-1.5 text-xs whitespace-nowrap">
-                          <SquareDashed className="text-brand-500 h-4 w-4 shrink-0" />
+                        <div className="flex items-center gap-1.5 text-sm whitespace-nowrap">
+                          <SquareDashed
+                            className="text-brand-500 h-4 w-4 shrink-0"
+                            aria-hidden="true"
+                          />
                           <span>{(property.sqmt || 0).toLocaleString()} m²</span>
                         </div>
                       </div>
@@ -994,9 +1058,10 @@ export default function ListingsContent({
                       <div className="flex gap-2">
                         <Link
                           href={`/properties/details/${property.id}`}
-                          className="bg-brand-600 hover:bg-brand-700 flex-1 rounded-lg px-4 py-2.5
-                            text-center text-sm font-semibold text-white transition-colors
-                            duration-200"
+                          aria-label={`${t("Card.btn")}: ${title}`}
+                          className="bg-brand-600 hover:bg-brand-700 inline-flex min-h-[44px] flex-1
+                            items-center justify-center rounded-lg px-4 py-2.5 text-center text-sm
+                            font-semibold text-white transition-colors duration-200"
                         >
                           {t("Card.btn")}
                         </Link>
@@ -1006,12 +1071,15 @@ export default function ListingsContent({
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className="bg-brand-600 hover:bg-brand-700 flex items-center
-                            justify-center gap-1.5 rounded-lg px-4 py-2.5 text-sm font-semibold
-                            text-white transition-colors duration-200"
+                          aria-label={`${t("Card.enquire")}: ${title}`}
+                          className="border-brand-600 text-brand-700 hover:bg-brand-50
+                            dark:border-brand-400 dark:text-brand-300 dark:hover:bg-brand-900/30
+                            inline-flex min-h-[44px] flex-1 items-center justify-center gap-1.5
+                            rounded-lg border bg-white px-4 py-2.5 text-sm font-semibold
+                            transition-colors duration-200 dark:bg-transparent"
                         >
                           <Image
-                            src="/img/Logos/si-whatsapp-w.svg"
+                            src="/img/Logos/si-whatsapp.svg"
                             alt=""
                             width={16}
                             height={16}
@@ -1027,41 +1095,72 @@ export default function ListingsContent({
             </div>
           ) : (
             <div className="py-20 text-center">
-              <SearchX className="mx-auto mb-4 h-12 w-12 text-gray-300 dark:text-gray-600" />
-              <h3 className="mb-2 text-xl font-semibold text-gray-500 dark:text-gray-400">
+              <SearchX
+                className="mx-auto mb-4 h-12 w-12 text-gray-400 dark:text-gray-500"
+                aria-hidden="true"
+              />
+              <h3 className="mb-2 text-xl font-semibold text-gray-900 dark:text-white">
                 {t("Results.no_results_title")}
               </h3>
-              <p className="mb-6 text-gray-600 dark:text-gray-400">
+              <p className="mx-auto mb-6 max-w-md text-base text-gray-600 dark:text-gray-300">
                 {t("Results.no_results_text")}
               </p>
-              <button
-                type="button"
-                onClick={clearAllFilters}
-                className="text-brand-700 dark:text-brand-400 cursor-pointer font-semibold
-                  hover:underline"
-              >
-                Clear all filters
-              </button>
+              <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
+                <button
+                  type="button"
+                  onClick={clearAllFilters}
+                  className="bg-brand-600 hover:bg-brand-700 inline-flex min-h-[44px] w-full
+                    cursor-pointer items-center justify-center rounded-lg px-6 py-2.5 text-sm
+                    font-semibold text-white transition-colors duration-200 sm:w-auto"
+                >
+                  <RotateCcw className="mr-1.5 h-4 w-4" aria-hidden="true"/>
+                  {t("Results.clear_all_filters")}
+                </button>
+                <a
+                  href={`${CONTACT_INFO.whatsapp.href}&text=${encodeURIComponent(
+                    t("ContactBanner.whatsapp_prefill")
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="border-brand-600 text-brand-700 hover:bg-brand-50
+                    dark:border-brand-400 dark:text-brand-300 dark:hover:bg-brand-900/30
+                    inline-flex min-h-[44px] w-full items-center justify-center gap-1.5 rounded-lg
+                    border bg-white px-6 py-2.5 text-sm font-semibold transition-colors
+                    duration-200 sm:w-auto dark:bg-transparent"
+                >
+                  <Image
+                    src="/img/Logos/si-whatsapp.svg"
+                    alt=""
+                    width={16}
+                    height={16}
+                    className="h-4 w-4"
+                  />
+                  {t("ContactBanner.btn")}
+                </a>
+              </div>
             </div>
           )}
         </div>
-      </div>
+      </section>
 
       {/* Why Choose Us Section */}
       <section
-        className="section bg-brand-300/5 dark:bg-brand-900/10"
-        aria-labelledby="why-heading"
+        aria-labelledby="listings-why-heading"
+        className="bg-white py-12 md:py-20 dark:bg-gray-900"
       >
-        <div className="container mx-auto px-4">
-          <div className="mb-10 text-center">
-            <h2 id="why-heading" className="text-h1 mb-3 font-bold text-gray-800 dark:text-white">
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div className="mx-auto mb-10 max-w-2xl text-center md:mb-12">
+            <h2
+              id="listings-why-heading"
+              className="text-h2 font-bold text-balance text-gray-900 dark:text-white"
+            >
               {t("WhyUs.title")}
             </h2>
-            <p className="text-body mx-auto max-w-xl text-gray-600 dark:text-gray-400">
+            <p className="mt-3 text-base leading-relaxed text-gray-600 md:text-lg dark:text-gray-300">
               {t("WhyUs.subtitle")}
             </p>
           </div>
-          <div className="mx-auto grid max-w-5xl grid-cols-2 gap-8 lg:grid-cols-4">
+          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-4">
             {[
               {
                 icon: Star,
@@ -1090,23 +1189,34 @@ export default function ListingsContent({
             ].map((item, idx) => {
               const Icon = item.icon;
               return (
-                <div key={idx} className="text-center">
+                <div
+                  key={idx}
+                  className="rounded-2xl border border-gray-100 bg-white p-6 text-center shadow-sm
+                    transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-lg
+                    dark:border-gray-700 dark:bg-gray-800"
+                >
                   <div
-                    className="bg-brand-100 dark:bg-brand-900/40 mx-auto mb-3 flex h-14 w-14
-                      items-center justify-center rounded-full"
+                    className="mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-xl
+                      bg-brand-50 dark:bg-brand-900/40"
                   >
-                    <Icon className="text-brand-600 dark:text-brand-400 h-7 w-7" />
+                    <Icon
+                      className="h-6 w-6 text-brand-700 dark:text-brand-300"
+                      aria-hidden="true"
+                    />
                   </div>
-                  <h3 className="text-h3 mb-1 font-semibold text-gray-800 dark:text-white">
+                  <h3 className="text-base font-semibold text-gray-900 sm:text-lg dark:text-white">
                     {item.title}
                     {item.hasStar && (
                       <Star
-                        className="text-brand-600 dark:text-brand-400 ml-1 inline-block h-4 w-4
-                          align-text-bottom"
+                        className="ml-1 inline-block h-4 w-4 align-text-bottom text-brand-700
+                          dark:text-brand-300"
+                        aria-hidden="true"
                       />
                     )}
                   </h3>
-                  <p className="text-sm text-gray-600 dark:text-gray-400">{item.desc}</p>
+                  <p className="mt-2 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
+                    {item.desc}
+                  </p>
                 </div>
               );
             })}
@@ -1115,32 +1225,59 @@ export default function ListingsContent({
       </section>
 
       {/* WhatsApp CTA Section */}
-      <section className="section">
-        <div className="rounded-2xl bg-gray-50 p-8 text-center dark:bg-gray-800">
-          <h2 className="text-h2 mb-2 font-bold text-gray-800 dark:text-white">
-            {t("ContactBanner.title")}
-          </h2>
-          <p className="text-body mx-auto mb-6 max-w-md text-gray-600 dark:text-gray-400">
-            {t("ContactBanner.description")}
-          </p>
-          <a
-            href={`${CONTACT_INFO.whatsapp.href}&text=${encodeURIComponent(
-              t("ContactBanner.whatsapp_prefill")
-            )}`}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="bg-brand-600 hover:bg-brand-700 inline-flex items-center rounded-xl px-8 py-3
-              font-semibold text-white transition-colors duration-200"
+      <section
+        aria-labelledby="listings-cta-heading"
+        className="bg-white pb-12 md:pb-20 dark:bg-gray-900"
+      >
+        <div className="mx-auto max-w-6xl px-4 sm:px-6">
+          <div
+            className="relative overflow-hidden rounded-3xl border border-brand-700 bg-brand-800
+              px-6 py-10 shadow-xl sm:px-10 md:p-14"
           >
-            <Image
-              src="/img/Logos/si-whatsapp-w.svg"
-              alt=""
-              width={20}
-              height={20}
-              className="mr-2"
-            />
-            {t("ContactBanner.btn")}
-          </a>
+            <div aria-hidden="true" className="pointer-events-none absolute inset-0">
+              <div className="absolute -top-20 -right-20 h-72 w-72 rounded-full bg-white/10 blur-3xl"/>
+            </div>
+            <div className="relative grid items-center gap-8 lg:grid-cols-[1.2fr_auto]">
+              <div>
+                <span
+                  className="inline-flex items-center gap-2 rounded-full border border-white/25
+                    bg-white/10 px-3 py-1 text-xs font-bold tracking-[0.18em] text-brand-50 uppercase"
+                >
+                  QMAX Realty
+                </span>
+                <h2
+                  id="listings-cta-heading"
+                  className="mt-4 text-h2 font-bold text-balance text-white"
+                >
+                  {t("ContactBanner.title")}
+                </h2>
+                <p className="mt-3 max-w-xl text-base leading-relaxed text-brand-50/85 md:text-lg">
+                  {t("ContactBanner.description")}
+                </p>
+              </div>
+              <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto lg:flex-col">
+                <a
+                  href={`${CONTACT_INFO.whatsapp.href}&text=${encodeURIComponent(
+                    t("ContactBanner.whatsapp_prefill")
+                  )}`}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="bg-brand-600 hover:bg-brand-700 inline-flex min-h-[44px] w-full
+                    items-center justify-center gap-2 rounded-lg px-6 py-3 text-base font-semibold
+                    text-white transition-colors duration-200 sm:w-auto lg:w-full"
+                >
+                  <Image
+                    src="/img/Logos/si-whatsapp-w.svg"
+                    alt=""
+                    width={20}
+                    height={20}
+                    className="h-5 w-5"
+                  />
+                  {t("ContactBanner.btn")}
+                </a>
+              </div>
+            </div>
+          </div>
         </div>
       </section>
     </>

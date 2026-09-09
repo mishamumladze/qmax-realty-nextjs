@@ -204,13 +204,13 @@ export function MessagesList() {
       </p>
 
       {messages === null && !loadError ? (
-        <p className="text-gray-600 dark:text-gray-300">{t("loading")}</p>
+        <p className="py-12 text-center text-gray-600 dark:text-gray-300">{t("loading")}</p>
       ) : loadError !== null ? (
         <div
           className="flex items-start gap-3 rounded-lg border border-red-300 bg-red-50 p-4
             text-red-700 dark:border-red-800 dark:bg-red-950/40 dark:text-red-300"
         >
-          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true" />
+          <AlertCircle className="mt-0.5 h-5 w-5 shrink-0" aria-hidden="true"/>
           <div>
             <p>{loadError}</p>
             <Button
@@ -224,11 +224,17 @@ export function MessagesList() {
           </div>
         </div>
       ) : messages === null ? null : messages.length === 0 ? (
-        <p className="text-gray-600 dark:text-gray-300">{t("empty")}</p>
+        <p className="py-12 text-center text-gray-600 dark:text-gray-300">{t("empty")}</p>
       ) : (
-        <ul className="divide-y divide-gray-200 dark:divide-gray-700">
+        <ul className="grid gap-3">
           {messages.map((m) => (
-            <li key={m.id} className="flex justify-between gap-4 py-4">
+            <li
+              key={m.id}
+              className={`flex justify-between gap-4 rounded-2xl border border-gray-100 bg-white
+                p-4 dark:border-gray-700 dark:bg-gray-800 ${
+                m.read === 0 ? "border-brand-600 dark:border-brand-400" : ""
+              }`}
+            >
               <div className={m.read === 0 ? "" : "text-gray-500 dark:text-gray-400"}>
                 <p className={m.read === 0 ? "font-semibold text-gray-900 dark:text-white" : ""}>
                   {m.read === 0 ? (
@@ -259,9 +265,9 @@ export function MessagesList() {
                   onClick={() => void toggleRead(m)}
                 >
                   {m.read === 0 ? (
-                    <MailOpen className="h-4 w-4" aria-hidden="true" />
+                    <MailOpen className="h-4 w-4" aria-hidden="true"/>
                   ) : (
-                    <Mail className="h-4 w-4" aria-hidden="true" />
+                    <Mail className="h-4 w-4" aria-hidden="true"/>
                   )}
                   <span className="sr-only">{m.read === 0 ? t("sr.read") : t("sr.unread")}</span>
                 </Button>
@@ -272,7 +278,7 @@ export function MessagesList() {
                   aria-label={t("Aria.delete_message", { name: m.name })}
                   onClick={(e) => requestDelete(m, e)}
                 >
-                  <Trash2 className="h-4 w-4" aria-hidden="true" />
+                  <Trash2 className="h-4 w-4" aria-hidden="true"/>
                 </Button>
               </div>
             </li>
@@ -293,7 +299,7 @@ export function MessagesList() {
             aria-modal="true"
             aria-labelledby={titleId}
             aria-describedby={descId}
-            className="w-full max-w-sm rounded-lg bg-white p-6 dark:bg-gray-800"
+            className="w-full max-w-sm rounded-2xl bg-white p-6 shadow-2xl dark:bg-gray-800"
             onKeyDown={(e) => {
               if (e.key === "Escape") closeDialog();
             }}
@@ -305,14 +311,19 @@ export function MessagesList() {
             <p id={descId} className="mt-2 text-sm text-gray-600 dark:text-gray-300">
               {t("Dialog.description", { name: deleteTarget.name })}
             </p>
-            <div className="mt-6 flex justify-end gap-2">
-              <Button variant="secondary" autoFocus onClick={closeDialog} className="min-h-11">
+            <div className="mt-6 flex flex-col-reverse justify-end gap-2 sm:flex-row">
+              <Button
+                variant="secondary"
+                autoFocus
+                onClick={closeDialog}
+                className="min-h-11 w-full sm:w-auto"
+              >
                 {t("Buttons.cancel")}
               </Button>
               <Button
                 variant="destructive"
                 onClick={() => void confirmDelete()}
-                className="min-h-11"
+                className="min-h-11 w-full sm:w-auto"
               >
                 {t("Buttons.delete")}
               </Button>
@@ -325,8 +336,8 @@ export function MessagesList() {
         <div
           role="status"
           className="fixed bottom-4 left-1/2 z-50 flex -translate-x-1/2 items-center gap-3
-            rounded-lg bg-gray-200 px-4 py-3 text-gray-700 shadow-lg dark:bg-gray-800
-            dark:text-gray-300"
+            rounded-xl bg-gray-900 px-4 py-3 text-white shadow-xl dark:bg-gray-700
+            dark:text-white"
         >
           <span>{t("Toast.deleted")}</span>
           <Button

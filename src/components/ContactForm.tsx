@@ -219,8 +219,8 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
   };
 
   return (
-    <div className="rounded-2xl bg-white p-8 shadow-lg md:p-10 dark:bg-gray-800">
-      <h2 className="mb-6 text-2xl font-bold text-gray-900 dark:text-white">{t("title")}</h2>
+    <div className="rounded-2xl bg-white p-6 shadow-lg md:p-10 dark:bg-gray-800">
+      <h2 className="mb-6 text-h2 font-bold text-gray-900 dark:text-white">{t("title")}</h2>
 
       {success && (
         <div
@@ -262,15 +262,17 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               value={formData.firstName}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
-                focus:outline-none ${
+              className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
+                focus:ring-2 focus:outline-none ${
                   errors.firstName
-                    ? "border-red-500 bg-red-50"
-                    : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
+                    ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
+                    : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
                 }`}
               placeholder="John"
               disabled={loading}
               autoComplete="given-name"
+              aria-describedby={errors.firstName ? "firstName-error" : undefined}
+              aria-invalid={errors.firstName ? "true" : "false"}
             />
             {errors.firstName && (
               <p id="firstName-error" className="mt-1 text-sm text-red-600" role="alert">
@@ -292,11 +294,11 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               value={formData.lastName}
               onChange={handleChange}
               onBlur={handleBlur}
-              className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
-                focus:outline-none ${
+              className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
+                focus:ring-2 focus:outline-none ${
                   errors.lastName
-                    ? "border-red-500 bg-red-50"
-                    : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
+                    ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
+                    : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
                 }`}
               placeholder="Doe"
               disabled={loading}
@@ -327,11 +329,11 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             value={formData.email}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
-              focus:outline-none ${
+            className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
+              focus:ring-2 focus:outline-none ${
                 errors.email
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
+                  ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
+                  : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
               }`}
             placeholder="john@example.com"
             disabled={loading}
@@ -361,11 +363,11 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             value={formData.phone}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
-              focus:outline-none ${
+            className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
+              focus:ring-2 focus:outline-none ${
                 errors.phone
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
+                  ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
+                  : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
               }`}
             placeholder={CONTACT_INFO.phone.display}
             disabled={loading}
@@ -394,11 +396,11 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             value={formData.subject}
             onChange={handleChange}
             onBlur={handleBlur}
-            className={`focus:ring-brand-500 w-full rounded-lg border px-4 py-3 focus:ring-2
-              focus:outline-none ${
+            className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
+              focus:ring-2 focus:outline-none ${
                 errors.subject
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
+                  ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
+                  : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
               }`}
             disabled={loading}
             autoComplete="off"
@@ -434,11 +436,11 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             onChange={handleChange}
             onBlur={handleBlur}
             rows={6}
-            className={`focus:ring-brand-500 w-full resize-none rounded-lg border px-4 py-3
-              focus:ring-2 focus:outline-none ${
+            className={`focus:ring-brand-500 min-h-[44px] w-full resize-none rounded-lg border px-4
+              py-3 focus:ring-2 focus:outline-none ${
                 errors.message
-                  ? "border-red-500 bg-red-50"
-                  : "border-gray-300 dark:border-gray-500 dark:bg-gray-900 dark:text-white"
+                  ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
+                  : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
               }`}
             placeholder={t("placeholders.message")}
             disabled={loading}
@@ -458,8 +460,8 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
           disabled={loading}
           aria-busy={loading}
           className="bg-brand-600 hover:bg-brand-700 dark:bg-brand-500 dark:hover:bg-brand-600
-            w-full rounded-lg py-3 font-semibold text-white transition-colors duration-200
-            disabled:bg-gray-400 dark:text-gray-900"
+            min-h-[44px] w-full rounded-lg py-3 font-semibold text-white transition-colors
+            duration-200 disabled:bg-gray-400 dark:text-gray-900"
         >
           {loading ? t("buttons.sending") : t("buttons.send")}
         </button>

@@ -60,10 +60,10 @@ export function LoginForm() {
 
   return (
     <div
-      className="mx-auto w-full max-w-sm rounded-xl border border-gray-200 bg-white p-6 shadow-sm
-        dark:border-gray-700 dark:bg-gray-800"
+      className="mx-auto w-full max-w-sm rounded-2xl border border-gray-200 bg-white p-6 shadow-xl
+        sm:p-8 dark:border-gray-700 dark:bg-gray-800"
     >
-      <h1 className="text-xl font-semibold text-gray-900 dark:text-gray-50">{t("title")}</h1>
+      <h1 className="text-h2 font-bold text-gray-900 dark:text-gray-50">{t("title")}</h1>
       <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">{t("subtitle")}</p>
 
       <form onSubmit={handleSubmit} noValidate className="mt-6 space-y-4">
@@ -105,13 +105,19 @@ export function LoginForm() {
           />
         </div>
 
-        <Button type="submit" variant="primary" size="md" className="w-full" disabled={submitting}>
+        <Button
+          type="submit"
+          variant="primary"
+          size="md"
+          className="min-h-11 w-full"
+          disabled={submitting}
+        >
           {submitting ? t("buttons.signing_in") : t("buttons.sign_in")}
         </Button>
 
         <div aria-live="polite">
           {error ? (
-            <p role="status" className="text-sm text-red-600 dark:text-red-400">
+            <p role="alert" className="text-sm text-red-600 dark:text-red-400">
               {error}
             </p>
           ) : null}
