@@ -2,7 +2,9 @@
 
 import { useState } from "react";
 import { useTranslations } from "next-intl";
+import { CheckCircle2 } from "lucide-react";
 import { CONTACT_INFO } from "@/config/contact";
+import { trackEvent } from "@/lib/analytics";
 
 const CONTACT_SUBJECTS = ["buying", "selling", "renting", "valuation", "investment", "general"];
 
@@ -199,6 +201,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
       }
 
       setSuccess(true);
+      trackEvent("contact_submit");
       setFormData({
         firstName: "",
         lastName: "",
@@ -227,9 +230,10 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
           id="form-success"
           role="status"
           aria-live="polite"
-          className="mb-6 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800
+          className="mb-6 flex items-start gap-3 rounded-lg border border-green-200 bg-green-50 p-4 dark:border-green-800
             dark:bg-green-900/20"
         >
+          <CheckCircle2 aria-hidden="true" className="h-5 w-5 shrink-0 text-green-600"/>
           <p className="font-semibold text-green-800">{t("success")}</p>
         </div>
       )}
@@ -263,7 +267,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               onChange={handleChange}
               onBlur={handleBlur}
               className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
-                focus:ring-2 focus:outline-none ${
+                focus:ring-2 ${
                   errors.firstName
                     ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
                     : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -295,7 +299,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
               onChange={handleChange}
               onBlur={handleBlur}
               className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
-                focus:ring-2 focus:outline-none ${
+                focus:ring-2 ${
                   errors.lastName
                     ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
                     : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -330,7 +334,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             onChange={handleChange}
             onBlur={handleBlur}
             className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
-              focus:ring-2 focus:outline-none ${
+              focus:ring-2 ${
                 errors.email
                   ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
                   : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -364,7 +368,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             onChange={handleChange}
             onBlur={handleBlur}
             className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
-              focus:ring-2 focus:outline-none ${
+              focus:ring-2 ${
                 errors.phone
                   ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
                   : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -390,6 +394,29 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
           >
             {t("labels.subject")}
           </label>
+          <div className="mb-3 flex flex-wrap gap-2">
+            {CONTACT_SUBJECTS.map((subj) => (
+              <button
+                key={subj}
+                type="button"
+                onClick={() => {
+                  setFormData((prev) => ({ ...prev, subject: subj }));
+                  if (errors.subject) {
+                    setErrors((prev) => ({ ...prev, subject: undefined }));
+                  }
+                }}
+                aria-pressed={formData.subject === subj}
+                disabled={loading}
+                className={`min-h-[44px] rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+                  formData.subject === subj
+                    ? "bg-brand-600 text-white"
+                    : "border border-gray-300 text-gray-700 dark:border-gray-600 dark:text-gray-200"
+                }`}
+              >
+                {t(`subjects.${subj}`)}
+              </button>
+            ))}
+          </div>
           <select
             id="subject"
             name="subject"
@@ -397,7 +424,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             onChange={handleChange}
             onBlur={handleBlur}
             className={`focus:ring-brand-500 min-h-[44px] w-full rounded-lg border px-4 py-3
-              focus:ring-2 focus:outline-none ${
+              focus:ring-2 ${
                 errors.subject
                   ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
                   : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"
@@ -437,7 +464,7 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
             onBlur={handleBlur}
             rows={6}
             className={`focus:ring-brand-500 min-h-[44px] w-full resize-none rounded-lg border px-4
-              py-3 focus:ring-2 focus:outline-none ${
+              py-3 focus:ring-2 ${
                 errors.message
                   ? "border-red-500 bg-red-50 dark:border-red-500 dark:bg-gray-900 dark:text-white"
                   : "border-gray-300 dark:border-gray-700 dark:bg-gray-900 dark:text-white"

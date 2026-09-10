@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { PrimaryButton } from "./ui/Buttons";
+import { trackEvent } from "@/lib/analytics";
 
 export default function NewsletterForm() {
   const [email, setEmail] = useState("");
@@ -36,6 +37,7 @@ export default function NewsletterForm() {
       }
 
       setStatus("success");
+      trackEvent("newsletter_submit");
       setMessage(t("status.success"));
       setEmail("");
     } catch {
@@ -77,6 +79,9 @@ export default function NewsletterForm() {
       >
         {/* Restructured: Put input and button in their own flex row container */}
         <div className="flex w-full flex-col gap-3 sm:flex-row">
+          <label htmlFor="newsletter-email" className="sr-only">
+            {t("input.label")}
+          </label>
           <input
             type="email"
             id="newsletter-email"
@@ -85,7 +90,7 @@ export default function NewsletterForm() {
             placeholder={t("input.text")}
             required
             autoComplete="email"
-            className="focus:ring-brand-500 w-full flex-1 rounded-lg border border-gray-300 px-4
+            className="focus:ring-brand-500 min-h-[44px] w-full flex-1 rounded-lg border border-gray-300 px-4
               py-3 text-gray-800 focus:border-transparent focus:ring-2 focus:outline-none
               dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:placeholder-gray-400"
           />

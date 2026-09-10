@@ -52,9 +52,32 @@
   outline-offset: 2px;
 }
 
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible {
+  outline: 2px solid var(--color-brand-500);
+  outline-offset: 2px;
+}
+
 /* ─── Custom Utilities/Components ───────────────────────────────────────── */
 .section {
   @apply container mx-auto my-6 rounded-lg px-4 py-8 md:my-8 md:py-12;
+}
+
+/* Motion-safe lift utility (no motion under prefers-reduced-motion) */
+@media (prefers-reduced-motion: no-preference) {
+  .motion-lift {
+    transition:
+      transform var(--duration-normal) var(--easing-standard),
+      box-shadow var(--duration-normal) var(--easing-standard);
+  }
+
+  .motion-lift:hover {
+    transform: translateY(-2px);
+    box-shadow:
+      0 10px 15px -3px rgb(0 0 0 / 0.1),
+      0 4px 6px -4px rgb(0 0 0 / 0.1);
+  }
 }
 
 /* ─── Leaflet Maps ─────────────────────────────────────────────────────── */

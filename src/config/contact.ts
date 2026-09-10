@@ -76,7 +76,7 @@ export const SOCIAL_MEDIAS = [
     cta_text: "Join Channel",
     cta_url: CONTACT_INFO.telegram.href,
     icon: siTelegram,
-    gradient: "from-blue-400 to-blue-500",
+    gradient: "from-sky-600 to-blue-700",
   },
   {
     key: "whatsapp",

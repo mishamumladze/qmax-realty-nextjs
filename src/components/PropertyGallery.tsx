@@ -4,6 +4,7 @@ import { useState, useEffect, useRef, useCallback } from "react";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { trackEvent } from "@/lib/analytics";
 
 interface PropertyGalleryProps {
   images: string[];
@@ -106,6 +107,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
                   }}
                   onClick={() => {
                     lastFocusedThumbnail.current = thumbnailRefs.current[idx] ?? null;
+                    if (selectedIndex === null) trackEvent("gallery_open");
                     setSelectedIndex(idx);
                   }}
                   className="group focus-visible:outline-brand-500 relative aspect-square
@@ -118,6 +120,7 @@ export default function PropertyGallery({ images, propertyTitle }: PropertyGalle
                     alt={t("photo_alt", { title: propertyTitle, n: idx + 1 })}
                     fill
                     sizes="(max-width:640px) 50vw, (max-width:1024px) 33vw, 25vw"
+                    loading="lazy"
                     className="object-cover transition-transform group-hover:scale-105"
                   />
                   <div

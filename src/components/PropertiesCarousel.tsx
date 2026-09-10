@@ -3,7 +3,7 @@
 import { useState, useEffect, useCallback, useRef } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { ChevronLeft, ChevronRight, Bed, Bath, Square, ArrowRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, Bed, Bath, Square, ArrowRight, Pause, Play } from "lucide-react";
 import { Property } from "@/types/property";
 import { useTranslations } from "next-intl";
 import { CarouselCardSkeleton } from "@/components/ui/Skeleton";
@@ -59,13 +59,13 @@ export default function PropertiesCarousel({
 
   const maxIndex = Math.max(0, total - visibleCount);
 
-  const handlePrev = useCallback(() => {
+  const handlePrev = () => {
     setCurrentIndex((prev) => (prev > 0 ? prev - 1 : maxIndex));
-  }, []);
+  };
 
-  const handleNext = useCallback(() => {
+  const handleNext = () => {
     setCurrentIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
-  }, []);
+  };
 
   const handleTouchStart = (e: React.TouchEvent) => {
     setTouchStart(e.touches[0].clientX);
@@ -90,7 +90,7 @@ export default function PropertiesCarousel({
       if (intervalRef.current) return;
       intervalRef.current = setInterval(() => {
         if (!isPaused) {
-          handleNext();
+          setCurrentIndex((prev) => (prev < maxIndex ? prev + 1 : 0));
         }
       }, 5000);
     };
@@ -107,7 +107,7 @@ export default function PropertiesCarousel({
     return () => {
       stopInterval();
     };
-  }, [total, visibleCount, isPaused, handleNext]);
+  }, [total, visibleCount, isPaused, maxIndex]);
 
   if (!homepageProperties || homepageProperties.length === 0) {
     if (isLoading) {
@@ -254,6 +254,7 @@ export default function PropertiesCarousel({
                       alt={title}
                       fill
                       sizes="(max-width: 640px) 80vw, (max-width: 1024px) 45vw, 31vw"
+                      loading="lazy"
                       className="object-cover"
                     />
                   </div>
@@ -330,7 +331,7 @@ export default function PropertiesCarousel({
           <ChevronRight className="h-6 w-6" aria-hidden="true"/>
         </button>
 
-          <div className="mt-6 flex justify-center gap-2">
+          <div className="mt-6 flex items-center justify-center gap-2">
             {Array.from({ length: maxIndex + 1 }).map((_, i) => (
               <button
                 key={i}
@@ -351,6 +352,24 @@ export default function PropertiesCarousel({
                 />
               </button>
             ))}
+            <button
+              type="button"
+              onClick={() => {
+                triggerHaptic();
+                setIsPaused((prev) => !prev);
+              }}
+              aria-pressed={isPaused}
+              aria-label={isPaused ? "Play autoplay" : "Pause autoplay"}
+              className="flex min-h-[44px] min-w-11 items-center justify-center rounded-full
+                text-gray-600 transition-colors duration-200 hover:bg-gray-200
+                dark:text-gray-300 dark:hover:bg-gray-700"
+            >
+              {isPaused ? (
+                <Play className="h-5 w-5" aria-hidden="true"/>
+              ) : (
+                <Pause className="h-5 w-5" aria-hidden="true"/>
+              )}
+            </button>
           </div>
         </div>
       </div>

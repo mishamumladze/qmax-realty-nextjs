@@ -12,7 +12,21 @@ import { getMessages, getTranslations } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
 
-const inter = Inter({ subsets: ["latin"], variable: "--font-inter" });
+const inter = Inter({ subsets: ["latin", "cyrillic"], variable: "--font-inter" });
+
+const organizationJsonLd = {
+  "@context": "https://schema.org",
+  "@type": "RealEstateAgent",
+  name: "QMAX Realty",
+  url: "https://qmax-realty.vercel.app",
+  logo: "https://qmax-realty.vercel.app/img/og-image.webp",
+  sameAs: [
+    "https://instagram.com/qmax_realestate",
+    "https://facebook.com/QMAXRealty",
+    "https://tiktok.com/@qmax_realty",
+    "https://t.me/qmaxrealty",
+  ],
+};
 
 export default async function RootLayout({
   children,
@@ -39,8 +53,12 @@ export default async function RootLayout({
             __html: `(function(){try{var t=localStorage.getItem('theme');if(t==='dark'||(!t&&window.matchMedia('(prefers-color-scheme:dark)').matches))document.documentElement.classList.add('dark')}catch(e){}})()`,
           }}
         />
+        <script
+          type="application/ld+json"
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+        />
       </head>
-      <SpeedInsights />
+      <SpeedInsights/>
       <body className="flex min-h-screen flex-col dark:bg-gray-900 dark:text-gray-100">
         <NextIntlClientProvider messages={messages}>
           <a
@@ -50,16 +68,16 @@ export default async function RootLayout({
           >
             {tLayout("skip_to_content")}
           </a>
-          <Navbar />
-          <ThemeToggle />
-          <OfflineIndicator />
+          <Navbar/>
+          <ThemeToggle/>
+          <OfflineIndicator/>
           <main
             id="main-content"
             className="transition-fade min-h-screen flex-grow pb-20 md:pt-16 md:pb-0"
           >
             {children}
           </main>
-          <Footer />
+          <Footer/>
         </NextIntlClientProvider>
       </body>
     </html>

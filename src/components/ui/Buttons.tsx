@@ -1,3 +1,5 @@
+"use client";
+
 import Link from "next/link";
 import React from "react";
 
@@ -75,6 +77,7 @@ function renderButtonContent(
           rel="noopener noreferrer"
           className={styles}
           aria-label={ariaLabel}
+          onClick={onClick}
         >
           {content}
         </a>
@@ -82,7 +85,7 @@ function renderButtonContent(
     }
 
     return (
-      <Link id={id} href={href} className={styles} aria-label={ariaLabel}>
+      <Link id={id} href={href} className={styles} aria-label={ariaLabel} onClick={onClick}>
         {content}
       </Link>
     );
@@ -146,26 +149,26 @@ export function Button({
 
 // Convenience exports for backward compatibility & semantic clarity
 export const PrimaryButton = (props: Omit<ButtonProps, "variant">) => (
-  <Button variant="primary" {...props} />
+  <Button variant="primary" {...props}/>
 );
 
 export const SecondaryButton = (props: Omit<ButtonProps, "variant">) => (
-  <Button variant="secondary" {...props} />
+  <Button variant="secondary" {...props}/>
 );
 
 export const TertiaryButton = (props: Omit<ButtonProps, "variant">) => (
-  <Button variant="tertiary" {...props} />
+  <Button variant="tertiary" {...props}/>
 );
 
 export const DestructiveButton = (props: Omit<ButtonProps, "variant">) => (
-  <Button variant="destructive" {...props} />
+  <Button variant="destructive" {...props}/>
 );
 
 // Rounded variant helpers (for hero CTAs that need rounded-full)
 export const PrimaryButtonRounded = (props: Omit<ButtonProps, "variant">) => (
-  <Button variant="primary" className={`${roundedStyles} ${props.className || ""}`} {...props} />
+  <Button variant="primary" className={`${roundedStyles} ${props.className || ""}`} {...props}/>
 );
 
 export const SecondaryButtonRounded = (props: Omit<ButtonProps, "variant">) => (
-  <Button variant="secondary" className={`${roundedStyles} ${props.className || ""}`} {...props} />
+  <Button variant="secondary" className={`${roundedStyles} ${props.className || ""}`} {...props}/>
 );

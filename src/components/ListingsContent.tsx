@@ -3,7 +3,7 @@
 import { useState, useMemo, useRef, useEffect, useCallback } from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import {
   Search,
   LayoutGrid,
@@ -26,10 +26,13 @@ import {
   Star,
   ShieldCheck,
   MessageCircle,
+  Heart,
 } from "lucide-react";
 import { Property } from "@/types/property";
 import { CONTACT_INFO } from "@/config/contact";
 import { PropertyCardSkeleton } from "@/components/ui/Skeleton";
+import { trackEvent } from "@/lib/analytics";
+import { TrackedWhatsAppAnchor } from "@/components/TrackedWhatsApp";
 
 interface ListingsContentProps {
   initialProperties: Property[];
@@ -37,6 +40,14 @@ interface ListingsContentProps {
   geoCities: string[];
   initialFilter?: string;
   initialOffer?: string;
+  initialSearch?: string;
+  initialCountry?: string;
+  initialCity?: string;
+  initialBeds?: string;
+  initialBaths?: string;
+  initialMin?: string;
+  initialMax?: string;
+  initialSort?: string;
   isLoading?: boolean;
 }
 
@@ -46,21 +57,75 @@ export default function ListingsContent({
   geoCities,
   initialFilter = "all",
   initialOffer = "all",
+  initialSearch = "",
+  initialCountry = "",
+  initialCity = "",
+  initialBeds = "",
+  initialBaths = "",
+  initialMin = "",
+  initialMax = "",
+  initialSort = "",
   isLoading = false,
 }: ListingsContentProps) {
   const t = useTranslations("Pages.Listings");
+  const locale = useLocale();
+
+  const formatPrice = useCallback(
+    (value: number | string, currency = "USD") => {
+      const num = typeof value === "string" ? Number(value) : value;
+      if (Number.isNaN(num)) return String(value);
+      try {
+        return new Intl.NumberFormat(locale, {
+          style: "currency",
+          currency,
+          maximumFractionDigits: 0,
+        }).format(num);
+      } catch {
+        return `$${num.toLocaleString()}`;
+      }
+    },
+    [locale]
+  );
+
+  // ─── Favorites (localStorage, no filter integration) ───────────────────────
+  const [favorites, setFavorites] = useState<number[]>(() => {
+    try {
+      if (typeof window === "undefined") return [];
+      const raw = window.localStorage.getItem("qmax:favorites");
+      if (!raw) return [];
+      const parsed: unknown = JSON.parse(raw);
+      if (Array.isArray(parsed)) {
+        return parsed.filter((v): v is number => typeof v === "number");
+      }
+      return [];
+    } catch {
+      return [];
+    }
+  });
+
+  const toggleFavorite = useCallback((id: number) => {
+    setFavorites((prev) => {
+      const next = prev.includes(id) ? prev.filter((f) => f !== id) : [...prev, id];
+      try {
+        window.localStorage.setItem("qmax:favorites", JSON.stringify(next));
+      } catch {
+        // storage unavailable — state still updates
+      }
+      return next;
+    });
+  }, []);
 
   // ─── Filter State ───────────────────────────────────────────────────────────
-  const [searchTerm, setSearchTerm] = useState("");
+  const [searchTerm, setSearchTerm] = useState(initialSearch);
   const [typeFilter, setTypeFilter] = useState<string>(initialFilter);
   const [offerFilter, setOfferFilter] = useState<string>(initialOffer);
-  const [countryFilter, setCountryFilter] = useState<string>("");
-  const [cityFilter, setCityFilter] = useState<string>("");
-  const [bedroomsFilter, setBedroomsFilter] = useState<number>(0);
-  const [bathroomsFilter, setBathroomsFilter] = useState<number>(0);
-  const [minPrice, setMinPrice] = useState<string>("");
-  const [maxPrice, setMaxPrice] = useState<string>("");
-  const [sortBy, setSortBy] = useState<string>("default");
+  const [countryFilter, setCountryFilter] = useState<string>(initialCountry);
+  const [cityFilter, setCityFilter] = useState<string>(initialCity);
+  const [bedroomsFilter, setBedroomsFilter] = useState<number>(Number(initialBeds) || 0);
+  const [bathroomsFilter, setBathroomsFilter] = useState<number>(Number(initialBaths) || 0);
+  const [minPrice, setMinPrice] = useState<string>(initialMin);
+  const [maxPrice, setMaxPrice] = useState<string>(initialMax);
+  const [sortBy, setSortBy] = useState<string>(initialSort || "default");
 
   // Modal visibility state
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -160,6 +225,7 @@ export default function ListingsContent({
   };
 
   const applyModalFilters = () => {
+    trackEvent("filters_apply");
     setOfferFilter(draftOffer);
     setTypeFilter(draftType);
     setCountryFilter(draftCountry);
@@ -191,6 +257,74 @@ export default function ListingsContent({
     setDraftMaxPrice("");
     setSortBy("default");
   };
+
+  // ─── URL Persistence (state → URL, no navigation) ──────────────────────────
+  const stateRef = useRef({
+    searchTerm,
+    typeFilter,
+    offerFilter,
+    countryFilter,
+    cityFilter,
+    bedroomsFilter,
+    bathroomsFilter,
+    minPrice,
+    maxPrice,
+    sortBy,
+  });
+
+  useEffect(() => {
+    stateRef.current = {
+      searchTerm,
+      typeFilter,
+      offerFilter,
+      countryFilter,
+      cityFilter,
+      bedroomsFilter,
+      bathroomsFilter,
+      minPrice,
+      maxPrice,
+      sortBy,
+    };
+  }, [searchTerm, typeFilter, offerFilter, countryFilter, cityFilter, bedroomsFilter, bathroomsFilter, minPrice, maxPrice, sortBy]);
+
+  const syncUrl = useCallback(() => {
+    const s = stateRef.current;
+    const params = new URLSearchParams();
+    if (s.typeFilter !== "all") params.set("filter", s.typeFilter);
+    if (s.offerFilter !== "all") params.set("offer", s.offerFilter);
+    if (s.searchTerm.trim()) params.set("q", s.searchTerm.trim());
+    if (s.countryFilter) params.set("country", s.countryFilter);
+    if (s.cityFilter) params.set("city", s.cityFilter);
+    if (s.bedroomsFilter > 0) params.set("beds", String(s.bedroomsFilter));
+    if (s.bathroomsFilter > 0) params.set("baths", String(s.bathroomsFilter));
+    if (s.minPrice) params.set("min", s.minPrice);
+    if (s.maxPrice) params.set("max", s.maxPrice);
+    if (s.sortBy !== "default") params.set("sort", s.sortBy);
+    const qs = params.toString();
+    window.history.replaceState(null, "", qs ? `?${qs}` : window.location.pathname);
+  }, []);
+
+  const skipImmediateFirst = useRef(true);
+  const skipSearchFirst = useRef(true);
+
+  // Immediate sync for filter/sort changes
+  useEffect(() => {
+    if (skipImmediateFirst.current) {
+      skipImmediateFirst.current = false;
+      return;
+    }
+    syncUrl();
+  }, [typeFilter, offerFilter, countryFilter, cityFilter, bedroomsFilter, bathroomsFilter, minPrice, maxPrice, sortBy, syncUrl]);
+
+  // Debounced sync for search input (~400ms)
+  useEffect(() => {
+    if (skipSearchFirst.current) {
+      skipSearchFirst.current = false;
+      return;
+    }
+    const t = setTimeout(syncUrl, 400);
+    return () => clearTimeout(t);
+  }, [searchTerm, syncUrl]);
 
   // ─── Filter & Sort Logic ────────────────────────────────────────────────────
   const filteredProperties = useMemo(() => {
@@ -555,7 +689,8 @@ export default function ListingsContent({
                       border-brand-200 dark:border-brand-800 inline-flex items-center gap-1
                       rounded-full border px-2.5 py-0.5 text-xs font-semibold"
                   >
-                    ${minPrice || "0"} - ${maxPrice || "Any"}
+                    {minPrice ? formatPrice(Number(minPrice)) : "$0"} -{" "}
+                    {maxPrice ? formatPrice(Number(maxPrice)) : "Any"}
                     <button
                       onClick={() => {
                         setMinPrice("");
@@ -1005,7 +1140,7 @@ export default function ListingsContent({
                         className="bg-brand-600 absolute top-3 right-3 max-w-[50%] truncate
                           rounded-full px-3 py-1 text-sm font-bold text-white shadow"
                       >
-                        ${price.toLocaleString()}
+                        {formatPrice(price, property.currency || "USD")}
                       </span>
 
                       <span
@@ -1014,6 +1149,21 @@ export default function ListingsContent({
                       >
                         {saleType}
                       </span>
+                      <button
+                        type="button"
+                        onClick={() => toggleFavorite(property.id)}
+                        aria-pressed={favorites.includes(property.id)}
+                        aria-label={favorites.includes(property.id) ? "Saved" : "Save property"}
+                        className="absolute bottom-3 left-3 flex min-h-[44px] min-w-[44px]
+                          items-center justify-center rounded-full bg-black/60 text-white
+                          backdrop-blur-sm transition-colors duration-200 hover:bg-black/80"
+                      >
+                        <Heart
+                          className="h-5 w-5"
+                          aria-hidden="true"
+                          fill={favorites.includes(property.id) ? "currentColor" : "none"}
+                        />
+                      </button>
                     </div>
 
                     <div className="flex flex-1 flex-col p-5">
@@ -1065,9 +1215,12 @@ export default function ListingsContent({
                         >
                           {t("Card.btn")}
                         </Link>
-                        <a
+                        <TrackedWhatsAppAnchor
                           href={`${CONTACT_INFO.whatsapp.href}&text=${encodeURIComponent(
-                            t("Card.whatsapp_prefill", { title, price })
+                            t("Card.whatsapp_prefill", {
+                              title,
+                              price: formatPrice(price, property.currency || "USD"),
+                            })
                           )}`}
                           target="_blank"
                           rel="noopener noreferrer"
@@ -1086,7 +1239,7 @@ export default function ListingsContent({
                             className="h-4 w-4"
                           />
                           {t("Card.enquire")}
-                        </a>
+                        </TrackedWhatsAppAnchor>
                       </div>
                     </div>
                   </article>
@@ -1116,7 +1269,7 @@ export default function ListingsContent({
                   <RotateCcw className="mr-1.5 h-4 w-4" aria-hidden="true"/>
                   {t("Results.clear_all_filters")}
                 </button>
-                <a
+                <TrackedWhatsAppAnchor
                   href={`${CONTACT_INFO.whatsapp.href}&text=${encodeURIComponent(
                     t("ContactBanner.whatsapp_prefill")
                   )}`}
@@ -1136,7 +1289,7 @@ export default function ListingsContent({
                     className="h-4 w-4"
                   />
                   {t("ContactBanner.btn")}
-                </a>
+                </TrackedWhatsAppAnchor>
               </div>
             </div>
           )}
@@ -1256,7 +1409,7 @@ export default function ListingsContent({
                 </p>
               </div>
               <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto lg:flex-col">
-                <a
+                <TrackedWhatsAppAnchor
                   href={`${CONTACT_INFO.whatsapp.href}&text=${encodeURIComponent(
                     t("ContactBanner.whatsapp_prefill")
                   )}`}
@@ -1274,7 +1427,7 @@ export default function ListingsContent({
                     className="h-5 w-5"
                   />
                   {t("ContactBanner.btn")}
-                </a>
+                </TrackedWhatsAppAnchor>
               </div>
             </div>
           </div>

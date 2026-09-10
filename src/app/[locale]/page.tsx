@@ -2,26 +2,43 @@ import Image from "next/image";
 import { getTranslations } from "next-intl/server";
 import PropertiesCarousel from "@/components/PropertiesCarousel";
 import { getActiveProperties } from "@/lib/db";
-import { PrimaryButton, PrimaryButtonRounded, SecondaryButton } from "@/components/ui/Buttons";
+import { PrimaryButton, PrimaryButtonRounded } from "@/components/ui/Buttons";
+import { TrackedWhatsAppButton } from "@/components/TrackedWhatsApp";
 import { CONTACT_INFO } from "@/config/contact";
+import { routing } from "@/i18n/routing";
 
 import { Home, Key, BadgeDollarSign, Building2, Star, Handshake, ShieldCheck } from "lucide-react";
 import { Metadata } from "next";
 
 // 1. Dynamic localized Metadata scoped to "HomePage.Metadata"
-export async function generateMetadata(): Promise<Metadata> {
-  const t = await getTranslations("Pages.HomePage.Metadata");
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  const t = await getTranslations({ locale, namespace: "Pages.HomePage.Metadata" });
+  const canonical =
+    locale === "en"
+      ? "https://qmax-realty.vercel.app"
+      : `https://qmax-realty.vercel.app/${locale}`;
 
   return {
     title: t("title"),
     description: t("description"),
     alternates: {
-      canonical: "https://qmax-realty.vercel.app",
+      canonical,
+      languages: Object.fromEntries(
+        routing.locales.map((l) => [
+          l,
+          l === "en" ? "https://qmax-realty.vercel.app" : `https://qmax-realty.vercel.app/${l}`,
+        ])
+      ),
     },
     openGraph: {
       title: `${t("title")} - QMAX Realty`,
       description: t("description"),
-      url: "https://qmax-realty.vercel.app",
+      url: canonical,
       images: [
         {
           url: "https://qmax-realty.vercel.app/img/og-image.webp",
@@ -77,6 +94,7 @@ export default async function HomePage() {
             alt={t("Hero.image_alt")}
             fill
             priority
+            fetchPriority="high"
             sizes="100vw"
             className="object-cover object-[50%_35%]"
           />
@@ -248,7 +266,8 @@ export default async function HomePage() {
                 </p>
               </div>
               <div className="flex w-full flex-col gap-3 sm:flex-row lg:w-auto lg:flex-col">
-                <SecondaryButton
+                <TrackedWhatsAppButton
+                  variant="secondary"
                   label={t("ContactBanner.whatsapp_btn")}
                   href={CONTACT_INFO.whatsapp.href}
                   size="lg"

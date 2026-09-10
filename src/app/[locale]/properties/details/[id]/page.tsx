@@ -47,7 +47,9 @@ import {
 import { getActiveProperties, getPropertyById } from "@/lib/db";
 import { CONTACT_INFO } from "@/config/contact";
 import PropertyGallery from "@/components/PropertyGallery";
-import { PrimaryButton, SecondaryButton } from "@/components/ui/Buttons";
+import ShareProperty from "@/components/ShareProperty";
+import { SecondaryButton } from "@/components/ui/Buttons";
+import { TrackedWhatsAppButton } from "@/components/TrackedWhatsApp";
 
 export async function generateStaticParams() {
   const properties = getActiveProperties();
@@ -101,9 +103,29 @@ export async function generateMetadata({
       .filter(Boolean)
       .join(". ");
 
+  const ogImage = property.card_image?.startsWith("http")
+    ? property.card_image
+    : `https://qmax-realty.vercel.app${property.card_image || "/img/og-image.webp"}`;
+
   return {
     title: `${property.title} - QMAX Realty`,
     description: metaDesc,
+    alternates: {
+      canonical: `https://qmax-realty.vercel.app/properties/details/${id}`,
+    },
+    openGraph: {
+      title: `${property.title} - QMAX Realty`,
+      description: metaDesc,
+      url: `https://qmax-realty.vercel.app/properties/details/${id}`,
+      images: [
+        {
+          url: ogImage,
+          width: 1200,
+          height: 630,
+          alt: property.title,
+        },
+      ],
+    },
   };
 }
 
@@ -197,6 +219,67 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
       ? `${currency === "USD" ? "$" : currency + " "}${property.price.toLocaleString()}`
       : null;
 
+  const canonicalUrl = `https://qmax-realty.vercel.app/properties/details/${id}`;
+  const jsonLdImages = [imageSrc, ...gallery]
+    .filter(Boolean)
+    .map((src) =>
+      src.startsWith("http") ? src : `https://qmax-realty.vercel.app${src}`
+    );
+  const realEstateJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "RealEstateListing",
+    name: property.title,
+    description: property.description || property.meta_description || property.title,
+    url: canonicalUrl,
+    image: jsonLdImages,
+    address: {
+      "@type": "PostalAddress",
+      streetAddress: property.neighborhood || undefined,
+      addressLocality: property.city || undefined,
+      addressRegion: property.region || undefined,
+      addressCountry: property.country || "Georgia",
+    },
+    offers: {
+      "@type": "Offer",
+      price: property.price ?? undefined,
+      priceCurrency: currency,
+      url: canonicalUrl,
+    },
+  };
+  const breadcrumbJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Properties",
+        item: "https://qmax-realty.vercel.app/listings",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: property.title,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
+  const allActive = getActiveProperties(locale);
+  const others = allActive.filter((p) => p.id !== property.id);
+  const sameCity = others.filter(
+    (p) => property.city && p.city && p.city === property.city
+  );
+  const sameType = others.filter(
+    (p) =>
+      property.type &&
+      p.type === property.type &&
+      !(property.city && p.city === property.city)
+  );
+  const similarProperties = [...sameCity, ...sameType, ...others]
+    .filter((p, idx, arr) => arr.findIndex((x) => x.id === p.id) === idx)
+    .slice(0, 3);
+
   const tileClass =
     "rounded-xl border border-gray-100 bg-white p-4 shadow-sm transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-lg dark:border-gray-700 dark:bg-gray-800";
   const chipClass =
@@ -208,6 +291,14 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
 
   return (
     <>
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(realEstateJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
+      />
       {/* Back bar */}
       <div className="sticky top-0 z-30 border-b border-gray-100 bg-white/95 backdrop-blur md:top-16 dark:border-gray-700 dark:bg-gray-900/95">
         <div className="mx-auto max-w-6xl px-4 sm:px-6">
@@ -603,7 +694,8 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                   {t("Sidebar.description")}
                 </p>
                 <div className="mt-5 space-y-3">
-                  <PrimaryButton
+                  <TrackedWhatsAppButton
+                    variant="primary"
                     label={t("Sidebar.whatsapp")}
                     href={whatsappUrl}
                     icon={<MessageCircle className="h-5 w-5" aria-hidden="true"/>}
@@ -624,12 +716,99 @@ export default async function PropertyDetailsPage({ params }: { params: Promise<
                     fullWidth
                     className="min-h-[44px] w-full"
                   />
+                  <ShareProperty title={property.title} url={canonicalUrl}/>
                 </div>
               </div>
             </div>
           </div>
         </div>
       </section>
+
+      {/* Similar properties */}
+      {similarProperties.length > 0 && (
+        <section
+          aria-labelledby="similar-properties-heading"
+          className="border-t border-gray-100 bg-gray-50 py-12 md:py-16 dark:border-gray-800 dark:bg-gray-800/50"
+        >
+          <div className="mx-auto max-w-6xl px-4 sm:px-6">
+            <h2 id="similar-properties-heading" className={`${sectionHeadingClass} mb-6`}>
+              Similar properties
+            </h2>
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3">
+              {similarProperties.map((item) => {
+                const itemCurrency = item.currency || "USD";
+                const itemPrice =
+                  item.price != null
+                    ? `${itemCurrency === "USD" ? "$" : itemCurrency + " "}${item.price.toLocaleString()}`
+                    : null;
+                return (
+                  <article
+                    key={item.id}
+                    className="flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-sm transition-all duration-200 motion-safe:hover:-translate-y-0.5 hover:shadow-xl dark:border-gray-700 dark:bg-gray-800"
+                  >
+                    <div className="relative h-52 w-full flex-shrink-0">
+                      <Image
+                        src={item.card_image || "/img/placeholder_2.webp"}
+                        alt={item.title}
+                        fill
+                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                        loading="lazy"
+                        className="object-cover"
+                      />
+                    </div>
+                    <div className="flex flex-1 flex-col p-5">
+                      <h3 className="mb-1 line-clamp-2 text-lg leading-snug font-bold text-gray-900 dark:text-white">
+                        {item.title}
+                      </h3>
+                      {itemPrice && (
+                        <p className="mb-4 text-base font-bold text-gray-900 dark:text-white">
+                          {itemPrice}
+                        </p>
+                      )}
+                      <Link
+                        href={`/properties/details/${item.id}`}
+                        aria-label={`View Details: ${item.title}`}
+                        className="mt-auto inline-flex min-h-[44px] items-center justify-center rounded-lg bg-brand-600 px-4 py-2.5 text-center text-sm font-semibold text-white transition-colors duration-200 hover:bg-brand-700"
+                      >
+                        View Details
+                      </Link>
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </div>
+        </section>
+      )}
+
+      {/* Sticky mobile CTA */}
+      <div className="sticky bottom-0 z-30 border-t border-gray-100 bg-white/95 backdrop-blur md:hidden dark:border-gray-700 dark:bg-gray-900/95">
+        <div className="mx-auto grid max-w-6xl grid-cols-3 gap-2 px-4 py-2 sm:px-6">
+          <a
+            href={CONTACT_INFO.phone.href}
+            className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg bg-brand-600 px-3 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-700"
+          >
+            <Phone className="h-4 w-4" aria-hidden="true"/>
+            Call
+          </a>
+          <a
+            href={whatsappUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg border border-gray-200 px-3 py-2.5 text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+          >
+            <MessageCircle className="h-4 w-4" aria-hidden="true"/>
+            WhatsApp
+          </a>
+          <Link
+            href="/contact?subject=viewing"
+            className="inline-flex min-h-[44px] items-center justify-center gap-1.5 rounded-lg border border-gray-200 px-3 py-2.5 text-sm font-semibold text-gray-900 transition-colors hover:bg-gray-50 dark:border-gray-700 dark:text-white dark:hover:bg-gray-700"
+          >
+            <Calendar className="h-4 w-4" aria-hidden="true"/>
+            Viewing
+          </Link>
+        </div>
+      </div>
     </>
   );
 }

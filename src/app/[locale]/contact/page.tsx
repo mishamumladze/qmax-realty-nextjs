@@ -1,10 +1,11 @@
 import { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { Mail, Phone, MapPin, MessageCircle, Send } from "lucide-react";
-import { PrimaryButton, SecondaryButton } from "@/components/ui/Buttons";
+import { PrimaryButton } from "@/components/ui/Buttons";
 import { CONTACT_INFO } from "@/config/contact";
 import ContactForm from "@/components/ContactForm";
 import OfficeMap from "@/components/OfficeMap";
+import { TrackedWhatsAppAnchor, TrackedWhatsAppButton } from "@/components/TrackedWhatsApp";
 
 export async function generateMetadata(): Promise<Metadata> {
   const t = await getTranslations("Pages.Contact.Metadata");
@@ -149,7 +150,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                       <h3 className="text-base font-semibold text-gray-900 dark:text-white">
                         {t("Channels.whatsapp")}
                       </h3>
-                      <a
+                      <TrackedWhatsAppAnchor
                         href={CONTACT_INFO.whatsapp.href}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -158,7 +159,7 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                           hover:underline dark:text-brand-300"
                       >
                         {CONTACT_INFO.phone.display}
-                      </a>
+                      </TrackedWhatsAppAnchor>
                       <p className="mt-1 text-sm text-gray-500 dark:text-gray-400">
                         {t("Channels.availability")}
                       </p>
@@ -244,7 +245,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                 <p className="mt-1 mb-4 text-sm leading-relaxed text-gray-600 dark:text-gray-300">
                   {t("WhatsappCard.description")}
                 </p>
-                <PrimaryButton
+                <TrackedWhatsAppButton
+                  variant="primary"
                   label={t("WhatsappCard.btn")}
                   href={CONTACT_INFO.whatsapp.href}
                   size="lg"
@@ -334,7 +336,8 @@ export default async function ContactPage({ searchParams }: ContactPageProps) {
                   size="lg"
                   className="w-full min-h-[44px] sm:w-auto lg:w-full"
                 />
-                <SecondaryButton
+                <TrackedWhatsAppButton
+                  variant="secondary"
                   label={t("Buttons.whatsapp")}
                   href={CONTACT_INFO.whatsapp.href}
                   size="lg"
