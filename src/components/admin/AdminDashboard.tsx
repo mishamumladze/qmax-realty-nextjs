@@ -3,16 +3,16 @@
 import { useEffect, useId, useRef, useState } from "react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
-import { LayoutGrid, Mail, Users, LogOut, Plus } from "lucide-react";
+import { LayoutGrid, Users, Contact, LogOut, Plus } from "lucide-react";
 import type { Property } from "@/types/property";
 import { mergeTranslationAliases } from "@/lib/admin-translations";
 import { PropertyTable } from "@/components/admin/PropertyTable";
-import { MessagesList } from "@/components/admin/MessagesList";
 import { NewsletterSubscribersList } from "@/components/admin/NewsletterSubscribersList";
 import { PropertyFormModal } from "@/components/admin/PropertyFormModal";
+import { CrmTab } from "@/components/admin/CrmTab";
 import { Button } from "@/components/ui/Buttons";
 
-type Tab = "properties" | "messages" | "newsletter";
+type Tab = "properties" | "newsletter" | "crm";
 
 // Save-response shape: the property plus optional translation extras.
 // Kept local so the shared Property type stays untouched; old mocked
@@ -88,7 +88,7 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
 
   const tabs: { id: Tab; label: string; icon: typeof LayoutGrid }[] = [
     { id: "properties", label: t("Tabs.properties"), icon: LayoutGrid },
-    { id: "messages", label: t("Tabs.messages"), icon: Mail },
+    { id: "crm", label: t("Tabs.crm"), icon: Contact },
     { id: "newsletter", label: t("Tabs.newsletter"), icon: Users },
   ];
 
@@ -308,15 +308,6 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
           </>
         )}
 
-        {activeTab === "messages" && (
-          <>
-            <h1 className="text-h2 mb-6 font-bold text-balance text-gray-900 dark:text-gray-100">
-              {t("Headings.messages")}
-            </h1>
-            <MessagesList/>
-          </>
-        )}
-
         {activeTab === "newsletter" && (
           <>
             <h1 className="text-h2 mb-6 font-bold text-balance text-gray-900 dark:text-gray-100">
@@ -325,6 +316,8 @@ export function AdminDashboard({ initialProperties }: { initialProperties: Prope
             <NewsletterSubscribersList/>
           </>
         )}
+
+        {activeTab === "crm" && <CrmTab/>}
       </main>
 
       {deleteTarget && (

@@ -11,12 +11,69 @@ export interface MessageSummary {
   subject: string | null;
   message: string;
   created_at: string;
+  contact_id?: number | null;
 }
 
 export interface NewsletterSubscriber {
   id: number;
   email: string;
   created_at: string;
+}
+
+export type CrmStatus = "prospect" | "lead" | "customer" | "archived";
+
+export interface CrmContact {
+  id: number;
+  first_name: string;
+  last_name: string | null;
+  email: string | null;
+  phone: string | null;
+  status: CrmStatus;
+  tags: string[];
+  source: string | null;
+  created_at: string;
+  updated_at: string;
+  last_activity_at: string | null;
+  deleted_at?: string | null;
+}
+
+export type CrmActivityKind = "call" | "email" | "meeting" | "note" | "status";
+
+export interface CrmActivity {
+  id: number;
+  contact_id: number;
+  kind: CrmActivityKind;
+  body: string | null;
+  occurred_at: string;
+  created_at: string;
+  created_by: string | null;
+  updated_at: string | null;
+}
+
+export type CrmMessageDirection = "in" | "out";
+export type CrmMessageChannel = "email" | "chat" | "sms" | "note";
+
+export interface CrmMessage {
+  id: number;
+  contact_id: number;
+  direction: CrmMessageDirection;
+  channel: CrmMessageChannel;
+  sender: string | null;
+  subject: string | null;
+  body: string;
+  occurred_at: string;
+  created_at: string;
+}
+
+export interface CrmListParams {
+  q?: string;
+  status?: CrmStatus;
+  tag?: string;
+  from?: string;
+  to?: string;
+  sort?: string;
+  page?: number;
+  limit?: number;
 }
 
 export interface PropertyFormData {

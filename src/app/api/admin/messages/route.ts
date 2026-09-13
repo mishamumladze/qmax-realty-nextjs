@@ -1,5 +1,15 @@
 import { NextResponse } from "next/server";
-import { deleteMessage, getAllMessages, insertMessage, setMessageRead } from "@/lib/db";
+import {
+  countUnlinkedMessages,
+  deleteMessage,
+  getAllMessages,
+  getCrmContactById,
+  insertMessage,
+  linkMessageToContact,
+  listMessagesByContact,
+  listUnlinkedMessages,
+  setMessageRead,
+} from "@/lib/db";
 import { verifyToken } from "@/lib/admin-auth";
 
 export async function GET(request: Request) {
@@ -9,7 +19,26 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Unauthorized" }, { status: 401 });
   }
 
-  return NextResponse.json({ messages: getAllMessages() });
+  const params = new URL(request.url).searchParams;
+  const contactIdParam = params.get("contact_id");
+  if (contactIdParam) {
+    const contactId = Number(contactIdParam);
+    if (!Number.isInteger(contactId) || contactId <= 0) {
+      return NextResponse.json(
+        { error: "Valid contact_id query parameter is required" },
+        { status: 400 }
+      );
+    }
+    return NextResponse.json({ messages: listMessagesByContact(contactId) });
+  }
+  if (params.get("unlinked") === "1") {
+    return NextResponse.json({
+      messages: listUnlinkedMessages(),
+      unlinked: countUnlinkedMessages(),
+    });
+  }
+
+  return NextResponse.json({ messages: getAllMessages(), unlinked: countUnlinkedMessages() });
 }
 
 export async function PATCH(request: Request) {
@@ -28,6 +57,23 @@ export async function PATCH(request: Request) {
     const record = body as Record<string, unknown>;
     if (typeof record.id !== "number" || !Number.isInteger(record.id) || record.id <= 0) {
       return NextResponse.json({ error: "Valid numeric id is required" }, { status: 400 });
+    }
+    if (record.contact_id !== undefined) {
+      if (
+        record.contact_id !== null &&
+        (typeof record.contact_id !== "number" ||
+          !Number.isInteger(record.contact_id) ||
+          record.contact_id <= 0)
+      ) {
+        return NextResponse.json({ error: "contact_id must be a valid id or null" }, { status: 400 });
+      }
+      if (record.contact_id !== null && !getCrmContactById(record.contact_id)) {
+        return NextResponse.json({ error: "Contact not found" }, { status: 404 });
+      }
+      if (!linkMessageToContact(record.id, record.contact_id)) {
+        return NextResponse.json({ error: "Message not found" }, { status: 404 });
+      }
+      return NextResponse.json({ ok: true });
     }
     if (typeof record.read !== "boolean") {
       return NextResponse.json({ error: "read must be a boolean" }, { status: 400 });

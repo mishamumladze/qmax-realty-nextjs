@@ -126,12 +126,14 @@
         "Tabs": {
           "properties": "Свойства",
           "messages": "Сообщения",
-          "newsletter": "Информационный бюллетень"
+          "newsletter": "Информационный бюллетень",
+          "crm": "CRM"
         },
         "Headings": {
           "properties": "Свойства",
           "messages": "Сообщения",
-          "newsletter": "Информационный бюллетень"
+          "newsletter": "Информационный бюллетень",
+          "crm": "CRM"
         },
         "logout": "Выйти",
         "add_property": "Добавить свойство",
@@ -264,6 +266,201 @@
         },
         "Toast": {
           "removed": "Подписчик удален."
+        }
+      },
+      "Crm": {
+        "Headings": {
+          "crm": "CRM"
+        },
+        "Tabs": {
+          "crm": "CRM"
+        },
+        "loading": "Loading…",
+        "Metrics": {
+          "total": "Total contacts",
+          "active_leads": "Active leads",
+          "conversion": "Conversion",
+          "contacted_7d": "Contacted (7d)"
+        },
+        "Filters": {
+          "search_label": "Search",
+          "search_placeholder": "Name, email, or phone…",
+          "status_label": "Status",
+          "all": "All",
+          "tag_label": "Tag",
+          "tag_placeholder": "Filter by tag…",
+          "from_label": "From",
+          "to_label": "To"
+        },
+        "Count": {
+          "results": "{count} contacts"
+        },
+        "Columns": {
+          "name": "Name",
+          "contact": "Contact",
+          "status": "Status",
+          "tags": "Tags",
+          "last_activity": "Last activity",
+          "created": "Added",
+          "actions": "Actions"
+        },
+        "Status": {
+          "prospect": "Prospect",
+          "lead": "Lead",
+          "customer": "Customer",
+          "archived": "Archived"
+        },
+        "Buttons": {
+          "add_contact": "Add contact",
+          "edit": "Edit",
+          "save": "Save",
+          "saving": "Saving…",
+          "cancel": "Cancel",
+          "close": "Close",
+          "delete": "Delete",
+          "undo": "Undo",
+          "retry": "Retry",
+          "export_csv": "Export CSV",
+          "change_status": "Change status",
+          "delete_selected": "Delete selected",
+          "deleting": "Deleting…",
+          "select_all": "Select all",
+          "prev": "Previous",
+          "next": "Next",
+          "call": "Call",
+          "email_log": "Log email"
+        },
+        "Sort": {
+          "ascending": "Sort ascending",
+          "descending": "Sort descending"
+        },
+        "Selected": {
+          "count": "{count} selected"
+        },
+        "Pagination": {
+          "page": "Page {page} of {total}"
+        },
+        "Empty": {
+          "none": "No contacts yet."
+        },
+        "Errors": {
+          "load_failed": "Failed to load contacts."
+        },
+        "Aria": {
+          "select_row": "Select {name}",
+          "edit_contact": "Edit {name}",
+          "delete_contact": "Delete {name}",
+          "call_contact": "Call {name}",
+          "email_contact": "Email {name}",
+          "log_meeting": "Log meeting with {name}"
+        },
+        "Dialog": {
+          "title": "Delete contacts?",
+          "description": "{count} contact(s) will be removed. You can undo for 8 seconds."
+        },
+        "Toast": {
+          "deleted": "Contacts deleted."
+        },
+        "Form": {
+          "title_add": "Add contact",
+          "title_edit": "Edit contact",
+          "first_name": "First name *",
+          "last_name": "Last name",
+          "email": "Email",
+          "phone": "Phone",
+          "status": "Status",
+          "tags": "Tags",
+          "tags_hint": "Comma-separated, e.g. buyer, vip",
+          "source": "Source",
+          "required_first": "First name is required.",
+          "required_contact": "Email or phone is required.",
+          "invalid_email": "Enter a valid email address.",
+          "duplicate_warning": "Possible duplicates found. You can still save."
+        },
+        "Detail": {
+          "tabs_label": "Contact details",
+          "tab_info": "Info",
+          "tab_activity": "Activity",
+          "tab_notes": "Notes",
+          "tab_timeline": "Activity & Notes",
+          "tab_messages": "Messages"
+        },
+        "Activity": {
+          "kind_label": "Type",
+          "kind_call": "Call",
+          "kind_email": "Email",
+          "kind_meeting": "Meeting",
+          "kind_note": "Note",
+          "occurred_label": "Date",
+          "body_label": "Details",
+          "body_placeholder": "What happened?",
+          "email_log_only": "Email is logged only — no message is sent.",
+          "log_button": "Log activity",
+          "logging": "Saving…",
+          "loading": "Loading activity…",
+          "empty": "No activity yet.",
+          "delete_confirm": "Delete this activity?",
+          "delete_activity": "Delete {kind} activity",
+          "kind_status": "Status change",
+          "system_author": "System",
+          "edited_label": "Edited · {when}",
+          "edit_activity": "Edit {kind} activity",
+          "delete_title": "Delete this entry?"
+        },
+        "Messages": {
+          "direction_label": "Direction",
+          "direction_in": "Incoming",
+          "direction_out": "Outgoing",
+          "channel_label": "Channel",
+          "channel_all": "All channels",
+          "channel_email": "Email",
+          "channel_chat": "Chat",
+          "channel_sms": "SMS",
+          "channel_note": "Note",
+          "sender_label": "Sender",
+          "sender_placeholder": "Who sent this?",
+          "subject_label": "Subject",
+          "subject_placeholder": "Subject (optional)",
+          "occurred_label": "Date",
+          "body_label": "Message",
+          "body_placeholder": "Write the message…",
+          "body_required": "Message text is required.",
+          "search_label": "Search messages",
+          "search_placeholder": "Keyword…",
+          "from_label": "From",
+          "to_label": "To",
+          "add_button": "Add message",
+          "saving": "Saving…",
+          "loading": "Loading messages…",
+          "empty": "No messages yet.",
+          "count": "{shown} of {total} messages",
+          "edit_message": "Edit message",
+          "delete_title": "Delete this message?",
+          "delete_confirm": "Delete this message?",
+          "delete_message": "Delete message",
+          "website_badge": "Website",
+          "open_message": "Открыть сообщение",
+          "read_more": "Подробнее"
+        },
+        "Inbox": {
+          "view_label": "CRM view",
+          "view_contacts": "Contacts",
+          "view_inbox": "Inbox",
+          "empty": "Inbox is clear. All messages are linked.",
+          "mark_read": "Mark as read",
+          "mark_unread": "Mark as unread",
+          "delete_message": "Delete message from {name}",
+          "link_to_contact": "Link {name} to a contact",
+          "link_title": "Link message from {name}",
+          "link_search_label": "Find contact",
+          "link_search_placeholder": "Name, email, or phone…",
+          "link_search_button": "Search",
+          "link_no_results": "No contacts found.",
+          "create_contact": "Create prospect from this message",
+          "create_busy": "Creating…",
+          "backfill_button": "Auto-link all",
+          "backfill_busy": "Linking…",
+          "backfill_done": "Linked {linked} messages, created {created} prospects."
         }
       },
       "PropertyFormModal": {
@@ -990,14 +1187,27 @@
         "floor_plan": "План этажа",
         "included": "Что входит в комплект",
         "key_features": "Основные особенности!",
-        "additional": "Дополнительная информация"
+        "additional": "Дополнительная информация",
+        "amenities": "Удобства и особенности",
+        "floor_plan_link": "Посмотреть план этажа",
+        "per_sqm": "за кв. м",
+        "negotiable": "По договоренности"
       },
       "Facts": {
         "year_built": "Год постройки",
         "floor": "Пол",
         "parking": "Парковка",
         "available": "В наличии",
-        "none": "Нет"
+        "none": "Нет",
+        "energy_class": "Энергетический класс",
+        "renovation_year": "Год реконструкции",
+        "heating_type": "Отопление",
+        "hot_water_type": "Горячая вода",
+        "parking_type": "Парковка",
+        "furnishing": "Меблировка",
+        "condition": "Состояние",
+        "building_status": "Статус строительства",
+        "project_type": "Тип проекта"
       },
       "Sidebar": {
         "title": "Заинтересовались?",
@@ -1012,6 +1222,82 @@
       "Fallback": {
         "property": "Недвижимость",
         "country": "Грузия"
+      },
+      "Options": {
+        "type": {
+          "apartment": "Квартира",
+          "house": "Дом",
+          "room": "Комната",
+          "commercial": "Коммерческий",
+          "land": "Страна",
+          "garage": "Гараж / Парковочное место",
+          "warehouse": "Склад / Промышленность",
+          "commercial_unit": "Коммерческое помещение"
+        },
+        "sale_type": {
+          "for_sale": "Продается",
+          "for_rent": "Сдается в аренду",
+          "daily_rent": "Посуточная аренда / Краткосрочная аренда",
+          "lease": "Аренда",
+          "rent_to_own": "Аренда с правом выкупа"
+        },
+        "heating_type": {
+          "central": "Центральный",
+          "individual": "Индивидуальный",
+          "floor": "Подогрев пола",
+          "wall": "Настенное отопление",
+          "electric": "Электрический",
+          "heat_pump": "Тепловой насос",
+          "pellet_stove": "Пеллетная / дровяная печь"
+        },
+        "hot_water_type": {
+          "central": "Центральный",
+          "electric": "Электрический",
+          "gas": "Газ",
+          "solar": "Солнечная энергия",
+          "heat_pump_boiler": "Котел с тепловым насосом",
+          "tankless": "Безбаковые / мгновенные электрические"
+        },
+        "parking_type": {
+          "none": "Нет",
+          "garage": "Гараж",
+          "carport": "Навес для автомобиля",
+          "street": "Улица",
+          "underground": "Подземный",
+          "driveway": "Подъездная дорожка, не выходящая на улицу",
+          "ev_charging": "Зарядная станция для электромобилей",
+          "covered": "Крытое помещение"
+        },
+        "furnishing": {
+          "unfurnished": "Без мебели",
+          "semi_furnished": "Частично меблированный",
+          "furnished": "С мебелью",
+          "kitchen_only": "Только кухня / Частично оборудованная"
+        },
+        "condition": {
+          "excellent": "Отлично",
+          "good": "Хорошо",
+          "fair": "Ярмарка",
+          "needs_renovation": "Требует ремонта",
+          "brand_new": "Совершенно новый / Недавно отремонтированный",
+          "cosmetic_fix": "Требуется косметический ремонт"
+        },
+        "building_status": {
+          "new_construction": "Новое строительство",
+          "under_construction": "В процессе создания",
+          "ready": "Готово",
+          "shell_core": "Черная рама / Корпус и сердечник",
+          "white_frame": "Белая рама / Незавершенная обработка",
+          "renovation_required": "Требуется ремонт"
+        },
+        "project_type": {
+          "residential": "Жилой",
+          "commercial": "Коммерческий",
+          "mixed_use": "Многофункциональное использование",
+          "industrial": "Промышленный",
+          "agricultural": "Сельскохозяйственный",
+          "hospitality": "Гостиничный бизнес / Гостиницы"
+        }
       }
     },
     "NotFound": {

@@ -73,7 +73,7 @@ export default async function RootLayout({
           <OfflineIndicator/>
           <main
             id="main-content"
-            className="transition-fade min-h-screen flex-grow pb-20 md:pt-16 md:pb-0"
+            className="min-h-screen flex-grow pb-20 md:pt-16 md:pb-0"
           >
             {children}
           </main>

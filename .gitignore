@@ -48,3 +48,7 @@ next-env.d.ts
 opencode.json
 .omo/start-work/ledger.jsonl
 .omo/start-work/ledger.jsonl
+.impeccable
+CLAUDE.md
+DESIGN.md
+AGENTS.md

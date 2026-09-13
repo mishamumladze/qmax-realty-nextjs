@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
-import { insertMessage } from "@/lib/db";
+import {
+  findCrmDuplicates,
+  insertCrmContact,
+  insertMessage,
+  linkMessageToContact,
+  touchCrmContactActivity,
+} from "@/lib/db";
 import { sendMail } from "@/lib/mailer";
 
 export async function POST(request: Request) {
@@ -38,8 +44,9 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: "Validation failed", fields: errors }, { status: 400 });
     }
 
+    const fullName = `${name.trim()} ${lastName.trim()}`.trim();
     const result = insertMessage({
-      name: name.trim(),
+      name: fullName,
       email: email.trim(),
       phone: phone || undefined,
       subject,
@@ -48,6 +55,31 @@ export async function POST(request: Request) {
 
     if (!result) {
       return NextResponse.json({ error: "Failed to save message" }, { status: 500 });
+    }
+
+    // Auto-link to CRM: match by email/phone, else create a prospect. Best-effort.
+    try {
+      const trimmedEmail = email.trim();
+      const trimmedPhone = typeof phone === "string" && phone.trim() ? phone.trim() : null;
+      const matches = findCrmDuplicates(trimmedEmail, trimmedPhone);
+      let contactId: number | undefined = matches[0]?.id;
+      if (!contactId) {
+        const created = insertCrmContact({
+          first_name: fullName || trimmedEmail,
+          last_name: null,
+          email: trimmedEmail,
+          phone: trimmedPhone,
+          status: "prospect",
+          source: "website",
+        });
+        contactId = created?.id ?? undefined;
+      }
+      if (contactId) {
+        linkMessageToContact(result.id, contactId);
+        touchCrmContactActivity(contactId);
+      }
+    } catch {
+      // never fail the public response on CRM bookkeeping
     }
 
     // Forward via email (non-blocking)

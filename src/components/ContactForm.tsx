@@ -173,7 +173,14 @@ export default function ContactForm({ initialSubject = "" }: ContactFormProps) {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          name: formData.firstName.trim(),
+          lastName: formData.lastName.trim(),
+          email: formData.email.trim(),
+          phone: formData.phone,
+          subject: formData.subject,
+          message: formData.message,
+        }),
       });
 
       const data = await response.json();
