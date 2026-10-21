@@ -20,6 +20,7 @@ export default function Navbar() {
     { href: "/about", page: "About", label: t("About"), icon: Info },
     { href: "/contact", page: "Contact", label: t("Contact"), icon: Building2 },
     { href: "/socials", page: "Socials", label: t("Socials"), icon: Share2 },
+    { href: "/documents", page: "Documents", label: t("documents"), icon: Share2 },
   ];
 
   const [isOpen, setIsOpen] = useState(false);

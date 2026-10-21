@@ -67,13 +67,7 @@ export default async function AboutPage() {
           <div className="absolute -top-24 -right-24 h-96 w-96 rounded-full bg-white/10 blur-3xl"/>
         </div>
         <div className="relative mx-auto max-w-6xl px-4 py-14 text-center sm:px-6 md:py-20 lg:py-24">
-          <span
-            className="inline-flex items-center gap-2 rounded-full border border-white/25
-              bg-white/10 px-4 py-1.5 text-xs font-bold tracking-[0.18em] text-brand-50 uppercase"
-          >
-            <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-200"/>
-            QMAX Realty
-          </span>
+
           <h1 id="about-hero-heading" className="mt-5 text-h1 font-bold text-balance">
             {t("Hero.title")}
           </h1>
