@@ -1,5 +1,6 @@
 import Database from "better-sqlite3";
 import { randomBytes } from "crypto";
+import { mkdirSync } from "fs";
 import path from "path";
 import { Property } from "@/types/property";
 import { MessageSummary, NewsletterSubscriber, PropertyFormData } from "@/types/admin";
@@ -17,6 +18,7 @@ import { normalizeCrmEmail, normalizeCrmPhone } from "@/lib/crm-utils";
 import type { TranslationFields } from "@/lib/translations";
 
 const dbPath = path.join(process.cwd(), "data", "qmax.sqlite");
+mkdirSync(path.dirname(dbPath), { recursive: true });
 
 initTables();
 
@@ -205,9 +207,41 @@ export function initTables(): void {
       CREATE TABLE IF NOT EXISTS newsletter_subscribers (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         email TEXT NOT NULL UNIQUE,
+        unsub_token TEXT,
         created_at TEXT DEFAULT CURRENT_TIMESTAMP
       )
     `);
+    const subscriberColumns = db.prepare("PRAGMA table_info(newsletter_subscribers)").all() as {
+      name: string;
+    }[];
+    if (!subscriberColumns.map((c) => c.name).includes("unsub_token")) {
+      db.exec("ALTER TABLE newsletter_subscribers ADD COLUMN unsub_token TEXT");
+    }
+
+    db.exec(`
+      CREATE TABLE IF NOT EXISTS properties (
+        id INTEGER PRIMARY KEY AUTOINCREMENT,
+        slug TEXT UNIQUE NOT NULL,
+        type TEXT,
+        title TEXT,
+        rooms INTEGER,
+        bedrooms INTEGER,
+        bathrooms REAL,
+        sqmt REAL,
+        price REAL,
+        location TEXT,
+        neighborhood TEXT,
+        city TEXT,
+        country TEXT,
+        sale_type TEXT,
+        card_image TEXT,
+        coords TEXT,
+        status TEXT DEFAULT 'active',
+        created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+        updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+      )
+    `);
+
     const columns = db.prepare("PRAGMA table_info(properties)").all() as { name: string }[];
     const columnNames = columns.map((c) => c.name);
 
@@ -519,8 +553,8 @@ export function initTables(): void {
     } catch {
       // index may already exist
     }
-  } catch {
-    // silently fail — tables may not be writable
+  } catch (err) {
+    console.error("Failed to initialize database:", err);
   }
 }
 

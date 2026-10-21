@@ -23,7 +23,7 @@ Live: **https://qmax-realty.vercel.app**
 | Framework | Next.js 16 (App Router, Turbopack) + React 19 |
 | Styling | Tailwind CSS v4, SCSS (`globals.scss`), Prettier + tailwind plugins |
 | i18n | next-intl 4.x, DeepL (`deepl-node`) |
-| Database | better-sqlite3 (`data/qmax.sqlite`), auto-migrated in `src/lib/db.ts` |
+| Database | better-sqlite3 (`data/qmax.sqlite`, committed demo DB), auto-migrated in `src/lib/db.ts` |
 | Maps | maplibre-gl, leaflet, react-leaflet, @maplibre/maplibre-gl-leaflet |
 | Email | nodemailer |
 | Auth | Stateless HMAC-SHA256 tokens (Web Crypto, 7-day TTL) |
@@ -49,7 +49,7 @@ src/
   hooks/                 # useDarkMode, useMounted
   types/                 # property.ts, admin.ts
 messages/                # en.json, de.json, tr.json, ru.json, pl.json
-data/                    # qmax.sqlite (gitignored, auto-created)
+data/                    # qmax.sqlite (tracked demo DB, auto-created if missing)
 scripts/translate.mjs    # DeepL batch translation for missing message keys
 ```
 
@@ -129,11 +129,17 @@ npm run translate
 
 ## Database
 
-SQLite file at `data/qmax.sqlite` (auto-created, not committed).
+SQLite file at `data/qmax.sqlite` (committed with demo content). `src/lib/db.ts` creates the `data/` directory and any missing tables on startup, so a fresh clone boots even if the file is absent.
+
+To reset local data to the committed copy:
+
+```bash
+git checkout -- data/qmax.sqlite
+```
 
 `src/lib/db.ts` handles:
 
-- `initTables()` — creates `messages`, `newsletter_subscribers`, `properties`, `property_translations` and migrates missing columns/indexes
+- `initTables()` — creates `messages`, `newsletter_subscribers`, `properties`, `property_translations`, `crm_contacts`, `crm_activities`, `crm_messages` and migrates missing columns/indexes
 - `getActiveProperties(locale?)` / `getPropertyById(id, locale?)` — locale-aware reads with translation joins
 - `getAllProperties()` / `getAllPropertiesWithLocale(locale)` — admin reads
 - `insertProperty` / `updateProperty` / `deleteProperty` — with slug deduplication and JSON column handling
