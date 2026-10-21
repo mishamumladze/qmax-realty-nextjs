@@ -6,7 +6,7 @@ import Image from "next/image";
 import { motion, useReducedMotion } from "framer-motion";
 import { useTranslations } from "next-intl";
 import LanguageSelector from "@/components/LanguageSelector";
-import { Menu, X, Home, Share2, Users, Building2, Info } from "lucide-react";
+import { Menu, X, Home, Share2, Users, Building2, Info, FileText } from "lucide-react";
 import { useHapticAndVisualFeedback } from "@/components/ui/HapticFeedback";
 
 export default function Navbar() {
@@ -20,7 +20,7 @@ export default function Navbar() {
     { href: "/about", page: "About", label: t("About"), icon: Info },
     { href: "/contact", page: "Contact", label: t("Contact"), icon: Building2 },
     { href: "/socials", page: "Socials", label: t("Socials"), icon: Share2 },
-    { href: "/documents", page: "Documents", label: t("documents"), icon: Share2 },
+    { href: "/documents", page: "Documents", label: t("documents"), icon: FileText },
   ];
 
   const [isOpen, setIsOpen] = useState(false);
@@ -134,32 +134,6 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Mobile-only: Logo + Brand at top-right */}
-      <div className="fixed top-4 right-4 z-40 md:hidden">
-        <Link
-          href="/"
-          className="flex items-center gap-2 rounded-xl border border-gray-200 bg-white/80 px-3 py-2
-            shadow-lg backdrop-blur-sm dark:border-gray-700 dark:bg-gray-900/80"
-        >
-          <Image
-            src="/img/Light/Logo200.webp"
-            alt="QMAX Realty Logo Light"
-            width={40}
-            height={40}
-            className="block h-7 w-7 dark:hidden"
-            priority={false}
-          />
-          <Image
-            src="/img/Dark/Logo200.webp"
-            alt="QMAX Realty Logo Dark"
-            width={40}
-            height={40}
-            className="hidden h-7 w-7 dark:block"
-            priority={false}
-          />
-          <span className="text-sm font-bold text-gray-800 dark:text-white">QMAX Realty</span>
-        </Link>
-      </div>
 
       {/* Desktop & Mobile Fixed Navbar Bar */}
       <nav

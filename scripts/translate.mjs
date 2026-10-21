@@ -15,7 +15,7 @@ import path from "path";
 import * as deepl from "deepl-node";
 import dotenv from "dotenv";
 
-dotenv.config({ path: ".env.local" });
+dotenv.config({ path: ".env" });
 
 const apiKey = process.env.DEEPL_API_KEY;
 if (!apiKey) {

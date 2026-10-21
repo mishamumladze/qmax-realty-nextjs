@@ -38,7 +38,8 @@
         "open_menu": "Otwórz menu główne",
         "close_menu": "Zamknij menu główne",
         "main_menu": "Menu główne"
-      }
+      },
+      "documents": "Dokumenty"
     },
     "Layout": {
       "skip_to_content": "Przejdź do treści"
@@ -1321,6 +1322,199 @@
         "Metadata": {
           "title": "Logowanie administratora"
         }
+      }
+    },
+    "Documents": {
+      "Metadata": {
+        "title": "Dokumenty i usługi wsparcia",
+        "description": "Zezwolenia na pobyt, nieruchomości, wizy schengeńskie, zatrudnienie, rekrutacja na studia, tłumaczenia, ubezpieczenia i usługi administracyjne w Turcji. Firma QMAX zapewnia kompleksowe wsparcie – od przygotowania dokumentów aż po uzyskanie wyniku.",
+        "og_alt": "Dokumenty i usługi wsparcia – QMAX Realty"
+      },
+      "Hero": {
+        "title": "Dokumenty",
+        "subtitle": "Skontaktuj się z nami, aby uzyskać więcej informacji.",
+        "whatsapp": "WhatsApp"
+      },
+      "Tabs": {
+        "aria_label": "Usługi związane z dokumentacją i wsparciem"
+      },
+      "Services": {
+        "residence_permit": {
+          "title": "Zezwolenie na pobyt w Turcji",
+          "subtitle": "Pełne wsparcie od momentu złożenia wniosku aż do ogłoszenia wyników",
+          "items": {
+            "item_1": "Konsultacje i wybór podstawy",
+            "item_2": "Przygotowanie dokumentów",
+            "item_3": "Złożenie wniosku o e-İkamet",
+            "item_4": "Umówienie wizyty",
+            "item_5": "Sprawdzanie dokumentów przed złożeniem",
+            "item_6": "Wsparcie na każdym etapie",
+            "item_7": "Pomoc w zakresie przedłużenia lub zmiany statusu",
+            "item_8": "Monitorowanie procesu rejestracji"
+          },
+          "note": "QMAX — zajmujemy się całym procesem, oszczędzając Ci czasu i stresu."
+        },
+        "real_estate": {
+          "title": "Nieruchomości w Turcji",
+          "subtitle": "Od wyboru nieruchomości aż po sfinalizowanie transakcji",
+          "items": {
+            "item_1": "Wybór nieruchomości dostosowanej do Państwa potrzeb",
+            "item_2": "Zakup i sprzedaż",
+            "item_3": "Nieruchomości inwestycyjne",
+            "item_4": "Weryfikacja dokumentów i majątku",
+            "item_5": "Wsparcie transakcyjne",
+            "item_6": "Web Tapu i przetwarzanie dokumentów",
+            "item_7": "Kredyty hipoteczne i kwestie bankowe",
+            "item_8": "Pełnomocnictwo i wsparcie w ramach pełnomocnictwa",
+            "item_9": "Pomoc po zakupie"
+          },
+          "note": "QMAX — zajmujemy się obsługą transakcji, a nie tylko sprzedażą nieruchomości."
+        },
+        "schengen_visa": {
+          "title": "Wizy schengeńskie",
+          "subtitle": "Pomoc od przygotowania dokumentów po ich złożenie",
+          "items": {
+            "item_1": "Określenie odpowiedniego rodzaju wizy",
+            "item_2": "Sprawdzanie dokumentów",
+            "item_3": "Wypełnianie formularza wniosku wizowego",
+            "item_4": "Przygotowywanie i przetwarzanie dokumentów",
+            "item_5": "Umówienie terminu złożenia wniosku",
+            "item_6": "Przygotowanie do rozmowy kwalifikacyjnej",
+            "item_7": "Doradztwo w zakresie ubezpieczeń i rezerwacji",
+            "item_8": "Wsparcie na każdym etapie procesu rekrutacyjnego"
+          }
+        },
+        "employment": {
+          "title": "Zatrudnienie w Turcji",
+          "subtitle": "Pomoc w znalezieniu pracy i legalnej rejestracji",
+          "items": {
+            "item_1": "Poszukiwanie pracy",
+            "item_2": "Konsultacje w sprawie warunków pracy",
+            "item_3": "Przygotowanie niezbędnych dokumentów",
+            "item_4": "Uzyskanie pozwolenia na pracę",
+            "item_5": "Wsparcie dla pracodawcy i pracownika",
+            "item_6": "Monitorowanie procesu rejestracji",
+            "item_7": "Konsultacje w sprawie statusu zatrudnienia"
+          },
+          "note": "QMAX nie tylko pomaga w znalezieniu pracy, ale także wspiera w prawidłowym sformalizowaniu stosunku pracy."
+        },
+        "university_admission": {
+          "title": "Rekrutacja na uniwersytety w Turcji",
+          "subtitle": "Od wyboru uczelni do zapisania się na studia",
+          "items": {
+            "item_1": "Wybór uczelni i kierunku studiów",
+            "item_2": "Konsultacje w sprawie warunków przyjęcia",
+            "item_3": "Weryfikacja dokumentów",
+            "item_4": "Tłumaczenie i przygotowywanie dokumentów",
+            "item_5": "Złożenie wniosku",
+            "item_6": "Pomoc w procesie rekrutacji",
+            "item_7": "Pomoc w rejestracji na uczelni",
+            "item_8": "Konsultacje w sprawie zezwoleń na pobyt dla studentów"
+          },
+          "note": "QMAX — pomagamy Ci złożyć wniosek i przejść przez wszystkie etapy bez żadnych kłopotów."
+        },
+        "translation_services": {
+          "title": "Usługi tłumaczeniowe",
+          "subtitle": "Dokładne tłumaczenie dokumentów wraz z oficjalnym poświadczeniem",
+          "items": {
+            "item_1": "Tłumaczenie dokumentów i zaświadczeń",
+            "item_2": "Poświadczenie notarialne",
+            "item_3": "Tłumaczenie przysięgłe",
+            "item_4": "Apostille i legalizacja",
+            "item_5": "Tłumaczenia dla instytucji rządowych",
+            "item_6": "Tłumaczenia na potrzeby postępowań sądowych i prawnych",
+            "item_7": "Tłumaczenia dokumentów związanych z pozwoleniami na pobyt, obywatelstwem i nieruchomościami"
+          }
+        },
+        "title_insurance": {
+          "title": "Ubezpieczenie tytułu prawnego do nieruchomości",
+          "subtitle": "Ochrona Twoich praw i interesów przy zakupie nieruchomości",
+          "items": {
+            "item_1": "Weryfikacja praw własności",
+            "item_2": "Sprawdzanie ewentualnych zagrożeń i ograniczeń",
+            "item_3": "Analiza dokumentów dotyczących nieruchomości",
+            "item_4": "Ubezpieczenie tytułu własności przy zakupie",
+            "item_5": "Konsultacje przed zawarciem transakcji",
+            "item_6": "Pomoc przy rejestracji"
+          }
+        },
+        "insurance": {
+          "title": "Ubezpieczenia w Turcji",
+          "subtitle": "Wybór i dostosowanie ubezpieczenia do własnych potrzeb",
+          "items": {
+            "item_1": "Ubezpieczenie zdrowotne związane z pozwoleniem na pobyt",
+            "item_2": "Ubezpieczenie podróżne",
+            "item_3": "Ubezpieczenie związane z wizą",
+            "item_4": "Przedłużenie polisy ubezpieczeniowej",
+            "item_5": "Wybór odpowiedniego zakresu ubezpieczenia"
+          }
+        },
+        "state_municipal_services": {
+          "title": "Usługi państwowe i gminne",
+          "subtitle": "Pomoc w załatwianiu formalności i wsparcie w kontaktach z urzędami państwowymi",
+          "items": {
+            "item_1": "Gmina — usługi komunalne",
+            "item_2": "Ludność — rejestracja i zmiana adresu",
+            "item_3": "Wymiana zagranicznych praw jazdy na tureckie",
+            "item_4": "Uzyskanie i przetwarzanie numeru podatkowego",
+            "item_5": "Urząd Skarbowy — kwestie podatkowe",
+            "item_6": "e-Devlet — pomoc w korzystaniu z elektronicznych usług administracji publicznej",
+            "item_7": "Rejestracja adresu i procedury rejestracyjne",
+            "item_8": "Umówienie się na spotkanie w urzędach państwowych",
+            "item_9": "Pomoc i składanie dokumentów",
+            "item_10": "Pomoc w zakresie oficjalnych wniosków i zaświadczeń"
+          }
+        },
+        "family_support": {
+          "title": "Wsparcie dla rodzin w Turcji",
+          "subtitle": "Pomoc rodzinom w załatwianiu formalności i ważnych spraw",
+          "items": {
+            "item_1": "Rodzinne zezwolenie na pobyt",
+            "item_2": "Dokumenty dla członków rodziny",
+            "item_3": "Rejestracja dzieci",
+            "item_4": "Zapisy do szkoły i pomoc w procesie rekrutacji",
+            "item_5": "Rejestracja adresu",
+            "item_6": "Tłumaczenie i poświadczenie notarialne dokumentów",
+            "item_7": "Współpraca z agencjami rządowymi",
+            "item_8": "Pomoc w zakresie wniosków i zaświadczeń"
+          }
+        },
+        "additional_services": {
+          "title": "Usługi dodatkowe",
+          "subtitle": "Pomoc w załatwianiu spraw codziennych i urzędowych w Turcji",
+          "items": {
+            "item_1": "Otwieranie rachunków bankowych",
+            "item_2": "Pomoc w zakresie PTT i operacji bankowych",
+            "item_3": "Uzyskiwanie zaświadczeń i dokumentów",
+            "item_4": "e-Devlet – pomoc w korzystaniu z usług administracji publicznej",
+            "item_5": "Rejestracja w urzędach państwowych",
+            "item_6": "Rejestracja pełnomocnictw",
+            "item_7": "Usługi notarialne",
+            "item_8": "Apostille i legalizacja dokumentów",
+            "item_9": "Pomoc w przygotowywaniu dokumentów",
+            "item_10": "Pomoc w sprawach związanych z mediami",
+            "item_11": "Usługi doradcze"
+          },
+          "note": "QMAX to kompleksowe rozwiązanie spełniające różnorodne potrzeby w Turcji."
+        }
+      },
+      "Languages": {
+        "title": "Języki tłumaczenia:",
+        "turkish": "Turecki",
+        "russian": "rosyjski",
+        "english": "angielski",
+        "ukrainian": "ukraiński",
+        "uzbek": "uzbecki",
+        "german": "niemiecki",
+        "french": "Francuski",
+        "arabic": "arabski",
+        "kazakh": "kazachski",
+        "azerbaijani": "azerbejdżański"
+      },
+      "Cta": {
+        "title": "Skontaktuj się z naszym zespołem specjalistów, aby rozwiązać swoje problemy.",
+        "whatsapp": "WhatsApp",
+        "contact": "Skontaktuj się z nami"
       }
     }
   }

@@ -38,7 +38,8 @@
         "open_menu": "Hauptmenü öffnen",
         "close_menu": "Hauptmenü schließen",
         "main_menu": "Hauptmenü"
-      }
+      },
+      "documents": "Dokumente"
     },
     "Layout": {
       "skip_to_content": "Zum Inhalt springen"
@@ -1321,6 +1322,199 @@
         "Metadata": {
           "title": "Admin-Anmeldung"
         }
+      }
+    },
+    "Documents": {
+      "Metadata": {
+        "title": "Dokumente und Support-Dienstleistungen",
+        "description": "Aufenthaltsgenehmigungen, Immobilien, Schengen-Visa, Beschäftigung, Hochschulzulassung, Übersetzungen, Versicherungen und Behördengänge in der Türkei. QMAX bietet umfassende Unterstützung von der Vorbereitung der Unterlagen bis zum Ergebnis.",
+        "og_alt": "Unterlagen und Supportleistungen – QMAX Realty"
+      },
+      "Hero": {
+        "title": "Dokumente",
+        "subtitle": "Kontaktieren Sie uns für weitere Informationen.",
+        "whatsapp": "WhatsApp"
+      },
+      "Tabs": {
+        "aria_label": "Dokumentations- und Supportdienste"
+      },
+      "Services": {
+        "residence_permit": {
+          "title": "Aufenthaltsgenehmigung in der Türkei",
+          "subtitle": "Umfassende Unterstützung von der Einreichung bis zum Ergebnis",
+          "items": {
+            "item_1": "Beratung und Auswahl der Grundlage",
+            "item_2": "Erstellung von Dokumenten",
+            "item_3": "Abschluss des e-İkamet-Antrags",
+            "item_4": "Einen Termin vereinbaren",
+            "item_5": "Überprüfung der Unterlagen vor der Einreichung",
+            "item_6": "Unterstützung in jeder Phase",
+            "item_7": "Unterstützung bei der Verlängerung oder Änderung des Status",
+            "item_8": "Überwachung des Registrierungsvorgangs"
+          },
+          "note": "QMAX – wir kümmern uns um den gesamten Prozess und ersparen Ihnen so Zeit und Stress."
+        },
+        "real_estate": {
+          "title": "Immobilien in der Türkei",
+          "subtitle": "Von der Auswahl einer Immobilie bis zum Abschluss der Transaktion",
+          "items": {
+            "item_1": "Auswahl von Immobilien für Ihre Zwecke",
+            "item_2": "Kauf und Verkauf",
+            "item_3": "Renditeobjekte",
+            "item_4": "Überprüfung von Dokumenten und Eigentum",
+            "item_5": "Transaktionsunterstützung",
+            "item_6": "Web Tapu und Dokumentenbearbeitung",
+            "item_7": "Hypotheken und Bankangelegenheiten",
+            "item_8": "Vollmacht und Unterstützung im Rahmen einer Vollmacht",
+            "item_9": "Kundendienst nach dem Kauf"
+          },
+          "note": "QMAX – wir begleiten Transaktionen, wir verkaufen nicht nur Immobilien."
+        },
+        "schengen_visa": {
+          "title": "Schengen Visa",
+          "subtitle": "Unterstützung von der Erstellung der Unterlagen bis zur Einreichung",
+          "items": {
+            "item_1": "Ermittlung der geeigneten Visumart",
+            "item_2": "Prüfung von Dokumenten",
+            "item_3": "Ausfüllen des Visumantragsformulars",
+            "item_4": "Vorbereitung und Bearbeitung von Dokumenten",
+            "item_5": "Einen Termin für die Einreichung vereinbaren",
+            "item_6": "Vorbereitung auf ein Vorstellungsgespräch",
+            "item_7": "Beratung zu Versicherungen und Buchungen",
+            "item_8": "Unterstützung während des gesamten Bewerbungsprozesses"
+          }
+        },
+        "employment": {
+          "title": "Beschäftigung in der Türkei",
+          "subtitle": "Unterstützung bei der Arbeitssuche und der rechtmäßigen Anmeldung",
+          "items": {
+            "item_1": "Stellensuche",
+            "item_2": "Anhörung zu den Arbeitsbedingungen",
+            "item_3": "Vorbereitung der erforderlichen Unterlagen",
+            "item_4": "Erlangung einer Arbeitserlaubnis",
+            "item_5": "Unterstützung für Arbeitgeber und Arbeitnehmer",
+            "item_6": "Überwachung des Registrierungsvorgangs",
+            "item_7": "Beratung zum Beschäftigungsstatus"
+          },
+          "note": "QMAX hilft Ihnen nicht nur bei der Jobsuche, sondern unterstützt Sie auch dabei, Ihr Arbeitsverhältnis ordnungsgemäß zu regeln."
+        },
+        "university_admission": {
+          "title": "Zulassung an Universitäten in der Türkei",
+          "subtitle": "Von der Wahl der Hochschule bis zur Immatrikulation",
+          "items": {
+            "item_1": "Wahl der Hochschule und des Studienfachs",
+            "item_2": "Beratung zu den Zulassungsbedingungen",
+            "item_3": "Überprüfung von Dokumenten",
+            "item_4": "Übersetzung und Aufbereitung von Dokumenten",
+            "item_5": "Einreichung eines Antrags",
+            "item_6": "Unterstützung beim Zulassungsverfahren",
+            "item_7": "Unterstützung bei der Immatrikulation an der Universität",
+            "item_8": "Konsultation zu Aufenthaltsgenehmigungen für Studierende"
+          },
+          "note": "QMAX – wir helfen Ihnen bei der Bewerbung und begleiten Sie problemlos durch alle Schritte."
+        },
+        "translation_services": {
+          "title": "Übersetzungsdienstleistungen",
+          "subtitle": "Korrekte Übersetzung von Dokumenten mit amtlicher Beglaubigung",
+          "items": {
+            "item_1": "Übersetzung von Dokumenten und Urkunden",
+            "item_2": "Beglaubigung",
+            "item_3": "Beglaubigte Übersetzung",
+            "item_4": "Apostille und Beglaubigung",
+            "item_5": "Übersetzungen für Behörden",
+            "item_6": "Übersetzungen für Gerichts- und Rechtsverfahren",
+            "item_7": "Übersetzung von Dokumenten im Zusammenhang mit Aufenthaltsgenehmigungen, Staatsbürgerschaft und Immobilien"
+          }
+        },
+        "title_insurance": {
+          "title": "Eigentumsversicherung für Immobilien",
+          "subtitle": "Schutz Ihrer Rechte und Interessen beim Kauf von Immobilien",
+          "items": {
+            "item_1": "Überprüfung der Eigentumsrechte",
+            "item_2": "Prüfung möglicher Risiken und Einschränkungen",
+            "item_3": "Auswertung von Grundstücksunterlagen",
+            "item_4": "Eigentumsversicherung beim Kauf",
+            "item_5": "Beratung vor Abschluss der Transaktion",
+            "item_6": "Unterstützung bei der Registrierung"
+          }
+        },
+        "insurance": {
+          "title": "Versicherungen in der Türkei",
+          "subtitle": "Auswahl und Zusammenstellung von Versicherungen, die Ihren Bedürfnissen entsprechen",
+          "items": {
+            "item_1": "Krankenversicherung für eine Aufenthaltserlaubnis",
+            "item_2": "Reiseversicherung",
+            "item_3": "Versicherung für ein Visum",
+            "item_4": "Verlängerung einer Versicherungspolice",
+            "item_5": "Auswahl eines geeigneten Versicherungsschutzes"
+          }
+        },
+        "state_municipal_services": {
+          "title": "Dienstleistungen für Landes- und Kommunalbehörden",
+          "subtitle": "Hilfe bei Formalitäten und Unterstützung bei Behördengängen",
+          "items": {
+            "item_1": "Stadtverwaltung — kommunale Dienstleistungen",
+            "item_2": "Melderegister – Anmeldung und Adressänderung",
+            "item_3": "Umtausch ausländischer Führerscheine gegen türkische Führerscheine",
+            "item_4": "Beantragung und Bearbeitung einer Steuernummer",
+            "item_5": "Finanzamt — Steuerangelegenheiten",
+            "item_6": "e-Devlet – Unterstützung bei elektronischen Behördendiensten",
+            "item_7": "Anmeldung der Anschrift und Anmeldeverfahren",
+            "item_8": "Terminvereinbarung bei Behörden",
+            "item_9": "Unterstützung und Einreichung von Unterlagen",
+            "item_10": "Unterstützung bei behördlichen Anträgen und Bescheinigungen"
+          }
+        },
+        "family_support": {
+          "title": "Familienunterstützung in der Türkei",
+          "subtitle": "Unterstützung von Familien bei Formalitäten und wichtigen Behördengängen",
+          "items": {
+            "item_1": "Aufenthaltserlaubnis für Familienangehörige",
+            "item_2": "Unterlagen für Familienangehörige",
+            "item_3": "Anmeldung von Kindern",
+            "item_4": "Anmeldung in der Schule und Unterstützung bei der Aufnahme",
+            "item_5": "Adressregistrierung",
+            "item_6": "Übersetzung und Beglaubigung von Dokumenten",
+            "item_7": "Begleitung in Behörden",
+            "item_8": "Unterstützung bei Anträgen und Bescheinigungen"
+          }
+        },
+        "additional_services": {
+          "title": "Zusätzliche Dienstleistungen",
+          "subtitle": "Unterstützung bei der Klärung alltäglicher und behördlicher Angelegenheiten in der Türkei",
+          "items": {
+            "item_1": "Eröffnung von Bankkonten",
+            "item_2": "Unterstützung bei PTT- und Bankgeschäften",
+            "item_3": "Einholung von Bescheinigungen und Unterlagen",
+            "item_4": "e-Devlet – Unterstützung bei Behördengängen",
+            "item_5": "Registrierung bei Behörden",
+            "item_6": "Eintragung von Vollmachten",
+            "item_7": "Notariatsdienstleistungen",
+            "item_8": "Apostille und Beglaubigung von Dokumenten",
+            "item_9": "Unterstützung bei der Erstellung von Dokumenten",
+            "item_10": "Unterstützung bei den Nebenkosten",
+            "item_11": "Beratungsleistungen"
+          },
+          "note": "QMAX ist Ihr Komplettanbieter für eine Vielzahl von Bedürfnissen in der Türkei."
+        }
+      },
+      "Languages": {
+        "title": "Übersetzungssprachen:",
+        "turkish": "Türkisch",
+        "russian": "Russisch",
+        "english": "Englisch",
+        "ukrainian": "Ukrainisch",
+        "uzbek": "Usbekisch",
+        "german": "Deutsch",
+        "french": "Französisch",
+        "arabic": "Arabisch",
+        "kazakh": "Kasachisch",
+        "azerbaijani": "Aserbaidschanisch"
+      },
+      "Cta": {
+        "title": "Wenden Sie sich an unser Team aus Fachleuten, um Ihre Probleme zu lösen.",
+        "whatsapp": "WhatsApp",
+        "contact": "Kontakt"
       }
     }
   }

@@ -16,7 +16,7 @@ export const CONTACT_INFO = {
     href: "mailto:info@qmaxrealty.ge",
   },
   address: {
-    display: "Rustaveli Ave 12, Tbilisi, Georgia",
+    display: "Side, Atatürk (Yalı) Bul No: 110/C, 07330 Manavgat/Antalya, Türkiye",
     href: "https://www.openstreetmap.org/?mlat=41.6969&mlon=44.8009#map=17/41.6969/44.8009",
   },
   whatsapp: {

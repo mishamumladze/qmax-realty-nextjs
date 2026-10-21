@@ -867,6 +867,199 @@
         }
       }
     },
+    "Documents": {
+      "Metadata": {
+        "title": "Documents & Support Services",
+        "description": "Residence permits, real estate, Schengen visas, employment, university admission, translation, insurance and government services in Turkey. QMAX provides full support from document preparation to result.",
+        "og_alt": "Documents and support services - QMAX Realty"
+      },
+      "Hero": {
+        "title": "Documents",
+        "subtitle": "Contact us for more information.",
+        "whatsapp": "WhatsApp"
+      },
+      "Tabs": {
+        "aria_label": "Document and support services"
+      },
+      "Services": {
+        "residence_permit": {
+          "title": "Residence Permit in Turkey",
+          "subtitle": "Full support from submission to result",
+          "items": {
+            "item_1": "Consultation and selection of the basis",
+            "item_2": "Preparation of documents",
+            "item_3": "Completion of the e-İkamet application",
+            "item_4": "Making an appointment",
+            "item_5": "Checking documents before submission",
+            "item_6": "Support at every stage",
+            "item_7": "Assistance with extension or change of status",
+            "item_8": "Monitoring the registration process"
+          },
+          "note": "QMAX — we take care of the process, saving you time and stress."
+        },
+        "real_estate": {
+          "title": "Real Estate in Turkey",
+          "subtitle": "From selecting a property to completing the transaction",
+          "items": {
+            "item_1": "Selection of real estate for your purposes",
+            "item_2": "Purchase and sale",
+            "item_3": "Investment properties",
+            "item_4": "Verification of documents and property",
+            "item_5": "Transaction support",
+            "item_6": "Web Tapu and document processing",
+            "item_7": "Mortgages and banking issues",
+            "item_8": "Power of attorney and support under a power of attorney",
+            "item_9": "Assistance after purchase"
+          },
+          "note": "QMAX — we support transactions, not just sell real estate."
+        },
+        "schengen_visa": {
+          "title": "Schengen Visa",
+          "subtitle": "Assistance from document preparation to submission",
+          "items": {
+            "item_1": "Determining the appropriate visa type",
+            "item_2": "Checking documents",
+            "item_3": "Completing the visa application form",
+            "item_4": "Preparing and processing documents",
+            "item_5": "Making an appointment for submission",
+            "item_6": "Preparing for an interview",
+            "item_7": "Consulting on insurance and bookings",
+            "item_8": "Support throughout the application process"
+          }
+        },
+        "employment": {
+          "title": "Employment in Turkey",
+          "subtitle": "Assistance in finding a job and legal registration",
+          "items": {
+            "item_1": "Job search",
+            "item_2": "Consultation on working conditions",
+            "item_3": "Preparation of necessary documents",
+            "item_4": "Obtaining a work permit",
+            "item_5": "Support for the employer and employee",
+            "item_6": "Monitoring the registration process",
+            "item_7": "Consultation on work status"
+          },
+          "note": "QMAX helps you not only find a job, but also help you properly formalize your employment."
+        },
+        "university_admission": {
+          "title": "Admission to Universities in Turkey",
+          "subtitle": "From choosing a university to enrolment",
+          "items": {
+            "item_1": "Selection of a university and specialty",
+            "item_2": "Consultation on admission conditions",
+            "item_3": "Verification of documents",
+            "item_4": "Translation and preparation of documents",
+            "item_5": "Submission of an application",
+            "item_6": "Support with the admission process",
+            "item_7": "Assistance with registration at the university",
+            "item_8": "Consultation on student residence permits"
+          },
+          "note": "QMAX — we help you apply and navigate all the steps without any hassle."
+        },
+        "translation_services": {
+          "title": "Translation Services",
+          "subtitle": "Accurate translation of documents with official certification",
+          "items": {
+            "item_1": "Translation of documents and certificates",
+            "item_2": "Notarization",
+            "item_3": "Sworn translation",
+            "item_4": "Apostille and legalization",
+            "item_5": "Translation for government agencies",
+            "item_6": "Translation for court and legal procedures",
+            "item_7": "Translation of documents for residence permits, citizenship and real estate"
+          }
+        },
+        "title_insurance": {
+          "title": "Title Insurance of Real Estate",
+          "subtitle": "Protecting your rights and interests when purchasing real estate",
+          "items": {
+            "item_1": "Checking property rights",
+            "item_2": "Checking possible risks and restrictions",
+            "item_3": "Analysis of property documents",
+            "item_4": "Title insurance upon purchase",
+            "item_5": "Pre-transaction consultation",
+            "item_6": "Registration support"
+          }
+        },
+        "insurance": {
+          "title": "Insurance in Turkey",
+          "subtitle": "Selecting and arranging insurance to suit your needs",
+          "items": {
+            "item_1": "Medical insurance for a residence permit",
+            "item_2": "Travel insurance",
+            "item_3": "Insurance for a visa",
+            "item_4": "Renewal of an insurance policy",
+            "item_5": "Selection of suitable coverage"
+          }
+        },
+        "state_municipal_services": {
+          "title": "State and Municipal Services",
+          "subtitle": "Assistance with paperwork and support in government agencies",
+          "items": {
+            "item_1": "Belediye — municipal services",
+            "item_2": "Nüfus — registration and change of address",
+            "item_3": "Exchange of foreign driving licenses for Turkish ones",
+            "item_4": "Obtaining and processing a tax number",
+            "item_5": "Vergi Dairesi — tax issues",
+            "item_6": "e-Devlet — assistance with government electronic services",
+            "item_7": "Address registration and registration procedures",
+            "item_8": "Making an appointment at government agencies",
+            "item_9": "Support and submission of documents",
+            "item_10": "Assistance with official applications and certificates"
+          }
+        },
+        "family_support": {
+          "title": "Family Support in Turkey",
+          "subtitle": "Helping families with documents and important procedures",
+          "items": {
+            "item_1": "Family residence permit",
+            "item_2": "Documents for family members",
+            "item_3": "Registration of children",
+            "item_4": "Registration at school and assistance with admission",
+            "item_5": "Address registration",
+            "item_6": "Translation and notarization of documents",
+            "item_7": "Accompanying in government agencies",
+            "item_8": "Assistance with applications and certificates"
+          }
+        },
+        "additional_services": {
+          "title": "Additional Services",
+          "subtitle": "Assistance in resolving everyday and official issues in Turkey",
+          "items": {
+            "item_1": "Opening bank accounts",
+            "item_2": "Assistance with PTT and banking operations",
+            "item_3": "Obtaining certificates and documents",
+            "item_4": "e-Devlet - assistance with government services",
+            "item_5": "Registration in government agencies",
+            "item_6": "Registration of powers of attorney",
+            "item_7": "Notary services",
+            "item_8": "Apostille and legalization of documents",
+            "item_9": "Support in preparing documents",
+            "item_10": "Assistance with utilities",
+            "item_11": "Consulting services"
+          },
+          "note": "QMAX is a one-stop shop for a variety of needs in Turkey."
+        }
+      },
+      "Languages": {
+        "title": "Translation languages:",
+        "turkish": "Turkish",
+        "russian": "Russian",
+        "english": "English",
+        "ukrainian": "Ukrainian",
+        "uzbek": "Uzbek",
+        "german": "German",
+        "french": "French",
+        "arabic": "Arabic",
+        "kazakh": "Kazakh",
+        "azerbaijani": "Azerbaijani"
+      },
+      "Cta": {
+        "title": "Contact our team of professionals to solve your problems.",
+        "whatsapp": "WhatsApp",
+        "contact": "Contact Us"
+      }
+    },
     "Listings": {
       "Metadata": {
         "title": "Find Your Dream Property",

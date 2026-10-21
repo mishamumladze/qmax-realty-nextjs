@@ -38,7 +38,8 @@
         "open_menu": "Ana menüyü aç",
         "close_menu": "Ana menüyü kapat",
         "main_menu": "Ana menü"
-      }
+      },
+      "documents": "Belgeler"
     },
     "Layout": {
       "skip_to_content": "İçeriğe atla"
@@ -1308,6 +1309,199 @@
         "Metadata": {
           "title": "Yönetici girişi"
         }
+      }
+    },
+    "Documents": {
+      "Metadata": {
+        "title": "Belgeler ve Destek Hizmetleri",
+        "description": "Türkiye’de oturma izni, gayrimenkul, Schengen vizesi, istihdam, üniversiteye giriş, çeviri, sigorta ve kamu hizmetleri. QMAX, belge hazırlığından sonuca kadar tam destek sunmaktadır.",
+        "og_alt": "Belgeler ve destek hizmetleri - QMAX Realty"
+      },
+      "Hero": {
+        "title": "Belgeler",
+        "subtitle": "Daha fazla bilgi için bizimle iletişime geçin.",
+        "whatsapp": "WhatsApp"
+      },
+      "Tabs": {
+        "aria_label": "Belgeleme ve destek hizmetleri"
+      },
+      "Services": {
+        "residence_permit": {
+          "title": "Türkiye’de Oturma İzni",
+          "subtitle": "Başvurudan sonuca kadar tam destek",
+          "items": {
+            "item_1": "Temel ile ilgili danışma ve seçim",
+            "item_2": "Belgelerin hazırlanması",
+            "item_3": "e-İkamet başvurusunun tamamlanması",
+            "item_4": "Randevu alma",
+            "item_5": "Göndermeden önce belgelerin kontrol edilmesi",
+            "item_6": "Her aşamada destek",
+            "item_7": "Statü uzatımı veya değişikliği konusunda yardım",
+            "item_8": "Kayıt sürecinin izlenmesi"
+          },
+          "note": "QMAX — Süreci biz üstleniyoruz; böylece zamandan tasarruf edersiniz ve stresten kurtulursunuz."
+        },
+        "real_estate": {
+          "title": "Türkiye'de Gayrimenkul",
+          "subtitle": "Bir gayrimenkulün seçilmesinden işlemin tamamlanmasına kadar",
+          "items": {
+            "item_1": "Amacınıza uygun gayrimenkul seçimi",
+            "item_2": "Alım ve satım",
+            "item_3": "Yatırım amaçlı gayrimenkuller",
+            "item_4": "Belgelerin ve mülklerin doğrulanması",
+            "item_5": "İşlem desteği",
+            "item_6": "Web Tapu ve belge işleme",
+            "item_7": "İpotekler ve bankacılık konuları",
+            "item_8": "Vekaletname ve vekaletname kapsamında verilen destek",
+            "item_9": "Satın alma sonrası destek"
+          },
+          "note": "QMAX — biz sadece gayrimenkul satmakla kalmıyor, işlemlerin gerçekleştirilmesine de destek oluyoruz."
+        },
+        "schengen_visa": {
+          "title": "Schengen Vizesi",
+          "subtitle": "Belge hazırlığından sunuma kadar destek",
+          "items": {
+            "item_1": "Uygun vize türünün belirlenmesi",
+            "item_2": "Belgelerin kontrol edilmesi",
+            "item_3": "Vize başvuru formunun doldurulması",
+            "item_4": "Belgelerin hazırlanması ve işlenmesi",
+            "item_5": "Başvuru için randevu alma",
+            "item_6": "Mülakata hazırlık",
+            "item_7": "Sigorta ve rezervasyon danışmanlığı",
+            "item_8": "Başvuru süreci boyunca destek"
+          }
+        },
+        "employment": {
+          "title": "Türkiye’de İstihdam",
+          "subtitle": "İş bulma ve yasal kayıt konusunda yardım",
+          "items": {
+            "item_1": "İş arama",
+            "item_2": "Çalışma koşullarına ilişkin istişare",
+            "item_3": "Gerekli belgelerin hazırlanması",
+            "item_4": "Çalışma izni alınması",
+            "item_5": "İşveren ve çalışana yönelik destek",
+            "item_6": "Kayıt sürecinin izlenmesi",
+            "item_7": "Çalışma durumuna ilişkin danışma"
+          },
+          "note": "QMAX, sadece iş bulmanıza yardımcı olmakla kalmaz, aynı zamanda istihdamınızın usulüne uygun bir şekilde resmileştirilmesine de yardımcı olur."
+        },
+        "university_admission": {
+          "title": "Türkiye’deki Üniversitelere Kabul",
+          "subtitle": "Üniversite seçiminden kayıt işlemlerine kadar",
+          "items": {
+            "item_1": "Üniversite ve uzmanlık alanının seçimi",
+            "item_2": "Kabul koşullarına ilişkin danışma",
+            "item_3": "Belgelerin doğrulanması",
+            "item_4": "Belgelerin çevirisi ve hazırlanması",
+            "item_5": "Başvurunun sunulması",
+            "item_6": "Kabul sürecinde destek",
+            "item_7": "Üniversiteye kayıt konusunda yardım",
+            "item_8": "Öğrenci oturma izinlerine ilişkin danışma süreci"
+          },
+          "note": "QMAX — başvuru sürecinde size yardımcı olur ve tüm aşamaları sorunsuz bir şekilde tamamlamanızı sağlarız."
+        },
+        "translation_services": {
+          "title": "Çeviri Hizmetleri",
+          "subtitle": "Resmi tasdikli belgelerin doğru çevirisi",
+          "items": {
+            "item_1": "Belge ve sertifikaların çevirisi",
+            "item_2": "Noter tasdiki",
+            "item_3": "Yeminli çeviri",
+            "item_4": "Apostil ve tasdik",
+            "item_5": "Kamu kurumları için çeviri hizmetleri",
+            "item_6": "Mahkeme ve hukuki işlemler için çeviri",
+            "item_7": "Oturma izni, vatandaşlık ve gayrimenkul ile ilgili belgelerin çevirisi"
+          }
+        },
+        "title_insurance": {
+          "title": "Gayrimenkulün Tapu Sigortası",
+          "subtitle": "Gayrimenkul satın alırken haklarınızı ve çıkarlarınızı korumak",
+          "items": {
+            "item_1": "Mülkiyet haklarının kontrol edilmesi",
+            "item_2": "Olası risklerin ve kısıtlamaların kontrol edilmesi",
+            "item_3": "Mülkiyet belgelerinin incelenmesi",
+            "item_4": "Satın alma sırasında tapu sigortası",
+            "item_5": "İşlem öncesi danışmanlık",
+            "item_6": "Kayıt desteği"
+          }
+        },
+        "insurance": {
+          "title": "Türkiye’de Sigorta",
+          "subtitle": "İhtiyaçlarınıza uygun sigortayı seçme ve düzenleme",
+          "items": {
+            "item_1": "Oturma izni için sağlık sigortası",
+            "item_2": "Seyahat sigortası",
+            "item_3": "Vize için sigorta",
+            "item_4": "Bir sigorta poliçesinin yenilenmesi",
+            "item_5": "Uygun kapsamın seçimi"
+          }
+        },
+        "state_municipal_services": {
+          "title": "Eyalet ve Belediye Hizmetleri",
+          "subtitle": "Resmi işlemlerde yardım ve devlet kurumlarında destek",
+          "items": {
+            "item_1": "Belediye — municipal services",
+            "item_2": "Nüfus — kayıt ve adres değişikliği",
+            "item_3": "Yabancı sürücü belgelerinin Türk sürücü belgeleriyle değiştirilmesi",
+            "item_4": "Vergi numarasının alınması ve işleme konulması",
+            "item_5": "Vergi Dairesi — tax issues",
+            "item_6": "e-Devlet — kamu kurumlarının elektronik hizmetlerine ilişkin destek",
+            "item_7": "Adres kaydı ve kayıt işlemleri",
+            "item_8": "Devlet kurumlarından randevu alma",
+            "item_9": "Destek ve belgelerin sunulması",
+            "item_10": "Resmi başvurular ve belgelerle ilgili yardım"
+          }
+        },
+        "family_support": {
+          "title": "Türkiye’de Aile Desteği",
+          "subtitle": "Ailelere evrak ve önemli işlemler konusunda yardımcı olmak",
+          "items": {
+            "item_1": "Aile oturma izni",
+            "item_2": "Aile üyeleri için belgeler",
+            "item_3": "Çocukların kaydı",
+            "item_4": "Okula kayıt ve kabul sürecinde destek",
+            "item_5": "Adres kaydı",
+            "item_6": "Belgelerin çevirisi ve noter tasdiki",
+            "item_7": "Devlet kurumlarında refakat etme",
+            "item_8": "Başvurular ve sertifikalar konusunda yardım"
+          }
+        },
+        "additional_services": {
+          "title": "Ek Hizmetler",
+          "subtitle": "Türkiye’de günlük ve resmi sorunların çözümüne yönelik destek",
+          "items": {
+            "item_1": "Banka hesabı açma",
+            "item_2": "PTT ve bankacılık işlemlerinde yardım",
+            "item_3": "Sertifika ve belgelerin alınması",
+            "item_4": "e-Devlet - kamu hizmetlerinde destek",
+            "item_5": "Devlet kurumlarına kayıt",
+            "item_6": "Vekaletnamelerin tescili",
+            "item_7": "Noterlik hizmetleri",
+            "item_8": "Belgelerin apostil ve tasdik işlemleri",
+            "item_9": "Belge hazırlama konusunda destek",
+            "item_10": "Kamu hizmetleri konusunda yardım",
+            "item_11": "Danışmanlık hizmetleri"
+          },
+          "note": "QMAX, Türkiye’deki çeşitli ihtiyaçlar için tek elden hizmet sunan bir şirkettir."
+        }
+      },
+      "Languages": {
+        "title": "Çeviri dilleri:",
+        "turkish": "Türkçe",
+        "russian": "Rusça",
+        "english": "İngilizce",
+        "ukrainian": "Ukraynaca",
+        "uzbek": "Özbek",
+        "german": "Almanca",
+        "french": "Fransızca",
+        "arabic": "Arapça",
+        "kazakh": "Kazak",
+        "azerbaijani": "Azerbaycanlı"
+      },
+      "Cta": {
+        "title": "Sorunlarınızı çözmek için profesyonel ekibimizle iletişime geçin.",
+        "whatsapp": "WhatsApp",
+        "contact": "Bize Ulaşın"
       }
     }
   }

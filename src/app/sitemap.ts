@@ -10,7 +10,7 @@ function localized(path: string, locale: string): string {
 }
 
 export default function sitemap(): MetadataRoute.Sitemap {
-  const staticRoutes = ["/", "/listings", "/about", "/contact", "/socials"];
+  const staticRoutes = ["/", "/listings", "/about", "/contact", "/socials", "/documents"];
   const now = new Date();
 
   const staticEntries: MetadataRoute.Sitemap = routing.locales.flatMap((locale) =>
