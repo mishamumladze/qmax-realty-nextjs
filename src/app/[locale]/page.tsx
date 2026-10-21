@@ -7,7 +7,7 @@ import { TrackedWhatsAppButton } from "@/components/TrackedWhatsApp";
 import { CONTACT_INFO } from "@/config/contact";
 import { routing } from "@/i18n/routing";
 
-import { Home, Key, BadgeDollarSign, Building2, Star, Handshake, ShieldCheck } from "lucide-react";
+import { Home, Key, BadgeDollarSign, Building2, Star, Handshake, ShieldCheck, FileText } from "lucide-react";
 import { Metadata } from "next";
 
 // 1. Dynamic localized Metadata scoped to "HomePage.Metadata"
@@ -103,13 +103,6 @@ export default async function HomePage() {
               via-black/40 to-transparent text-center"
           >
             <div className="relative mx-auto w-full max-w-6xl px-4 pb-10 sm:px-6 md:pb-16">
-              <span
-                className="inline-flex items-center gap-2 rounded-full border border-white/25
-                  bg-white/10 px-4 py-1.5 text-xs font-bold tracking-[0.18em] text-brand-50 uppercase"
-              >
-                <span aria-hidden="true" className="h-1.5 w-1.5 rounded-full bg-brand-200"/>
-                QMAX Realty
-              </span>
               <h1
                 id="home-hero-heading"
                 className="mx-auto mt-5 max-w-2xl text-h1 font-bold text-balance text-white"
@@ -119,7 +112,7 @@ export default async function HomePage() {
               <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/90 md:text-lg">
                 {t("Hero.subtitle")}
               </p>
-              <div className="mt-8 flex flex-col flex-wrap items-center justify-center gap-3 sm:flex-row">
+              <div className="mt-8 inline-grid grid-cols-2 md:grid-cols-4 items-center justify-center gap-3">
                 <PrimaryButtonRounded
                   label={t("Hero.buy_btn")}
                   icon={<Home className="h-5 w-5" aria-hidden="true"/>}
@@ -141,6 +134,13 @@ export default async function HomePage() {
                   size="lg"
                   className="w-full min-h-[44px] sm:w-auto"
                 />
+                <PrimaryButtonRounded
+                  label={t("Hero.docs_btn")}
+                  icon={<FileText className="h-5 w-5" aria-hidden="true"/>}
+                  href="/documents"
+                  size="lg"
+                  className="w-full min-h-[44px] sm:w-auto"
+                />       
               </div>
             </div>
           </div>

@@ -798,7 +798,8 @@
         "subtitle": "Discover premium real estate with expert guidance and unmatched service",
         "buy_btn": "Buy Properties",
         "rent_btn": "Rent Properties",
-        "sell_btn": "Sell Your Home"
+        "sell_btn": "Sell Your Home",
+        "docs_btn": "Documents"
       },
       "WhyUs": {
         "title": "Why Choose QMAX Realty?",
